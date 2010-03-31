@@ -1,0 +1,37 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:PixelLab.Wpf.Demo"
+    ShowsNavigationUI="False">
+  <Page.Resources>
+
+    <local:IsStringEmptyConverter x:Key="IsStringEmptyConverter"/>
+
+    <XmlDataProvider x:Key="samples" Source="TableOfContents.xml"/>
+
+  </Page.Resources>
+  <DockPanel Margin="10">
+
+    <ListBox Name="SampleList"
+			SelectedIndex="0"
+			ItemsSource="{Binding Source={StaticResource samples}, XPath=Samples/Sample}"
+			VerticalAlignment="Center"
+			Margin="10"
+			Padding="5"
+      DisplayMemberPath="@Title" 
+      DockPanel.Dock="Left"/>
+
+    <Border BorderBrush="Black" BorderThickness="1" Margin="10" CornerRadius="10" Padding="10"
+            DataContext="{Binding ElementName=SampleList, Path=SelectedItem}">
+      <DockPanel>
+        <Expander DockPanel.Dock="Bottom" Header="Description" Style="{StaticResource SimpleExpander}"
+                  Visibility="{Binding Converter={StaticResource IsStringEmptyConverter}}">
+          <TextBlock Text="{Binding XPath=@Description}" MaxWidth="600"
+							   TextWrapping="Wrap" Margin="30 10" TextAlignment="Justify" FontSize="12"/>
+        </Expander>
+        <Frame Name="ContentFrame" Source="{Binding XPath=@Page}" NavigationUIVisibility="Hidden" Focusable="false"/>
+      </DockPanel>
+    </Border>
+
+  </DockPanel>
+</Page>

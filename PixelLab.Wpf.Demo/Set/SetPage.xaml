@@ -1,0 +1,113 @@
+﻿<Page x:Class="PixelLab.Wpf.Demo.Set.SetPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="clr-namespace:PixelLab.Wpf.Demo.Set"
+    xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf"
+    WindowTitle="WPF Set - 2008-01-30" ShowsNavigationUI="false">
+
+  <Page.Background>
+    <LinearGradientBrush  StartPoint="0,1" EndPoint="0,0">
+      <GradientStop Color="#FCCC" Offset="0"/>
+      <GradientStop Color="#FFFFFFFF" Offset=".5"/>
+    </LinearGradientBrush>
+  </Page.Background>
+
+  <Page.Resources>
+
+    <Style TargetType="Control" x:Key="EmptyFocusVisualStyle">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate/>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style TargetType="Button">
+      <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyFocusVisualStyle}"/>
+    </Style>
+
+    <app:CardImageSourceConverter x:Key="CardImageSourceConverter" />
+
+    <DataTemplate DataType="{x:Type app:SetCard}">
+      <Image Source="{Binding Converter={StaticResource CardImageSourceConverter}}"/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type app:Set}">
+      <Grid Width="100">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition/>
+          <ColumnDefinition/>
+          <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Image Source="{Binding Path=[0], Converter={StaticResource CardImageSourceConverter}}" Grid.Column="0" Margin="1"/>
+        <Image Source="{Binding Path=[1], Converter={StaticResource CardImageSourceConverter}}" Grid.Column="1" Margin="1"/>
+        <Image Source="{Binding Path=[2], Converter={StaticResource CardImageSourceConverter}}" Grid.Column="2" Margin="1"/>
+
+      </Grid>
+    </DataTemplate>
+
+  </Page.Resources>
+
+  <DockPanel Margin="20">
+
+    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+      <StackPanel.Resources>
+        <Style TargetType="TextBlock" x:Key="TextBlock_Default">
+          <Setter Property="VerticalAlignment" Value="Center" />
+          <Setter Property="FontWeight" Value="Bold" />
+          <Setter Property="Width" Value="25" />
+          <Setter Property="FontSize" Value="20"/>
+        </Style>
+
+        <Style TargetType="Label">
+          <Setter Property="VerticalAlignment" Value="Center" />
+          <Setter Property="FontSize" Value="20"/>
+        </Style>
+      </StackPanel.Resources>
+
+      <Label Content="Cards Left in Deck:"/>
+      <TextBlock Text="{Binding Path=CardsInDeck}" Style="{StaticResource TextBlock_Default}"/>
+
+      <Label Content="Possible Sets:" Margin="15 0 0 0"/>
+      <TextBlock Text="{Binding Path=SetsOnBoard}" Style="{StaticResource TextBlock_Default}"/>
+
+    </StackPanel>
+
+    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right"
+               Name="m_stackPanel">
+
+      <Button Content="_New Game" Click="newGame_click" FontSize="20" Padding="10 5"/>
+
+    </StackPanel>
+
+    <Viewbox>
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="120"/>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="120"/>
+        </Grid.ColumnDefinitions>
+
+        <ItemsControl Grid.Column="2" ItemsSource="{Binding Path=PlayedSets}" BorderBrush="Transparent" BorderThickness="1" Height="420" >
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <lib:AnimatingTilePanel ItemWidth="110" Width="110" Variation="0" Dampening=".1"/>
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.OpacityMask>
+            <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+              <GradientStop Color="#FF000000" Offset="0"/>
+              <GradientStop Color="#00000000" Offset="1"/>
+            </LinearGradientBrush>
+          </ItemsControl.OpacityMask>
+
+        </ItemsControl>
+
+        <app:SetBoardElement Grid.Column="1" x:Name="m_setBoardElement"/>
+
+      </Grid>
+    </Viewbox>
+
+  </DockPanel>
+</Page>

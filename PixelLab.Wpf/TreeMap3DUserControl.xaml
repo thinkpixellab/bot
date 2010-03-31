@@ -1,0 +1,57 @@
+<UserControl x:Class="PixelLab.Wpf.TreeMap3DUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:PixelLab.Wpf">
+    <Grid>
+
+        <!-- The display of the 3D data -->
+        <Viewport3D x:Name="viewport3D">
+            <Viewport3D.Camera>
+                <PerspectiveCamera  LookDirection = " 0,  -3, -3"
+                                UpDirection   = " 0,  0,  1"
+                                Position      = "0,  3,  3"
+                                FieldOfView   = "45" />
+            </Viewport3D.Camera>
+
+            <local:TreeMap3D x:Name="_treeMap3D" WeightBindingPath="CustomerCount">
+                <local:TreeMap3D.Transform>
+                    <Transform3DGroup>
+                        <ScaleTransform3D ScaleX="1.2" ScaleY="1.2" ScaleZ="1.2" />
+                        <RotateTransform3D>
+                            <RotateTransform3D.Rotation>
+                                <AxisAngleRotation3D Angle="30" Axis="0, 0, 1" />
+                            </RotateTransform3D.Rotation>
+                        </RotateTransform3D>
+                        <TranslateTransform3D OffsetZ="0.6" OffsetX="-0.3"/>
+                    </Transform3DGroup>
+                </local:TreeMap3D.Transform>
+            </local:TreeMap3D>
+
+            <ModelVisual3D>
+                <ModelVisual3D.Content>
+                    <Model3DGroup>
+                        <DirectionalLight Color="#FFFFFF" Direction="0,0,-10" />
+                        <DirectionalLight Color="#FFFFFF" Direction="1,0,0" />
+                    </Model3DGroup>
+                </ModelVisual3D.Content>
+            </ModelVisual3D>
+        </Viewport3D>
+
+        <!-- The custom transition -->
+        <local:Transition3D x:Name="_transition3D">
+            <local:Transition3D.Child>
+                <Viewbox Width="100" Height="100">
+                    <Border BorderThickness="1" Background="#6FFF" Padding="5">
+                        <StackPanel Name="_dataDisplay" Width="100">
+                            <TextBlock Text="{Binding Path=FirstName}"/>
+                            <TextBlock Text="{Binding Path=LastName}"/>
+                            <TextBlock Text="{Binding Path=AgentId}"/>
+                            <TextBlock Text="{Binding Path=CustomerCount}"/>
+                            <Slider HorizontalAlignment="Stretch"/>
+                        </StackPanel>
+                    </Border>
+                </Viewbox>
+            </local:Transition3D.Child>
+        </local:Transition3D>
+    </Grid>
+</UserControl>

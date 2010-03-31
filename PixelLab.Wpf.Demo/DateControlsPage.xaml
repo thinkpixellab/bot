@@ -1,0 +1,14 @@
+﻿<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <FlowDocumentScrollViewer VerticalScrollBarVisibility="Auto">
+        <FlowDocument>
+            <Paragraph>The date controls in the Bag o' Tricks were never that good. They were a stop-gap waiting for something better from Microsoft.</Paragraph>
+            <Paragraph>Something better has arrived.</Paragraph>
+            <Paragraph>
+                The WPF codeplex site (http://wpf.codeplex.com/) has details one these controls.
+            </Paragraph>
+        </FlowDocument>
+    </FlowDocumentScrollViewer>
+
+</Page>

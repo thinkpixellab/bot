@@ -1,0 +1,10 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf">
+
+	<Viewbox Width="200">
+		<lib:NumericUpDown Margin="5"/>
+	</Viewbox>
+
+</Page>

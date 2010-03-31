@@ -1,0 +1,35 @@
+﻿<Page x:Class="PixelLab.Wpf.Demo.ReorderListBoxPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf">
+
+  <Page.Resources>
+    <DataTemplate DataType="{x:Type SolidColorBrush}">
+      <Rectangle Fill="{Binding}" Height="20" Margin="5" lib:ReorderListBox.IsDragElement="True"/>
+    </DataTemplate>
+    <Style TargetType="ListBoxItem">
+      <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    </Style>
+  </Page.Resources>
+
+  <Viewbox>
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="150"/>
+        <ColumnDefinition Width="150"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition/>
+      </Grid.RowDefinitions>
+
+      <TextBlock Text="Drag to reorder items on the left." TextWrapping="Wrap" HorizontalAlignment="Center"/>
+      <TextBlock Grid.Column="1" Text="Drop to see them reorder on the right." TextWrapping="Wrap" HorizontalAlignment="Center"/>
+    
+      <lib:ReorderListBox Grid.Row="1" ItemsSource="{Binding}"/>
+      <ListBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding}"/>
+
+    </Grid>
+  </Viewbox>
+
+</Page>

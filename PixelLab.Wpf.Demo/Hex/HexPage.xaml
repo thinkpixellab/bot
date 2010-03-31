@@ -1,0 +1,244 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:hex="clr-namespace:PixelLab.Wpf.Demo.Hex"
+    xmlns:sys="sys">
+  <Page.Background>
+    <LinearGradientBrush>
+      <LinearGradientBrush.StartPoint>
+        <Point X="0" Y="0"/>
+      </LinearGradientBrush.StartPoint>
+      <LinearGradientBrush.EndPoint>
+        <Point X="0" Y="1"/>
+      </LinearGradientBrush.EndPoint>
+      <LinearGradientBrush.GradientStops>
+        <GradientStop Color="Black" Offset="-3"/>
+        <GradientStop Color="White" Offset=".75"/>
+        <GradientStop Color="Black" Offset="2"/>
+      </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+  </Page.Background>
+
+  <DockPanel>
+    <Button Margin="5" DockPanel.Dock="Top" HorizontalAlignment="Left"
+            Command="{Binding ElementName=hbe, Path=Board.ResetCommand}"
+            Content="_Reset"/>
+    <Viewbox>
+      <hex:HexBoardElement x:Name="hbe" Margin="35">
+        <hex:HexBoardElement.Resources>
+          <Style TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle">
+              <Setter.Value>
+                <Style>
+                  <Setter Property="Control.Template">
+                    <Setter.Value>
+                      <ControlTemplate>
+                      </ControlTemplate>
+                    </Setter.Value>
+                  </Setter>
+                </Style>
+              </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+              <Setter.Value>
+
+                <ControlTemplate TargetType="{x:Type Button}">
+                  <Grid>
+                    <hex:Hexagon Name="hexagon" Radius="20" Stroke="Black" Margin="1"
+                      HorizontalAlignment="Center" VerticalAlignment="Center">
+                      <hex:Hexagon.Fill>
+                        <LinearGradientBrush>
+                          <LinearGradientBrush.StartPoint>
+                            <Point X="0" Y="0"/>
+                          </LinearGradientBrush.StartPoint>
+                          <LinearGradientBrush.EndPoint>
+                            <Point X="1" Y="1"/>
+                          </LinearGradientBrush.EndPoint>
+                          <LinearGradientBrush.GradientStops>
+                            <GradientStop Color="White" Offset="-.5"/>
+                            <GradientStop Color="Black" Offset="2"/>
+                          </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                      </hex:Hexagon.Fill>
+                    </hex:Hexagon>
+                    <TextBlock Text="{Binding Path=Number}"
+                               Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlock"/>
+                  </Grid>
+                  <ControlTemplate.Triggers>
+
+
+
+                    <DataTrigger Binding="{Binding Path=Number}" Value="0">
+                      <Setter TargetName="textBlock" Property="Text" Value=""/>
+                    </DataTrigger>
+
+                    <!-- Hover animation-->
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                        <Condition Binding="{Binding Path=Number}" Value="0"/>
+
+                      </MultiDataTrigger.Conditions>
+                      <MultiDataTrigger.EnterActions>
+                        <BeginStoryboard >
+                          <BeginStoryboard.Storyboard>
+                            <Storyboard TargetName="hexagon" TargetProperty="Opacity">
+                              <DoubleAnimation Duration="0:0:0.1" To=".67" />
+                            </Storyboard>
+                          </BeginStoryboard.Storyboard>
+                        </BeginStoryboard>
+                      </MultiDataTrigger.EnterActions>
+                      <MultiDataTrigger.ExitActions>
+                        <BeginStoryboard>
+                          <BeginStoryboard.Storyboard>
+                            <Storyboard TargetName="hexagon" TargetProperty="Opacity">
+                              <DoubleAnimation Duration="0:0:0.5" />
+                            </Storyboard>
+                          </BeginStoryboard.Storyboard>
+                        </BeginStoryboard>
+                      </MultiDataTrigger.ExitActions>
+                    </MultiDataTrigger>
+
+                    <!-- pressed animation -->
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True"/>
+                        <Condition Binding="{Binding Path=Number}" Value="0"/>
+
+                      </MultiDataTrigger.Conditions>
+                      <MultiDataTrigger.EnterActions>
+                        <BeginStoryboard>
+                          <BeginStoryboard.Storyboard>
+                            <Storyboard TargetName="hexagon" TargetProperty="Opacity">
+                              <DoubleAnimation Duration="0:0:0.1" To=".33" />
+                            </Storyboard>
+                          </BeginStoryboard.Storyboard>
+                        </BeginStoryboard>
+                      </MultiDataTrigger.EnterActions>
+                      <MultiDataTrigger.ExitActions>
+                        <BeginStoryboard>
+                          <BeginStoryboard.Storyboard>
+                            <Storyboard TargetName="hexagon" TargetProperty="Opacity">
+                              <DoubleAnimation Duration="0:0:0.5"  />
+                            </Storyboard>
+                          </BeginStoryboard.Storyboard>
+                        </BeginStoryboard>
+                      </MultiDataTrigger.ExitActions>
+                    </MultiDataTrigger>
+
+                    <!-- "white" piece, not won-->
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Path=IsWinner}"  Value="False"/>
+                        <Condition Binding="{Binding Path=State}" Value="White"/>
+                      </MultiDataTrigger.Conditions>
+                      <Setter TargetName="textBlock" Property="Foreground" Value="White"/>
+
+                      <Setter TargetName="hexagon" Property="Fill">
+                        <Setter.Value>
+                          <LinearGradientBrush>
+                            <LinearGradientBrush.StartPoint>
+                              <Point X="0" Y="0"/>
+                            </LinearGradientBrush.StartPoint>
+                            <LinearGradientBrush.EndPoint>
+                              <Point X="1" Y="1"/>
+                            </LinearGradientBrush.EndPoint>
+                            <LinearGradientBrush.GradientStops>
+                              <GradientStop Color="Red" Offset="0"/>
+                              <GradientStop Color="Black" Offset="1"/>
+                            </LinearGradientBrush.GradientStops>
+                          </LinearGradientBrush>
+                        </Setter.Value>
+                      </Setter>
+                    </MultiDataTrigger>
+
+                    <!-- "white" piece, won-->
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Path=IsWinner}" Value="True"/>
+                        <Condition Binding="{Binding Path=State}" Value="White"/>
+                      </MultiDataTrigger.Conditions>
+                      <Setter TargetName="textBlock" Property="Foreground" Value="Black"/>
+
+                      <Setter TargetName="hexagon" Property="Fill">
+                        <Setter.Value>
+                          <LinearGradientBrush>
+                            <LinearGradientBrush.StartPoint>
+                              <Point X="0" Y="0"/>
+                            </LinearGradientBrush.StartPoint>
+                            <LinearGradientBrush.EndPoint>
+                              <Point X="1" Y="1"/>
+                            </LinearGradientBrush.EndPoint>
+                            <LinearGradientBrush.GradientStops>
+                              <GradientStop Color="Red" Offset="1.5"/>
+                              <GradientStop Color="White" Offset="0"/>
+                            </LinearGradientBrush.GradientStops>
+                          </LinearGradientBrush>
+                        </Setter.Value>
+                      </Setter>
+                    </MultiDataTrigger>
+
+
+                    <!-- Black Winners -->
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Path=IsWinner}"  Value="True"/>
+                        <Condition Binding="{Binding Path=State}" Value="Black"/>
+                      </MultiDataTrigger.Conditions>
+                      <Setter TargetName="textBlock" Property="Foreground" Value="Black"/>
+
+                      <Setter TargetName="hexagon" Property="Fill">
+                        <Setter.Value>
+                          <LinearGradientBrush>
+                            <LinearGradientBrush.StartPoint>
+                              <Point X="0" Y="0"/>
+                            </LinearGradientBrush.StartPoint>
+                            <LinearGradientBrush.EndPoint>
+                              <Point X="1" Y="1"/>
+                            </LinearGradientBrush.EndPoint>
+                            <LinearGradientBrush.GradientStops>
+                              <GradientStop Color="Blue" Offset="1.5"/>
+                              <GradientStop Color="White" Offset="0"/>
+                            </LinearGradientBrush.GradientStops>
+                          </LinearGradientBrush>
+                        </Setter.Value>
+                      </Setter>
+                    </MultiDataTrigger>
+
+                    <!-- Black losers -->
+                    <MultiDataTrigger>
+                      <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Path=IsWinner}"  Value="False"/>
+                        <Condition Binding="{Binding Path=State}" Value="Black"/>
+                      </MultiDataTrigger.Conditions>
+
+                      <Setter TargetName="textBlock" Property="Foreground" Value="White"/>
+
+                      <Setter TargetName="hexagon" Property="Fill">
+                        <Setter.Value>
+                          <LinearGradientBrush>
+                            <LinearGradientBrush.StartPoint>
+                              <Point X="0" Y="0"/>
+                            </LinearGradientBrush.StartPoint>
+                            <LinearGradientBrush.EndPoint>
+                              <Point X="1" Y="1"/>
+                            </LinearGradientBrush.EndPoint>
+                            <LinearGradientBrush.GradientStops>
+                              <GradientStop Color="Blue" Offset="0"/>
+                              <GradientStop Color="Black" Offset="1"/>
+                            </LinearGradientBrush.GradientStops>
+                          </LinearGradientBrush>
+                        </Setter.Value>
+                      </Setter>
+                    </MultiDataTrigger>
+
+                  </ControlTemplate.Triggers>
+                </ControlTemplate>
+              </Setter.Value>
+            </Setter>
+          </Style>
+        </hex:HexBoardElement.Resources>
+      </hex:HexBoardElement>
+    </Viewbox>
+  </DockPanel>
+</Page>
