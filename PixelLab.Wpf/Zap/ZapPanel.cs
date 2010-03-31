@@ -98,4 +98,4 @@ namespace PixelLab.Wpf
 
     } //** class ZapPanel
 
-} //** namespace Microsoft.Samples.KMoore.WPFSamples.Zap
+}
