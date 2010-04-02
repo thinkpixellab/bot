@@ -21,8 +21,7 @@
       DisplayMemberPath="@Title" 
       DockPanel.Dock="Left"/>
 
-    <Border BorderBrush="Black" BorderThickness="1" Margin="10" CornerRadius="10" Padding="10"
-            DataContext="{Binding ElementName=SampleList, Path=SelectedItem}">
+    <Border Margin="10" Padding="10" DataContext="{Binding ElementName=SampleList, Path=SelectedItem}">
       <DockPanel>
         <Expander DockPanel.Dock="Bottom" Header="Description" Style="{StaticResource SimpleExpander}"
                   Visibility="{Binding Converter={StaticResource IsStringEmptyConverter}}">

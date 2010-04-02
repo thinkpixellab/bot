@@ -1,16 +1,10 @@
 ﻿<Page x:Class="PixelLab.Wpf.Demo.IntroductionPage"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Page.Background>
-    <LinearGradientBrush  StartPoint="0,1" EndPoint="0,0">
-      <GradientStop Color="#FCCC" Offset="0"/>
-      <GradientStop Color="#FFFFFFFF" Offset=".5"/>
-    </LinearGradientBrush>
-  </Page.Background>
-  <FlowDocumentScrollViewer VerticalScrollBarVisibility="Auto">
-    <FlowDocument FontFamily="Consolas">
-      <Paragraph><Image Source="/PixelLab.Wpf.Demo;component/logo.png" Stretch="None" /></Paragraph>
-      <Paragraph FontSize="20" FontWeight="Bold">Welcome to the Bag o' Tricks.</Paragraph>
+  <FlowDocumentScrollViewer VerticalScrollBarVisibility="Auto" VerticalAlignment="Center" Background="White" Padding="20" BorderBrush="Black" BorderThickness="1" MaxWidth="720" HorizontalAlignment="Center">
+    <FlowDocument FontFamily="Consolas" TextAlignment="Left">
+      <Paragraph TextAlignment="Center"><Image Source="/PixelLab.Wpf.Demo;component/logo.png" Stretch="None" /></Paragraph>
+      <Paragraph FontSize="20" FontWeight="Bold">Welcome to the Bag of Tricks.</Paragraph>
       <Paragraph>This is a collection of samples and controls that show the power and flexibility of WPF.</Paragraph>
       <Paragraph>For updates, check out <Hyperlink NavigateUri="http://bot.codeplex.com">bot.codeplex.com</Hyperlink>.</Paragraph>
       <Paragraph>Thanks to Ben for <Hyperlink NavigateUri="RevealPage.xaml">Reveal</Hyperlink>, Neil for <Hyperlink NavigateUri="TransitionPresenter\TransitionPresenterPage.xaml">TransitionPresenter</Hyperlink>, and Kurt for the <Hyperlink NavigateUri="Interactive3DPage.xaml">Interactive 3D code</Hyperlink>.</Paragraph>
