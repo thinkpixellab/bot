@@ -1,7 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace PixelLab.Common {
-  public struct Line {
+  public struct Line : IEquatable<Line> {
     public Line(Point p1, Point p2) {
       Util.RequireArgument(p1.IsValid(), "p1");
       Util.RequireArgument(p2.IsValid(), "p2");
@@ -38,6 +39,32 @@ namespace PixelLab.Common {
       return GeoHelper.Dot(l1.Vector, l2.Vector);
     }
 
+    public bool Equals(Line other) {
+      return m_p1.Equals(other.m_p1) && m_p2.Equals(other.m_p2);
+    }
+
+    public override bool Equals(object obj) {
+      if (obj is Line) {
+        return Equals((Line)obj);
+      }
+      else {
+        return false;
+      }
+    }
+
+    public override int GetHashCode() {
+      return 0;
+    }
+
+    public static bool operator ==(Line l1, Line l2) {
+      return l1.Equals(l2);
+    }
+
+    public static bool operator !=(Line l1, Line l2) {
+      return !l1.Equals(l2);
+    }
+
     private Point m_p1, m_p2;
+
   }
 }

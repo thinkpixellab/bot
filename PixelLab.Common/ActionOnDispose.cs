@@ -61,7 +61,7 @@ namespace PixelLab.Common {
     ///     Calls the provided Action if it has not been called; 
     ///     otherwise, throws an <see cref="Exception"/>.
     /// </summary>
-    /// <exception cref="Exception">If <see cref="Dispose()"/> has already been called.</exception>
+    /// <exception cref="InvalidOperationException">If <see cref="Dispose()"/> has already been called.</exception>
     public void Dispose() {
       Action action = Interlocked.Exchange(ref m_unlockDelegate, null);
       if (action != null) {

@@ -90,7 +90,7 @@ namespace PixelLab.Wpf.Demo {
     } //*** click
 
     private void churn(object sender, EventArgs e) {
-      if (Util.Rnd.Next(10) == 0) {
+      if (Util.Rnd.Next(20) == 0) {
         Node<string> node = (Node<string>)theGraph.CenterObject;
         if (node != null && node.ChildNodes.Count > 0) {
           theGraph.CenterObject = node.ChildNodes.Random();
