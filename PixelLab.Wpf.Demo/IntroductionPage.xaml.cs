@@ -1,20 +1,21 @@
 using System.Diagnostics;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Navigation;
 
-namespace PixelLab.Wpf.Demo
-{
-    public partial class IntroductionPage : Page
-    {
-        public IntroductionPage()
-        {
-            InitializeComponent();
-        }
+namespace PixelLab.Wpf.Demo {
+  public partial class IntroductionPage : Page {
+    public IntroductionPage() {
+      InitializeComponent();
 
-        private void link_navigate(object sender, RequestNavigateEventArgs e)
-        {
-            Process.Start(e.Uri.ToString());
+      AddHandler(Hyperlink.RequestNavigateEvent, new RequestNavigateEventHandler(
+        (sender, e) => {
+          var uri = e.Uri.ToString();
+          if (uri.StartsWith("http://")) {
+            Process.Start(uri);
             e.Handled = true;
-        }
+          }
+        }));
     }
+  }
 }
