@@ -1,6 +1,6 @@
-﻿<Page x:Class="PixelLab.Wpf.Demo.IntroductionPage"
+﻿<Page
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <FlowDocumentScrollViewer VerticalScrollBarVisibility="Auto" VerticalAlignment="Stretch" Background="#EEE" Padding="20" MaxWidth="720" HorizontalAlignment="Center">
     <FlowDocument FontFamily="Consolas" TextAlignment="Left">
       <Paragraph TextAlignment="Center"><Image Source="/PixelLab.Wpf.Demo;component/logo.png" Stretch="None" /></Paragraph>

@@ -88,6 +88,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MineSweeper\MineFieldElement.cs" />
     <Compile Include="MineSweeper\MineSweeper.cs" />
     <Compile Include="MineSweeper\MineSweeperPage.xaml.cs">
@@ -329,9 +332,6 @@
     <Compile Include="FlipTile3D\FlipTile.cs" />
     <Compile Include="Interactive3DPage.xaml.cs">
       <DependentUpon>Interactive3DPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="IntroductionPage.xaml.cs">
-      <DependentUpon>IntroductionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="NotifyWorkerPage.xaml.cs">
       <DependentUpon>NotifyWorkerPage.xaml</DependentUpon>

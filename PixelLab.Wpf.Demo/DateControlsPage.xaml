@@ -3,11 +3,9 @@
 
     <FlowDocumentScrollViewer VerticalScrollBarVisibility="Auto">
         <FlowDocument>
-            <Paragraph>The date controls in the Bag o' Tricks were never that good. They were a stop-gap waiting for something better from Microsoft.</Paragraph>
+            <Paragraph>The date controls in the Bag of Tricks were never that good. They were a stop-gap waiting for something better from Microsoft.</Paragraph>
             <Paragraph>Something better has arrived.</Paragraph>
-            <Paragraph>
-                The WPF codeplex site (http://wpf.codeplex.com/) has details one these controls.
-            </Paragraph>
+            <Paragraph>The <Hyperlink NavigateUri="http://wpf.codeplex.com">WPF codeplex site</Hyperlink> has details on these controls.</Paragraph>
         </FlowDocument>
     </FlowDocumentScrollViewer>
 

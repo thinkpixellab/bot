@@ -1,9 +1,10 @@
 ﻿<Page
+  x:Class="PixelLab.Wpf.Demo.MainPage"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:local="clr-namespace:PixelLab.Wpf.Demo"
 	xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf"
-  ShowsNavigationUI="False" WindowTitle="Bag o' Tricks" Background="#00AB5B5B">
+  ShowsNavigationUI="False" WindowTitle="Bag of Tricks" Background="#00AB5B5B">
   <Page.Resources>
 
     <local:IsStringEmptyConverter x:Key="IsStringEmptyConverter"/>
@@ -32,7 +33,7 @@
                   Visibility="{Binding Converter={StaticResource IsStringEmptyConverter}}" MaxWidth="720" HorizontalAlignment="Center">
         <TextBlock Text="{Binding XPath=@Description}" TextWrapping="Wrap" Margin="30 10" FontSize="12"/>
       </Expander>
-      <Frame x:Name="ContentFrame" Source="{Binding XPath=@Page}" NavigationUIVisibility="Hidden" Focusable="false"/>
+      <Frame Name="m_contentFrame" Source="{Binding XPath=@Page}" NavigationUIVisibility="Hidden" Focusable="false"/>
     </DockPanel>
 
   </DockPanel>
