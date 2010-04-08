@@ -11,6 +11,7 @@
     <BootstrapperEnabled>false</BootstrapperEnabled>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkSubset>Full</TargetFrameworkSubset>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -259,6 +260,9 @@
     <Compile Include="AnimatingTilePanelPage.xaml.cs">
       <DependentUpon>AnimatingTilePanelPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FlipTile3D\FlipTile3D.cs" />
     <Compile Include="FlipTile3D\FlipTile.cs" />
     <Compile Include="Interactive3DPage.xaml.cs">
@@ -291,6 +295,7 @@
     <Compile Include="TransitionPresenter\TransitionPresenterPage.xaml.cs">
       <DependentUpon>TransitionPresenterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TreeViewHelperClasses\TreeViewDataItem.cs" />
     <Compile Include="VSCopyToHtmlPage.xaml.cs">
       <DependentUpon>VSCopyToHtmlPage.xaml</DependentUpon>
     </Compile>
@@ -303,6 +308,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
