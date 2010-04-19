@@ -54,9 +54,10 @@ namespace PixelLab.Wpf {
 
         // raise an event to update the underlying datasource
         if (m_lastMouseOverItem != null && m_dragItemIndex != m_dragInsertIndex) {
-          OnReorderRequested(new ReorderEventArgs(m_dragItem, m_lastMouseOverItem));
+          var insertItem = ItemContainerGenerator.ContainerFromIndex(m_dragInsertIndex);
+          OnReorderRequested(new ReorderEventArgs(m_dragItem, insertItem));
         }
-        else{
+        else {
           RaiseReorderCancelEvent();
         }
 
@@ -228,13 +229,13 @@ namespace PixelLab.Wpf {
     public static readonly RoutedEvent ReorderBeginEvent = EventManager.RegisterRoutedEvent("ReorderBegin", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ReorderListBox));
 
     public event RoutedEventHandler ReorderBegin {
-        add { AddHandler(ReorderBeginEvent, value); }
-        remove { RemoveHandler(ReorderBeginEvent, value); }
+      add { AddHandler(ReorderBeginEvent, value); }
+      remove { RemoveHandler(ReorderBeginEvent, value); }
     }
 
     void RaiseReorderBeginEvent() {
-        RoutedEventArgs newEventArgs = new RoutedEventArgs(ReorderListBox.ReorderBeginEvent);
-        RaiseEvent(newEventArgs);
+      RoutedEventArgs newEventArgs = new RoutedEventArgs(ReorderListBox.ReorderBeginEvent);
+      RaiseEvent(newEventArgs);
     }
 
     #endregion
@@ -243,16 +244,14 @@ namespace PixelLab.Wpf {
 
     public static readonly RoutedEvent ReorderCancelEvent = EventManager.RegisterRoutedEvent("ReorderCancel", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ReorderListBox));
 
-    public event RoutedEventHandler ReorderCancel
-    {
-        add { AddHandler(ReorderCancelEvent, value); }
-        remove { RemoveHandler(ReorderCancelEvent, value); }
+    public event RoutedEventHandler ReorderCancel {
+      add { AddHandler(ReorderCancelEvent, value); }
+      remove { RemoveHandler(ReorderCancelEvent, value); }
     }
 
-    void RaiseReorderCancelEvent()
-    {
-        RoutedEventArgs newEventArgs = new RoutedEventArgs(ReorderListBox.ReorderCancelEvent);
-        RaiseEvent(newEventArgs);
+    void RaiseReorderCancelEvent() {
+      RoutedEventArgs newEventArgs = new RoutedEventArgs(ReorderListBox.ReorderCancelEvent);
+      RaiseEvent(newEventArgs);
     }
 
     #endregion
