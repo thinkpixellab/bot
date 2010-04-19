@@ -31,7 +31,7 @@ using System.Windows.Media;
 
 namespace PixelLab.Common {
   public class CompositionTargetRenderingListener :
-#if WPF35
+#if !SILVERLIGHT
  System.Windows.Threading.DispatcherObject,
 #endif
  IDisposable {
@@ -91,7 +91,7 @@ namespace PixelLab.Common {
 
     public bool IsDisposed {
       get {
-#if WPF35
+#if !SILVERLIGHT
         VerifyAccess();
 #endif
         return m_disposed;
@@ -133,7 +133,7 @@ namespace PixelLab.Common {
 
     [DebuggerStepThrough]
     private void requireAccessAndNotDisposed() {
-#if WPF35
+#if !SILVERLIGHT
       VerifyAccess();
 #endif
       if (m_disposed) {
