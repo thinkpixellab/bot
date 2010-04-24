@@ -55,9 +55,6 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\PixelLab.Wpf\DemoCollection.cs">
-      <Link>DemoCollection.cs</Link>
-    </Compile>
     <Compile Include="FlipControl.xaml.cs">
       <DependentUpon>FlipControl.xaml</DependentUpon>
     </Compile>

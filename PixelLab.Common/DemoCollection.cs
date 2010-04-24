@@ -27,9 +27,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Input;
-using PixelLab.Common;
 
-namespace PixelLab.Wpf {
+namespace PixelLab.Common {
   /// <remarks>
   ///     The members of this class are only safe to use via one thread (usually the UI thread in a WPF application).
   ///     Any cross-thread changes will cause undesired behavior.

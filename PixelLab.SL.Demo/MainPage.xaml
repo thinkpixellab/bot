@@ -7,6 +7,6 @@
     d:DesignHeight="300" d:DesignWidth="400" Background="Gray">
 
   <Grid x:Name="LayoutRoot">
-    <Image HorizontalAlignment="Center" Name="image1" Stretch="None" VerticalAlignment="Center" Source="/PixelLab.SL4.Demo;component/logo.png" />
+    <Image HorizontalAlignment="Center" Stretch="None" VerticalAlignment="Center" Source="/PixelLab.SL4.Demo;component/logo.png" />
   </Grid>
 </UserControl>

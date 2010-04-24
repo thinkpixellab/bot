@@ -54,6 +54,7 @@
     <Compile Include="CommandWrapper.cs" />
     <Compile Include="CompositionTargetRenderingListening.cs" />
     <Compile Include="DBUtil.cs" />
+    <Compile Include="DemoCollection.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GeoHelper.cs" />
     <Compile Include="HueConverter.cs" />

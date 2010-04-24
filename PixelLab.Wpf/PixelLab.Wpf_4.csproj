@@ -46,7 +46,6 @@
     <Compile Include="AnimatingTilePanel.cs" />
     <Compile Include="ButtonBase3D.cs" />
     <Compile Include="ColorBrushConverter.cs" />
-    <Compile Include="DemoCollection.cs" />
     <Compile Include="DragPreviewAdorner.cs" />
     <Compile Include="NotifyWorker.cs" />
     <Compile Include="OrgTree.cs" />
