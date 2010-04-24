@@ -69,18 +69,6 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\PixelLab.Wpf.Demo\Hex\HexHelper.cs">
-      <Link>Hex\HexHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\PixelLab.Wpf.Demo\Hex\HexStuff.cs">
-      <Link>Hex\HexStuff.cs</Link>
-    </Compile>
-    <Compile Include="..\PixelLab.Wpf.Demo\MineSweeper\MineSweeper.cs">
-      <Link>MineSweeper\MineSweeper.cs</Link>
-    </Compile>
-    <Compile Include="..\PixelLab.Wpf.Demo\Set\Set.cs">
-      <Link>Set\Set.cs</Link>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>

@@ -13,7 +13,7 @@
     <RootNamespace>PixelLab.SL4.Demo.Web</RootNamespace>
     <AssemblyName>PixelLab.SL4.Demo.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <SilverlightApplicationList>{966B0BD5-F6EE-42E9-AD48-4864C456F204}|..\PixelLab.SL4.Demo\PixelLab.SL4.Demo.csproj|ClientBin|False</SilverlightApplicationList>
+    <SilverlightApplicationList>{966B0BD5-F6EE-42E9-AD48-4864C456F204}|..\PixelLab.SL.Demo\PixelLab.SL.Demo.csproj|ClientBin|False</SilverlightApplicationList>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,12 +52,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientBin\PixelLab.SL4.Demo.xap" />
-    <Content Include="PixelLab.SL4.DemoTestPage.html" />
+    <Content Include="PixelLab.SL.DemoTestPage.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Silverlight.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
