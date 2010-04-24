@@ -29,9 +29,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationFramework.Aero"/>
+    <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
-    <Reference Include="System.Core"/>
+    <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.XML" />
@@ -48,12 +48,10 @@
     <Compile Include="ColorBrushConverter.cs" />
     <Compile Include="DemoCollection.cs" />
     <Compile Include="DragPreviewAdorner.cs" />
-    <Compile Include="HueConverter.cs" />
     <Compile Include="NotifyWorker.cs" />
     <Compile Include="OrgTree.cs" />
     <Compile Include="OrgTreeItem.cs" />
     <Compile Include="ReorderListBox.cs" />
-    <Compile Include="RoundDoubleConverter.cs" />
     <Compile Include="ShowElement.cs" />
     <Compile Include="TemplateBorder.cs" />
     <Compile Include="TreeMap3DUserControl.xaml.cs">

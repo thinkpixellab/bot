@@ -25,9 +25,8 @@ THE SOFTWARE.
 using System;
 using System.Windows.Data;
 using System.Windows.Media;
-using PixelLab.Common;
 
-namespace PixelLab.Wpf {
+namespace PixelLab.Common {
   public class HueConverter : IValueConverter {
     public Color Convert(int index, int count) {
       Util.RequireArgumentRange(index >= 0, "index");

@@ -63,11 +63,13 @@
     <Compile Include="CompositionTargetRenderingListening.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GeoHelper.cs" />
+    <Compile Include="HueConverter.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="ListBase.cs" />
     <Compile Include="LockHelper.cs" />
     <Compile Include="ObservableCollectionPlus.cs" />
     <Compile Include="PageFlipper.cs" />
+    <Compile Include="RoundDoubleConverter.cs" />
     <Compile Include="SimpleValueConverter.cs" />
     <Compile Include="SortHelper.cs" />
     <Compile Include="TreeHelpers.cs" />
