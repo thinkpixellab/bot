@@ -10,7 +10,7 @@ namespace PixelLab.SL.Demo {
 
       var pageSize = new Size(200, 400);
 
-      m_flip.SetChild(m_contentButton = new Button() { Background = Colors.Blue.ToCachedBrush(), FontSize = 40 });
+      m_flip.SetChild(m_contentButton = new Button() { Background = Colors.Blue.ToCachedBrush(), FontSize = 120 });
       m_flip.Size = pageSize;
       m_flip.FlipStarting += (sender, args) => {
         var oldValue = args.OldValue as int?;
@@ -25,14 +25,13 @@ namespace PixelLab.SL.Demo {
         m_contentButton.Content = newValue;
       });
 
-      m_contentButton.Click += (sender, args) => {
-        DataContext = ++value;
-      };
+      m_next.Click += (sender, args) => DataContext = ++value;
+      m_previos.Click += (sender,args) => DataContext = --value;
 
       DataContext = value;
     }
 
     private int value = 0;
-    private readonly Button m_contentButton;
+    private readonly ContentControl m_contentButton;
   }
 }

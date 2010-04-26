@@ -6,8 +6,19 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400" Background="Gray"
   xmlns:lib="clr-namespace:PixelLab.SL;assembly=PixelLab.SL" >
+	<UserControl.Resources>
+		<Style x:Key="PageButtonStyle" TargetType="RepeatButton">
+			<Setter Property="VerticalAlignment" Value="Bottom"/>
+			<Setter Property="Margin" Value="5"/>
+      <Setter Property="Width" Value="100" />
+      <Setter Property="Height" Value="30" />
+      <Setter Property="Opacity" Value=".3" />
+		</Style>
+	</UserControl.Resources>
 
-  <Grid Name="m_layoutRoot" Background="LightGray">
+  <Grid Name="m_layoutRoot" Background="LightGray" Width="400" Height="400">
     <lib:FlipControl Name="m_flip" Width="400" Height="400"/>
+    <RepeatButton Name="m_previos" HorizontalAlignment="Left" Content="Previous" Style="{StaticResource PageButtonStyle}" />
+    <RepeatButton Name="m_next" HorizontalAlignment="Right" Content="Next" Style="{StaticResource PageButtonStyle}"  />
   </Grid>
 </UserControl>
