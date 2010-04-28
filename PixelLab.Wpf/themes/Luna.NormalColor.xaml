@@ -159,10 +159,10 @@
               <TextBlock Text="{TemplateBinding ValueString}" 
                   TextAlignment="Right" VerticalAlignment="Center" Grid.RowSpan="2" Margin="2 0 5 2"/>
 
-              <RepeatButton Command="nud:NumericUpDown.IncreaseCommand" 
+              <RepeatButton Command="lib:NumericUpDown.IncreaseCommand" 
                             Grid.Column="1" Grid.Row="0"
                             Style="{StaticResource TopButton}"/>
-              <RepeatButton Command="nud:NumericUpDown.DecreaseCommand" 
+              <RepeatButton Command="lib:NumericUpDown.DecreaseCommand" 
                             Grid.Column="1" Grid.Row="1"
                             Style="{StaticResource BottomButton}"/>
 
