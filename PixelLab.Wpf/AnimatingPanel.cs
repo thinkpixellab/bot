@@ -40,6 +40,10 @@ namespace PixelLab.Wpf {
 
     #endregion
 
+    protected virtual Point ProcessNewChild(UIElement child, Rect providedBounds) {
+      return providedBounds.Location;
+    }
+
     protected void ArrangeChild(UIElement child, Rect bounds) {
       m_listener.StartListening();
 
@@ -49,16 +53,14 @@ namespace PixelLab.Wpf {
         child.SetValue(DataProperty, data);
         Debug.Assert(child.RenderTransform == Transform.Identity);
         child.RenderTransform = data.Transform;
+
+        data.Current = ProcessNewChild(child, bounds);
       }
       Debug.Assert(child.RenderTransform == data.Transform);
 
       //set the location attached DP
-      data.Target = bounds;
+      data.Target = bounds.Location;
 
-      if (!data.IsProcessed) { // first time I've seen this...
-        data.IsProcessed = true;
-        data.Current = bounds;
-      }
       child.Arrange(bounds);
     }
 
@@ -89,20 +91,20 @@ namespace PixelLab.Wpf {
         Debug.Assert(dampening > 0 && dampening < 1);
         Debug.Assert(attractionFactor > 0 && !double.IsInfinity(attractionFactor));
 
-        attractionFactor *= 1 + (variation * data.Random - .5);
+        attractionFactor *= 1 + (variation * data.RandomSeed - .5);
 
         Point newLocation;
         Vector newVelocity;
 
         bool anythingChanged =
-            GeoHelper.Animate(data.Current.TopLeft, data.LocationVelocity, data.Target.TopLeft,
+            GeoHelper.Animate(data.Current, data.LocationVelocity, data.Target,
                 attractionFactor, dampening, c_terminalVelocity, c_diff, c_diff,
                 out newLocation, out newVelocity);
 
-        data.Current = new Rect(newLocation, data.Target.Size);
+        data.Current = newLocation;
         data.LocationVelocity = newVelocity;
 
-        var transformVector = data.Current.TopLeft - data.Target.TopLeft;
+        var transformVector = data.Current - data.Target;
         data.Transform.SetToVector(transformVector);
 
         return anythingChanged;
@@ -203,11 +205,10 @@ namespace PixelLab.Wpf {
     private const double c_terminalVelocity = 10000;
 
     private class AnimatingPanelItemData {
-      public Rect Target;
-      public Rect Current;
+      public Point Target;
+      public Point Current;
       public Vector LocationVelocity;
-      public bool IsProcessed;
-      public readonly double Random = Util.Rnd.NextDouble();
+      public readonly double RandomSeed = Util.Rnd.NextDouble();
       public readonly TranslateTransform Transform = new TranslateTransform();
     }
   }

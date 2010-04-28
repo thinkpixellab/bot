@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media.Animation;
 using PixelLab.Common;
 
 namespace PixelLab.Wpf {
@@ -89,7 +90,26 @@ namespace PixelLab.Wpf {
 
         ArrangeChild(Children[i], new Rect(newOffset, theChildSize));
       }
+
+      m_arrangedOnce = true;
       return finalSize;
+    }
+      
+    protected override Point ProcessNewChild(UIElement child, Rect providedBounds) {
+      var startLocation = providedBounds.Location;
+      if (m_arrangedOnce) {
+        if (m_itemOpacityAnimation == null) {
+          m_itemOpacityAnimation = new DoubleAnimation() {
+            From = 0,
+            Duration = new Duration(TimeSpan.FromSeconds(.5))
+          };
+          m_itemOpacityAnimation.Freeze();
+        }
+
+        child.BeginAnimation(UIElement.OpacityProperty, m_itemOpacityAnimation);
+        startLocation -= new Vector(providedBounds.Width, 0);
+      }
+      return startLocation;
     }
 
     #endregion
@@ -147,6 +167,8 @@ namespace PixelLab.Wpf {
     #endregion
 
     private bool m_appliedTemplate;
+    private bool m_arrangedOnce;
+    private DoubleAnimation m_itemOpacityAnimation;
 
     #endregion
 
