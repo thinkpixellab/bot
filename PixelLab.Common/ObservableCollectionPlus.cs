@@ -8,7 +8,7 @@ using System.Linq;
 namespace PixelLab.Common {
   public class ObservableCollectionPlus<T> : ObservableCollection<T> {
     public ObservableCollectionPlus() : this(Enumerable.Empty<T>()) { }
-#if SL3
+#if WP7
     public ObservableCollectionPlus(IEnumerable<T> collection) {
       m_roCollection = new ReadOnlyObservableCollection<T>(this);
       m_lock = new WrappedLock(BeforeMultiUpdate, unlock);

@@ -240,7 +240,7 @@ namespace PixelLab.Common {
             return exception is OutOfMemoryException ||
                     exception is StackOverflowException ||
                     exception is ThreadAbortException
-#if !SL3
+#if !WP7
                     ||exception is SEHException
 #endif
 ;

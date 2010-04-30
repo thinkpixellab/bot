@@ -64,7 +64,7 @@ namespace PixelLab.Common {
       }
     }
 
-#if !SL3
+#if !WP7
     public void WireParentLoadedUnloaded(FrameworkElement parent) {
       requireAccessAndNotDisposed();
       Util.RequireNotNull(parent, "parent");
