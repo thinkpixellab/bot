@@ -54,9 +54,7 @@ namespace PixelLab.Common {
         m_dropShadowBlurEffect = new BlurEffect() { Radius = 20 };
 
         m_dropShadow.Effect = m_dropShadowBlurEffect;
-#if SL3
         m_dropShadow.CacheMode = new BitmapCache();
-#endif
         m_dropShadow.RenderTransform = m_pageTransformGroup;
         m_dropShadow.Width = m_pageSize.Width;
         m_dropShadow.Height = m_pageSize.Height;
