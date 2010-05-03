@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.Common_WPF4", "Pix
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.Wpf.Demo_WPF4", "PixelLab.Wpf.Demo\PixelLab.Wpf.Demo_WPF4.csproj", "{8D131626-B130-429D-A6F3-BB7D83A58F75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WriteableBitmapEx", "WriteableBitmapEx\WriteableBitmapEx.csproj", "{255CC1F7-0442-4B32-A517-DF69B958382C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.SL.Demo", "PixelLab.SL.Demo\PixelLab.SL.Demo.csproj", "{966B0BD5-F6EE-42E9-AD48-4864C456F204}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.SL.Demo.Web", "PixelLab.SL.Demo.Web\PixelLab.SL.Demo.Web.csproj", "{8BEAB69D-0C7C-46E8-9B75-7073603107C4}"
@@ -39,10 +37,6 @@ Global
 		{8D131626-B130-429D-A6F3-BB7D83A58F75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D131626-B130-429D-A6F3-BB7D83A58F75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D131626-B130-429D-A6F3-BB7D83A58F75}.Release|Any CPU.Build.0 = Release|Any CPU
-		{255CC1F7-0442-4B32-A517-DF69B958382C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{255CC1F7-0442-4B32-A517-DF69B958382C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{255CC1F7-0442-4B32-A517-DF69B958382C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{255CC1F7-0442-4B32-A517-DF69B958382C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{966B0BD5-F6EE-42E9-AD48-4864C456F204}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{966B0BD5-F6EE-42E9-AD48-4864C456F204}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{966B0BD5-F6EE-42E9-AD48-4864C456F204}.Release|Any CPU.ActiveCfg = Release|Any CPU

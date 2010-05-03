@@ -93,10 +93,6 @@
       <Project>{74445E4D-56D4-40F5-A9FD-3793A014E76E}</Project>
       <Name>PixelLab.SL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WriteableBitmapEx\WriteableBitmapEx.csproj">
-      <Project>{255CC1F7-0442-4B32-A517-DF69B958382C}</Project>
-      <Name>WriteableBitmapEx</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="..\PixelLab.Wpf.Demo\logo.png">
