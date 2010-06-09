@@ -40,7 +40,7 @@ namespace PixelLab.Common {
     ///     If <paramref name="condition"/> is false, throw an empty <see cref="InvalidOperationException"/>.
     /// </summary>
     /// <param name="condition">The 'truth' to evaluate.</param>
-    [DebuggerStepThrough, Obsolete("Should use Contract.Requires.")]
+    [DebuggerStepThrough]
     public static void Require(bool condition) {
       if (!condition) {
         throw new InvalidOperationException();
@@ -56,7 +56,7 @@ namespace PixelLab.Common {
     ///     The <see cref="Exception.Message"/> if 
     ///     <paramref name="condition"/> is false.
     /// </param>
-    [DebuggerStepThrough, Obsolete("Should use Contract.Requires.")]
+    [DebuggerStepThrough]
     public static void Require(bool condition, string message) {
       Contract.Requires(!string.IsNullOrWhiteSpace(message));
       Contract.Requires(!string.IsNullOrWhiteSpace(message));
@@ -73,7 +73,7 @@ namespace PixelLab.Common {
     /// <param name="exception">
     ///     The <see cref="Exception"/> to throw if <paramref name="condition"/> is false.
     /// </param>
-    [DebuggerStepThrough, Obsolete("Should use Contract.Requires.")]
+    [DebuggerStepThrough]
     public static void Require(bool condition, Exception exception) {
       Contract.Requires(exception != null);
       if (!condition) {
@@ -89,7 +89,7 @@ namespace PixelLab.Common {
     /// </summary>
     /// <param name="stringParameter">The object to test for null and empty.</param>
     /// <param name="parameterName">The string for the ArgumentException parameter, if thrown.</param>
-    [DebuggerStepThrough, Obsolete("Should use Contract.Requires.")]
+    [DebuggerStepThrough]
     public static void RequireNotNullOrEmpty(string stringParameter, string parameterName) {
       if (stringParameter == null) {
         throw new ArgumentNullException(parameterName);
@@ -105,7 +105,7 @@ namespace PixelLab.Common {
     /// </summary>
     /// <param name="obj">The object to test for null.</param>
     /// <param name="parameterName">The string for the ArgumentNullException parameter, if thrown.</param>
-    [DebuggerStepThrough, Obsolete("Should use Contract.Requires.")]
+    [DebuggerStepThrough]
     public static void RequireNotNull(object obj, string parameterName) {
       if (obj == null) {
         throw new ArgumentNullException(parameterName);
@@ -117,7 +117,7 @@ namespace PixelLab.Common {
     /// </summary>
     /// <param name="truth">The value assumed to be true.</param>
     /// <param name="parameterName">The string for <see cref="ArgumentException"/>, if thrown.</param>
-    [DebuggerStepThrough, Obsolete("Should use Contract.Requires.")]
+    [DebuggerStepThrough]
     public static void RequireArgument(bool truth, string parameterName) {
       Contract.Requires(!string.IsNullOrWhiteSpace(parameterName));
 
@@ -132,7 +132,7 @@ namespace PixelLab.Common {
     /// <param name="truth">The value assumed to be true.</param>
     /// <param name="paramName">The paramName for the <see cref="ArgumentException"/>, if thrown.</param>
     /// <param name="message">The message for <see cref="ArgumentException"/>, if thrown.</param>
-    [DebuggerStepThrough, Obsolete("Should use Contract.Requires.")]
+    [DebuggerStepThrough]
     public static void RequireArgument(bool truth, string paramName, string message) {
       Contract.Requires(!string.IsNullOrWhiteSpace(paramName));
       Contract.Requires(!string.IsNullOrWhiteSpace(message));
@@ -147,7 +147,7 @@ namespace PixelLab.Common {
     /// </summary>
     /// <param name="truth">The value assumed to be true.</param>
     /// <param name="parameterName">The string for <see cref="ArgumentOutOfRangeException"/>, if thrown.</param>
-    [DebuggerStepThrough, Obsolete("Should use Contract.Requires.")]
+    [DebuggerStepThrough]
     public static void RequireArgumentRange(bool truth, string parameterName) {
       Contract.Requires(!string.IsNullOrWhiteSpace(parameterName));
       if (!truth) {
@@ -161,7 +161,7 @@ namespace PixelLab.Common {
     /// <param name="truth">The value assumed to be true.</param>
     /// <param name="paramName">The paramName for the <see cref="ArgumentOutOfRangeException"/>, if thrown.</param>
     /// <param name="message">The message for <see cref="ArgumentOutOfRangeException"/>, if thrown.</param>
-    [DebuggerStepThrough, Obsolete("Should use Contract.Requires.")]
+    [DebuggerStepThrough]
     public static void RequireArgumentRange(bool truth, string paramName, string message) {
       Contract.Requires(!string.IsNullOrWhiteSpace(paramName));
       Contract.Requires(!string.IsNullOrWhiteSpace(message));
