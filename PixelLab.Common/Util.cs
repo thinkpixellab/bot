@@ -134,8 +134,8 @@ namespace PixelLab.Common {
     /// <param name="message">The message for <see cref="ArgumentException"/>, if thrown.</param>
     [DebuggerStepThrough]
     public static void RequireArgument(bool truth, string paramName, string message) {
-      Contract.Requires(!string.IsNullOrWhiteSpace(paramName));
-      Contract.Requires(!string.IsNullOrWhiteSpace(message));
+      Contract.Assume(!string.IsNullOrWhiteSpace(paramName));
+      Contract.Assume(!string.IsNullOrWhiteSpace(message));
 
       if (!truth) {
         throw new ArgumentException(message, paramName);

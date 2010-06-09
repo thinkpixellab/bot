@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace PixelLab.Common {
 
@@ -24,6 +25,7 @@ namespace PixelLab.Common {
     }
 
     public IDisposable GetLock(T param) {
+      Contract.Ensures(Contract.Result<IDisposable>() != null);
       if (m_stack.Count == 0) {
         m_actionOnLock(param);
       }
