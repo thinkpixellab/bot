@@ -130,12 +130,14 @@ namespace PixelLab.Common {
     public static Vector Subtract(this Point point, Point other) {
       Contract.Requires(point.IsValid());
       Contract.Requires(other.IsValid());
+      Contract.Ensures(Contract.Result<Vector>().IsValid());
       return new Vector(point.X - other.X, point.Y - other.Y);
     }
 
     public static Vector Subtract(this Size size, Size other) {
       Contract.Requires(size.IsValid());
       Contract.Requires(other.IsValid());
+      Contract.Ensures(Contract.Result<Vector>().IsValid());
       return new Vector(size.Width - other.Width, size.Height - other.Height);
     }
 
