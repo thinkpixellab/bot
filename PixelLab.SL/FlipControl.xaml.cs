@@ -2,6 +2,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -21,13 +22,13 @@ namespace PixelLab.SL {
     }
 
     public void SetChild(FrameworkElement value) {
-      Util.RequireNotNull(value, "value");
+      Contract.Requires(value != null);
       m_contentPresenter.Content = m_currentContent = value;
     }
 
     public void Config(Size pageSize) {
-      Util.Require(m_flipper == null);
-      Util.RequireArgument(pageSize.IsValid(), "size");
+      Contract.Requires(m_flipper == null);
+      Contract.Requires(pageSize.IsValid());
 
       PageWidth = pageSize.Width;
       PageHeight = pageSize.Height;

@@ -23,14 +23,15 @@ THE SOFTWARE.
 */
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Windows.Data;
 using System.Windows.Media;
 
 namespace PixelLab.Common {
   public class HueConverter : IValueConverter {
     public Color Convert(int index, int count) {
-      Util.RequireArgumentRange(index >= 0, "index");
-      Util.RequireArgumentRange(count > 0, "count");
+      Contract.Requires(index >= 0);
+      Contract.Requires(count > 0);
 
       index = index % count;
 

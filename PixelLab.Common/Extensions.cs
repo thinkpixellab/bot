@@ -26,6 +26,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace PixelLab.Common {
@@ -42,8 +43,8 @@ namespace PixelLab.Common {
       source.ForEach(item => action(item, i++));
     }
 
-    public static IEnumerable<TTarget> CountSelect<TSource,TTarget>(this IEnumerable<TSource> source, Func<TSource,int,TTarget> func){
-      int i =0;
+    public static IEnumerable<TTarget> CountSelect<TSource, TTarget>(this IEnumerable<TSource> source, Func<TSource, int, TTarget> func) {
+      int i = 0;
       foreach (var item in source) {
         yield return func(item, i++);
       }
@@ -55,7 +56,7 @@ namespace PixelLab.Common {
     /// </summary>
     /// <exception cref="ArgumentNullException">if <param name="source"/> is null.</exception>
     public static bool AllUnique<T>(this IList<T> source) where T : IEquatable<T> {
-      Util.RequireNotNull(source, "source");
+      Contract.Requires(source != null);
 
       EqualityComparer<T> comparer = EqualityComparer<T>.Default;
 
@@ -67,8 +68,8 @@ namespace PixelLab.Common {
     ///     true for every pair of items in <paramref name="source"/>.
     /// </summary>
     public static bool TrueForAllPairs<T>(this IList<T> source, Func<T, T, bool> compare) {
-      Util.RequireNotNull(source, "source");
-      Util.RequireNotNull(compare, "compare");
+      Contract.Requires(source != null);
+      Contract.Requires(compare != null);
 
       for (int i = 0; i < source.Count; i++) {
         for (int j = i + 1; j < source.Count; j++) {
@@ -97,8 +98,8 @@ namespace PixelLab.Common {
     /// </para>
     /// </remarks>
     public static bool TrueForAllAdjacentPairs<T>(this IList<T> source, Func<T, T, bool> compare) {
-      Util.RequireNotNull(source, "source");
-      Util.RequireNotNull(compare, "compare");
+      Contract.Requires(source != null);
+      Contract.Requires(compare != null);
 
       for (int i = 0; i < (source.Count - 1); i++) {
         if (!compare(source[i], source[i + 1])) {
@@ -115,7 +116,7 @@ namespace PixelLab.Common {
     /// </summary>
     /// <exception cref="ArgumentNullException">if <param name="source"/> is null.</exception>
     public static bool AllNotNullOrEmpty(this IEnumerable<string> source) {
-      Util.RequireNotNull(source, "source");
+      Contract.Requires(source != null);
       return source.All(item => !string.IsNullOrEmpty(item));
     }
 
@@ -125,8 +126,8 @@ namespace PixelLab.Common {
     /// </summary>
     /// <exception cref="ArgumentNullException">if <param name="source"/> or <param name="set"/> are null.</exception>
     public static bool AllExistIn<TSource>(this IEnumerable<TSource> source, IEnumerable<TSource> set) {
-      Util.RequireNotNull(source, "source");
-      Util.RequireNotNull(set, "set");
+      Contract.Requires(source != null);
+      Contract.Requires(set != null);
 
       return source.All(item => set.Contains(item));
     }
@@ -147,7 +148,7 @@ namespace PixelLab.Common {
     /// </para>    
     /// </remarks>
     public static bool IsEmpty<TSource>(this IEnumerable<TSource> source) {
-      Util.RequireNotNull(source, "source");
+      Contract.Requires(source != null);
 
       if (source is ICollection<TSource>) {
         return ((ICollection<TSource>)source).Count == 0;
@@ -166,8 +167,8 @@ namespace PixelLab.Common {
     /// <param name="source">The source enumerable.</param>
     /// <param name="predicate">The function to evaluate on each element.</param>
     public static int IndexOf<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate) {
-      Util.RequireNotNull(source, "source");
-      Util.RequireNotNull(predicate, "predicate");
+      Contract.Requires(source != null);
+      Contract.Requires(predicate != null);
 
       int index = 0;
       foreach (TSource item in source) {
@@ -189,7 +190,7 @@ namespace PixelLab.Common {
     ///     don't mutate.
     /// </remarks>
     public static ReadOnlyCollection<TSource> ToReadOnlyCollection<TSource>(this IEnumerable<TSource> source) {
-      Util.RequireNotNull(source, "source");
+      Contract.Requires(source != null);
       return new ReadOnlyCollection<TSource>(source.ToArray());
     }
 
@@ -201,8 +202,8 @@ namespace PixelLab.Common {
     /// <param name="source">The sequence to which is applied the specified <paramref name="action"/>.</param>
     /// <param name="action">The action applied to each element in <paramref name="source"/>.</param>
     public static void ForEach<TSource>(this IEnumerable<TSource> source, Action<TSource> action) {
-      Util.RequireNotNull(source, "source");
-      Util.RequireNotNull(action, "action");
+      Contract.Requires(source != null);
+      Contract.Requires(action != null);
 
       foreach (TSource item in source) {
         action(item);
@@ -217,8 +218,8 @@ namespace PixelLab.Common {
     /// <returns>The last element.</returns>
     /// <remarks><paramref name="source"/> must have at least one element and allow changes.</remarks>
     public static TSource RemoveLast<TSource>(this IList<TSource> source) {
-      Util.RequireNotNull(source, "source");
-      Util.RequireArgument(source.Count > 0, "source", "source must have at least one element");
+      Contract.Requires(source != null);
+      Contract.Requires(source.Count > 0);
       TSource item = source[source.Count - 1];
       source.RemoveAt(source.Count - 1);
       return item;
@@ -247,8 +248,8 @@ namespace PixelLab.Common {
     public static IEnumerable<TSource> SelectRecursive<TSource>(
         this IEnumerable<TSource> source,
         Func<TSource, IEnumerable<TSource>> recursiveSelector) {
-      Util.RequireNotNull(source, "source");
-      Util.RequireNotNull(recursiveSelector, "recursiveSelector");
+      Contract.Requires(source != null);
+      Contract.Requires(recursiveSelector != null);
 
       Stack<IEnumerator<TSource>> stack = new Stack<IEnumerator<TSource>>();
       stack.Push(source.GetEnumerator());
@@ -281,8 +282,8 @@ namespace PixelLab.Common {
     }
 
     public static T Random<T>(this IList<T> source) {
-      Util.RequireNotNull(source, "source");
-      Util.RequireArgument(source.Count > 0, "source", "source must have at least one item");
+      Contract.Requires(source != null);
+      Contract.Requires(source.Count > 0);
       return source[Util.Rnd.Next(source.Count)];
     }
 
@@ -300,7 +301,7 @@ namespace PixelLab.Common {
 
     private class FuncComparer<T> : IComparer<T> {
       public FuncComparer(Func<T, T, int> func) {
-        Util.RequireNotNull(func, "func");
+        Contract.Requires(func != null);
         m_func = func;
       }
 
@@ -313,7 +314,7 @@ namespace PixelLab.Common {
 
     private class FuncEqualityComparer<T> : IEqualityComparer<T> {
       public FuncEqualityComparer(Func<T, T, bool> func) {
-        Util.RequireNotNull(func, "func");
+        Contract.Requires(func != null);
         m_func = func;
       }
       public bool Equals(T x, T y) {

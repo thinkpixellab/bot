@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Windows.Media;
 
 namespace PixelLab.Common {
   public static class ColorHelper {
     public static Color HsbToRgb(float hue, float saturation, float brightness) {
-      Util.RequireArgumentRange(hue >= 0f && hue <= 1f, "hue");
-      Util.RequireArgumentRange(saturation >= 0f && saturation <= 1f, "saturation");
-      Util.RequireArgumentRange(brightness >= 0f && brightness <= 1f, "brightness");
+      Contract.Requires(hue >= 0f && hue <= 1f);
+      Contract.Requires(saturation >= 0f && saturation <= 1f);
+      Contract.Requires(brightness >= 0f && brightness <= 1f);
 
       float red = 0, green = 0, blue = 0;
 

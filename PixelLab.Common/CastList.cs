@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace PixelLab.Common {
   /// <summary>
@@ -22,8 +23,7 @@ namespace PixelLab.Common {
     /// </summary>
     /// <param name="from">The source collection.</param>
     public CastList(IList<TFrom> from) {
-      Util.RequireNotNull(from, "from");
-
+      Contract.Requires(from != null);
       m_source = from;
     }
 

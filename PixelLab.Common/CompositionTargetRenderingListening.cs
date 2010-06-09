@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Windows;
 using System.Windows.Media;
 
@@ -66,8 +67,8 @@ namespace PixelLab.Common {
 
 #if !WP7
     public void WireParentLoadedUnloaded(FrameworkElement parent) {
+      Contract.Requires(parent != null);
       requireAccessAndNotDisposed();
-      Util.RequireNotNull(parent, "parent");
 
       parent.Loaded += delegate(object sender, RoutedEventArgs e) {
         this.StartListening();

@@ -1,21 +1,27 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Windows;
 
 namespace PixelLab.Common {
   public static class GeoHelper {
+
+    [Pure]
     public static bool IsValid(this double value) {
       return !double.IsInfinity(value) && !double.IsNaN(value);
     }
 
+    [Pure]
     public static bool IsValid(this Point value) {
       return value.X.IsValid() && value.Y.IsValid();
     }
 
+    [Pure]
     public static bool IsValid(this Size value) {
       return value.Width.IsValid() && value.Height.IsValid();
     }
 
+    [Pure]
     public static bool IsValid(this Vector value) {
       return value.X.IsValid() && value.Y.IsValid();
     }
@@ -27,8 +33,8 @@ namespace PixelLab.Common {
     /// <param name="target">The target size.</param>
     /// <param name="size2">The source size.</param>
     public static double ScaleToFit(Size target, Size source) {
-      Util.RequireArgument(target.IsValid(), "target");
-      Util.RequireArgument(source.IsValid(), "source");
+      Contract.Requires(target.IsValid());
+      Contract.Requires(source.IsValid());
 
       double targetHWR = target.Height / target.Width;
       double sourceHWR = source.Height / source.Width;
@@ -122,14 +128,14 @@ namespace PixelLab.Common {
     }
 
     public static Vector Subtract(this Point point, Point other) {
-      Util.RequireArgument(point.IsValid(), "point");
-      Util.RequireArgument(other.IsValid(), "other");
+      Contract.Requires(point.IsValid());
+      Contract.Requires(other.IsValid());
       return new Vector(point.X - other.X, point.Y - other.Y);
     }
 
     public static Vector Subtract(this Size size, Size other) {
-      Util.RequireArgument(size.IsValid(), "size");
-      Util.RequireArgument(other.IsValid(), "other");
+      Contract.Requires(size.IsValid());
+      Contract.Requires(other.IsValid());
       return new Vector(size.Width - other.Width, size.Height - other.Height);
     }
 
@@ -142,7 +148,7 @@ namespace PixelLab.Common {
     }
 
     public static Rect Expand(this Rect target, double amount) {
-      Util.RequireArgumentRange(amount >= 0, "amount", "amount must be positive");
+      Contract.Requires(amount >= 0);
       return new Rect(target.X - amount, target.Y - amount, target.Width + 2 * amount, target.Height + 2 * amount);
     }
 
@@ -214,8 +220,8 @@ namespace PixelLab.Common {
     }
 
     public static Vector GetVectorFromAngle(double angleRadians, double length) {
-      Util.RequireArgument(angleRadians.IsValid(), "angleRadians");
-      Util.RequireArgument(length.IsValid(), "length");
+      Contract.Requires(angleRadians.IsValid());
+      Contract.Requires(length.IsValid());
 
       double x = Math.Cos(angleRadians) * length;
       double y = -Math.Sin(angleRadians) * length;

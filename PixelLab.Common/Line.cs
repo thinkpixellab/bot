@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Windows;
+using System.Diagnostics.Contracts;
 
 namespace PixelLab.Common {
   public struct Line : IEquatable<Line> {
     public Line(Point p1, Point p2) {
-      Util.RequireArgument(p1.IsValid(), "p1");
-      Util.RequireArgument(p2.IsValid(), "p2");
+      Contract.Requires(p1.IsValid());
+      Contract.Requires(p2.IsValid());
 
       m_p1 = p1;
       m_p2 = p2;
@@ -14,7 +15,7 @@ namespace PixelLab.Common {
     public Point P1 {
       get { return m_p1; }
       set {
-        Util.RequireArgument(value.IsValid(), "value");
+        Contract.Requires(value.IsValid());
         m_p1 = value;
       }
     }
@@ -22,7 +23,7 @@ namespace PixelLab.Common {
     public Point P2 {
       get { return m_p2; }
       set {
-        Util.RequireArgument(value.IsValid(), "value");
+        Contract.Requires(value.IsValid());
         m_p2 = value;
       }
     }

@@ -313,10 +313,6 @@ namespace PixelLab.Common {
     /// <param name="index">The zero-based index in array at which copying begins.</param>
     //--------------------------------------------------------------------
     public virtual void CopyTo(Array array, int index) {
-      Util.RequireNotNull(array, "array");
-      Util.RequireArgument(array.Rank == 1, "array", "Array must be 1-dimentional.");
-      Util.RequireArgumentRange(array.Length >= (this.Count + index), "index");
-
       for (int i = 0; i < this.Count; i++) {
         array.SetValue(this[i], index + i);
       }

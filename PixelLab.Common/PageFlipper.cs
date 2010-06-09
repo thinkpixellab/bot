@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
@@ -8,7 +9,7 @@ namespace PixelLab.Common {
 
     public PageFlipper(Size pageSize, UIElement hotCorner, UIElement pageHolder, FrameworkElement curlShadow, FrameworkElement dropShadow) {
 
-      Util.RequireArgument(pageSize.IsValid(), "pageSize");
+      Contract.Requires(pageSize.IsValid());
       m_pageSize = pageSize;
 
       m_hotCorner = hotCorner;

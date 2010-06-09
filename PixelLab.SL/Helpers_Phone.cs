@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
-using PixelLab.Common;
 
 namespace PixelLab.SL {
   public static class Helpers {
@@ -19,13 +19,13 @@ namespace PixelLab.SL {
     private static readonly DependencyProperty DataContextChangedHelperActionProperty = DependencyProperty.RegisterAttached("DataContextChangedHelperAction", typeof(Action<object, object>), typeof(Helpers), null);
 
     public static void CopyPixels(this WriteableBitmap source, WriteableBitmap target, int startX, int startY) {
-      Util.RequireNotNull(source, "source");
-      Util.RequireNotNull(target, "target");
-      Util.RequireArgumentRange(startX >= 0, "startX");
-      Util.RequireArgumentRange(startX + target.PixelWidth <= source.PixelWidth, "startX");
+      Contract.Requires(source != null);
+      Contract.Requires(target != null);
+      Contract.Requires(startX >= 0);
+      Contract.Requires(startX + target.PixelWidth <= source.PixelWidth);
 
-      Util.RequireArgumentRange(startY >= 0, "startY");
-      Util.RequireArgumentRange(startY + target.PixelHeight <= source.PixelHeight, "startY");
+      Contract.Requires(startY >= 0);
+      Contract.Requires(startY + target.PixelHeight <= source.PixelHeight);
 
       int targetIndex, sourceIndex;
 

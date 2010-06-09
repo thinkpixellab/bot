@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics.Contracts;
 using System.Windows.Input;
 
 namespace PixelLab.Common {
@@ -35,15 +36,17 @@ namespace PixelLab.Common {
   /// </remarks>
   public class DemoCollection<T> : ReadOnlyObservableCollection<T> {
     public static DemoCollection<T> Create(IEnumerable<T> source, int initialCount, int minCount, int maxCount) {
-      Util.RequireNotNull(source, "source");
-      Util.RequireArgumentRange(initialCount >= 0, "initialCount");
-      Util.RequireArgumentRange(minCount >= 0, "minCount");
-      Util.RequireArgumentRange(minCount <= initialCount, "minCount");
-      Util.RequireArgumentRange(initialCount <= maxCount, "maxCount");
-
+      Contract.Requires(source != null);
+      Contract.Requires(initialCount >= 0);
+      Contract.Requires(minCount >= 0);
+      Contract.Requires(minCount <= initialCount);
+      Contract.Requires(initialCount <= maxCount);
+      
       var sourceItems = source.ToReadOnlyCollection();
-
-      Util.RequireArgumentRange(sourceItems.Count > 0, "source", "source must have at least 1 item");
+      if (sourceItems.Count == 0) {
+        throw new ArgumentException("source must have at least one item", "source");
+      }
+      Contract.Assume(sourceItems.Count > 0);
 
       var observableCollection = new ObservableCollectionPlus<T>();
 

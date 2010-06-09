@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Windows.Input;
 
 namespace PixelLab.Common {
@@ -36,7 +37,7 @@ namespace PixelLab.Common {
   public class CommandWrapper<T> {
     public CommandWrapper(Action<T> action) : this(action, (param) => true) { }
     public CommandWrapper(Action<T> action, Func<T, bool> canExecute) {
-      Util.RequireNotNull(action, "action");
+      Contract.Requires(action != null);
       m_action = action;
       m_command = new CommandImpl(this);
       m_canExecute = canExecute;

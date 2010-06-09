@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Threading;
 
 namespace PixelLab.Common {
@@ -52,7 +53,7 @@ namespace PixelLab.Common {
     /// </param>
     /// <exception cref="ArgumentNullException">if <paramref name="unlockAction"/> is null.</exception>
     public ActionOnDispose(Action unlockAction) {
-      Util.RequireNotNull(unlockAction, "unlockAction");
+      Contract.Requires(unlockAction != null);
 
       m_unlockDelegate = unlockAction;
     }
