@@ -155,18 +155,22 @@ namespace PixelLab.Common {
     }
 
     public static Point TopLeft(this Rect rect) {
+      Contract.Ensures(Contract.Result<Point>().IsValid());
       return new Point(rect.Left, rect.Top);
     }
 
     public static Point BottomRight(this Rect rect) {
+      Contract.Ensures(Contract.Result<Point>().IsValid());
       return new Point(rect.Right, rect.Bottom);
     }
 
     public static Point BottomLeft(this Rect rect) {
+      Contract.Ensures(Contract.Result<Point>().IsValid());
       return new Point(rect.Left, rect.Bottom);
     }
 
     public static Point TopRight(this Rect rect) {
+      Contract.Ensures(Contract.Result<Point>().IsValid());
       return new Point(rect.Right, rect.Top);
     }
 
