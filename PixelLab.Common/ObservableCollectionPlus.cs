@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace PixelLab.Common {
@@ -27,7 +28,12 @@ namespace PixelLab.Common {
       return m_lock.GetLock();
     }
 
-    public ReadOnlyObservableCollection<T> ReadOnly { get { return m_roCollection; } }
+    public ReadOnlyObservableCollection<T> ReadOnly {
+      get {
+        Contract.Ensures(Contract.Result<ReadOnlyObservableCollection<T>>() != null);
+        return m_roCollection;
+      }
+    }
 
 #if SILVERLIGHT
     public void Move(int oldIndex, int newIndex) {
