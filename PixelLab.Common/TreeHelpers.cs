@@ -60,17 +60,15 @@ namespace PixelLab.Common {
           // Walk the tree until we get to the ItemsPanel, once we get there we know 
           // that the immediate child of the parent is going to be the ItemContainer
 
-          UIElement parent = VisualTreeHelper.GetParent(child) as UIElement;
-
-          while (parent != null) {
+          UIElement parent;
+          do {
+            parent = VisualTreeHelper.GetParent(child) as UIElement;
             if (parent == panel) {
               return child;
             }
-            else {
-              child = parent;
-              parent = VisualTreeHelper.GetParent(child) as UIElement;
-            }
+            child = parent;
           }
+          while (parent != null);
         }
       }
       return null;
