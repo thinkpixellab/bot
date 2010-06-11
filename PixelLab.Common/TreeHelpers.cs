@@ -1,22 +1,18 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace PixelLab.Common {
   public static class TreeHelpers {
-    // TODO: make this non-recursive, to impress the kids
+
     public static T FindChild<T>(DependencyObject obj) where T : DependencyObject {
-      if (obj as T != null) return obj as T;
-
-      int childCount = VisualTreeHelper.GetChildrenCount(obj);
-      for (int i = 0; i < childCount; i++) {
-        DependencyObject child = VisualTreeHelper.GetChild(obj, i);
-
-        T foundChild = FindChild<T>(child);
-        if (foundChild != null) return foundChild;
-      }
-
-      return null;
+      Contract.Requires(obj != null);
+      return (T)obj.GetChildren()
+        .SelectRecursive(element => element.GetChildren())
+        .Where(element => element is T)
+        .FirstOrDefault();
     }
 
     public static T FindParent<T>(DependencyObject obj) where T : DependencyObject {
@@ -40,6 +36,15 @@ namespace PixelLab.Common {
         }
       } while (element != null);
       return false;
+    }
+
+    public static IEnumerable<DependencyObject> GetChildren(this DependencyObject source) {
+      Contract.Requires(source != null);
+      int count = VisualTreeHelper.GetChildrenCount(source);
+
+      for (int i = 0; i < count; i++) {
+        yield return VisualTreeHelper.GetChild(source, i);
+      }
     }
 
     public static UIElement GetItemContainerFromChildElement(ItemsControl itemsControl, UIElement child) {
