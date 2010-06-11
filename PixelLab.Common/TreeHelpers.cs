@@ -8,12 +8,16 @@ using System.Windows.Media;
 namespace PixelLab.Common {
   public static class TreeHelpers {
 
+    public static IEnumerable<T> FindChildren<T>(DependencyObject obj) where T : DependencyObject {
+      Contract.Requires(obj != null);
+      return obj.GetChildren()
+        .SelectRecursive(element => element.GetChildren())
+        .OfType<T>();
+    }
+
     public static T FindChild<T>(DependencyObject obj) where T : DependencyObject {
       Contract.Requires(obj != null);
-      return (T)obj.GetChildren()
-        .SelectRecursive(element => element.GetChildren())
-        .Where(element => element is T)
-        .FirstOrDefault();
+      return FindChildren<T>(obj).FirstOrDefault();
     }
 
     public static T FindParent<T>(DependencyObject obj) where T : DependencyObject {
@@ -27,16 +31,20 @@ namespace PixelLab.Common {
       return null;
     }
 
-    public static bool HasAncestor(this DependencyObject element, DependencyObject ancestor) {
+    /// <remarks>Includes element.</remarks>
+    public static IEnumerable<DependencyObject> GetAncestors(this DependencyObject element) {
+      Contract.Requires(element != null);
       do {
-        if (element == ancestor) {
-          return true;
-        }
-        else {
-          element = VisualTreeHelper.GetParent(element);
-        }
+        yield return element;
+        element = VisualTreeHelper.GetParent(element);
       } while (element != null);
-      return false;
+    }
+
+    public static bool HasAncestor(this DependencyObject element, DependencyObject ancestor) {
+      return element
+        .GetAncestors()
+        .Where(e => e == ancestor)
+        .Any();
     }
 
     public static IEnumerable<DependencyObject> GetChildren(this DependencyObject source) {
