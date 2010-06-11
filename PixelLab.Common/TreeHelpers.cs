@@ -19,18 +19,15 @@ namespace PixelLab.Common {
       return null;
     }
 
-    // TODO: make this non-recursive, to impress the kids
     public static T FindParent<T>(DependencyObject obj) where T : DependencyObject {
-      if (obj as T != null) return obj as T;
+      while (obj != null) {
+        obj = VisualTreeHelper.GetParent(obj);
 
-      DependencyObject parent = VisualTreeHelper.GetParent(obj);
-
-      if (parent != null) {
-        return FindParent<T>(parent);
+        if (obj is T) {
+          return (T)obj;
+        }
       }
-      else {
-        return null;
-      }
+      return null;
     }
 
     public static bool HasAncestor(this DependencyObject element, DependencyObject ancestor) {
