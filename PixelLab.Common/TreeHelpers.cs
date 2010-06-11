@@ -49,24 +49,27 @@ namespace PixelLab.Common {
     }
 
     public static UIElement GetItemContainerFromChildElement(ItemsControl itemsControl, UIElement child) {
+      Contract.Requires(itemsControl != null);
+      Contract.Requires(child != null);
+
       if (itemsControl.Items.Count > 0) {
         // find the ItemsPanel
-        Panel p = VisualTreeHelper.GetParent(itemsControl.ItemContainerGenerator.ContainerFromIndex(0)) as Panel;
+        Panel panel = VisualTreeHelper.GetParent(itemsControl.ItemContainerGenerator.ContainerFromIndex(0)) as Panel;
 
-        if (p != null) {
+        if (panel != null) {
           // Walk the tree until we get to the ItemsPanel, once we get there we know 
           // that the immediate child of the parent is going to be the ItemContainer
 
-          UIElement element = child;
-          UIElement parent = VisualTreeHelper.GetParent(element) as UIElement;
+          UIElement parent = VisualTreeHelper.GetParent(child) as UIElement;
 
-          // TODO: replace this with a do,while
-          while (true) {
-            if (parent == p) return element;
-            if (parent == null) return parent;
-
-            element = parent;
-            parent = VisualTreeHelper.GetParent(element) as UIElement;
+          while (parent != null) {
+            if (parent == panel) {
+              return child;
+            }
+            else {
+              child = parent;
+              parent = VisualTreeHelper.GetParent(child) as UIElement;
+            }
           }
         }
       }
