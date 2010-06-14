@@ -151,30 +151,36 @@ namespace PixelLab.Common {
 
     public static Rect Expand(this Rect target, double amount) {
       Contract.Requires(amount >= 0);
+      Contract.Requires(!target.IsEmpty);
       return new Rect(target.X - amount, target.Y - amount, target.Width + 2 * amount, target.Height + 2 * amount);
     }
 
     public static Point TopLeft(this Rect rect) {
+      Contract.Requires(!rect.IsEmpty);
       Contract.Ensures(Contract.Result<Point>().IsValid());
       return new Point(rect.Left, rect.Top);
     }
 
     public static Point BottomRight(this Rect rect) {
+      Contract.Requires(!rect.IsEmpty);
       Contract.Ensures(Contract.Result<Point>().IsValid());
       return new Point(rect.Right, rect.Bottom);
     }
 
     public static Point BottomLeft(this Rect rect) {
+      Contract.Requires(!rect.IsEmpty);
       Contract.Ensures(Contract.Result<Point>().IsValid());
       return new Point(rect.Left, rect.Bottom);
     }
 
     public static Point TopRight(this Rect rect) {
+      Contract.Requires(!rect.IsEmpty);
       Contract.Ensures(Contract.Result<Point>().IsValid());
       return new Point(rect.Right, rect.Top);
     }
 
     public static Size Size(this Rect rect) {
+      Contract.Requires(!rect.IsEmpty);
       return new Size(rect.Width, rect.Height);
     }
 
