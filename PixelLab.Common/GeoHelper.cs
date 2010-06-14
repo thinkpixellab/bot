@@ -152,6 +152,7 @@ namespace PixelLab.Common {
     public static Rect Expand(this Rect target, double amount) {
       Contract.Requires(amount >= 0);
       Contract.Requires(!target.IsEmpty);
+      Contract.Ensures(!Contract.Result<Rect>().IsEmpty);
       return new Rect(target.X - amount, target.Y - amount, target.Width + 2 * amount, target.Height + 2 * amount);
     }
 
