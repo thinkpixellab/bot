@@ -34,6 +34,7 @@ namespace PixelLab.Common {
     /// <remarks>Includes element.</remarks>
     public static IEnumerable<DependencyObject> GetAncestors(this DependencyObject element) {
       Contract.Requires(element != null);
+      Contract.Ensures(Contract.Result<IEnumerable<DependencyObject>>() != null);
       do {
         yield return element;
         element = VisualTreeHelper.GetParent(element);
