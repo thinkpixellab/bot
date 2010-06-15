@@ -8,19 +8,19 @@ using System.Windows.Media;
 namespace PixelLab.Common {
   public static class TreeHelpers {
 
-    public static IEnumerable<T> FindChildren<T>(DependencyObject obj) where T : DependencyObject {
+    public static IEnumerable<T> FindChildren<T>(this DependencyObject obj) where T : DependencyObject {
       Contract.Requires(obj != null);
       return obj.GetChildren()
         .SelectRecursive(element => element.GetChildren())
         .OfType<T>();
     }
 
-    public static T FindChild<T>(DependencyObject obj) where T : DependencyObject {
+    public static T FindChild<T>(this DependencyObject obj) where T : DependencyObject {
       Contract.Requires(obj != null);
       return FindChildren<T>(obj).FirstOrDefault();
     }
 
-    public static T FindParent<T>(DependencyObject obj) where T : DependencyObject {
+    public static T FindParent<T>(this DependencyObject obj) where T : DependencyObject {
       while (obj != null) {
         obj = VisualTreeHelper.GetParent(obj);
 
