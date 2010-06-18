@@ -31,15 +31,15 @@ namespace PixelLab.Common {
       }
 
       var g = Guid.NewGuid();
-      m_stack.Add(g);
+      m_stack.Push(g);
       return new ActionOnDispose(() => unlock(g, param));
     }
 
     public bool IsLocked { get { return m_stack.Count > 0; } }
 
     private void unlock(Guid g, T param) {
-      if (m_stack.Count > 0 && m_stack[m_stack.Count - 1] == g) {
-        m_stack.RemoveLast();
+      if (m_stack.Count > 0 && m_stack.Peek() == g) {
+        m_stack.Pop();
 
         if (m_stack.Count == 0) {
           m_actionOnUnlock(param);
@@ -50,8 +50,15 @@ namespace PixelLab.Common {
       }
     }
 
-    readonly List<Guid> m_stack = new List<Guid>();
-    readonly Action<T> m_actionOnUnlock;
-    readonly Action<T> m_actionOnLock;
+    [ContractInvariantMethod]
+    void ObjectInvariant() {
+      Contract.Invariant(m_stack != null);
+      Contract.Invariant(m_actionOnLock != null);
+      Contract.Invariant(m_actionOnUnlock != null);
+    }
+
+    private readonly Stack<Guid> m_stack = new Stack<Guid>();
+    private readonly Action<T> m_actionOnUnlock;
+    private readonly Action<T> m_actionOnLock;
   }
 }

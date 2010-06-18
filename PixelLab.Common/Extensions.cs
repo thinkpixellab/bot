@@ -39,6 +39,9 @@ namespace PixelLab.Common {
     /// Calls the provided action on each item, providing the item and its index into the source.
     /// </summary>
     public static void CountForEach<T>(this IEnumerable<T> source, Action<T, int> action) {
+      Contract.Requires(source != null);
+      Contract.Requires(action != null);
+
       int i = 0;
       source.ForEach(item => action(item, i++));
     }
@@ -191,6 +194,7 @@ namespace PixelLab.Common {
     /// </remarks>
     public static ReadOnlyCollection<TSource> ToReadOnlyCollection<TSource>(this IEnumerable<TSource> source) {
       Contract.Requires(source != null);
+      Contract.Ensures(Contract.Result<ReadOnlyCollection<TSource>>() != null);
       return new ReadOnlyCollection<TSource>(source.ToArray());
     }
 
@@ -276,8 +280,8 @@ namespace PixelLab.Common {
 
     } //*** SelectRecursive
 
-    public static IList<TTo> ToCastList<TFrom, TTo>(this IList<TFrom> source)
-    where TFrom : TTo {
+    public static IList<TTo> ToCastList<TFrom, TTo>(this IList<TFrom> source) where TFrom : TTo {
+      Contract.Requires<ArgumentNullException>(source != null);
       return new CastList<TFrom, TTo>(source);
     }
 
@@ -288,14 +292,18 @@ namespace PixelLab.Common {
     }
 
     public static IEnumerable<T> Distinct<T>(this IEnumerable<T> source, Func<T, T, bool> comparer) {
+      Contract.Requires(source != null);
+      Contract.Requires(comparer != null);
       return source.Distinct(comparer.ToEqualityComparer());
     }
 
     public static IEqualityComparer<T> ToEqualityComparer<T>(this Func<T, T, bool> func) {
+      Contract.Requires(func != null);
       return new FuncEqualityComparer<T>(func);
     }
 
     public static IComparer<T> ToComparer<T>(this Func<T, T, int> compareFunction) {
+      Contract.Requires(compareFunction != null);
       return new FuncComparer<T>(compareFunction);
     }
 
@@ -307,6 +315,11 @@ namespace PixelLab.Common {
 
       public int Compare(T x, T y) {
         return m_func(x, y);
+      }
+
+      [ContractInvariantMethod]
+      void ObjectInvariant() {
+        Contract.Invariant(m_func != null);
       }
 
       private readonly Func<T, T, int> m_func;
@@ -323,6 +336,11 @@ namespace PixelLab.Common {
 
       public int GetHashCode(T obj) {
         return 0; // this is on purpose. Should only use function...not short-cut by hashcode compare
+      }
+
+      [ContractInvariantMethod]
+      void ObjectInvariant() {
+        Contract.Invariant(m_func != null);
       }
 
       private readonly Func<T, T, bool> m_func;

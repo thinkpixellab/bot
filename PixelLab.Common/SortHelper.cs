@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace PixelLab.Common {
 
@@ -40,18 +41,26 @@ namespace PixelLab.Common {
     }*/
 
     public static bool QuickSort<T>(this IList<T> list, Func<T, T, int> comparer) {
+      Contract.Requires(list != null);
+      Contract.Requires(comparer != null);
       return Sort(list, 0, list.Count, comparer.ToComparer());
     }
 
     public static bool QuickSort<T>(this IList<T> list, IComparer<T> comparer) {
+      Contract.Requires(list != null);
+      Contract.Requires(comparer != null);
       return Sort(list, 0, list.Count, comparer);
     }
 
     public static bool QuickSort<T>(this IList<T> list) {
+      Contract.Requires(list != null);
       return Sort(list, 0, list.Count, null);
     }
 
     private static bool Sort<T>(IList<T> keys, int index, int length, IComparer<T> comparer) {
+      Contract.Requires<ArgumentNullException>(comparer != null);
+      Contract.Requires<ArgumentNullException>(keys != null);
+
       if (length > 1) {
         try {
           if (comparer == null) {
@@ -70,6 +79,13 @@ namespace PixelLab.Common {
     }
 
     private static bool quickSort<T>(IList<T> keys, int left, int right, IComparer<T> comparer) {
+      Contract.Requires<ArgumentNullException>(comparer != null);
+      Contract.Requires<ArgumentNullException>(keys != null);
+      Contract.Requires<ArgumentOutOfRangeException>(left >= 0);
+      Contract.Requires<ArgumentOutOfRangeException>(left < keys.Count);
+      Contract.Requires<ArgumentOutOfRangeException>(right >= 0);
+      Contract.Requires<ArgumentOutOfRangeException>(right < keys.Count);
+
       bool change = false;
       do {
         int a = left;
@@ -118,6 +134,13 @@ namespace PixelLab.Common {
     }
 
     private static bool swapIfGreaterWithItems<T>(IList<T> keys, IComparer<T> comparer, int a, int b) {
+      Contract.Requires<ArgumentNullException>(comparer != null);
+      Contract.Requires<ArgumentNullException>(keys != null);
+      Contract.Requires<ArgumentOutOfRangeException>(a >= 0);
+      Contract.Requires<ArgumentOutOfRangeException>(a < keys.Count);
+      Contract.Requires<ArgumentOutOfRangeException>(a >= 0);
+      Contract.Requires<ArgumentOutOfRangeException>(b < keys.Count);
+
       if ((a != b) && (comparer.Compare(keys[a], keys[b]) > 0)) {
         T local = keys[a];
         keys[a] = keys[b];

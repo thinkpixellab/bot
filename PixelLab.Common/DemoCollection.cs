@@ -25,7 +25,6 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Diagnostics.Contracts;
 using System.Windows.Input;
 
@@ -35,18 +34,15 @@ namespace PixelLab.Common {
   ///     Any cross-thread changes will cause undesired behavior.
   /// </remarks>
   public class DemoCollection<T> : ReadOnlyObservableCollection<T> {
-    public static DemoCollection<T> Create(IEnumerable<T> source, int initialCount, int minCount, int maxCount) {
+    public static DemoCollection<T> Create(IList<T> source, int initialCount, int minCount, int maxCount) {
       Contract.Requires(source != null);
+      Contract.Requires(source.Count > 0);
       Contract.Requires(initialCount >= 0);
       Contract.Requires(minCount >= 0);
       Contract.Requires(minCount <= initialCount);
       Contract.Requires(initialCount <= maxCount);
-      
+
       var sourceItems = source.ToReadOnlyCollection();
-      if (sourceItems.Count == 0) {
-        throw new ArgumentException("source must have at least one item", "source");
-      }
-      Contract.Assume(sourceItems.Count > 0);
 
       var observableCollection = new ObservableCollectionPlus<T>();
 
@@ -155,6 +151,10 @@ namespace PixelLab.Common {
         int maxCount,
         int initialCount)
       : base(activeItems) {
+      Contract.Requires<ArgumentNullException>(activeItems != null);
+      Contract.Requires<ArgumentNullException>(sourceItems != null);
+      Contract.Requires(sourceItems.Count > 0);
+
       m_minCount = minCount;
       m_maxCount = maxCount;
       m_initialCount = initialCount;
@@ -169,7 +169,7 @@ namespace PixelLab.Common {
       m_changeCommand = new CommandWrapper(Change, () => canChange);
       m_resetCommand = new CommandWrapper(Reset);
 
-      activeItems.CollectionChanged += delegate(object sender, NotifyCollectionChangedEventArgs e) {
+      activeItems.CollectionChanged += (sender, e) => {
         m_removeCommand.UpdateCanExecute();
         m_addCommand.UpdateCanExecute();
         m_moveCommand.UpdateCanExecute();
@@ -185,6 +185,20 @@ namespace PixelLab.Common {
     private bool canMove { get { return m_activeItems.Count > 1; } }
 
     private bool canChange { get { return m_activeItems.Count > 0; } }
+
+    [ContractInvariantMethod]
+    void ObjectInvariant() {
+      Contract.Invariant(m_random != null);
+      Contract.Invariant(m_sourceItems != null);
+      Contract.Invariant(m_sourceItems.Count > 0);
+      Contract.Invariant(m_activeItems != null);
+      Contract.Invariant(m_addCommand != null);
+      Contract.Invariant(m_removeCommand != null);
+      Contract.Invariant(m_moveCommand != null);
+      Contract.Invariant(m_changeCommand != null);
+      Contract.Invariant(m_resetCommand != null);
+      Contract.Invariant(m_insertCommand != null);
+    }
 
     private readonly CommandWrapper m_addCommand, m_removeCommand, m_moveCommand, m_changeCommand, m_insertCommand, m_resetCommand;
     private readonly int m_minCount, m_maxCount, m_initialCount;

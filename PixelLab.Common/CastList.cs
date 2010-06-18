@@ -43,6 +43,11 @@ namespace PixelLab.Common {
 
     #region Implementation
 
+    [ContractInvariantMethod]
+    void ObjectInvariant() {
+      Contract.Invariant(m_source != null);
+    }
+
     private readonly IList<TFrom> m_source;
 
     #endregion

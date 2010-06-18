@@ -35,6 +35,8 @@ namespace PixelLab.Common {
     public static double ScaleToFit(Size target, Size source) {
       Contract.Requires(target.IsValid());
       Contract.Requires(source.IsValid());
+      Contract.Requires(target.Width > 0);
+      Contract.Requires(source.Width > 0);
 
       double targetHWR = target.Height / target.Width;
       double sourceHWR = source.Height / source.Width;
@@ -155,7 +157,9 @@ namespace PixelLab.Common {
       Contract.Requires(amount >= 0);
       Contract.Requires(!target.IsEmpty);
       Contract.Ensures(!Contract.Result<Rect>().IsEmpty);
-      return new Rect(target.X - amount, target.Y - amount, target.Width + 2 * amount, target.Height + 2 * amount);
+      var value = new Rect(target.X - amount, target.Y - amount, target.Width + 2 * amount, target.Height + 2 * amount);
+      Contract.Assume(!value.IsEmpty);
+      return value;
     }
 
     public static Point TopLeft(this Rect rect) {

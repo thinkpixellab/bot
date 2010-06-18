@@ -37,10 +37,12 @@ namespace PixelLab.Common {
 
 #if SILVERLIGHT
     public void Move(int oldIndex, int newIndex) {
+      Contract.Requires(oldIndex >= 0 && oldIndex < base.Count);
       MoveItem(oldIndex, newIndex);
     }
 
     protected virtual void MoveItem(int oldIndex, int newIndex) {
+      Contract.Requires(oldIndex >= 0 && oldIndex < base.Count);
       if (oldIndex != newIndex) {
         T item = base[oldIndex];
         using (BeginMultiUpdate()) {
@@ -52,6 +54,7 @@ namespace PixelLab.Common {
 #endif
 
     public void Sort(Func<T, T, int> comparer) {
+      Contract.Requires<ArgumentNullException>(comparer != null);
       var changed = Items.QuickSort(comparer);
       if (changed) {
         raiseReset();
@@ -92,6 +95,12 @@ namespace PixelLab.Common {
       OnPropertyChanged(new PropertyChangedEventArgs("Count"));
       OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
       OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+    }
+
+    [ContractInvariantMethod]
+    private void ObjectInvariant() {
+      Contract.Invariant(m_lock != null);
+      Contract.Invariant(m_roCollection != null);
     }
 
     private bool m_isChanged;
