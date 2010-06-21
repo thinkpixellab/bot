@@ -30,50 +30,25 @@ using System.Diagnostics.Contracts;
 using System.Threading;
 
 namespace PixelLab.Common {
-  //////////////////////////////////////////////////////////////////////////
   /// <summary>
   ///     Serves as a base implemetation of <see cref="IList{T}"/>.
   /// </summary>
   /// <typeparam name="T">The type of the item in the list.</typeparam>
-  //////////////////////////////////////////////////////////////////////////
+  [ContractClass(typeof(ListBaseContract<>))]
   public abstract class ListBase<T> : IList<T>, IList {
 
-    //--------------------------------------------------------------------
-    /// <exception cref="NotSupportedException">
-    ///     RemoveAt is not directly supported. To add support,
-    ///     override in a subclass.
-    /// </exception>
-    //--------------------------------------------------------------------
     protected virtual bool RemoveItem(int index) {
       throw new NotSupportedException();
     }
 
-    //--------------------------------------------------------------------
-    /// <exception cref="NotSupportedException">
-    ///     Add is not directly supported. To add support,
-    ///     override in a subclass.
-    /// </exception>
-    //--------------------------------------------------------------------
     protected virtual void InsertItem(int index, T item) {
       throw new NotSupportedException();
     }
 
-    //--------------------------------------------------------------------
-    /// <exception cref="NotSupportedException">
-    ///     Clear is not directly supported. To add support,
-    ///     override in a subclass.
-    /// </exception>
-    //--------------------------------------------------------------------
     protected virtual void ClearItems() {
       throw new NotSupportedException();
     }
 
-    //--------------------------------------------------------------------
-    /// <exception cref="NotSupportedException">
-    ///     SetItem is not directly supported. To add support,
-    ///     override in a subclass.
-    /// </exception>
-    //--------------------------------------------------------------------
     protected virtual void SetItem(int index, T value) {
       throw new NotSupportedException();
     }
@@ -97,19 +72,6 @@ namespace PixelLab.Common {
 
     #region IList<T> Members
 
-    //--------------------------------------------------------------------
-    /// <summary>
-    ///     Searches for the specified object and returns the zero-based
-    ///     index of the first occurrence within the entire <see cref="ListBase{T}"/>.
-    /// </summary>
-    /// <param name="item">
-    ///     The object to locate in the <see cref="ListBase{T}"/>. 
-    ///     The value can be null for reference types.</param>
-    /// <returns>
-    ///     The zero-based index of the first occurrence of item within the 
-    ///     entire <see cref="ListBase{T}"/>, if found; otherwise, –1.
-    /// </returns>
-    //--------------------------------------------------------------------
     public virtual int IndexOf(T item) {
       for (int i = 0; i < this.Count; i++) {
         if (EqualityComparer<T>.Default.Equals(this[i], item)) {
@@ -119,27 +81,12 @@ namespace PixelLab.Common {
       return -1;
     }
 
-    //--------------------------------------------------------------------
-    /// <summary>
-    ///     Gets or sets the element at the specified index.
-    /// </summary>
-    /// <param name="index">The zero-based index of the element to get or set.</param>
-    /// <returns>The element at the specified index.</returns>
-    //--------------------------------------------------------------------
     public T this[int index] {
       get {
         return GetItem(index);
       }
     }
 
-    //--------------------------------------------------------------------
-    /// <summary>
-    ///     When overridden in a derived class, provides the item at the 
-    ///     specified index;
-    /// </summary>
-    /// <param name="index">The index of the desired item.</param>
-    /// <returns>The item at the provided index.</returns>
-    //--------------------------------------------------------------------
     protected abstract T GetItem(int index);
 
     void IList<T>.Insert(int index, T item) {
@@ -163,18 +110,6 @@ namespace PixelLab.Common {
 
     #region ICollection<T> Members
 
-    //--------------------------------------------------------------------
-    /// <summary>
-    ///     Determines whether an element is in the list.
-    /// </summary>
-    /// <param name="item">
-    ///     The object to locate in the list.
-    ///     The value can be null for reference types.
-    /// </param>
-    /// <returns>
-    ///     true if item is found in the list; otherwise, false.
-    /// </returns>
-    //--------------------------------------------------------------------
     [Pure]
     public virtual bool Contains(T item) {
       if (item == null) {
@@ -194,28 +129,10 @@ namespace PixelLab.Common {
       return false;
     }
 
-    //--------------------------------------------------------------------
-    /// <summary>
-    ///     Copies the entire list to a compatible one-dimensional array,
-    ///     starting at the specified index of the target array.
-    /// </summary>
-    /// <param name="array">
-    ///     The one-dimensional Array that is the destination of the elements copied from list.
-    ///     The Array must have zero-based indexing.
-    /// </param>
-    /// <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
-    //--------------------------------------------------------------------
     public virtual void CopyTo(T[] array, int arrayIndex) {
       CopyTo((Array)array, arrayIndex);
     }
 
-    //--------------------------------------------------------------------
-    /// <summary>
-    ///     When overridden in a derived class, returns the number of items
-    ///     in the list.
-    /// </summary>
-    /// <remarks>The number of items in the list.</remarks>
-    //--------------------------------------------------------------------
     public abstract int Count {
       get;
     }
@@ -305,17 +222,6 @@ namespace PixelLab.Common {
 
     #region ICollection Members
 
-    //--------------------------------------------------------------------
-    /// <summary>
-    ///     Copies the entire <see cref="ListBase{T}"/> to a compatible one-dimensional 
-    ///     array, starting at the specified index of the target array.
-    /// </summary>
-    /// <param name="array">
-    ///     The one-dimensional Array that is the destination of the elements copied from <see cref="ListBase{T}"/>.
-    ///     The Array must have zero-based indexing.
-    /// </param>
-    /// <param name="index">The zero-based index in array at which copying begins.</param>
-    //--------------------------------------------------------------------
     public virtual void CopyTo(Array array, int index) {
       for (int i = 0; i < this.Count; i++) {
         array.SetValue(this[i], index + i);
@@ -363,5 +269,22 @@ namespace PixelLab.Common {
     #endregion
 
   } //*** class ListBase<T>
+
+  [ContractClassFor(typeof(ListBase<>))]
+  abstract class ListBaseContract<T> : ListBase<T> {
+    protected override T GetItem(int index) {
+      Contract.Requires(index >= 0);
+      Contract.Requires(index < Count);
+      return default(T);
+    }
+
+    public override int Count {
+      get {
+        Contract.Ensures(Contract.Result<int>() >= 0);
+        return default(int);
+      }
+    }
+  }
+
 
 } //*** namespace PixelLab.Common
