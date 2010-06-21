@@ -22,7 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+using System;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -77,21 +79,25 @@ namespace PixelLab.Wpf {
     }
 
     public static void SetToVector(this TranslateTransform3D translateTransform3D, Vector3D vector3D) {
+      Contract.Requires<ArgumentNullException>(translateTransform3D != null);
       translateTransform3D.OffsetX = vector3D.X;
       translateTransform3D.OffsetY = vector3D.Y;
       translateTransform3D.OffsetZ = vector3D.Z;
     }
 
     public static void SetToVector(this TranslateTransform translateTransform, Vector vector) {
+      Contract.Requires<ArgumentNullException>(translateTransform != null);
       translateTransform.X = vector.X;
       translateTransform.Y = vector.Y;
     }
 
     public static Vector ToVector(this Transform transform) {
+      Contract.Requires(transform != null);
       return new Vector(transform.Value.OffsetX, transform.Value.OffsetY);
     }
 
     public static Point ToPoint(this Transform transform) {
+      Contract.Requires(transform != null);
       return new Point(transform.Value.OffsetX, transform.Value.OffsetY);
     }
 

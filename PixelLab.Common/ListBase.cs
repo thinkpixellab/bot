@@ -86,6 +86,15 @@ namespace PixelLab.Common {
       get { return true; }
     }
 
+    protected virtual object SyncRoot {
+      get {
+        if (m_syncRoot == null) {
+          Interlocked.CompareExchange(ref m_syncRoot, new object(), null);
+        }
+        return m_syncRoot;
+      }
+    }
+
     #region IList<T> Members
 
     //--------------------------------------------------------------------
@@ -319,10 +328,7 @@ namespace PixelLab.Common {
 
     object ICollection.SyncRoot {
       get {
-        if (m_syncRoot == null) {
-          Interlocked.CompareExchange(ref m_syncRoot, new object(), null);
-        }
-        return m_syncRoot;
+        return SyncRoot;
       }
     }
 

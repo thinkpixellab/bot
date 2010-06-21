@@ -19,7 +19,7 @@ namespace PixelLab.Wpf.Demo {
     }
 
     private readonly DemoCollection<SolidColorBrush> m_colors = DemoCollection<SolidColorBrush>.Create(
-      App.DemoColors.Select(c => c.ToCachedBrush()), 20, 0, 40);
+      App.DemoColors.Select(c => c.ToCachedBrush()).ToArray(), 20, 0, 40);
 
   }
 }
