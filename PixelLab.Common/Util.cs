@@ -249,6 +249,7 @@ namespace PixelLab.Common {
 
     public static Random Rnd {
       get {
+        Contract.Ensures(Contract.Result<Random>() != null);
         var r = (Random)s_random.Target;
         if (r == null) {
           s_random.Target = r = new Random();
