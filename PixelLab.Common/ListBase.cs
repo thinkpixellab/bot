@@ -26,6 +26,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Threading;
 
 namespace PixelLab.Common {
@@ -36,6 +37,55 @@ namespace PixelLab.Common {
   /// <typeparam name="T">The type of the item in the list.</typeparam>
   //////////////////////////////////////////////////////////////////////////
   public abstract class ListBase<T> : IList<T>, IList {
+
+    //--------------------------------------------------------------------
+    /// <exception cref="NotSupportedException">
+    ///     RemoveAt is not directly supported. To add support,
+    ///     override in a subclass.
+    /// </exception>
+    //--------------------------------------------------------------------
+    protected virtual bool RemoveItem(int index) {
+      throw new NotSupportedException();
+    }
+
+    //--------------------------------------------------------------------
+    /// <exception cref="NotSupportedException">
+    ///     Add is not directly supported. To add support,
+    ///     override in a subclass.
+    /// </exception>
+    //--------------------------------------------------------------------
+    protected virtual void InsertItem(int index, T item) {
+      throw new NotSupportedException();
+    }
+
+    //--------------------------------------------------------------------
+    /// <exception cref="NotSupportedException">
+    ///     Clear is not directly supported. To add support,
+    ///     override in a subclass.
+    /// </exception>
+    //--------------------------------------------------------------------
+    protected virtual void ClearItems() {
+      throw new NotSupportedException();
+    }
+
+    //--------------------------------------------------------------------
+    /// <exception cref="NotSupportedException">
+    ///     SetItem is not directly supported. To add support,
+    ///     override in a subclass.
+    /// </exception>
+    //--------------------------------------------------------------------
+    protected virtual void SetItem(int index, T value) {
+      throw new NotSupportedException();
+    }
+
+    protected virtual bool IsReadOnly {
+      get { return true; }
+    }
+
+    protected virtual bool IsFixedSize {
+      get { return true; }
+    }
+
     #region IList<T> Members
 
     //--------------------------------------------------------------------
@@ -61,26 +111,6 @@ namespace PixelLab.Common {
     }
 
     //--------------------------------------------------------------------
-    /// <exception cref="NotSupportedException">
-    ///     Insert is not directly supported. To add support,
-    ///     override in a subclass.
-    /// </exception>
-    //--------------------------------------------------------------------
-    public virtual void Insert(int index, T item) {
-      throw new NotSupportedException();
-    }
-
-    //--------------------------------------------------------------------
-    /// <exception cref="NotSupportedException">
-    ///     RemoveAt is not directly supported. To add support,
-    ///     override in a subclass.
-    /// </exception>
-    //--------------------------------------------------------------------
-    public virtual void RemoveAt(int index) {
-      throw new NotSupportedException();
-    }
-
-    //--------------------------------------------------------------------
     /// <summary>
     ///     Gets or sets the element at the specified index.
     /// </summary>
@@ -90,9 +120,6 @@ namespace PixelLab.Common {
     public T this[int index] {
       get {
         return GetItem(index);
-      }
-      set {
-        SetItem(index, value);
       }
     }
 
@@ -106,39 +133,26 @@ namespace PixelLab.Common {
     //--------------------------------------------------------------------
     protected abstract T GetItem(int index);
 
-    //--------------------------------------------------------------------
-    /// <exception cref="NotSupportedException">
-    ///     SetItem is not directly supported. To add support,
-    ///     override in a subclass.
-    /// </exception>
-    //--------------------------------------------------------------------
-    protected virtual void SetItem(int index, T value) {
-      throw new NotSupportedException();
+    void IList<T>.Insert(int index, T item) {
+      InsertItem(index, item);
+    }
+
+    void IList<T>.RemoveAt(int index) {
+      RemoveItem(index);
+    }
+
+    T IList<T>.this[int index] {
+      get {
+        return this[index];
+      }
+      set {
+        SetItem(index, value);
+      }
     }
 
     #endregion
 
     #region ICollection<T> Members
-
-    //--------------------------------------------------------------------
-    /// <exception cref="NotSupportedException">
-    ///     Add is not directly supported. To add support,
-    ///     override in a subclass.
-    /// </exception>
-    //--------------------------------------------------------------------
-    public virtual void Add(T item) {
-      throw new NotSupportedException();
-    }
-
-    //--------------------------------------------------------------------
-    /// <exception cref="NotSupportedException">
-    ///     Clear is not directly supported. To add support,
-    ///     override in a subclass.
-    /// </exception>
-    //--------------------------------------------------------------------
-    public virtual void Clear() {
-      throw new NotSupportedException();
-    }
 
     //--------------------------------------------------------------------
     /// <summary>
@@ -152,6 +166,7 @@ namespace PixelLab.Common {
     ///     true if item is found in the list; otherwise, false.
     /// </returns>
     //--------------------------------------------------------------------
+    [Pure]
     public virtual bool Contains(T item) {
       if (item == null) {
         for (int num1 = 0; num1 < this.Count; num1++) {
@@ -196,35 +211,24 @@ namespace PixelLab.Common {
       get;
     }
 
-    //--------------------------------------------------------------------
-    /// <summary>
-    ///     Gets a value representing if the List is read-only.
-    /// </summary>
-    /// <remarks>true if the list is read-only; otherwise, false.</remarks>
-    //--------------------------------------------------------------------
-    public virtual bool IsReadOnly {
-      get { return true; }
+    bool ICollection<T>.IsReadOnly { get { return IsReadOnly; } }
+
+    void ICollection<T>.Add(T item) {
+      InsertItem(Count, item);
     }
 
-    //--------------------------------------------------------------------
-    /// <exception cref="NotSupportedException">
-    ///     Remove is not directly supported. To add support,
-    ///     override in a subclass.
-    /// </exception>
-    //--------------------------------------------------------------------
-    public virtual bool Remove(T item) {
-      throw new NotSupportedException();
+    void ICollection<T>.Clear() {
+      ClearItems();
+    }
+
+    bool ICollection<T>.Remove(T item) {
+      return RemoveItem(IndexOf(item));
     }
 
     #endregion
 
     #region IEnumerable<T> Members
 
-    //--------------------------------------------------------------------
-    /// <summary>
-    ///     Returns an enumerator that iterates through the list.
-    /// </summary>
-    //--------------------------------------------------------------------
     public virtual IEnumerator<T> GetEnumerator() {
       for (int i = 0; i < this.Count; i++) {
         yield return this[i];
@@ -233,19 +237,11 @@ namespace PixelLab.Common {
 
     #endregion
 
-    #region IEnumerable Members
-
-    IEnumerator IEnumerable.GetEnumerator() {
-      return this.GetEnumerator();
-    }
-
-    #endregion
-
     #region IList Members
 
     int IList.Add(object value) {
       VerifyValueType(value);
-      this.Add((T)value);
+      this.InsertItem(Count, (T)value);
       return (this.Count - 1);
     }
 
@@ -265,21 +261,12 @@ namespace PixelLab.Common {
 
     void IList.Insert(int index, object value) {
       VerifyValueType(value);
-      this.Insert(index, (T)value);
-    }
-
-    //--------------------------------------------------------------------
-    /// <summary>
-    ///     Gets a value indicating whether the list has a fixed size.
-    /// </summary>
-    //--------------------------------------------------------------------
-    public virtual bool IsFixedSize {
-      get { return true; }
+      this.InsertItem(index, (T)value);
     }
 
     void IList.Remove(object value) {
       if (IsCompatibleObject(value)) {
-        this.Remove((T)value);
+        this.RemoveItem(IndexOf((T)value));
       }
     }
 
@@ -289,12 +276,20 @@ namespace PixelLab.Common {
       }
       set {
         VerifyValueType(value);
-        this[index] = (T)value;
+        SetItem(index, (T)value);
       }
     }
 
     void IList.RemoveAt(int index) {
-      RemoveAt(index);
+      RemoveItem(index);
+    }
+
+    bool IList.IsReadOnly { get { return IsReadOnly; } }
+
+    bool IList.IsFixedSize { get { return IsFixedSize; } }
+
+    void IList.Clear() {
+      ClearItems();
     }
 
     #endregion
@@ -318,20 +313,11 @@ namespace PixelLab.Common {
       }
     }
 
-    //--------------------------------------------------------------------
-    /// <exception cref="NotSupportedException">
-    ///     IsSynchronized is not directly supported. To add support,
-    ///     override in a subclass.
-    /// </exception>
-    //--------------------------------------------------------------------
-    public virtual bool IsSynchronized {
+    bool ICollection.IsSynchronized {
       get { return false; }
     }
 
-    /// <summary>
-    ///     Gets an object that can be used to synchronize access to the ICollection.
-    /// </summary>
-    public virtual object SyncRoot {
+    object ICollection.SyncRoot {
       get {
         if (m_syncRoot == null) {
           Interlocked.CompareExchange(ref m_syncRoot, new object(), null);
@@ -341,6 +327,16 @@ namespace PixelLab.Common {
     }
 
     #endregion
+
+    #region IEnumerable Members
+
+    IEnumerator IEnumerable.GetEnumerator() {
+      return this.GetEnumerator();
+    }
+
+    #endregion
+
+    private object m_syncRoot;
 
     #region Private Static Helpers
 
@@ -359,8 +355,6 @@ namespace PixelLab.Common {
     }
 
     #endregion
-
-    private object m_syncRoot;
 
   } //*** class ListBase<T>
 
