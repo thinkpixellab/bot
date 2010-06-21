@@ -285,6 +285,8 @@ namespace PixelLab.Common {
       return new CastList<TFrom, TTo>(source);
     }
 
+    // TODO: add Random<T>(this IList<T> source, int count)
+
     public static T Random<T>(this IList<T> source) {
       Contract.Requires(source != null);
       Contract.Requires(source.Count > 0);
