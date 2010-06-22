@@ -25,6 +25,7 @@ namespace PixelLab.Common {
     }
 #endif
     public IDisposable BeginMultiUpdate() {
+      Contract.Ensures(Contract.Result<IDisposable>() != null);
       return m_lock.GetLock();
     }
 
