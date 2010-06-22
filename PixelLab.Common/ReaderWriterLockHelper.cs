@@ -23,111 +23,25 @@ THE SOFTWARE.
 */
 
 using System;
-using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Threading;
 
-namespace PixelLab.Common
-{
-    /// <summary>
-    ///     Provides services of <see cref="ReaderWriterLockSlim"/>
-    ///     with <c>using(){...}</c> semantics.
-    /// </summary>
-    public sealed class ReaderWriterLockHelper : IDisposable
-    {
-        #region Read
+namespace PixelLab.Common {
 
-        /// <summary>
-        ///     Aquires a read lock.
-        /// </summary>
-        /// <returns>An <see cref="IDisposable"/> that can be used in a C# 'lock' block.</returns>
-        /// <example><code>
-        /// using(lockHelper.GetReadLock())
-        /// {
-        ///     //do reading here
-        /// }
-        /// </code></example>
-        public IDisposable GetReadLock()
-        {
-            m_rwLockSlim.EnterReadLock();
+  public static class ReaderWriterLockHelper {
 
-            return new ActionOnDispose(m_rwLockSlim.ExitReadLock);
-        }
+    public static IDisposable BeginReadLock(this ReaderWriterLockSlim slimLock) {
+      Contract.Requires(slimLock != null);
+      slimLock.EnterReadLock();
+      return new ActionOnDispose(slimLock.ExitReadLock);
+    }
 
-        /// <summary>
-        ///     Gets a value that indicates whether the current thread has entered the lock in read mode.
-        /// </summary>
-        /// <returns>true if it holds the lock; otherwise, false.</returns>
-        public bool IsReadLockHeld { get { return m_rwLockSlim.IsReadLockHeld; } }
+    public static IDisposable BeginWriteLock(this ReaderWriterLockSlim slimLock) {
+      Contract.Requires(slimLock != null);
+      slimLock.EnterWriteLock();
+      return new ActionOnDispose(slimLock.ExitWriteLock);
+    }
 
-        /// <summary>
-        ///     Throws an exception if <see cref="IsReadLockHeld"/> is false.
-        /// </summary>
-        /// <exception cref="Exception">If <see cref="IsReadLockHeld"/> is false.</exception>
-        [DebuggerStepThrough]
-        public void VerifyReadAccess()
-        {
-            if (!IsReadLockHeld)
-            {
-                throw new InvalidOperationException("Code was run that does not have the nessesary lock.");
-            }
-        }
-
-        #endregion Read
-
-        #region Write
-
-        /// <summary>
-        ///     Aquires a write lock.
-        /// </summary>
-        /// <returns>An <see cref="IDisposable"/> that can be used in a C# 'lock' block.</returns>
-        /// using(lockHelper.GetWriteLock())
-        /// {
-        ///     //do reading/writing here
-        /// }
-        public IDisposable GetWriteLock()
-        {
-            m_rwLockSlim.EnterWriteLock();
-
-            return new ActionOnDispose(m_rwLockSlim.ExitWriteLock);
-        }
-
-        /// <summary>
-        ///     Gets a value that indicates whether the current thread has entered the lock in write mode.
-        /// </summary>
-        /// <returns>true if it holds the lock; otherwise, false.</returns>
-        public bool IsWriteLockHeld { get { return m_rwLockSlim.IsWriteLockHeld; } }
-
-        /// <summary>
-        ///     Throws an exception if <see cref="IsWriteLockHeld"/> is false.
-        /// </summary>
-        /// <exception cref="Exception">If <see cref="IsWriteLockHeld"/> is false.</exception>
-        [DebuggerStepThrough]
-        public void VerifyWriteAccess()
-        {
-            if (!IsWriteLockHeld)
-            {
-                throw new InvalidOperationException("Code was run that does not have the nessesary lock.");
-            }
-        }
-
-        #endregion Write
-
-        /// <summary>
-        ///     Implementation of <see cref="IDisposable.Dispose()"/>.
-        ///     Disposes the nested <see cref="ReaderWriterLockSlim"/>.
-        /// </summary>
-        public void Dispose()
-        {
-            m_rwLockSlim.Dispose();
-        }
-
-        #region Implementation
-
-        private readonly ReaderWriterLockSlim m_rwLockSlim = new ReaderWriterLockSlim();
-
-        #endregion
-
-
-    } //*** class LockHelper
+  } //*** class LockHelper
 
 } //*** namespace PixelLab.Common
