@@ -12,14 +12,7 @@ namespace PixelLab.Common {
       if (s_brushes == null) {
         s_brushes = new Dictionary<Color, SolidColorBrush>();
       }
-      SolidColorBrush brush;
-      if (s_brushes.TryGetValue(color, out brush)) {
-        return brush;
-      }
-      else {
-        s_brushes[color] = brush = color.ToBrush();
-      }
-      return brush;
+      return  s_brushes.EnsureItem(color, () => color.ToBrush());
     }
 
     public static int CacheSize { get { return s_brushes == null ? 0 : s_brushes.Count; } }

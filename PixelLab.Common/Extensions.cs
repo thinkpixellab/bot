@@ -309,6 +309,17 @@ namespace PixelLab.Common {
       return new FuncComparer<T>(compareFunction);
     }
 
+    public static TValue EnsureItem<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Func<TValue> valueFactory) {
+      Contract.Requires(dictionary != null);
+      Contract.Requires(valueFactory != null);
+      TValue value;
+      if (!dictionary.TryGetValue(key, out value)) {
+        value = valueFactory();
+        dictionary.Add(key, value);
+      }
+      return value;
+    }
+
     private class FuncComparer<T> : IComparer<T> {
       public FuncComparer(Func<T, T, int> func) {
         Contract.Requires(func != null);
