@@ -58,7 +58,7 @@ namespace PixelLab.Common {
     ///     <see cref="EqualityComparer{T}.Default">EqualityComparer&lt;T&gt;.Default</see>.
     /// </summary>
     /// <exception cref="ArgumentNullException">if <param name="source"/> is null.</exception>
-    public static bool AllUnique<T>(this IList<T> source) where T : IEquatable<T> {
+    public static bool AllUnique<T>(this IList<T> source) {
       Contract.Requires(source != null);
 
       EqualityComparer<T> comparer = EqualityComparer<T>.Default;
