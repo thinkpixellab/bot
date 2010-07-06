@@ -42,12 +42,6 @@
     <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
     <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
     <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
-    <CodeContractsCustomRewriterAssembly />
-    <CodeContractsCustomRewriterClass />
-    <CodeContractsLibPaths />
-    <CodeContractsExtraRewriteOptions />
-    <CodeContractsExtraAnalysisOptions />
-    <CodeContractsBaseLineFile />
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
   </PropertyGroup>
@@ -86,6 +80,7 @@
     <Compile Include="LockHelper.cs" />
     <Compile Include="ObservableCollectionPlus.cs" />
     <Compile Include="PageFlipper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoundDoubleConverter.cs" />
     <Compile Include="SimpleValueConverter.cs" />
     <Compile Include="SortHelper.cs" />
@@ -93,9 +88,6 @@
     <Compile Include="Util.cs" />
     <Compile Include="Vector_SL.cs" />
     <Compile Include="WrappedLock.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
