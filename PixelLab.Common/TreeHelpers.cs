@@ -33,9 +33,11 @@ namespace PixelLab.Common {
     }
 
     public static bool HasAncestor(this DependencyObject element, DependencyObject ancestor) {
+      Contract.Requires(element != null);
+      Contract.Requires(ancestor != null);
       return element
         .GetAncestors()
-        .Where(e => e == ancestor)
+        .Where(e => ancestor.Equals(e))
         .Any();
     }
 
@@ -50,11 +52,12 @@ namespace PixelLab.Common {
 
     public static IEnumerable<DependencyObject> GetVisualDescendents(this DependencyObject source) {
       Contract.Requires(source != null);
-      return source.GetVisualChildren()
+      return source
+        .GetVisualChildren()
         .SelectRecursive(element => element.GetVisualChildren());
     }
 
-    public static FrameworkElement GetFirstChildByName(this DependencyObject source, string name) {
+    public static FrameworkElement FirstVisualDescendentByName(this DependencyObject source, string name) {
       return source.GetVisualDescendents()
         .OfType<FrameworkElement>()
         .Where(fe => fe.Name.Equals(name))
