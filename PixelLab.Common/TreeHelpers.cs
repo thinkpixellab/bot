@@ -10,9 +10,7 @@ namespace PixelLab.Common {
 
     public static IEnumerable<T> FindChildren<T>(this DependencyObject obj) where T : DependencyObject {
       Contract.Requires(obj != null);
-      return obj.GetChildren()
-        .SelectRecursive(element => element.GetChildren())
-        .OfType<T>();
+      return obj.GetAncestors().OfType<T>();
     }
 
     public static T FindChild<T>(this DependencyObject obj) where T : DependencyObject {
@@ -48,13 +46,26 @@ namespace PixelLab.Common {
         .Any();
     }
 
-    public static IEnumerable<DependencyObject> GetChildren(this DependencyObject source) {
+    public static IEnumerable<DependencyObject> GetVisualChildren(this DependencyObject source) {
       Contract.Requires(source != null);
       int count = VisualTreeHelper.GetChildrenCount(source);
 
       for (int i = 0; i < count; i++) {
         yield return VisualTreeHelper.GetChild(source, i);
       }
+    }
+
+    public static IEnumerable<DependencyObject> GetVisualDescendents(this DependencyObject source) {
+      Contract.Requires(source != null);
+      return source.GetVisualChildren()
+        .SelectRecursive(element => element.GetVisualChildren());
+    }
+
+    public static FrameworkElement GetFirstChildByName(this DependencyObject source, string name) {
+      return source.GetVisualDescendents()
+        .OfType<FrameworkElement>()
+        .Where(fe => fe.Name.Equals(name))
+        .FirstOrDefault();
     }
 
     public static UIElement GetItemContainerFromChildElement(ItemsControl itemsControl, UIElement child) {
