@@ -12,7 +12,7 @@ namespace PixelLab.Wpf.Demo {
 
       this.LayoutUpdated += delegate(object sender, EventArgs e) {
         if (Panel == null) {
-          Panel = TreeHelpers.FindChild<AnimatingTilePanel>(m_itemsControl);
+          Panel = m_itemsControl.FirstVisualDescendentOfType<AnimatingTilePanel>();
         }
       };
 

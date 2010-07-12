@@ -59,7 +59,9 @@ namespace PixelLab.Common {
     /// </summary>
     /// <exception cref="ArgumentNullException">if <param name="source"/> is null.</exception>
     public static bool AllUnique<T>(this IList<T> source) {
-      Contract.Requires(source != null);
+      Util.RequireNotNull(source, "source");
+      // TODO: Contract fails here. Grr...
+      // Contract.Requires(source != null);
 
       EqualityComparer<T> comparer = EqualityComparer<T>.Default;
 
