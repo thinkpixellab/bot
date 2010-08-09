@@ -322,6 +322,10 @@ namespace PixelLab.Common {
       return value;
     }
 
+    public static bool IsNullOrWhiteSpace(this string str) {
+      return str == null || str.Trim().Length == 0;
+    }
+    
     private class FuncComparer<T> : IComparer<T> {
       public FuncComparer(Func<T, T, int> func) {
         Contract.Requires(func != null);

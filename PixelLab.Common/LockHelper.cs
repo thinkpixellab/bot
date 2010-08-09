@@ -40,7 +40,7 @@ namespace PixelLab.Common {
     /// <exception cref="ArgumentNullException">If <paramref name="name"/> is null.</exception>
     /// <exception cref="ArgumentOutOfRangeException">If <paramref name="name"/> is empty.</exception>
     public LockHelper(string name) {
-      Contract.Requires(!string.IsNullOrWhiteSpace(name));
+      Contract.Requires(!name.IsNullOrWhiteSpace());
 
       m_name = name;
     }

@@ -52,10 +52,8 @@ namespace PixelLab.Common {
       }
 
       if (m_dropShadow != null) {
-        m_dropShadowBlurEffect = new BlurEffect() { Radius = 20 };
-
-        m_dropShadow.Effect = m_dropShadowBlurEffect;
-        m_dropShadow.CacheMode = new BitmapCache();
+        //m_dropShadowBlurEffect = new BlurEffect() { Radius = 20 };
+        //m_dropShadow.Effect = m_dropShadowBlurEffect;
         m_dropShadow.RenderTransform = m_pageTransformGroup;
         m_dropShadow.Width = m_pageSize.Width;
         m_dropShadow.Height = m_pageSize.Height;
@@ -291,7 +289,7 @@ namespace PixelLab.Common {
     private readonly RotateTransform m_curlShadowRotate;
 
 
-    private readonly BlurEffect m_dropShadowBlurEffect;
+    //private readonly BlurEffect m_dropShadowBlurEffect;
 
     private readonly Geometry m_nextPageClip, m_pageHolderClip;
 

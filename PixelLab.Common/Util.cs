@@ -58,8 +58,8 @@ namespace PixelLab.Common {
     /// </param>
     [DebuggerStepThrough]
     public static void Require(bool condition, string message) {
-      Contract.Requires(!string.IsNullOrWhiteSpace(message));
-      Contract.Requires(!string.IsNullOrWhiteSpace(message));
+      Contract.Requires(!message.IsNullOrWhiteSpace());
+      Contract.Requires(!message.IsNullOrWhiteSpace());
       if (!condition) {
         throw new InvalidOperationException(message);
       }
@@ -119,7 +119,7 @@ namespace PixelLab.Common {
     /// <param name="parameterName">The string for <see cref="ArgumentException"/>, if thrown.</param>
     [DebuggerStepThrough]
     public static void RequireArgument(bool truth, string parameterName) {
-      Contract.Requires(!string.IsNullOrWhiteSpace(parameterName));
+      Contract.Requires(!parameterName.IsNullOrWhiteSpace());
 
       if (!truth) {
         throw new ArgumentException(parameterName);
@@ -134,8 +134,8 @@ namespace PixelLab.Common {
     /// <param name="message">The message for <see cref="ArgumentException"/>, if thrown.</param>
     [DebuggerStepThrough]
     public static void RequireArgument(bool truth, string paramName, string message) {
-      Contract.Assume(!string.IsNullOrWhiteSpace(paramName));
-      Contract.Assume(!string.IsNullOrWhiteSpace(message));
+      Contract.Assume(!paramName.IsNullOrWhiteSpace());
+      Contract.Assume(!message.IsNullOrWhiteSpace());
 
       if (!truth) {
         throw new ArgumentException(message, paramName);
@@ -149,7 +149,7 @@ namespace PixelLab.Common {
     /// <param name="parameterName">The string for <see cref="ArgumentOutOfRangeException"/>, if thrown.</param>
     [DebuggerStepThrough]
     public static void RequireArgumentRange(bool truth, string parameterName) {
-      Contract.Requires(!string.IsNullOrWhiteSpace(parameterName));
+      Contract.Requires(!parameterName.IsNullOrWhiteSpace());
       if (!truth) {
         throw new ArgumentOutOfRangeException(parameterName);
       }
@@ -163,8 +163,8 @@ namespace PixelLab.Common {
     /// <param name="message">The message for <see cref="ArgumentOutOfRangeException"/>, if thrown.</param>
     [DebuggerStepThrough]
     public static void RequireArgumentRange(bool truth, string paramName, string message) {
-      Contract.Requires(!string.IsNullOrWhiteSpace(paramName));
-      Contract.Requires(!string.IsNullOrWhiteSpace(message));
+      Contract.Requires(!paramName.IsNullOrWhiteSpace());
+      Contract.Requires(!message.IsNullOrWhiteSpace());
 
       if (!truth) {
         throw new ArgumentOutOfRangeException(message, paramName);
@@ -220,7 +220,6 @@ namespace PixelLab.Common {
       }
     }
 
-    /// <summary>
     /// Returns true if the provided <see cref="Exception"/> is considered 'critical'
     /// </summary>
     /// <param name="exception">The <see cref="Exception"/> to evaluate for critical-ness.</param>
