@@ -41,7 +41,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Phone.Reactive" />
     <Reference Include="mscorlib" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Observable" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -67,9 +70,11 @@
     <Compile Include="RoundDoubleConverter.cs" />
     <Compile Include="SortHelper.cs" />
     <Compile Include="SimpleValueConverter.cs" />
+    <Compile Include="StreamHelpers.cs" />
     <Compile Include="TreeHelpers.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Vector_SL.cs" />
+    <Compile Include="WebHelpers.cs" />
     <Compile Include="WrappedLock.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
