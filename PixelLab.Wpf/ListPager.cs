@@ -286,9 +286,7 @@ namespace PixelLab.Wpf {
       private readonly int _pageSize;
       private readonly int _pageNumber;
 
-#if DEBUG
       private int _initialCount;
-#endif
     }
 
   }
