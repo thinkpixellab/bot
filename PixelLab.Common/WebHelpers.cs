@@ -1,27 +1,50 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
+using System.Diagnostics;
 #if WP7
 using Microsoft.Phone.Reactive;
+#else
+using System.Linq;
 #endif
 
 namespace PixelLab.Common {
   public static class WebHelpers {
-    public static IObservable<string> GetResponseAsStringAsync(this WebRequest webRequest) {
-      return from response in webRequest.GetResponseAsync() select response.ReadAsString();
+    public static IObservable<WebResponse> GetResponseAsync(this Uri requestUri, string userAgent = null) {
+      var webRequest = (HttpWebRequest)WebRequest.Create(requestUri);
+      if (userAgent != null) {
+        webRequest.UserAgent = userAgent;
+      }
+
+      var wrappedEndGetResponse = new Func<IAsyncResult, WebResponse>(result => {
+        try {
+          return webRequest.EndGetResponse(result);
+        }
+        catch (WebException webException) {
+          Debug.WriteLine("Error requesting '{0}'. Error: {1}", webRequest.RequestUri, webException);
+          return null;
+        }
+      });
+      return Observable
+        .Defer(Observable.FromAsyncPattern<WebResponse>(webRequest.BeginGetResponse, wrappedEndGetResponse))
+        .Where(response => response != null);
     }
 
-    public static IObservable<byte[]> GetResponseAsBytesAsync(this WebRequest webRequest) {
-      return from response in webRequest.GetResponseAsync() select response.ReadAsBytes();
+    public static IObservable<string> GetResponseAsStringAsync(this Uri requestUri, string userAgent = null) {
+      return from response in requestUri.GetResponseAsync(userAgent)
+             select response.UseAndDispose(ReadAsString);
     }
 
-    public static IObservable<WebResponse> GetResponseAsync(this WebRequest webRequest) {
-      return Observable.FromAsyncPattern<WebResponse>(webRequest.BeginGetResponse, webRequest.EndGetResponse)();
+    public static IObservable<byte[]> GetResponseAsBytesAsync(this Uri requestUri, string userAgent = null) {
+      return from response in requestUri.GetResponseAsync(userAgent)
+             select response.UseAndDispose(ReadAsBytes);
     }
 
     public static string ReadAsString(this WebResponse response) {
 #if DEBUG
-      System.Diagnostics.Debug.WriteLine("Reading URI: {0}", ((HttpWebResponse)response).ResponseUri);
+      var http = response as HttpWebResponse;
+      if (http != null) {
+        Debug.WriteLine(http.ResponseUri);
+      }
 #endif
       using (var stream = response.GetResponseStream()) {
         return stream.ReadAllAsString();
@@ -29,14 +52,15 @@ namespace PixelLab.Common {
     }
 
     public static byte[] ReadAsBytes(this WebResponse response) {
-#if DEBUG
-      System.Diagnostics.Debug.WriteLine("Reading URI: {0}", ((HttpWebResponse)response).ResponseUri);
-#endif
       using (var stream = response.GetResponseStream()) {
         return stream.ReadAllAsBytes();
       }
     }
 
-
+    public static TResponse UseAndDispose<T, TResponse>(this T source, Func<T, TResponse> func) where T : IDisposable {
+      using (source) {
+        return func(source);
+      }
+    }
   }
 }
