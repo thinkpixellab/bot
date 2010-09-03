@@ -10,9 +10,15 @@ using System.Linq;
 namespace PixelLab.Common {
   public static class WebHelpers {
     public static IObservable<WebResponse> GetResponseAsync(this Uri requestUri, string userAgent = null) {
-      var webRequest = (HttpWebRequest)WebRequest.Create(requestUri);
+      var webRequest = WebRequest.Create(requestUri);
       if (userAgent != null) {
-        webRequest.UserAgent = userAgent;
+        var httpRequest = webRequest as HttpWebRequest;
+        if (httpRequest == null) {
+          throw new ArgumentException("Cannot set 'userAgent' for non-http requests.");
+        }
+        else {
+          httpRequest.UserAgent = userAgent;
+        }
       }
 
       var wrappedEndGetResponse = new Func<IAsyncResult, WebResponse>(result => {
