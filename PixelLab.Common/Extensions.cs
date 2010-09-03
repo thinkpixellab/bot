@@ -325,7 +325,12 @@ namespace PixelLab.Common {
     public static bool IsNullOrWhiteSpace(this string str) {
       return str == null || str.Trim().Length == 0;
     }
-    
+
+    public static IEnumerable<T> Concat<T>(this IEnumerable<T> source, params T[] items) {
+      return source.Concat(items.AsEnumerable());
+    }
+
+    #region impl
     private class FuncComparer<T> : IComparer<T> {
       public FuncComparer(Func<T, T, int> func) {
         Contract.Requires(func != null);
@@ -364,6 +369,7 @@ namespace PixelLab.Common {
 
       private readonly Func<T, T, bool> m_func;
     }
+    #endregion
   }
 
 } //*** namespace PixelLab.Common
