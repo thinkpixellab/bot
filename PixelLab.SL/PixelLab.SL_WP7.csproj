@@ -53,6 +53,7 @@
       <DependentUpon>FlipControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers_Phone.cs" />
+    <Compile Include="IsolatedStorage\IsolatedFileSystemInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
