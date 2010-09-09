@@ -4,10 +4,15 @@
   xmlns:plsl="clr-namespace:PixelLab.SL">
 
   <Style TargetType="plsl:SpriteButton">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="{x:Null}" />
+    <Setter Property="BorderThickness" Value="0" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="plsl:SpriteButton">
+          <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
             <Rectangle HorizontalAlignment="Center" VerticalAlignment="Center" Name="ImageHolder" />
+          </Border>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
