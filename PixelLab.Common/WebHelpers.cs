@@ -21,9 +21,16 @@ namespace PixelLab.Common {
         }
       }
 
+      var wrappedBeginGetResponse = new Func<AsyncCallback, Object, IAsyncResult>((callback, state) => {
+        Debug.WriteLine("Requesting   : {0}", requestUri);
+        return webRequest.BeginGetResponse(callback, state);
+      });
+
       var wrappedEndGetResponse = new Func<IAsyncResult, WebResponse>(result => {
         try {
-          return webRequest.EndGetResponse(result);
+          var response = webRequest.EndGetResponse(result);
+          Debug.WriteLine("Response from: {0}", response.ResponseUri);
+          return response;
         }
         catch (WebException webException) {
           Debug.WriteLine("Error requesting '{0}'. Error: {1}", webRequest.RequestUri, webException);
@@ -31,7 +38,7 @@ namespace PixelLab.Common {
         }
       });
       return Observable
-        .Defer(Observable.FromAsyncPattern<WebResponse>(webRequest.BeginGetResponse, wrappedEndGetResponse))
+        .Defer(Observable.FromAsyncPattern<WebResponse>(wrappedBeginGetResponse, wrappedEndGetResponse))
         .Where(response => response != null);
     }
 
@@ -46,12 +53,6 @@ namespace PixelLab.Common {
     }
 
     public static string ReadAsString(this WebResponse response) {
-#if DEBUG
-      var http = response as HttpWebResponse;
-      if (http != null) {
-        Debug.WriteLine(http.ResponseUri);
-      }
-#endif
       using (var stream = response.GetResponseStream()) {
         return stream.ReadAllAsString();
       }
