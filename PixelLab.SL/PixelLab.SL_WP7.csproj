@@ -56,6 +56,7 @@
     <Compile Include="IsolatedStorage\IsolatedFileSystemInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpriteButton.cs" />
+    <Compile Include="SpriteElement.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="FlipControl.xaml">
