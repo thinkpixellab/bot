@@ -78,7 +78,7 @@ namespace PixelLab.Common {
       }
     }
 
-    private readonly Regex m_regex = new Regex(s_match, RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.Singleline);
+    private readonly Regex m_regex = new Regex(s_match, RegexOptions.CultureInvariant | RegexOptions.Singleline);
 
     private static readonly string s_match = string.Format("^({0})->({1})(,({2}))?$", c_validName, c_validName, c_validName);
     private const string c_validName = "[a-zA-Z_][a-zA-Z0-9_]*";
