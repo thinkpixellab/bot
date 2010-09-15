@@ -1,0 +1,7 @@
+﻿
+bin
+Bin
+obj
+*.user
+*.suo
+*.xap
