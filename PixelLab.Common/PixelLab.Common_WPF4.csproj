@@ -77,6 +77,8 @@
     <Compile Include="CompositionTargetRenderingListening.cs" />
     <Compile Include="DBUtil.cs" />
     <Compile Include="DemoCollection.cs" />
+    <Compile Include="DependencyPropHelper.cs" />
+    <Compile Include="EnumConverter.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GeoHelper.cs" />
     <Compile Include="HueConverter.cs" />
@@ -90,7 +92,9 @@
     <Compile Include="RoundDoubleConverter.cs" />
     <Compile Include="SimpleValueConverter.cs" />
     <Compile Include="SortHelper.cs" />
+    <Compile Include="StreamHelpers.cs" />
     <Compile Include="TreeHelpers.cs" />
+    <Compile Include="TypedDictionaryExtensions.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="WrappedLock.cs" />
   </ItemGroup>
