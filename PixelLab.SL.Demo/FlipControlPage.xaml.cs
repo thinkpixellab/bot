@@ -2,8 +2,10 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using PixelLab.Common;
+using PixelLab.SL.Demo.Core;
 
 namespace PixelLab.SL.Demo {
+  [DemoMetadata("Flip Control")]
   public partial class FlipControlPage : UserControl {
     public FlipControlPage() {
       InitializeComponent();
@@ -26,7 +28,7 @@ namespace PixelLab.SL.Demo {
       });
 
       m_next.Click += (sender, args) => DataContext = ++value;
-      m_previos.Click += (sender,args) => DataContext = --value;
+      m_previos.Click += (sender, args) => DataContext = --value;
 
       DataContext = value;
     }

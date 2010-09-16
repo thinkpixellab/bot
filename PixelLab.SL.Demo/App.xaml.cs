@@ -5,7 +5,7 @@ namespace PixelLab.SL.Demo {
   public partial class App : Application {
 
     public App() {
-      this.Startup += (sender, args) => { this.RootVisual = new SpriteButtonPage(); };
+      this.Startup += (sender, args) => { this.RootVisual = new DemoHost(); };
       this.UnhandledException += this.Application_UnhandledException;
 
       InitializeComponent();
