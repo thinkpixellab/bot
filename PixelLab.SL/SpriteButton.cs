@@ -1,34 +1,15 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Shapes;
+using PixelLab.Common;
 
 namespace PixelLab.SL {
 
-  // TODO: really need to wire up change handlers for properties
-  // TODO: Need to add PressedOffsetX property
-  [TemplatePart(Name="ImageHolder", Type=typeof(Rectangle))]
   public class SpriteButton : Button {
     public SpriteButton() {
       DefaultStyleKey = typeof(SpriteButton);
-
-      m_transform = new TranslateTransform();
-      m_brush = new ImageBrush() { Stretch = Stretch.None, AlignmentX = AlignmentX.Left, AlignmentY = AlignmentY.Top, Transform = m_transform };
     }
 
-    public override void OnApplyTemplate() {
-      var child = GetTemplateChild("ImageHolder") as Rectangle;
-      if (child != null) {
-        child.Fill = m_brush;
-        updateSize(child);
-        updateTransform();
-      }
-      base.OnApplyTemplate();
-    }
-
-    protected override void OnIsPressedChanged(DependencyPropertyChangedEventArgs e) {
-      updateTransform();
-    }
     #region DPs
     public ImageSource ImageSource {
       get { return (ImageSource)GetValue(ImageSourceProperty); }
@@ -36,11 +17,7 @@ namespace PixelLab.SL {
     }
 
     public static readonly DependencyProperty ImageSourceProperty =
-        DependencyProperty.Register("ImageSource", typeof(ImageSource), typeof(SpriteButton),
-        new PropertyMetadata(new PropertyChangedCallback((element, args) => {
-          ((SpriteButton)element).m_brush.ImageSource = (ImageSource)args.NewValue;
-        }))
-        );
+      DependencyPropHelper.Register<SpriteButton, ImageSource>("ImageSource");
 
     public int SpriteWidth {
       get { return (int)GetValue(SpriteWidthProperty); }
@@ -48,7 +25,7 @@ namespace PixelLab.SL {
     }
 
     public static readonly DependencyProperty SpriteWidthProperty =
-        DependencyProperty.Register("SpriteWidth", typeof(int), typeof(SpriteButton), null);
+      DependencyPropHelper.Register<SpriteButton, int>("SpriteWidth");
 
     public int SpriteHeight {
       get { return (int)GetValue(SpriteHeightProperty); }
@@ -82,34 +59,39 @@ namespace PixelLab.SL {
     public static readonly DependencyProperty SpriteIndexProperty =
         DependencyProperty.Register("SpriteIndex", typeof(int), typeof(SpriteButton), null);
 
+    public int PressedOffsetX {
+      get { return (int)GetValue(PressedOffsetXProperty); }
+      set { SetValue(PressedOffsetXProperty, value); }
+    }
+
+    public static readonly DependencyProperty PressedOffsetXProperty =
+      DependencyPropHelper.Register<SpriteButton, int>("PressedOffsetX");
+
     public int PressedOffsetY {
       get { return (int)GetValue(PressedOffsetYProperty); }
       set { SetValue(PressedOffsetYProperty, value); }
     }
 
     public static readonly DependencyProperty PressedOffsetYProperty =
-        DependencyProperty.Register("PressedOffsetY", typeof(int), typeof(SpriteButton), null);
+      DependencyPropHelper.Register<SpriteButton, int>("PressedOffsetY");
+
+    public int MouseOverOffsetX {
+      get { return (int)GetValue(MouseOverOffsetXProperty); }
+      set { SetValue(MouseOverOffsetXProperty, value); }
+    }
+
+    public static readonly DependencyProperty MouseOverOffsetXProperty =
+      DependencyPropHelper.Register<SpriteButton, int>("MouseOverOffsetX");
+
+    public int MouseOverOffsetY {
+      get { return (int)GetValue(MouseOverOffsetYProperty); }
+      set { SetValue(MouseOverOffsetYProperty, value); }
+    }
+
+    public static readonly DependencyProperty MouseOverOffsetYProperty =
+      DependencyPropHelper.Register<SpriteButton, int>("MouseOverOffsetY");
+
     #endregion
 
-    private void updateTransform() {
-      m_transform.X = -NextOffsetX * SpriteIndex;
-      m_transform.Y = -NextOffsetY * SpriteIndex;
-      if (IsPressed) {
-        m_transform.Y -= PressedOffsetY;
-      }
-    }
-
-    private void updateSize(Rectangle child = null) {
-      if (child == null) {
-        child = GetTemplateChild("ImageHolder") as Rectangle;
-      }
-      if (child != null) {
-        child.Width = SpriteWidth;
-        child.Height = SpriteHeight;
-      }
-    }
-
-    private readonly ImageBrush m_brush;
-    private readonly TranslateTransform m_transform;
   }
 }

@@ -11,7 +11,17 @@
       <Setter.Value>
         <ControlTemplate TargetType="plsl:SpriteButton">
           <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-            <Rectangle HorizontalAlignment="Center" VerticalAlignment="Center" Name="ImageHolder" />
+            <plsl:SpriteElement Width="{TemplateBinding SpriteWidth}" Height="{TemplateBinding SpriteHeight}" 
+                                ImageSource="{TemplateBinding ImageSource}"
+                                NextOffsetX="{TemplateBinding NextOffsetX}"
+                                NextOffsetY="{TemplateBinding NextOffsetY}"
+                                IsMouseOver="{TemplateBinding IsMouseOver}"
+                                MouseOverOffsetX="{TemplateBinding MouseOverOffsetX}"
+                                MouseOverOffsetY="{TemplateBinding MouseOverOffsetY}"
+                                IsPressed="{TemplateBinding IsPressed}"
+                                PressedOffsetX="{TemplateBinding PressedOffsetX}"
+                                PressedOffsetY="{TemplateBinding PressedOffsetY}"
+                                SpriteIndex="{TemplateBinding SpriteIndex}"/>
           </Border>
         </ControlTemplate>
       </Setter.Value>

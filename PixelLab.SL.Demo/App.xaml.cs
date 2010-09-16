@@ -5,7 +5,7 @@ namespace PixelLab.SL.Demo {
   public partial class App : Application {
 
     public App() {
-      this.Startup += (sender, args) => { this.RootVisual = new FlipControlPage(); };
+      this.Startup += (sender, args) => { this.RootVisual = new SpriteButtonPage(); };
       this.UnhandledException += this.Application_UnhandledException;
 
       InitializeComponent();

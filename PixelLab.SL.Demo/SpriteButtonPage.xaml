@@ -1,0 +1,34 @@
+﻿<UserControl
+  x:Class="PixelLab.SL.Demo.SpriteButtonPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignHeight="300" d:DesignWidth="400"
+  xmlns:sl="clr-namespace:PixelLab.SL;assembly=PixelLab.SL">
+
+  <UserControl.Resources>
+    <Style TargetType="sl:SpriteButton" x:Key="spriteStyle">
+      <Setter Property="ImageSource" Value="/PixelLab.SL.Demo;component/Assets/sprite.png"/>
+      <Setter Property="Width" Value="32"/>
+      <Setter Property="Height" Value="32"/>
+      <Setter Property="NextOffsetX" Value="32" />
+      <Setter Property="MouseOverOffsetY" Value="32"/>
+      <Setter Property="PressedOffsetY" Value="64"/>
+    </Style>
+  </UserControl.Resources>
+
+  <Grid x:Name="LayoutRoot" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+    <StackPanel Orientation="Horizontal" >
+      <sl:SpriteButton Style="{StaticResource spriteStyle}" SpriteIndex="0" />
+      <sl:SpriteButton Style="{StaticResource spriteStyle}" SpriteIndex="1" />
+      <sl:SpriteButton Style="{StaticResource spriteStyle}" SpriteIndex="2" />
+      <sl:SpriteButton Style="{StaticResource spriteStyle}" SpriteIndex="3" />
+      <sl:SpriteButton Style="{StaticResource spriteStyle}" SpriteIndex="4" />
+      <sl:SpriteButton Style="{StaticResource spriteStyle}" SpriteIndex="5" />
+    </StackPanel>
+
+  </Grid>
+</UserControl>
