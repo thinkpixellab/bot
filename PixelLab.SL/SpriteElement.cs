@@ -23,7 +23,7 @@ namespace PixelLab.SL {
       set { SetValue(IsPressedProperty, value); }
     }
 
-    public static readonly DependencyProperty IsPressedProperty = DependencyPropertyHelper.Register<SpriteElement, bool>("IsPressed", (element, newValue, oldValue) => element.updateTransform());
+    public static readonly DependencyProperty IsPressedProperty = DependencyPropHelper.Register<SpriteElement, bool>("IsPressed", (element, newValue, oldValue) => element.updateTransform());
 
     public ImageSource ImageSource {
       get { return (ImageSource)GetValue(ImageSourceProperty); }
@@ -31,7 +31,7 @@ namespace PixelLab.SL {
     }
 
     public static readonly DependencyProperty ImageSourceProperty =
-      DependencyPropertyHelper.Register<SpriteElement, ImageSource>("ImageSource", (element, newVal, oldVal) => {
+      DependencyPropHelper.Register<SpriteElement, ImageSource>("ImageSource", (element, newVal, oldVal) => {
         element.m_brush.ImageSource = newVal;
         element.updateTransform();
       });
@@ -42,7 +42,7 @@ namespace PixelLab.SL {
     }
 
     public static readonly DependencyProperty NextOffsetXProperty =
-      DependencyPropertyHelper.Register<SpriteElement, int>("NextOffsetXProperty", onValueChange);
+      DependencyPropHelper.Register<SpriteElement, int>("NextOffsetXProperty", onValueChange);
 
     public int NextOffsetY {
       get { return (int)GetValue(NextOffsetYProperty); }
@@ -50,7 +50,7 @@ namespace PixelLab.SL {
     }
 
     public static readonly DependencyProperty NextOffsetYProperty =
-      DependencyPropertyHelper.Register<SpriteElement, int>("NextOffsetYProperty", onValueChange);
+      DependencyPropHelper.Register<SpriteElement, int>("NextOffsetYProperty", onValueChange);
 
     public int SpriteIndex {
       get { return (int)GetValue(SpriteIndexProperty); }
@@ -58,7 +58,7 @@ namespace PixelLab.SL {
     }
 
     public static readonly DependencyProperty SpriteIndexProperty =
-      DependencyPropertyHelper.Register<SpriteElement, int>("SpriteIndex", onValueChange);
+      DependencyPropHelper.Register<SpriteElement, int>("SpriteIndex", onValueChange);
 
     public int PressedOffsetY {
       get { return (int)GetValue(PressedOffsetYProperty); }
@@ -66,7 +66,7 @@ namespace PixelLab.SL {
     }
 
     public static readonly DependencyProperty PressedOffsetYProperty =
-      DependencyPropertyHelper.Register<SpriteElement, int>("PressedOffset", onValueChange);
+      DependencyPropHelper.Register<SpriteElement, int>("PressedOffset", onValueChange);
     #endregion
 
     private void updateTransform() {

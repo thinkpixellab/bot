@@ -72,7 +72,7 @@
     <Compile Include="CommandWrapper.cs" />
     <Compile Include="CompositionTargetRenderingListening.cs" />
     <Compile Include="DemoCollection.cs" />
-    <Compile Include="DependencyPropertyHelper.cs" />
+    <Compile Include="DependencyPropHelper.cs" />
     <Compile Include="EnumConverter.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GeoHelper.cs" />
@@ -86,6 +86,7 @@
     <Compile Include="RoundDoubleConverter.cs" />
     <Compile Include="SimpleValueConverter.cs" />
     <Compile Include="SortHelper.cs" />
+    <Compile Include="StreamHelpers.cs" />
     <Compile Include="TreeHelpers.cs" />
     <Compile Include="TypedDictionaryExtensions.cs" />
     <Compile Include="Util.cs" />

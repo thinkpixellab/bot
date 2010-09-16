@@ -58,7 +58,7 @@
     <Compile Include="CompositionTargetRenderingListening.cs" />
     <Compile Include="Contracts_WP7.cs" />
     <Compile Include="DemoCollection.cs" />
-    <Compile Include="DependencyPropertyHelper.cs" />
+    <Compile Include="DependencyPropHelper.cs" />
     <Compile Include="EnumConverter.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GeoHelper.cs" />
