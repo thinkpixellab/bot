@@ -5,21 +5,10 @@ namespace PixelLab.SL.Demo {
   public partial class App : Application {
 
     public App() {
-      this.Startup += this.Application_Startup;
-      this.Exit += this.Application_Exit;
+      this.Startup += (sender, args) => { this.RootVisual = new FlipControlPage(); };
       this.UnhandledException += this.Application_UnhandledException;
 
-      Host.Settings.EnableFrameRateCounter = true;
-
       InitializeComponent();
-    }
-
-    private void Application_Startup(object sender, StartupEventArgs e) {
-      this.RootVisual = new MainPage();
-    }
-
-    private void Application_Exit(object sender, EventArgs e) {
-
     }
 
     private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e) {
