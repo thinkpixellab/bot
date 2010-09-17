@@ -7,6 +7,11 @@
     d:DesignHeight="300" d:DesignWidth="400">
 
   <Grid x:Name="m_layoutRoot" >
-
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <ListBox Name="m_items" DisplayMemberPath="Item1" />
+    <Border Name="m_container" Grid.Column="1"/>
   </Grid>
 </UserControl>

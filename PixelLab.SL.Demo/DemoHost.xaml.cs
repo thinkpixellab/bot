@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
+using System.ComponentModel.Composition.Primitives;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using PixelLab.Common;
@@ -10,15 +11,30 @@ namespace PixelLab.SL.Demo {
   public partial class DemoHost : UserControl {
     public DemoHost() {
       InitializeComponent();
-      CompositionInitializer.SatisfyImports(this);
-      m_layoutRoot.Children.Add(Demos.Random().Value);
-    }
 
-    [ImportMany(typeof(FrameworkElement))]
-    public IList<Lazy<FrameworkElement, IDemoMetadata>> Demos {
-      get { return m_demos; }
-    }
 
-    private readonly List<Lazy<FrameworkElement, IDemoMetadata>> m_demos = new List<Lazy<FrameworkElement, IDemoMetadata>>();
+      var catalog = new AssemblyCatalog(typeof(App).Assembly);
+      var items = (from part in catalog.Parts
+                   from definition in part.ExportDefinitions
+                   where definition.ContractName == DemoMetadataAttribute.ContractName
+                   select new Tuple<string, ExportDefinition, ComposablePartDefinition>(definition.Metadata["Name"] as string, definition, part)).ToReadOnlyCollection();
+      m_items.ItemsSource = items;
+
+      m_items.SelectionChanged += (sender, args) => {
+        var item = m_items.SelectedItem as Tuple<string, ExportDefinition, ComposablePartDefinition>;
+        if (item != null) {
+
+          var element = item.Item3.CreatePart().GetExportedValue(item.Item2) as FrameworkElement;
+          if (element == null) {
+            m_container.Child = new TextBlock() { Text = "Error loading component" };
+          }
+          else {
+            m_container.Child = element;
+          }
+
+        }
+
+      };
+    }
   }
 }
