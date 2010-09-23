@@ -84,7 +84,7 @@ namespace PixelLab.SL {
     }
 
     public static readonly DependencyProperty NextOffsetXProperty =
-      DependencyPropHelper.Register<SpriteElement, int>("NextOffsetXProperty", onValueChange);
+      DependencyPropHelper.Register<SpriteElement, int>("NextOffsetX", onValueChange);
 
     public int NextOffsetY {
       get { return (int)GetValue(NextOffsetYProperty); }
@@ -92,7 +92,7 @@ namespace PixelLab.SL {
     }
 
     public static readonly DependencyProperty NextOffsetYProperty =
-      DependencyPropHelper.Register<SpriteElement, int>("NextOffsetYProperty", onValueChange);
+      DependencyPropHelper.Register<SpriteElement, int>("NextOffsetY", onValueChange);
 
     public int SpriteIndex {
       get { return (int)GetValue(SpriteIndexProperty); }
