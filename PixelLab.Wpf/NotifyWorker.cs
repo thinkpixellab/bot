@@ -157,15 +157,11 @@ namespace PixelLab.Wpf {
         }
 
         if (getInput && !m_disposed) {
-          bool processInput = false;
-          m_operation = Dispatcher.BeginInvoke(
-              DispatcherPriority.Background,
-              new Action(delegate() {
-                m_preWork();
-                processInput = true;
-              }));
+
+          m_operation = Dispatcher.BeginInvoke(DispatcherPriority.Background, new Func<bool>(() => { return m_preWork(); }));
 
           if (!m_disposed && m_operation.Wait() == DispatcherOperationStatus.Completed) {
+            bool processInput = (bool)m_operation.Result;
             m_operation = null;
 
             if (processInput) {
@@ -189,9 +185,9 @@ namespace PixelLab.Wpf {
                 //  out a LastException, if one exists...all on the Dispatcher thread
                 m_operation = Dispatcher.BeginInvoke(DispatcherPriority.Background,
                     new Action(delegate() {
-                      m_postWork();
-                      OnClientException(null);
-                    }));
+                  m_postWork();
+                  OnClientException(null);
+                }));
 
                 if (!m_disposed) {
                   m_operation.Wait();
