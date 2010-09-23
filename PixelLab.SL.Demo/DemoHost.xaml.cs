@@ -4,7 +4,6 @@ using System.ComponentModel.Composition.Primitives;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using PixelLab.Common;
 using PixelLab.SL.Demo.Core;
 
 namespace PixelLab.SL.Demo {
@@ -17,7 +16,14 @@ namespace PixelLab.SL.Demo {
       var items = (from part in catalog.Parts
                    from definition in part.ExportDefinitions
                    where definition.ContractName == DemoMetadataAttribute.DemoContractName
-                   select new Tuple<string, ExportDefinition, ComposablePartDefinition>(definition.Metadata["Name"] as string, definition, part)).ToReadOnlyCollection();
+                   select new Tuple<string, ExportDefinition, ComposablePartDefinition>(definition.Metadata["Name"] as string, definition, part)).ToList();
+
+      var welcome = items.Where(tuple => tuple.Item1.Equals("Welcome", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+      if (welcome != null) {
+        items.Remove(welcome);
+        items.Insert(0, welcome);
+      }
+
       m_items.ItemsSource = items;
 
       m_items.SelectionChanged += (sender, args) => {
@@ -35,6 +41,8 @@ namespace PixelLab.SL.Demo {
         }
 
       };
+
+      m_items.SelectedIndex = 0;
     }
   }
 }
