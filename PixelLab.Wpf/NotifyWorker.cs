@@ -158,7 +158,7 @@ namespace PixelLab.Wpf {
 
         if (getInput && !m_disposed) {
 
-          m_operation = Dispatcher.BeginInvoke(DispatcherPriority.Background, new Func<bool>(() => { return m_preWork(); }));
+          m_operation = Dispatcher.BeginInvoke(DispatcherPriority.Background, m_preWork);
 
           if (!m_disposed && m_operation.Wait() == DispatcherOperationStatus.Completed) {
             bool processInput = (bool)m_operation.Result;
