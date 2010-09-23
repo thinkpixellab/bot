@@ -16,7 +16,7 @@ namespace PixelLab.SL.Demo {
       var catalog = new AssemblyCatalog(typeof(App).Assembly);
       var items = (from part in catalog.Parts
                    from definition in part.ExportDefinitions
-                   where definition.ContractName == DemoMetadataAttribute.ContractName
+                   where definition.ContractName == DemoMetadataAttribute.DemoContractName
                    select new Tuple<string, ExportDefinition, ComposablePartDefinition>(definition.Metadata["Name"] as string, definition, part)).ToReadOnlyCollection();
       m_items.ItemsSource = items;
 

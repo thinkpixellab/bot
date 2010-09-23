@@ -9,7 +9,7 @@ namespace PixelLab.SL.Demo.Core {
   public class DemoMetadataAttribute : ExportAttribute, IDemoMetadata {
     public DemoMetadataAttribute(string name) : this(name, string.Empty) { }
     public DemoMetadataAttribute(string name, string description)
-      : base(ContractName, typeof(FrameworkElement)) {
+      : base(DemoContractName, typeof(FrameworkElement)) {
       Name = name;
       Description = description;
     }
@@ -17,7 +17,7 @@ namespace PixelLab.SL.Demo.Core {
     public string Name { get; private set; }
     public string Description { get; private set; }
 
-    public const string ContractName = "PixelLab.SL.Demo";
+    public const string DemoContractName = "PixelLab.SL.Demo";
   }
 
   public interface IDemoMetadata {
