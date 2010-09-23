@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using PixelLab.Common;
@@ -11,7 +11,10 @@ namespace PixelLab.SL {
       m_transform = new TranslateTransform();
       m_brush = new ImageBrush() { Stretch = Stretch.None, AlignmentX = AlignmentX.Left, AlignmentY = AlignmentY.Top, Transform = m_transform };
 
-      this.Content = new Rectangle() { Fill = m_brush };
+      var rect = new Rectangle() { Fill = m_brush };
+      rect.SetBinding(Rectangle.WidthProperty, new Binding("SpriteWidth") { Source = this });
+      rect.SetBinding(Rectangle.HeightProperty, new Binding("SpriteHeight") { Source = this });
+      this.Content = rect;
     }
 
     #region DPs
@@ -78,6 +81,22 @@ namespace PixelLab.SL {
         element.updateTransform();
       });
 
+    public int SpriteWidth {
+      get { return (int)GetValue(SpriteWidthProperty); }
+      set { SetValue(SpriteWidthProperty, value); }
+    }
+
+    public static readonly DependencyProperty SpriteWidthProperty =
+      DependencyPropHelper.Register<SpriteElement, int>("SpriteWidth");
+
+    public int SpriteHeight {
+      get { return (int)GetValue(SpriteHeightProperty); }
+      set { SetValue(SpriteHeightProperty, value); }
+    }
+
+    public static readonly DependencyProperty SpriteHeightProperty =
+      DependencyPropHelper.Register<SpriteElement, int>("SpriteHeight");
+
     public int NextOffsetX {
       get { return (int)GetValue(NextOffsetXProperty); }
       set { SetValue(NextOffsetXProperty, value); }
@@ -119,7 +138,6 @@ namespace PixelLab.SL {
 
     private static void onValueChange(SpriteElement element, int newValue, int oldValue) {
       element.updateTransform();
-      Debug.WriteLine("{0} {1}", element, newValue);
     }
 
     private readonly ImageBrush m_brush;

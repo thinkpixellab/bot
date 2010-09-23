@@ -33,7 +33,7 @@ namespace PixelLab.SL {
     }
 
     public static readonly DependencyProperty SpriteHeightProperty =
-        DependencyProperty.Register("SpriteHeight", typeof(int), typeof(SpriteButton), null);
+      DependencyPropHelper.Register<SpriteButton, int>("SpriteHeight");
 
     public int NextOffsetX {
       get { return (int)GetValue(NextOffsetXProperty); }
