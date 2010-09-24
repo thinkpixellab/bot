@@ -13,6 +13,8 @@
       <Setter Property="ImageSource" Value="/PixelLab.SL.Demo;component/Assets/sprite.png"/>
       <Setter Property="Width" Value="32"/>
       <Setter Property="Height" Value="32"/>
+      <Setter Property="SpriteWidth" Value="32"/>
+      <Setter Property="SpriteHeight" Value="32"/>
       <Setter Property="NextOffsetX" Value="32" />
       <Setter Property="MouseOverOffsetY" Value="32"/>
       <Setter Property="PressedOffsetY" Value="64"/>
