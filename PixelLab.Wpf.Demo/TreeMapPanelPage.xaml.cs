@@ -4,8 +4,10 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using PixelLab.Common;
+using PixelLab.SL.Demo.Core;
 
 namespace PixelLab.Wpf.Demo {
+  [DemoMetadata("TreeMapPanel", "Another example of a custom panel.")]
   public partial class TreeMapPanelPage : Page {
     public TreeMapPanelPage() {
       InitializeComponent();

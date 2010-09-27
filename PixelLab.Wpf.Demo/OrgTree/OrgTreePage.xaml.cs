@@ -1,6 +1,8 @@
 ﻿using System.Windows.Controls;
+using PixelLab.SL.Demo.Core;
 
 namespace PixelLab.Wpf.Demo.OrgTree {
+  [DemoMetadata("Org Tree", "A play off treeview, but stacked like an org chart. Right-click on nodes to add or remove children.")]
   public partial class OrgTreePage : Page {
     public OrgTreePage() {
       InitializeComponent();

@@ -54,6 +54,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xaml" />
@@ -70,10 +71,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\PixelLab.SL.Demo\Core\DemoMetadata.cs">
+      <Link>Core\DemoMetadata.cs</Link>
+    </Compile>
+    <Compile Include="..\PixelLab.SL.Demo\Core\DemoMetadataAttribute.cs">
+      <Link>Core\DemoMetadataAttribute.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Code.cs" />
+    <Compile Include="Core\Code.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Hex\HexPage.xaml">
@@ -375,9 +382,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="TableOfContents.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\PixelLab.Common\PixelLab.Common_WPF4.csproj">
       <Project>{273247A2-A3C8-42D0-8463-F95FC5C0A34C}</Project>
       <Name>PixelLab.Common_WPF4</Name>
@@ -389,9 +393,8 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="logo.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="icon.ico" />
+    <Resource Include="TableOfContents.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

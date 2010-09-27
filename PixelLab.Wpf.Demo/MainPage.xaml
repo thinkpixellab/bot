@@ -3,15 +3,13 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:local="clr-namespace:PixelLab.Wpf.Demo"
-	xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf"
-  ShowsNavigationUI="False" WindowTitle="Bag of Tricks" Background="#00AB5B5B">
+  xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf"
+  ShowsNavigationUI="False" WindowTitle="The WPF Bag of Tricks - by Pixel Lab" Background="#00AB5B5B">
   <Page.Resources>
 
     <local:IsStringEmptyConverter x:Key="IsStringEmptyConverter"/>
 
-    <XmlDataProvider x:Key="samples" Source="TableOfContents.xml"/>
-
-    <Style x:Key="SampleItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+    <Style x:Key="SampleItemStyle" TargetType="{x:Type ListBoxItem}">
       <Setter Property="HorizontalContentAlignment" Value="Stretch" />
       <Setter Property="FontFamily" Value="Consolas"/>
       <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -24,16 +22,16 @@
   </Page.Resources>
   <DockPanel Margin="10">
 
-    <ListBox x:Name="SampleList" VerticalAlignment="Center" Margin="10" Padding="5" DockPanel.Dock="Left" Background="{x:Null}"
-  		SelectedIndex="0" ItemsSource="{Binding Source={StaticResource samples}, XPath=Samples/Sample}" DisplayMemberPath="@Title" ItemContainerStyle="{DynamicResource SampleItemStyle}"
-		BorderBrush="{x:Null}" BorderThickness="0"/>
+    <ListBox Name="m_sampleList" VerticalAlignment="Center" Margin="10" Padding="5" DockPanel.Dock="Left" Background="{x:Null}"
+      SelectedIndex="0" DisplayMemberPath="Name" ItemContainerStyle="{StaticResource SampleItemStyle}"
+    BorderBrush="{x:Null}" BorderThickness="0"/>
 
-    <DockPanel Margin="10" DataContext="{Binding SelectedItem, ElementName=SampleList}">
+    <DockPanel Margin="10" DataContext="{Binding SelectedItem, ElementName=m_sampleList}">
       <Expander DockPanel.Dock="Bottom" Header="Description" Style="{StaticResource SimpleExpander}"
-                  Visibility="{Binding Converter={StaticResource IsStringEmptyConverter}}" MaxWidth="720" HorizontalAlignment="Center">
-        <TextBlock Text="{Binding XPath=@Description}" TextWrapping="Wrap" Margin="30 10" FontSize="12"/>
+                  Visibility="{Binding Path=Description, Converter={StaticResource IsStringEmptyConverter}}" MaxWidth="720" HorizontalAlignment="Center">
+        <TextBlock Text="{Binding Path=Description}" TextWrapping="Wrap" Margin="30 10" FontSize="12"/>
       </Expander>
-      <Frame Name="m_contentFrame" Source="{Binding XPath=@Page}" NavigationUIVisibility="Hidden" Focusable="false"/>
+      <Frame Name="m_contentFrame" NavigationUIVisibility="Hidden" Focusable="false" Content="{Binding Path=Instance}"/>
     </DockPanel>
 
   </DockPanel>

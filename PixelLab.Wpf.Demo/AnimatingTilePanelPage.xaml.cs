@@ -4,8 +4,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using PixelLab.Common;
+using PixelLab.SL.Demo.Core;
 
 namespace PixelLab.Wpf.Demo {
+  [DemoMetadata("Animating Tile Panel", "This is a demonstration of two concepts: custom Panel creation and use of the Composition.Render event to do animations.")]
   public partial class AnimatingTilePanelPage : Page {
     public AnimatingTilePanelPage() {
       InitializeComponent();

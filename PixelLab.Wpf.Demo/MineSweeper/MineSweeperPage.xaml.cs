@@ -1,9 +1,11 @@
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.ComponentModel;
+using PixelLab.SL.Demo.Core;
 
 namespace PixelLab.Wpf.Demo.MineSweeper {
+  [DemoMetadata("Mine Sweeper", "An oldy, but a goody. Done in WPF. Custom templates are used a lot here.")]
   public partial class MineSweeperPage : Page {
 
     public MineSweeperPage() {

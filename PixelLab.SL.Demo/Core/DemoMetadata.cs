@@ -1,27 +1,31 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition.Primitives;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
 using PixelLab.Common;
-using System.Diagnostics.Contracts;
 
 namespace PixelLab.SL.Demo.Core {
   public class DemoMetadata {
-    public DemoMetadata(string name, ExportDefinition definition, ComposablePartDefinition partDefinition) {
+    public DemoMetadata(string name, string description, ExportDefinition definition, ComposablePartDefinition partDefinition) {
       Name = name;
+      Description = description;
       ExportDefinition = definition;
       PartDefinition = partDefinition;
     }
 
     public string Name { get; private set; }
+    public string Description { get; private set; }
     public ExportDefinition ExportDefinition { get; private set; }
     public ComposablePartDefinition PartDefinition { get; private set; }
 
     public FrameworkElement CreateElement() {
       return (FrameworkElement)PartDefinition.CreatePart().GetExportedValue(ExportDefinition);
     }
+
+    public FrameworkElement Instance { get { return CreateElement(); } }
 
     public static IList<DemoMetadata> GetDemos(Assembly sourceAssembly, string firstName = null) {
       Contract.Requires(sourceAssembly != null);
@@ -30,7 +34,7 @@ namespace PixelLab.SL.Demo.Core {
       var items = (from part in catalog.Parts
                    from definition in part.ExportDefinitions
                    where definition.ContractName == DemoMetadataAttribute.DemoContractName
-                   select new DemoMetadata(definition.Metadata["Name"] as string, definition, part)
+                   select new DemoMetadata((string)definition.Metadata["Name"], (string)definition.Metadata["Description"], definition, part)
                    )
                    .OrderBy(_ => _.Name)
                    .ToList();

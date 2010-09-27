@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using PixelLab.SL.Demo.Core;
 
 namespace PixelLab.Wpf.Demo {
+
+  [DemoMetadata("Show Element", "A simple element used to 'show' a series of UIElements.")]
   public partial class ShowElementPage : Page {
     public ShowElementPage() {
       InitializeComponent();
@@ -20,7 +23,7 @@ namespace PixelLab.Wpf.Demo {
 
       DispatcherTimer timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(4) };
       timer.Tick += (sender, args) => addElementAction();
-      
+
       Unloaded += (sender, args) => {
         timer.Stop();
       };

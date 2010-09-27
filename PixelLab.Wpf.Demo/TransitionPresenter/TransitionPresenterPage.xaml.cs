@@ -6,9 +6,11 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using PixelLab.SL.Demo.Core;
 using PixelLab.Wpf.Transitions;
 
 namespace PixelLab.Wpf.Demo {
+  [DemoMetadata("TransitionPresenter", "Before Neil went off to hack on the Zune app, he made one of the most impressive WPF demos. Kudos!")]
   public partial class TransitionPresenterPage : Page {
     public TransitionPresenterPage() {
       InitializeComponent();

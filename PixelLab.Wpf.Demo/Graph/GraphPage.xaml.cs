@@ -6,8 +6,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using PixelLab.Common;
+using PixelLab.SL.Demo.Core;
 
 namespace PixelLab.Wpf.Demo {
+
+  [DemoMetadata("Graph", "This is an example of supporting multi-item data binding without using ItemsControl. It uses tricks that are similar to AnimatingTilePanel, specifically physics inspired custom animations using CompsitionTarget.Render.")]
   public partial class GraphPage : Page {
     static GraphPage() {
       CommandManager.RegisterClassCommandBinding(typeof(GraphPage),
