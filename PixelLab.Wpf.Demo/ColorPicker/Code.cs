@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -22,8 +24,8 @@ namespace PixelLab.Wpf.Demo {
       throw new ArgumentException("parameter not a string");
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) {
-      throw new NotSupportedException();
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+      return DependencyProperty.UnsetValue;
     }
   }
 }

@@ -25,6 +25,7 @@ THE SOFTWARE.
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Windows;
 using System.Windows.Data;
 
 namespace PixelLab.Common {
@@ -88,7 +89,7 @@ namespace PixelLab.Common {
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
-      throw new NotImplementedException();
+      return DependencyProperty.UnsetValue;
     }
 
     #endregion

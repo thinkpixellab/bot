@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -82,7 +83,7 @@ namespace PixelLab.Common {
     }
 
     object IValueConverter.ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) {
-      throw new NotSupportedException();
+      return DependencyProperty.UnsetValue;
     }
   }
 }
