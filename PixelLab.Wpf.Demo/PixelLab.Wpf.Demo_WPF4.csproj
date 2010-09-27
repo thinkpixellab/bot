@@ -163,6 +163,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="VSCopyToHtmlPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="XamlShirt.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -362,6 +366,9 @@
     </Compile>
     <Compile Include="TransitionPresenter\TransitionPresenterPage.xaml.cs">
       <DependentUpon>TransitionPresenterPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VSCopyToHtmlPage.xaml.cs">
+      <DependentUpon>VSCopyToHtmlPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ZapPage.xaml.cs">
       <DependentUpon>ZapPage.xaml</DependentUpon>

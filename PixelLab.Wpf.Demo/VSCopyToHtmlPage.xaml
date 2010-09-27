@@ -8,7 +8,7 @@
       <RowDefinition Height="Auto"/>
       <RowDefinition />
     </Grid.RowDefinitions>
-    
+
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*" />
       <ColumnDefinition Width="*" />
@@ -21,7 +21,7 @@
                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="5"/>
     <TextBox Grid.Column="1" Grid.Row="1" Name="m_textBoxHtml" IsReadOnly="true"
              VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="5"/>
-    
+
   </Grid>
-  
+
 </Page>
