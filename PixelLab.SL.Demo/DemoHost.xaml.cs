@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.Composition.Hosting;
-using System.ComponentModel.Composition.Primitives;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,9 +15,9 @@ namespace PixelLab.SL.Demo {
       var items = (from part in catalog.Parts
                    from definition in part.ExportDefinitions
                    where definition.ContractName == DemoMetadataAttribute.DemoContractName
-                   select new Tuple<string, ExportDefinition, ComposablePartDefinition>(definition.Metadata["Name"] as string, definition, part)).ToList();
+                   select new DemoMetadata(definition.Metadata["Name"] as string, definition, part)).ToList();
 
-      var welcome = items.Where(tuple => tuple.Item1.Equals("Welcome", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+      var welcome = items.Where(tuple => tuple.Name.Equals("Welcome", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
       if (welcome != null) {
         items.Remove(welcome);
         items.Insert(0, welcome);
@@ -27,10 +26,10 @@ namespace PixelLab.SL.Demo {
       m_items.ItemsSource = items;
 
       m_items.SelectionChanged += (sender, args) => {
-        var item = m_items.SelectedItem as Tuple<string, ExportDefinition, ComposablePartDefinition>;
+        var item = m_items.SelectedItem as DemoMetadata;
         if (item != null) {
 
-          var element = item.Item3.CreatePart().GetExportedValue(item.Item2) as FrameworkElement;
+          var element = item.PartDefinition.CreatePart().GetExportedValue(item.ExportDefinition) as FrameworkElement;
           if (element == null) {
             m_container.Child = new TextBlock() { Text = "Error loading component" };
           }

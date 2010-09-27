@@ -69,6 +69,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Core\DemoMetadata.cs" />
+    <Compile Include="Core\DemoMetadataAttribute.cs" />
     <Compile Include="DemoHost.xaml.cs">
       <DependentUpon>DemoHost.xaml</DependentUpon>
     </Compile>
