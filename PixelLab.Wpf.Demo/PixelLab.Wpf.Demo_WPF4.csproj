@@ -101,6 +101,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BlockBarPage.xaml.cs">
+      <DependentUpon>BlockBarPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Core\Code.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -122,6 +125,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="InfoTextBoxPage.xaml.cs">
+      <DependentUpon>InfoTextBoxPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="IntroductionPage.xaml.cs">
+      <DependentUpon>IntroductionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -145,6 +154,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="RadioButtonListPage.xaml.cs">
+      <DependentUpon>RadioButtonListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RevealPage.xaml.cs">
+      <DependentUpon>RevealPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TreeMapPanelPage.xaml.cs">
       <DependentUpon>TreeMapPanelPage.xaml</DependentUpon>
     </Compile>
@@ -397,6 +412,9 @@
     </Compile>
     <Compile Include="VSCopyToHtmlPage.xaml.cs">
       <DependentUpon>VSCopyToHtmlPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="XamlShirt.xaml.cs">
+      <DependentUpon>XamlShirt.xaml</DependentUpon>
     </Compile>
     <Compile Include="ZapPage.xaml.cs">
       <DependentUpon>ZapPage.xaml</DependentUpon>

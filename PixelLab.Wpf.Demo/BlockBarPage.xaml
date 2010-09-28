@@ -1,6 +1,8 @@
-﻿<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf">
+﻿<Page 
+  x:Class="PixelLab.Wpf.Demo.BlockBarPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf">
   <Viewbox>
     <Grid Width="400" Margin="20">
       <Grid.RowDefinitions>

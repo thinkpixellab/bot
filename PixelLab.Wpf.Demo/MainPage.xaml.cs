@@ -7,7 +7,7 @@ namespace PixelLab.Wpf.Demo {
     public MainPage() {
       InitializeComponent();
 
-      m_sampleList.ItemsSource = DemoMetadata.GetDemos(typeof(MainPage).Assembly);
+      m_sampleList.ItemsSource = DemoMetadata.GetDemos(typeof(MainPage).Assembly, "Introduction");
 
       m_contentFrame.Navigating += (sender, e) => {
         if (e.Uri != null) {
