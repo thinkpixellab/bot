@@ -82,6 +82,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -95,6 +96,7 @@
     <Compile Include="CastList.cs" />
     <Compile Include="ColorHelper.cs" />
     <Compile Include="CommandWrapper.cs" />
+    <Compile Include="CompositionHelpers.cs" />
     <Compile Include="CompositionTargetRenderingListening.cs" />
     <Compile Include="DBUtil.cs" />
     <Compile Include="DemoCollection.cs" />

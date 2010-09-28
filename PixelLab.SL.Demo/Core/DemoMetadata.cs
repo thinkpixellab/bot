@@ -9,20 +9,18 @@ using PixelLab.Common;
 
 namespace PixelLab.SL.Demo.Core {
   public class DemoMetadata {
-    public DemoMetadata(string name, string description, ExportDefinition definition, ComposablePartDefinition partDefinition) {
-      Name = name;
-      Description = description;
-      ExportDefinition = definition;
-      PartDefinition = partDefinition;
+    public DemoMetadata(FunctionExportDefinition<FrameworkElement> export) {
+      Name = (string)export.Metadata["Name"];
+      Description = (string)export.Metadata["Description"];
+      ExportDefinition = export;
     }
 
     public string Name { get; private set; }
     public string Description { get; private set; }
-    public ExportDefinition ExportDefinition { get; private set; }
-    public ComposablePartDefinition PartDefinition { get; private set; }
+    public FunctionExportDefinition<FrameworkElement> ExportDefinition { get; private set; }
 
     public FrameworkElement CreateElement() {
-      return (FrameworkElement)PartDefinition.CreatePart().GetExportedValue(ExportDefinition);
+      return ExportDefinition.GetValue();
     }
 
     public FrameworkElement Instance { get { return CreateElement(); } }
@@ -31,11 +29,9 @@ namespace PixelLab.SL.Demo.Core {
       Contract.Requires(sourceAssembly != null);
 
       var catalog = new AssemblyCatalog(sourceAssembly);
-      var items = (from part in catalog.Parts
-                   from definition in part.ExportDefinitions
-                   where definition.ContractName == DemoMetadataAttribute.DemoContractName
-                   select new DemoMetadata((string)definition.Metadata["Name"], (string)definition.Metadata["Description"], definition, part)
-                   )
+      var items = (from export in catalog.GetExports<FrameworkElement>()
+                   where export.ContractName == DemoMetadataAttribute.DemoContractName
+                   select new DemoMetadata(export))
                    .OrderBy(_ => _.Name)
                    .ToList();
 
