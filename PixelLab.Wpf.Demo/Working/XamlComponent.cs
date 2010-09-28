@@ -7,13 +7,12 @@ using System.Resources;
 using System.Windows;
 using System.Windows.Baml2006;
 using System.Xaml;
-using PixelLab.Common;
 using PixelLab.Wpf.Demo;
 
 namespace PixelLab.Working {
   public static class XamlComponent {
 
-    private static void foo() {
+    public static void LoadDemos() {
 
       var assembly = typeof(App).Assembly;
 
@@ -30,7 +29,6 @@ namespace PixelLab.Working {
                         select value;
 
       var rootTypes = from entry in bamlEntries
-                      where entry.Name.Contains("kevin")
                       let reader = new Baml2006Reader(entry.Stream)
                       let type = (from myReader in reader.Enumerate()
                                   where myReader.NodeType == System.Xaml.XamlNodeType.StartObject
@@ -43,17 +41,15 @@ namespace PixelLab.Working {
                       where result.DemoName != null
                       select result;
 
-      rootTypes.ForEach(entry => {
+      foreach (var entry in rootTypes) {
         var path = entry.Name.Replace(".baml", ".xaml");
         path = string.Format("/{0};component/{1}", assembly.GetName().Name, path);
 
         var uri = new Uri(path, UriKind.Relative);
+        var thing = entry.Type.Invoker.CreateInstance(new object[0]);
 
-        if (path.Contains("kevin") || path.Contains("main")) {
-
-          var thing = entry.Type.Invoker.CreateInstance(new object[0]);
-        }
-      });
+        Debug.WriteLine(thing.GetType());
+      }
     }
 
 
