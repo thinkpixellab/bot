@@ -113,6 +113,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Working\DemoMetadataProperties.cs" />
+    <Compile Include="Working\ReadHelpers.cs" />
+    <Compile Include="Working\XamlComponent.cs" />
     <Compile Include="Hex\Hexagon.cs" />
     <Compile Include="Hex\HexBoardElement.cs" />
     <Compile Include="Hex\HexHelper.cs" />

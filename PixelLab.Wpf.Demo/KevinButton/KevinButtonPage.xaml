@@ -1,6 +1,9 @@
-<Page Background="#272627"
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
+<Page
+  Background="#272627"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:working="clr-namespace:PixelLab.Working"
+  working:DemoMetadataProperties.DemoName="Kevin Button">
 
   <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
     <Grid.RowDefinitions>
