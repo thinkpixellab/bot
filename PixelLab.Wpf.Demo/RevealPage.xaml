@@ -1,9 +1,11 @@
 ﻿<Page
-  x:Class="PixelLab.Wpf.Demo.RevealPage"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sys="clr-namespace:System;assembly=mscorlib" 
-  xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf">
+  xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf"
+  xmlns:core="clr-namespace:PixelLab.Core"
+  core:DemoMetadataProperties.DemoName="Reveal"
+  core:DemoMetadataProperties.DemoDescription="This is a great example of how a custom widget--namely, Reveal--can be used in a number of places. TreeView and Expander, for example.">
   <Grid>
     <Grid.Resources>
       <sys:String x:Key="Prose">Once upon a time, there was a rabbit. This rabbit ran through the woods, looking for a carrot. He couldn't find one, but he did come upon a deer. The deer looked lonely, so the rabbit bounced up to the deer and asked him what was wrong.</sys:String>
