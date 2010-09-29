@@ -74,6 +74,9 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Xaml.Tools">
+      <HintPath>..\lib\Microsoft.Xaml.Tools.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -113,9 +116,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Working\DemoMetadataProperties.cs" />
-    <Compile Include="Working\ReadHelpers.cs" />
-    <Compile Include="Working\XamlComponent.cs" />
+    <Compile Include="Core\DemoMetadataProperties.cs" />
+    <Compile Include="Core\XamlComponent.cs" />
     <Compile Include="Hex\Hexagon.cs" />
     <Compile Include="Hex\HexBoardElement.cs" />
     <Compile Include="Hex\HexHelper.cs" />
@@ -226,14 +228,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="RadioButtonListPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="DateControlsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -436,7 +430,6 @@
   <ItemGroup>
     <Resource Include="logo.png" />
     <None Include="icon.ico" />
-    <Resource Include="TableOfContents.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

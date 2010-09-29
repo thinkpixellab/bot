@@ -1,8 +1,11 @@
 ﻿<Page
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:hex="clr-namespace:PixelLab.Wpf.Demo.Hex"
-    xmlns:sys="sys">
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:hex="clr-namespace:PixelLab.Wpf.Demo.Hex"
+  xmlns:sys="sys"
+  xmlns:core="clr-namespace:PixelLab.Core"
+  core:DemoMetadataProperties.DemoName="Hex Game"
+  core:DemoMetadataProperties.DemoDescription="Games are a great way to learn a UI framework. Hex is a great game. Find out about the rules here: http://en.wikipedia.org/wiki/Hex_(board_game)">
   <Page.Background>
     <LinearGradientBrush>
       <LinearGradientBrush.StartPoint>
