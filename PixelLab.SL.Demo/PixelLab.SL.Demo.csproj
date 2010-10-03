@@ -65,11 +65,15 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\PixelLab.Wpf.Demo\Core\DemoMetadata.cs">
+      <Link>Core\DemoMetadata.cs</Link>
+    </Compile>
+    <Compile Include="..\PixelLab.Wpf.Demo\Core\DemoMetadataAttribute.cs">
+      <Link>Core\DemoMetadataAttribute.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Core\DemoMetadata.cs" />
-    <Compile Include="Core\DemoMetadataAttribute.cs" />
     <Compile Include="DemoHost.xaml.cs">
       <DependentUpon>DemoHost.xaml</DependentUpon>
     </Compile>

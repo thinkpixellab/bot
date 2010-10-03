@@ -28,7 +28,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using PixelLab.SL.Demo.Core;
+using PixelLab.Demo.Core;
 
 namespace PixelLab.Wpf.Demo.Set {
   [DemoMetadata("Set Game", "The game Set in WPF.")]

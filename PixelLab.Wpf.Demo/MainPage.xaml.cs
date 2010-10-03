@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Windows.Controls;
-using PixelLab.SL.Demo.Core;
+using PixelLab.Demo.Core;
 
 namespace PixelLab.Wpf.Demo {
   public partial class MainPage : Page {

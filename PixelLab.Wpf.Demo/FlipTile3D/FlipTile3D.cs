@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Threading;
 using PixelLab.Common;
+using PixelLab.Demo.Core;
 
 namespace PixelLab.Wpf.Demo.FlipTile3D {
   public class FlipTile3D : WrapperElement<Viewport3D> {
@@ -98,8 +99,8 @@ namespace PixelLab.Wpf.Demo.FlipTile3D {
               x * tileTextureSize.Width,
 
               // this will give you a headache. Exists since we are going 
-              // from bottom bottomLeft of 3D space (negative Y is down), 
-              // but texture coor are negative Y is up
+            // from bottom bottomLeft of 3D space (negative Y is down), 
+            // but texture coor are negative Y is up
               1 - y * tileTextureSize.Height - tileTextureSize.Height,
 
               tileTextureSize.Width, tileTextureSize.Height);
@@ -145,7 +146,7 @@ namespace PixelLab.Wpf.Demo.FlipTile3D {
     private readonly ReadOnlyCollection<DiffuseMaterial> m_materials = GetSamplePictures();
 
     private static ReadOnlyCollection<DiffuseMaterial> GetSamplePictures() {
-      IList<string> files = Helpers.GetPicturePaths();
+      IList<string> files = SampleImageHelper.GetPicturePaths().ToList();
       if (files.Count > 0) {
         return files
           .Select(file => {

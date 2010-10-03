@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Windows.Controls;
 using PixelLab.Common;
-using PixelLab.SL.Demo.Core;
+using PixelLab.Demo.Core;
 
 namespace PixelLab.Wpf.Demo {
   [DemoMetadata("List Pager", "This is another example of how a 'smart' data layer can minimize the number and complexity of custom elements you need to create.")]

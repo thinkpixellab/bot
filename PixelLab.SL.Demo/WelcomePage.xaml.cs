@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using PixelLab.SL.Demo.Core;
+using PixelLab.Demo.Core;
 
 namespace PixelLab.SL.Demo {
   [DemoMetadata("Welcome")]

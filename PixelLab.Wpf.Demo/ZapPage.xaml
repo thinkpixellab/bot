@@ -2,10 +2,10 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf"
-    xmlns:local="clr-namespace:PixelLab.Wpf.Demo"
+    xmlns:local="clr-namespace:PixelLab.Demo.Core"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
   <Page.Resources>
-    <local:ImagePathHolder x:Key="ImagePathHolder" />
+    <local:SampleImageHelper x:Key="ImagePathHolder" />
   </Page.Resources>
 
 

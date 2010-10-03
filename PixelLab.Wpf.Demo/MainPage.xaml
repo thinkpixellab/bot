@@ -2,7 +2,7 @@
   x:Class="PixelLab.Wpf.Demo.MainPage"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:local="clr-namespace:PixelLab.Wpf.Demo"
+  xmlns:local="clr-namespace:PixelLab.Demo.Core"
   xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf"
   ShowsNavigationUI="False" WindowTitle="The WPF Bag of Tricks - by Pixel Lab" Background="#00AB5B5B">
   <Page.Resources>

@@ -1,6 +1,6 @@
 using System.Windows.Controls;
 using PixelLab.Common;
-using PixelLab.SL.Demo.Core;
+using PixelLab.Demo.Core;
 
 namespace PixelLab.Wpf.Demo {
   [DemoMetadata("Zap Scroller", "An example of the union between custom elements, custom animation, and data binding.")]

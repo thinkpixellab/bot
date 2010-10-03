@@ -8,7 +8,7 @@ using System.Resources;
 using System.Windows;
 using System.Windows.Baml2006;
 using Microsoft.Xaml.Tools.XamlDom;
-using PixelLab.SL.Demo.Core;
+using PixelLab.Demo.Core;
 
 namespace PixelLab.Core {
   public static class XamlComponent {

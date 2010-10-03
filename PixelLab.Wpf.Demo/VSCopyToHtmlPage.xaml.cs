@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using PixelLab.Common;
-using PixelLab.SL.Demo.Core;
+using PixelLab.Demo.Core;
 
 namespace PixelLab.Wpf.Demo {
   [DemoMetadata("VS Copy to Html", "This demo takes copy output from Visual Studio and generates HTML for your blog.")]

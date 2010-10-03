@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using PixelLab.SL.Demo.Core;
+using PixelLab.Demo.Core;
 
 namespace PixelLab.Wpf.Demo {
 
@@ -12,7 +13,7 @@ namespace PixelLab.Wpf.Demo {
     public ShowElementPage() {
       InitializeComponent();
 
-      IList<BitmapImage> images = Helpers.GetBitmapImages(10);
+      IList<BitmapImage> images = SampleImageHelper.GetBitmapImages(10).ToArray();
       int currentIndex = 0;
 
       var addElementAction = new Action(() => {

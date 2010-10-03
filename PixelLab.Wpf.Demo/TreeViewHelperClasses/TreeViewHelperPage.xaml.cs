@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using PixelLab.Common;
-using PixelLab.SL.Demo.Core;
+using PixelLab.Demo.Core;
 
 namespace PixelLab.Wpf.Demo {
   [DemoMetadata("TreeView Expand", "This 'trick' is a demo of a couple classes I’ve added to the Library assembly. Expand by objects” uses the TreeViewHelper.Show method that takes an array of objects and shows the element that is represented by the corresponding path. 'Expand by indices' does something similar, using a different overload of TreeViewHelper.Show that uses an array of ints that represent the index at each level of the data model that corresponds to the desired TreeViewItem. Both 'Expand by objects' and 'Expand by indicies' work off a randomly generated path. If nothing happens when you click, either refresh the data or click again. 'Expand All' calls TreeViewHelper.ExpandAll, which does similar tricks to the previous two, but does it for every node under a given TreeView/TreeViewItem. 'Expand All (via data)' uses the preferred way to expand nodes in a TreeView. A similar method could be used to expand just a single node. Expand is pushed to the data layer and bound to the UI. Notice how much faster it is. This is an option if you can modify your data layer...although you’ll notice that I actually use a wrapper class (TreeViewDataItem) which could be used with almost any data model to support Show/ExpandAll.")]

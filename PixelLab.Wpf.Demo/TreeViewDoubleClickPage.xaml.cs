@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Xml;
-using PixelLab.SL.Demo.Core;
+using PixelLab.Demo.Core;
 
 namespace PixelLab.Wpf.Demo {
   [DemoMetadata("TreeView Double-Click", "This is really two demos: 1) It's a demo of adding double-click handling to an items control. Since Click is a RoutedEvent, you can listen to it anywhere up the tree. Here I just use it to find the TreeViewItem that was double-clicked and show the XML content that is bound to it. You can use the same logic in a ListBox, if you like. 2) It's a demo of XML binding to a TreeView. (Since the folder picker already does CLR binding.) Take a look at the XAML. You'll see we have full XPath support.")]

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using PixelLab.Common;
-using PixelLab.SL.Demo.Core;
+using PixelLab.Demo.Core;
 
 namespace PixelLab.Wpf.Demo {
   [DemoMetadata("Interactive 3D", "Shows what's possible with 2D-on-3D, input, and eventing. These are new 3D features in .NET 3.5. Thanks to Kurt Berglund for doing the heavy lifting on the 3D side.")]

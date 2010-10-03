@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using PixelLab.Common;
-using PixelLab.SL.Demo.Core;
+using PixelLab.Demo.Core;
 
 namespace PixelLab.SL.Demo {
   [DemoMetadata("Flip Control")]

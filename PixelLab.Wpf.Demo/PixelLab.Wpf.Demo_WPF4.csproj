@@ -95,16 +95,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="..\PixelLab.SL.Demo\Core\DemoMetadata.cs">
-      <Link>Core\DemoMetadata.cs</Link>
-    </Compile>
-    <Compile Include="..\PixelLab.SL.Demo\Core\DemoMetadataAttribute.cs">
-      <Link>Core\DemoMetadataAttribute.cs</Link>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Core\Code.cs" />
+    <Compile Include="Core\IsStringEmptyConverter.cs" />
+    <Compile Include="Core\SampleImageHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Hex\HexPage.xaml">
@@ -113,6 +108,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Core\DemoMetadata.cs" />
+    <Compile Include="Core\DemoMetadataAttribute.cs" />
     <Compile Include="Core\DemoMetadataProperties.cs" />
     <Compile Include="Core\XamlComponent.cs" />
     <Compile Include="Hex\Hexagon.cs" />

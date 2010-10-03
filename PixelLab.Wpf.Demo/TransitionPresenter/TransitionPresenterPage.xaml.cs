@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using PixelLab.SL.Demo.Core;
+using PixelLab.Common;
+using PixelLab.Demo.Core;
 using PixelLab.Wpf.Transitions;
 
 namespace PixelLab.Wpf.Demo {
@@ -17,16 +19,13 @@ namespace PixelLab.Wpf.Demo {
     }
 
     private void OnLoaded(object sender, object e) {
-      IList<string> pictures = Helpers.GetPicturePaths();
       PropertyInfo[] props = typeof(Brushes).GetProperties();
 
       List<object> data = new List<object>(17);
 
       data.Add(new UI());
 
-      for (int i = 0; i < Math.Min(pictures.Count, 8); i++) {
-        data.Add(new Picture(pictures[i]));
-      }
+      SampleImageHelper.GetPicturePaths().Take(8).ForEach(path => data.Add(new Picture(path)));
 
       for (int i = 0; i < Math.Min(props.Length, 8); i++) {
         if (props[i].Name != "Transparent") {
