@@ -53,7 +53,7 @@ namespace PixelLab.Demo.Core {
           .FirstOrDefault();
       }
 
-      return picturePaths.EmptyIfNull();
+      return picturePaths.EmptyIfNull().Take(c_maxImageReturnCount);
     }
 
     public static IEnumerable<BitmapImage> GetBitmapImages(int maxCount = -1) {
