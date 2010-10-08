@@ -28,7 +28,13 @@ namespace PixelLab.Demo.Core {
       }
     }
 
-    public static IEnumerable<string> GetPicturePaths() {
+    public static IEnumerable<string> GetPicturePaths(int maxCount = -1) {
+      if (maxCount < 0) {
+        maxCount = c_maxImageReturnCount;
+      }
+      else {
+        maxCount = Math.Min(maxCount, c_maxImageReturnCount);
+      }
 
       string[] commandLineArgs = null;
       try {
@@ -53,17 +59,12 @@ namespace PixelLab.Demo.Core {
           .FirstOrDefault();
       }
 
-      return picturePaths.EmptyIfNull().Take(c_maxImageReturnCount);
+      return picturePaths.EmptyIfNull().Take(maxCount);
     }
 
     public static IEnumerable<BitmapImage> GetBitmapImages(int maxCount = -1) {
-      if (maxCount < 0) {
-        maxCount = c_maxImageReturnCount;
-      }
-
-      return GetPicturePaths()
-        .Select(path => new BitmapImage(new Uri(path)))
-        .Take(maxCount);
+      return from path in GetPicturePaths(maxCount)
+             select new BitmapImage(new Uri(path));
     }
 
     #region impl
