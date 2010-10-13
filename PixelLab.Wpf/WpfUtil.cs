@@ -79,14 +79,14 @@ namespace PixelLab.Wpf {
     }
 
     public static void SetToVector(this TranslateTransform3D translateTransform3D, Vector3D vector3D) {
-      Contract.Requires<ArgumentNullException>(translateTransform3D != null);
+      Contract.Requires(translateTransform3D != null);
       translateTransform3D.OffsetX = vector3D.X;
       translateTransform3D.OffsetY = vector3D.Y;
       translateTransform3D.OffsetZ = vector3D.Z;
     }
 
     public static void SetToVector(this TranslateTransform translateTransform, Vector vector) {
-      Contract.Requires<ArgumentNullException>(translateTransform != null);
+      Contract.Requires(translateTransform != null);
       translateTransform.X = vector.X;
       translateTransform.Y = vector.Y;
     }

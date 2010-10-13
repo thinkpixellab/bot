@@ -55,7 +55,7 @@ namespace PixelLab.Common {
 #endif
 
     public void Sort(Func<T, T, int> comparer) {
-      Contract.Requires<ArgumentNullException>(comparer != null);
+      Contract.Requires(comparer != null);
       var changed = Items.QuickSort(comparer);
       if (changed) {
         raiseReset();

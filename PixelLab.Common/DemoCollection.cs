@@ -151,8 +151,8 @@ namespace PixelLab.Common {
         int maxCount,
         int initialCount)
       : base(activeItems) {
-      Contract.Requires<ArgumentNullException>(activeItems != null);
-      Contract.Requires<ArgumentNullException>(sourceItems != null);
+      Contract.Requires(activeItems != null);
+      Contract.Requires(sourceItems != null);
       Contract.Requires(sourceItems.Count > 0);
 
       m_minCount = minCount;

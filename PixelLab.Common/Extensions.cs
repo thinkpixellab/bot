@@ -283,7 +283,7 @@ namespace PixelLab.Common {
     } //*** SelectRecursive
 
     public static IList<TTo> ToCastList<TFrom, TTo>(this IList<TFrom> source) where TFrom : TTo {
-      Contract.Requires<ArgumentNullException>(source != null);
+      Contract.Requires(source != null);
       return new CastList<TFrom, TTo>(source);
     }
 

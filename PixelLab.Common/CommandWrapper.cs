@@ -37,7 +37,7 @@ namespace PixelLab.Common {
   public class CommandWrapper<T> {
     public CommandWrapper(Action<T> action)
       : this(action, (param) => true) {
-      Contract.Requires<ArgumentNullException>(action != null);
+      Contract.Requires(action != null);
     }
     public CommandWrapper(Action<T> action, Func<T, bool> canExecute) {
       Contract.Requires(action != null);

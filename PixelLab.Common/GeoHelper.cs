@@ -148,7 +148,7 @@ namespace PixelLab.Common {
     }
 
     public static Point GetCenter(this Rect value) {
-      Contract.Requires<ArgumentException>(!value.IsEmpty);
+      Contract.Requires(!value.IsEmpty);
       Contract.Ensures(Contract.Result<Point>().IsValid());
       return new Point(value.X + value.Width / 2, value.Y + value.Height / 2);
     }

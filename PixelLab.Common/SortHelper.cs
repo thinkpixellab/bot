@@ -58,8 +58,8 @@ namespace PixelLab.Common {
     }
 
     private static bool Sort<T>(IList<T> keys, int index, int length, IComparer<T> comparer) {
-      Contract.Requires<ArgumentNullException>(comparer != null);
-      Contract.Requires<ArgumentNullException>(keys != null);
+      Contract.Requires(comparer != null);
+      Contract.Requires(keys != null);
 
       if (length > 1) {
         try {
@@ -79,12 +79,12 @@ namespace PixelLab.Common {
     }
 
     private static bool quickSort<T>(IList<T> keys, int left, int right, IComparer<T> comparer) {
-      Contract.Requires<ArgumentNullException>(comparer != null);
-      Contract.Requires<ArgumentNullException>(keys != null);
-      Contract.Requires<ArgumentOutOfRangeException>(left >= 0);
-      Contract.Requires<ArgumentOutOfRangeException>(left < keys.Count);
-      Contract.Requires<ArgumentOutOfRangeException>(right >= 0);
-      Contract.Requires<ArgumentOutOfRangeException>(right < keys.Count);
+      Contract.Requires(comparer != null);
+      Contract.Requires(keys != null);
+      Contract.Requires(left >= 0);
+      Contract.Requires(left < keys.Count);
+      Contract.Requires(right >= 0);
+      Contract.Requires(right < keys.Count);
 
       bool change = false;
       do {
@@ -134,12 +134,12 @@ namespace PixelLab.Common {
     }
 
     private static bool swapIfGreaterWithItems<T>(IList<T> keys, IComparer<T> comparer, int a, int b) {
-      Contract.Requires<ArgumentNullException>(comparer != null);
-      Contract.Requires<ArgumentNullException>(keys != null);
-      Contract.Requires<ArgumentOutOfRangeException>(a >= 0);
-      Contract.Requires<ArgumentOutOfRangeException>(a < keys.Count);
-      Contract.Requires<ArgumentOutOfRangeException>(a >= 0);
-      Contract.Requires<ArgumentOutOfRangeException>(b < keys.Count);
+      Contract.Requires(comparer != null);
+      Contract.Requires(keys != null);
+      Contract.Requires(a >= 0);
+      Contract.Requires(a < keys.Count);
+      Contract.Requires(a >= 0);
+      Contract.Requires(b < keys.Count);
 
       if ((a != b) && (comparer.Compare(keys[a], keys[b]) > 0)) {
         T local = keys[a];
