@@ -23,7 +23,7 @@ namespace PixelLab.Common {
         return true;
       }
       else {
-        value = default(TType);
+        value = key.DefaultValue;
         return false;
       }
     }
@@ -34,13 +34,16 @@ namespace PixelLab.Common {
   }
 
   public class TypedDictionaryKey<TType, TKey> {
-    public TypedDictionaryKey(TKey key) {
+    public TypedDictionaryKey(TKey key, TType defaultValue = default(TType)) {
       m_key = key;
+      m_defaultValue = defaultValue;
     }
 
     public TKey Key { get { return m_key; } }
+    public TType DefaultValue { get { return m_defaultValue; } }
 
     private readonly TKey m_key;
+    private readonly TType m_defaultValue;
 
   }
 }
