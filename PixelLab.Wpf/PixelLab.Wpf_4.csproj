@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="..\WPF4.targets" />
   <PropertyGroup>
     <ProjectGuid>{E4BBC94F-B837-4668-A127-E36E6DE012F5}</ProjectGuid>
     <AssemblyName>PixelLab.Wpf</AssemblyName>
@@ -139,6 +140,5 @@
       <Name>PixelLab.Common_WPF4</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\Shared.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
