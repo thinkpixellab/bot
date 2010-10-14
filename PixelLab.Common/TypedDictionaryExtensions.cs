@@ -28,8 +28,13 @@ namespace PixelLab.Common {
       }
     }
 
-    public static void SetValue<TType, TKey>(this IDictionary<TKey, object> dictionary, TypedDictionaryKey<TType, TKey> key, TType value) {
-      dictionary[key.Key] = value;
+    public static void SetValue<TType, TKey>(this IDictionary<TKey, object> dictionary, TypedDictionaryKey<TType, TKey> key, TType value, bool clearIfDefault = false) {
+      if (clearIfDefault && EqualityComparer<TType>.Default.Equals(value, key.DefaultValue)) {
+        dictionary.Remove(key.Key);
+      }
+      else {
+        dictionary[key.Key] = value;
+      }
     }
   }
 
