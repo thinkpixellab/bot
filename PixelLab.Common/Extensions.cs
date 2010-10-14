@@ -128,6 +128,7 @@ namespace PixelLab.Common {
     ///     <see cref="ICollection{TSource}.Count">ICollection.Count</see> if it exists.
     /// </para>    
     /// </remarks>
+    [Pure]
     public static bool IsEmpty<TSource>(this IEnumerable<TSource> source) {
       Contract.Requires(source != null);
 
@@ -298,6 +299,7 @@ namespace PixelLab.Common {
       return value;
     }
 
+    [Pure]
     public static bool IsNullOrWhiteSpace(this string str) {
       return str == null || str.Trim().Length == 0;
     }

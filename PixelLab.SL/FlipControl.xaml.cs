@@ -27,8 +27,8 @@ namespace PixelLab.SL {
     }
 
     public void Config(Size pageSize) {
-      Contract.Requires(m_flipper == null);
       Contract.Requires(pageSize.IsValid());
+      Util.Require(m_flipper == null);
 
       PageWidth = pageSize.Width;
       PageHeight = pageSize.Height;
