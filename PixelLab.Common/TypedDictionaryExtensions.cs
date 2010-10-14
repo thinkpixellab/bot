@@ -10,6 +10,12 @@ namespace PixelLab.Common {
       return (TType)dictionary[key.Key];
     }
 
+    public static TType GetValueOrDefault<TType, TKey>(this IDictionary<TKey, object> dictionary, TypedDictionaryKey<TType, TKey> key) {
+      TType val;
+      TryGetValue(dictionary, key, out val);
+      return val;
+    }
+
     public static bool TryGetValue<TType, TKey>(this IDictionary<TKey, object> dictionary, TypedDictionaryKey<TType, TKey> key, out TType value) {
       object val;
       if (dictionary.TryGetValue(key.Key, out val)) {
