@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -39,6 +40,7 @@ namespace PixelLab.Common {
         }
       }
       else {
+        Debug.WriteLine("Could not parse the provided paramater: '{0}'", parameter);
         return DependencyProperty.UnsetValue;
       }
     }
@@ -59,7 +61,7 @@ namespace PixelLab.Common {
         return (string)value;
       }
       else {
-        throw new ArgumentException("Source value was not enum or bool.");
+        throw new ArgumentException("Source value was not boolean, string, or enum.");
       }
     }
 
@@ -74,7 +76,7 @@ namespace PixelLab.Common {
         return value;
       }
       else {
-        throw new ArgumentException("Can only target boolean and enum properties.");
+        throw new ArgumentException("Can only target boolean, string, and enum properties.");
       }
     }
 
