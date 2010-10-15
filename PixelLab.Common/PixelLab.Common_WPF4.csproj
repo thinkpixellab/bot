@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\WPF4.targets" />
+  <Import Project="_targets\WPF4.targets" />
   <PropertyGroup>
     <ProjectGuid>{273247A2-A3C8-42D0-8463-F95FC5C0A34C}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
