@@ -1,5 +1,4 @@
 _build
 *.user
 *.suo
-*.xap
 .DS_Store
