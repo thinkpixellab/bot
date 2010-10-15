@@ -3,11 +3,10 @@
   <Import Project="BuildShared.targets" />
   <Import Project="Contracts.targets" />
   <PropertyGroup>
-    <DefineConstants>$(CompileDependsOn);SILVERLIGHT</DefineConstants>
+    <DefineConstants>$(DefineConstants);SILVERLIGHT</DefineConstants>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <NoStdLib>true</NoStdLib>
