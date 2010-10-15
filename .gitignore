@@ -1,6 +1,4 @@
-bin
-Bin
-obj
+_build
 *.user
 *.suo
 *.xap

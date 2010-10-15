@@ -8,17 +8,19 @@
     <WarningLevel>4</WarningLevel>
     <ErrorReport>prompt</ErrorReport>
     <DefineConstants>TRACE</DefineConstants>
+    <RootOutputPath>_build</RootOutputPath>
+    <BaseIntermediateOutputPath>$(RootOutputPath)\obj</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>$(RootOutputPath)\bin\Debug\</OutputPath>
     <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>$(RootOutputPath)\bin\Release\</OutputPath>
   </PropertyGroup>
 </Project>
