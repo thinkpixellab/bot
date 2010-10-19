@@ -33,6 +33,7 @@
     <Compile Include="DependencyPropHelper.cs" />
     <Compile Include="EnumConverter.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="FuncEnumerable.cs" />
     <Compile Include="GeoHelper.cs" />
     <Compile Include="HueConverter.cs" />
     <Compile Include="Line.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="TreeHelpers.cs" />
     <Compile Include="TypedDictionaryExtensions.cs" />
     <Compile Include="Util.cs" />
+    <Compile Include="WeakEnumerable.cs" />
     <Compile Include="WrappedLock.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
