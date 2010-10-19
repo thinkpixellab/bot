@@ -25,6 +25,7 @@
     <Compile Include="BrushHelper.cs" />
     <Compile Include="CastList.cs" />
     <Compile Include="ColorHelper.cs" />
+    <Compile Include="CommandMapper.cs" />
     <Compile Include="CommandWrapper.cs" />
     <Compile Include="CompositionHelpers.cs" />
     <Compile Include="CompositionTargetRenderingListening.cs" />
@@ -32,8 +33,10 @@
     <Compile Include="DependencyPropHelper.cs" />
     <Compile Include="EnumConverter.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="FuncEnumerable.cs" />
     <Compile Include="GeoHelper.cs" />
     <Compile Include="HueConverter.cs" />
+    <Compile Include="IMapCommandTarget.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="ListBase.cs" />
     <Compile Include="LockHelper.cs" />
@@ -48,6 +51,8 @@
     <Compile Include="TypedDictionaryExtensions.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Vector_SL.cs" />
+    <Compile Include="WeakEnumerable.cs" />
+    <Compile Include="WrapPanel.cs" />
     <Compile Include="WrappedLock.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
