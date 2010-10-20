@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
 
@@ -306,6 +308,30 @@ namespace PixelLab.Common {
 
     public static IEnumerable<T> Concat<T>(this IEnumerable<T> source, params T[] items) {
       return source.Concat(items.AsEnumerable());
+    }
+
+    /// <summary>
+    /// Verifies that a property name exists in this ViewModel. This method
+    /// can be called before the property is used, for instance before
+    /// calling RaisePropertyChanged. It avoids errors when a property name
+    /// is changed but some places are missed.
+    /// <para>This method is only active in DEBUG mode.</para>
+    /// </summary>
+    /// <param name="element">The object to watch.</param>
+    /// <remarks>Thanks to Laurent Bugnion for the idea.</remarks>
+    [Conditional("DEBUG")]
+    [DebuggerStepThrough]
+    public static void VerifyPropertyNamesOnChange(this INotifyPropertyChanged element)
+    {
+        Contract.Requires(element != null);
+        var myType = element.GetType();
+        element.PropertyChanged += (sender, args) =>
+        {
+            if (myType.GetProperty(args.PropertyName) == null)
+            {
+                throw new ArgumentException("Property not found", args.PropertyName);
+            }
+        };
     }
 
     #region impl
