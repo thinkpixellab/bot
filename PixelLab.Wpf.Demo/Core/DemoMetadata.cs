@@ -6,9 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using PixelLab.Common;
-#if !SILVERLIGHT
 using PixelLab.Core;
-#endif
 
 namespace PixelLab.Demo.Core {
   public class DemoMetadata {
@@ -41,12 +39,8 @@ namespace PixelLab.Demo.Core {
                      where export.ContractName == DemoMetadataAttribute.DemoContractName
                      select DemoMetadata.Create(export);
 
-#if SILVERLIGHT
-      var items = mefItems.OrderBy(_ => _.Name).ToList();
-#else
       var xamlItems = XamlComponent.GetDemos(sourceAssembly);
       var items = mefItems.Concat(xamlItems).OrderBy(_ => _.Name).ToList();
-#endif
 
       if (firstName != null) {
         var welcome = items.Where(metadata => metadata.Name.Equals(firstName)).FirstOrDefault();

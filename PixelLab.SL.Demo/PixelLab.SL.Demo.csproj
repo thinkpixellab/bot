@@ -31,9 +31,6 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\PixelLab.Wpf.Demo\Core\DemoMetadata.cs">
-      <Link>Core\DemoMetadata.cs</Link>
-    </Compile>
     <Compile Include="..\PixelLab.Wpf.Demo\Core\DemoMetadataAttribute.cs">
       <Link>Core\DemoMetadataAttribute.cs</Link>
     </Compile>

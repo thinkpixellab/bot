@@ -11,7 +11,7 @@
       <ColumnDefinition Width="Auto" />
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
-    <ListBox Name="m_items" DisplayMemberPath="Name" />
+    <ListBox Name="m_items" DisplayMemberPath="Metadata.Name" />
     <Border Name="m_container" Grid.Column="1"/>
   </Grid>
 </UserControl>
