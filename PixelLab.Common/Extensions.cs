@@ -334,6 +334,10 @@ namespace PixelLab.Common {
         };
     }
 
+    public static bool Contains<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value) {
+      return dictionary.Contains(new KeyValuePair<TKey,TValue>(key, value));
+    }
+
     #region impl
     private class FuncComparer<T> : IComparer<T> {
       public FuncComparer(Func<T, T, int> func) {
