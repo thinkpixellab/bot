@@ -26,6 +26,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpriteButton.cs" />
     <Compile Include="SpriteElement.cs" />
+    <Compile Include="StretchDirection.cs" />
+    <Compile Include="Viewbox.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="FlipControl.xaml">
