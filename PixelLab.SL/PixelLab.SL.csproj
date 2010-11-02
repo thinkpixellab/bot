@@ -28,6 +28,7 @@
     </Compile>
     <Compile Include="IsolatedStorage\IsolatedFileSystemInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SLExtentions.cs" />
     <Compile Include="SpriteButton.cs" />
     <Compile Include="SpriteElement.cs" />
   </ItemGroup>
