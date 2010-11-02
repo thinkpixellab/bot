@@ -266,8 +266,6 @@ namespace PixelLab.Common {
       return new CastList<TFrom, TTo>(source);
     }
 
-    // TODO: add Random<T>(this IList<T> source, int count)
-
     public static T Random<T>(this IList<T> source) {
       Contract.Requires(source != null);
       Contract.Requires(source.Count > 0);
@@ -321,21 +319,24 @@ namespace PixelLab.Common {
     /// <remarks>Thanks to Laurent Bugnion for the idea.</remarks>
     [Conditional("DEBUG")]
     [DebuggerStepThrough]
-    public static void VerifyPropertyNamesOnChange(this INotifyPropertyChanged element)
-    {
-        Contract.Requires(element != null);
-        var myType = element.GetType();
-        element.PropertyChanged += (sender, args) =>
-        {
-            if (myType.GetProperty(args.PropertyName) == null)
-            {
-                throw new ArgumentException("Property not found", args.PropertyName);
-            }
-        };
+    public static void VerifyPropertyNamesOnChange(this INotifyPropertyChanged element) {
+      Contract.Requires(element != null);
+      var myType = element.GetType();
+      element.PropertyChanged += (sender, args) => {
+        if (myType.GetProperty(args.PropertyName) == null) {
+          throw new ArgumentException("Property not found", args.PropertyName);
+        }
+      };
     }
 
     public static bool Contains<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value) {
-      return dictionary.Contains(new KeyValuePair<TKey,TValue>(key, value));
+      return dictionary.Contains(new KeyValuePair<TKey, TValue>(key, value));
+    }
+
+    public static TResponse UseAndDispose<T, TResponse>(this T source, Func<T, TResponse> func) where T : IDisposable {
+      using (source) {
+        return func(source);
+      }
     }
 
     #region impl

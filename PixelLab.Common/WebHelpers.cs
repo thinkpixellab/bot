@@ -63,11 +63,5 @@ namespace PixelLab.Common {
         return stream.ReadAllAsBytes();
       }
     }
-
-    public static TResponse UseAndDispose<T, TResponse>(this T source, Func<T, TResponse> func) where T : IDisposable {
-      using (source) {
-        return func(source);
-      }
-    }
   }
 }
