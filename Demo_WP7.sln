@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.Common_WP7", "PixelLab.Common\PixelLab.Common_WP7.csproj", "{0ABF1FC9-50B9-4263-A9B5-B39D1A95C956}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.SL_WP7", "PixelLab.SL\PixelLab.SL_WP7.csproj", "{0EF6A204-D98A-4354-84BE-A7D2BEBC1FEF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0ABF1FC9-50B9-4263-A9B5-B39D1A95C956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ABF1FC9-50B9-4263-A9B5-B39D1A95C956}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ABF1FC9-50B9-4263-A9B5-B39D1A95C956}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ABF1FC9-50B9-4263-A9B5-B39D1A95C956}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EF6A204-D98A-4354-84BE-A7D2BEBC1FEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EF6A204-D98A-4354-84BE-A7D2BEBC1FEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EF6A204-D98A-4354-84BE-A7D2BEBC1FEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EF6A204-D98A-4354-84BE-A7D2BEBC1FEF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
