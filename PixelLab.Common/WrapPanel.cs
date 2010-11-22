@@ -7,7 +7,6 @@ namespace PixelLab.Common
 {
     public class WrapPanel : Panel
     {
-
         #region Row (Attached DependencyProperty)
 
         private static readonly DependencyProperty RowProperty =
@@ -94,12 +93,12 @@ namespace PixelLab.Common
             return new Size(w, h);
         }
 
-        
+
 
         protected override Size ArrangeOverride(Size finalSize)
         {
             // if we have no children then what's the point?
-            if (this.Children.Count == 0) return new Size(0,0);
+            if (this.Children.Count == 0) return new Size(0, 0);
 
             double top = 0;
             double left = 0;
