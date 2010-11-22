@@ -42,7 +42,7 @@ namespace PixelLab.Common
             m_threadStack.Push(currentThread);
             if (string.IsNullOrEmpty(currentThread.Name))
             {
-                m_owningThreadName = string.Format("Unnamed - ManagedThreadId:{0}", currentThread.ManagedThreadId);
+                m_owningThreadName = "Unnamed - ManagedThreadId:{0}".DoFormat(currentThread.ManagedThreadId);
             }
             else
             {
@@ -107,7 +107,7 @@ namespace PixelLab.Common
                 Thread currentThread = m_threadStack.Peek();
                 if (string.IsNullOrEmpty(currentThread.Name))
                 {
-                    m_owningThreadName = string.Format("Unnamed - ManagedThreadId:{0}", currentThread.ManagedThreadId);
+                    m_owningThreadName = "Unnamed - ManagedThreadId:{0}".DoFormat(currentThread.ManagedThreadId);
                 }
                 else
                 {

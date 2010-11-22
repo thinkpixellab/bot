@@ -29,11 +29,11 @@ namespace PixelLab.Common
             string[] paramLabels = new string[parameters.Length];
             for (int paramIndex = 0; paramIndex < parameters.Length; paramIndex++)
             {
-                paramLabels[paramIndex] = string.Format("@{0}", paramIndex);
+                paramLabels[paramIndex] = "@{0}".DoFormat(paramIndex);
                 command.Parameters.AddWithValue(paramLabels[paramIndex], parameters[paramIndex]);
             }
 
-            command.CommandText = string.Format(commandFormatString, paramLabels);
+            command.CommandText = commandFormatString.DoFormat(paramLabels);
             return command;
 
         } //*** createSqlCommandWithParameters

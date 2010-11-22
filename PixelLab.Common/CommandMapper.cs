@@ -147,7 +147,7 @@ namespace PixelLab.Common
                 var keyBindings = m_keyBindings.Where(kvp => kvp.Value == commandName).ToArray();
                 if (keyBindings.Length == 1)
                 {
-                    commandText = commandText + string.Format(" ({0})", keyBindings[0].Key);
+                    commandText = "{0} ({1})".DoFormat(commandText, keyBindings[0].Key);
                 }
                 ToolTipService.SetToolTip(button, commandText);
             }
@@ -323,7 +323,7 @@ namespace PixelLab.Common
                 (new[] { ModifierKeys.Control, ModifierKeys.Shift, ModifierKeys.Alt, ModifierKeys.Apple, ModifierKeys.Windows })
                   .Reverse()
                   .Where(mk => ModifierKeys.HasFlag(mk))
-                  .ForEach(mk => output = string.Format("{0}+{1}", mk, output));
+                  .ForEach(mk => output = "{0}+{1}".DoFormat(mk, output));
                 return output;
             }
         }

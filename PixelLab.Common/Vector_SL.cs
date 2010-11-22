@@ -46,7 +46,7 @@ namespace PixelLab.Common
 
         public override string ToString()
         {
-            return string.Format("{0}: {1}, {2}", base.ToString(), m_x, m_y);
+            return "{0}: {1}, {2}".DoFormat(base.ToString(), m_x, m_y);
         }
 
         private double m_x, m_y;
