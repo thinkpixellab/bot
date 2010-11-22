@@ -10,5 +10,7 @@
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
   </PropertyGroup>
 </Project>
