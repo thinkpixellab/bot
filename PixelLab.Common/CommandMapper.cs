@@ -11,10 +11,10 @@ using System.Windows.Input;
 namespace PixelLab.Common {
   public class CommandMapper {
     public CommandMapper() {
-      m_manager = new Manager(this);
+      m_manager = new CommandHandler(this);
     }
 
-    public Manager CommandManager { get { return m_manager; } }
+    public CommandHandler CommandManager { get { return m_manager; } }
 
     public void AddCommand(string commandName, Action executeAction, Func<bool> canExecuteFunc = null) {
       Contract.Requires(!string.IsNullOrWhiteSpace(commandName));
@@ -79,29 +79,6 @@ namespace PixelLab.Common {
 
     #endregion
 
-    // This class exists for a very simple reason.
-    // Exposing the Mapper publicly from a class is stupid. We don't want AddCommand exposed for anyone.
-    // So this exists to allow CommandMapper plumbing to get at the needed functionality, without exposing
-    //  its world to the whole world
-    public class Manager {
-      internal Manager(CommandMapper mapper) {
-        Contract.Requires(mapper != null);
-        m_mapper = mapper;
-      }
-      internal CommandMapper Mapper {
-        get {
-          Contract.Ensures(Contract.Result<CommandMapper>() != null);
-          return m_mapper;
-        }
-      }
-
-      [ContractInvariantMethod]
-      private void ObjectInvariant() {
-        Contract.Invariant(m_mapper != null);
-      }
-      private readonly CommandMapper m_mapper;
-    }
-
     #region Implementation
 
     private void ExecuteCommand(string commandName) {
@@ -161,7 +138,7 @@ namespace PixelLab.Common {
     private readonly Dictionary<string, CommandData> m_commands = new Dictionary<string, CommandData>();
     private readonly Dictionary<string, WeakEnumerable<MappedCommand>> m_mappedCommands = new Dictionary<string, WeakEnumerable<MappedCommand>>();
     private readonly Dictionary<KeyBinding, string> m_keyBindings = new Dictionary<KeyBinding, string>();
-    private readonly Manager m_manager;
+    private readonly CommandHandler m_manager;
 
     #endregion
 
@@ -193,7 +170,7 @@ namespace PixelLab.Common {
       Contract.Requires(element != null);
       return element.GetAncestors()
             .OfType<IMapCommandTarget>()
-            .Select(target => target.Manager.Mapper)
+            .Select(target => target.Handler.Mapper)
             .FirstOrDefault(mapper => mapper.HasCommand(commandName));
 
     }

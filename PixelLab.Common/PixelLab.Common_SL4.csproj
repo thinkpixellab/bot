@@ -25,6 +25,7 @@
     <Compile Include="BrushHelper.cs" />
     <Compile Include="CastList.cs" />
     <Compile Include="ColorHelper.cs" />
+    <Compile Include="CommandHandler.cs" />
     <Compile Include="CommandMapper.cs" />
     <Compile Include="CommandWrapper.cs" />
     <Compile Include="CompositionHelpers.cs" />

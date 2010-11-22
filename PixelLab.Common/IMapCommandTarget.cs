@@ -1,18 +1,23 @@
-﻿
-using System.Diagnostics.Contracts;
-namespace PixelLab.Common {
-  [ContractClass(typeof(IMapCommandTargetContract))]
-  public interface IMapCommandTarget {
-    CommandMapper.Manager Manager { get; }
-  }
+﻿using System.Diagnostics.Contracts;
 
-  [ContractClassFor(typeof(IMapCommandTarget))]
-  abstract class IMapCommandTargetContract : IMapCommandTarget {
-    public CommandMapper.Manager Manager {
-      get {
-        Contract.Ensures(Contract.Result<CommandMapper.Manager>() != null);
-        return default(CommandMapper.Manager);
-      }
+namespace PixelLab.Common
+{
+    [ContractClass(typeof(IMapCommandTargetContract))]
+    public interface IMapCommandTarget
+    {
+        CommandHandler Handler { get; }
     }
-  }
+
+    [ContractClassFor(typeof(IMapCommandTarget))]
+    abstract class IMapCommandTargetContract : IMapCommandTarget
+    {
+        public CommandHandler Handler
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<CommandHandler>() != null);
+                return default(CommandHandler);
+            }
+        }
+    }
 }
