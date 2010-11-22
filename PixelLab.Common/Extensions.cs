@@ -14,7 +14,6 @@ namespace PixelLab.Common
     /// </summary>
     public static class Extensions
     {
-
         /// <summary>
         /// Calls the provided action on each item, providing the item and its index into the source.
         /// </summary>
@@ -386,6 +385,41 @@ namespace PixelLab.Common
             {
                 return func(source);
             }
+        }
+
+        [Pure]
+        public static bool CountAtLeast<T>(this IEnumerable<T> source, int count)
+        {
+            Contract.Requires(source != null);
+            if (source is ICollection<T>)
+            {
+                return ((ICollection<T>)source).Count >= count;
+            }
+            else
+            {
+                using (var enumerator = source.GetEnumerator())
+                {
+                    while (count > 0)
+                    {
+                        if (enumerator.MoveNext())
+                        {
+                            count--;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+        }
+
+        public static string DoFormat(this string source, params object[] args)
+        {
+            Contract.Requires(source != null);
+            Contract.Requires(args != null);
+            return string.Format(source, args);
         }
 
         #region impl
