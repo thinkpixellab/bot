@@ -3,6 +3,7 @@
   <Import Project="_targets\SL4.targets" />
   <PropertyGroup>
     <ProjectGuid>{ACA535DF-6536-4FA4-8FFB-9CE2F05EF137}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <RootNamespace>PixelLab.Common</RootNamespace>
     <AssemblyName>PixelLab.Common.SL4</AssemblyName>
     <SilverlightApplication>false</SilverlightApplication>

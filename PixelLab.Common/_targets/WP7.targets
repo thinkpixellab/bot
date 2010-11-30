@@ -3,7 +3,6 @@
   <Import Project="SL_Shared.targets" />
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);WP7</DefineConstants>
-    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <TargetFrameworkProfile>WindowsPhone</TargetFrameworkProfile>
   </PropertyGroup>
 </Project>

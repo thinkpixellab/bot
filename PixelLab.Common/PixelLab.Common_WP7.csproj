@@ -3,6 +3,7 @@
   <Import Project="_targets\WP7.targets" />
   <PropertyGroup>
     <ProjectGuid>{0ABF1FC9-50B9-4263-A9B5-B39D1A95C956}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <RootNamespace>PixelLab.Common</RootNamespace>
     <AssemblyName>PixelLab.Common_WP7</AssemblyName>
   </PropertyGroup>
