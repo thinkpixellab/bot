@@ -30,12 +30,14 @@
     <Compile Include="CompositionTargetRenderingListening.cs" />
     <Compile Include="DemoCollection.cs" />
     <Compile Include="DependencyPropHelper.cs" />
+    <Compile Include="DispatcherExtensions.cs" />
     <Compile Include="EnumConverter.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="FuncEnumerable.cs" />
     <Compile Include="GeoHelper.cs" />
     <Compile Include="HueConverter.cs" />
     <Compile Include="IMapCommandTarget.cs" />
+    <Compile Include="KeyBinding.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="ListBase.cs" />
     <Compile Include="LockHelper.cs" />
