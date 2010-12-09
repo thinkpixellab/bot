@@ -73,9 +73,13 @@ namespace PixelLab.Common
             {
                 return (string)value;
             }
+            else if (value == null)
+            {
+                return "null";
+            }
             else
             {
-                throw new ArgumentException("Source value was not boolean, string, or enum.");
+                return value.ToString();
             }
         }
 
