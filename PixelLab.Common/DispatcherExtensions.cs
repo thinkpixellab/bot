@@ -6,9 +6,9 @@ namespace PixelLab.Common
 {
     public static class DispatcherExtensions
     {
-        public static void Invoke<TResult>(this Dispatcher dispatcher, Func<AsyncCallback, object, IAsyncResult> beginFunction, Func<IAsyncResult, TResult> endFunction, Action<TResult> handler)
+        public static IAsyncResult Invoke<TResult>(this Dispatcher dispatcher, Func<AsyncCallback, object, IAsyncResult> beginFunction, Func<IAsyncResult, TResult> endFunction, Action<TResult> handler)
         {
-            beginFunction(asyncResult =>
+            return beginFunction(asyncResult =>
             {
                 dispatcher.Invoke(() =>
                 {
@@ -18,9 +18,9 @@ namespace PixelLab.Common
             }, null);
         }
 
-        public static void Invoke<T, TResult>(this Dispatcher dispatcher, T param1, Func<T, AsyncCallback, object, IAsyncResult> beginFunction, Func<IAsyncResult, TResult> endFunction, Action<TResult> handler)
+        public static IAsyncResult Invoke<T, TResult>(this Dispatcher dispatcher, T param1, Func<T, AsyncCallback, object, IAsyncResult> beginFunction, Func<IAsyncResult, TResult> endFunction, Action<TResult> handler)
         {
-            beginFunction(param1, asyncResult =>
+            return beginFunction(param1, asyncResult =>
             {
                 dispatcher.Invoke(() =>
                 {
