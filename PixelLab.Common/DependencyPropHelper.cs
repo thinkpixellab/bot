@@ -46,8 +46,7 @@ namespace PixelLab.Common
                 metadata = GetTypePropertyMetadata(changeHandler);
             }
 
-            return DependencyProperty.Register(name, typeof(TProperty), typeof(TOwner), metadata);
+            return DependencyProperty.RegisterAttached(name, typeof(TProperty), typeof(TOwner), metadata);
         }
-
     }
 }
