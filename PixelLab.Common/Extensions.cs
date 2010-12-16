@@ -422,6 +422,21 @@ namespace PixelLab.Common
             return string.Format(source, args);
         }
 
+
+        public static IEnumerable<TSource> Except<TSource, TOther>(this IEnumerable<TSource> source, IEnumerable<TOther> other, Func<TSource, TOther, bool> comparer)
+        {
+            return from item in source
+                   where !other.Any(x => comparer(item, x))
+                   select item;
+        }
+
+        public static IEnumerable<TSource> Intersect<TSource, TOther>(this IEnumerable<TSource> source, IEnumerable<TOther> other, Func<TSource, TOther, bool> comparer)
+        {
+            return from item in source
+                   where other.Any(x => comparer(item, x))
+                   select item;
+        }
+
         #region impl
         private class FuncComparer<T> : IComparer<T>
         {
