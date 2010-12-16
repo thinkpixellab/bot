@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.Common_WP7", "Pixe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.SL_WP7", "PixelLab.SL\PixelLab.SL_WP7.csproj", "{0EF6A204-D98A-4354-84BE-A7D2BEBC1FEF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.Common_DesktopCore", "PixelLab.Common\PixelLab.Common_DesktopCore.csproj", "{8F249828-4E5F-4B75-B3A4-F67D74518F29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{0EF6A204-D98A-4354-84BE-A7D2BEBC1FEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EF6A204-D98A-4354-84BE-A7D2BEBC1FEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EF6A204-D98A-4354-84BE-A7D2BEBC1FEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F249828-4E5F-4B75-B3A4-F67D74518F29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F249828-4E5F-4B75-B3A4-F67D74518F29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F249828-4E5F-4B75-B3A4-F67D74518F29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F249828-4E5F-4B75-B3A4-F67D74518F29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
