@@ -67,4 +67,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Mono\MonoMac\v0.0\Mono.MonoMac.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\PixelLab.Common\PixelLab.Common_MonoMac.csproj">
+      <Project>{273247A2-A3C8-42D0-8463-F95FC5C0A34C}</Project>
+      <Name>PixelLab.Common_MonoMac</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
