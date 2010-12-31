@@ -14,7 +14,7 @@ namespace PixelLab.Common
     [ContractClass(typeof(ListBaseContract<>))]
     public abstract class ListBase<T> : IList<T>, IList
     {
-        protected virtual bool RemoveItem(int index)
+        protected virtual void RemoveItem(int index)
         {
             throw new NotSupportedException();
         }
@@ -155,7 +155,16 @@ namespace PixelLab.Common
 
         bool ICollection<T>.Remove(T item)
         {
-            return RemoveItem(IndexOf(item));
+            var index = IndexOf(item);
+            if (index < 0)
+            {
+                return false;
+            }
+            else
+            {
+                RemoveItem(index);
+                return true;
+            }
         }
 
         #endregion
