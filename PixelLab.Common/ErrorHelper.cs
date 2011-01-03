@@ -7,7 +7,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using PixelLab.Common;
 
-namespace Genscape.Product.Analytics.Dev
+namespace PixelLab.Common
 {
     public class DataErrorHelper : INotifyDataErrorInfo
     {
