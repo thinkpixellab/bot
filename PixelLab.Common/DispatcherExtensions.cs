@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Windows.Threading;
 using System.Diagnostics.Contracts;
+using System.Windows.Threading;
 
 namespace PixelLab.Common
 {

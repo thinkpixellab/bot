@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Controls;
 using System.Windows;
-using System.Windows.Media;
-using System.Diagnostics;
+using System.Windows.Controls;
 
 namespace PixelLab.Wpf
 {

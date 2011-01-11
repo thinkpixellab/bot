@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Media.Effects;
+using System.Windows.Media.Imaging;
 
 namespace PixelLab.Wpf {
   public class DragPreviewAdorner : Adorner {

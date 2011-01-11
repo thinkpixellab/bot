@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using PixelLab.Common;
 
 namespace PixelLab.Common
 {
