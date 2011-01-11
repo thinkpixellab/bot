@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics.Contracts;
+using System.Runtime.Serialization;
 
 namespace PixelLab.Common
 {
+    [DataContract]
     public abstract class Changeable : INotifyPropertyChanged
     {
 #if DEBUG
