@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
@@ -436,6 +437,22 @@ namespace PixelLab.Common
                    where other.Any(x => comparer(item, x))
                    select item;
         }
+
+        public static INotifyCollectionChanged AsINPC<T>(this ReadOnlyObservableCollection<T> source)
+        {
+            Contract.Requires(source != null);
+            return (INotifyCollectionChanged)source;
+        }
+
+#if SILVERLIGHT
+        public static void VerifyAccess(this System.Windows.Deployment deployment)
+        {
+            if (!deployment.Dispatcher.CheckAccess())
+            {
+                throw new InvalidOperationException("A call was made off the Dispatcher thread.");
+            }
+        }
+#endif
 
         #region impl
         private class FuncComparer<T> : IComparer<T>

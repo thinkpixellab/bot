@@ -24,6 +24,7 @@
     <Compile Include="ActionOnDispose.cs" />
     <Compile Include="BrushHelper.cs" />
     <Compile Include="CastList.cs" />
+    <Compile Include="Changeable.cs" />
     <Compile Include="ColorHelper.cs" />
     <Compile Include="CommandWrapper.cs" />
     <Compile Include="CompositionHelpers.cs" />
