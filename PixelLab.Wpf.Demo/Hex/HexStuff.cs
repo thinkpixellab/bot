@@ -6,10 +6,13 @@ using System.Diagnostics;
 using System.Windows.Input;
 using PixelLab.Common;
 
-namespace PixelLab.Wpf.Demo.Hex {
-    public class HexBoard : INotifyPropertyChanged {
+namespace PixelLab.Wpf.Demo.Hex
+{
+    public class HexBoard : Changeable
+    {
         public HexBoard() : this(DefaultSize) { }
-        public HexBoard(int size) {
+        public HexBoard(int size)
+        {
             Util.RequireArgumentRange(size >= 2, "size");
             m_size = size;
             _pieces = new HexPiece[m_size * m_size];
@@ -21,116 +24,139 @@ namespace PixelLab.Wpf.Demo.Hex {
             initialize();
         }
 
-        public bool Play(int row, int column) {
+        public bool Play(int row, int column)
+        {
             return Play(new PointInt(row, column));
         }
 
-        internal bool Play(PointInt point) {
-            if (!IsFinished) {
+        internal bool Play(PointInt point)
+        {
+            if (!IsFinished)
+            {
                 validatePnt(point, m_size);
                 int index = getIndex(point);
 
                 HexPiece piece = _pieces[index];
 
-                if (piece.State == HexPieceState.Unused) {
+                if (piece.State == HexPieceState.Unused)
+                {
 
                     piece.State = (CurrentPlayer == Player.Black) ? HexPieceState.Black : HexPieceState.White;
                     piece.Number = (++PlayCount);
 
                     checkFinished();
-                    if (!IsFinished) {
+                    if (!IsFinished)
+                    {
                         CurrentPlayer = (CurrentPlayer == Player.Black) ? Player.White : Player.Black;
                     }
                 }
                 return true;
             }
-            else {
+            else
+            {
                 return false;
             }
         }
 
-        public int Size {
+        public int Size
+        {
             get { return m_size; }
         }
-        public int PlayCount {
+        public int PlayCount
+        {
             get { return m_playCount; }
-            private set {
-                if (value != m_playCount) {
+            private set
+            {
+                if (value != m_playCount)
+                {
                     m_playCount = value;
                     m_resetCommand.UpdateCanExecute();
                     onPropertyChanged("PlayCount");
                 }
             }
         }
-        public Player CurrentPlayer {
+        public Player CurrentPlayer
+        {
             get { return m_currentPlayer; }
-            private set {
-                if (value != m_currentPlayer) {
+            private set
+            {
+                if (value != m_currentPlayer)
+                {
                     m_currentPlayer = value;
                     onPropertyChanged("CurrentPlayer");
                 }
             }
         }
-        public bool IsFinished {
+        public bool IsFinished
+        {
             get { return m_isFinished; }
-            private set {
-                if (value != m_isFinished) {
+            private set
+            {
+                if (value != m_isFinished)
+                {
                     m_isFinished = value;
                     onPropertyChanged("IsFinished");
                 }
             }
         }
 
-        public HexPiece this[int column, int row] {
-            get {
+        public HexPiece this[int column, int row]
+        {
+            get
+            {
                 return _pieces[getIndex(column, row)];
             }
         }
-        internal HexPiece this[PointInt point] {
-            get {
+        internal HexPiece this[PointInt point]
+        {
+            get
+            {
                 return _pieces[getIndex(point)];
             }
         }
-        public HexPiece this[int index] {
-            get {
+        public HexPiece this[int index]
+        {
+            get
+            {
                 return _pieces[index];
             }
         }
 
-        public void Reset() {
+        public void Reset()
+        {
             initialize();
             OnBoardReset(EventArgs.Empty);
         }
-        public ICommand ResetCommand {
-            get {
+        public ICommand ResetCommand
+        {
+            get
+            {
                 return m_resetCommand.Command;
             }
         }
 
         public event EventHandler BoardReset;
-        protected void OnBoardReset(EventArgs e) {
+        protected void OnBoardReset(EventArgs e)
+        {
             EventHandler handler = BoardReset;
-            if (handler != null) {
+            if (handler != null)
+            {
                 handler(this, e);
             }
         }
 
-        protected virtual void OnPropertyChanged(PropertyChangedEventArgs args) {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) {
-                handler(this, args);
-            }
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-
         #region private methods
-        private void onPropertyChanged(string propertyName) {
+        private void onPropertyChanged(string propertyName)
+        {
             OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
         }
 
-        private void initialize() {
-            for (int col = 0; col < m_size; col++) {
-                for (int row = 0; row < m_size; row++) {
+        private void initialize()
+        {
+            for (int col = 0; col < m_size; col++)
+            {
+                for (int row = 0; row < m_size; row++)
+                {
                     _pieces[getIndex(col, row)] = new HexPiece(col, row);
                 }
             }
@@ -139,7 +165,8 @@ namespace PixelLab.Wpf.Demo.Hex {
             PlayCount = 0;
             IsFinished = false;
         }
-        private void checkFinished() {
+        private void checkFinished()
+        {
             Debug.Assert(m_connectionTest.Count == 0);
 
             //white: top-left to lower-right
@@ -148,45 +175,57 @@ namespace PixelLab.Wpf.Demo.Hex {
             bool result = checkFirstRow();
             Debug.Assert(m_connectionTest.Count == 0);
 
-            if (result) {
+            if (result)
+            {
                 IsFinished = true;
             }
         }
-        private bool checkFirstRow() {
+        private bool checkFirstRow()
+        {
             List<PointInt> firstRowPieces = new List<PointInt>();
-            for (int i = 0; i < m_size; i++) {
-                if (CurrentPlayer == Player.White) {
-                    if (this[i, 0].State == HexPieceState.White) {
+            for (int i = 0; i < m_size; i++)
+            {
+                if (CurrentPlayer == Player.White)
+                {
+                    if (this[i, 0].State == HexPieceState.White)
+                    {
                         firstRowPieces.Add(new PointInt(i, 0));
                     }
                 }
-                else {
-                    if (this[0, i].State == HexPieceState.Black) {
+                else
+                {
+                    if (this[0, i].State == HexPieceState.Black)
+                    {
                         firstRowPieces.Add(new PointInt(0, i));
                     }
                 }
             }
-            if (firstRowPieces.Count > 0) {
+            if (firstRowPieces.Count > 0)
+            {
                 Debug.Assert(m_connectionTest.Count == 0);
 
                 //need to add the first layer to the found pieces cache so we don't loop through them
-                foreach (PointInt p in firstRowPieces) {
+                foreach (PointInt p in firstRowPieces)
+                {
                     m_connectionTest.Add(getIndex(p));
                 }
 
                 bool won = false;
 
-                foreach (PointInt p in firstRowPieces) {
+                foreach (PointInt p in firstRowPieces)
+                {
                     int currentCount = m_connectionTest.Count;
                     won = checkPiece(p);
                     Debug.Assert(currentCount == m_connectionTest.Count);
-                    if (won) {
+                    if (won)
+                    {
                         setWinner(p);
                         break;
                     }
                 }
 
-                foreach (PointInt p in firstRowPieces) {
+                foreach (PointInt p in firstRowPieces)
+                {
                     Debug.Assert(m_connectionTest.ContainsKey(getIndex(p)));
                     m_connectionTest.Remove(getIndex(p));
                 }
@@ -195,15 +234,18 @@ namespace PixelLab.Wpf.Demo.Hex {
                 //_stackDepth--;
                 return won;
             }
-            else {
+            else
+            {
                 //_stackDepth--;
                 return false;
             }
         }
-        private void setWinner(PointInt pnt) {
+        private void setWinner(PointInt pnt)
+        {
             _pieces[getIndex(pnt)].IsWinner = true;
         }
-        private bool checkPiece(PointInt point) {
+        private bool checkPiece(PointInt point)
+        {
             //_stackDepth++;
 
             //should only be checking pieces that match the _currentPlayer
@@ -213,12 +255,15 @@ namespace PixelLab.Wpf.Demo.Hex {
             //use the ptns in _connectionTest to make sure we don't loop back on ourselves
 
             List<PointInt> adjacentPoints = new List<PointInt>();
-            foreach (PointInt p in getAdjacent(point, m_size)) {
+            foreach (PointInt p in getAdjacent(point, m_size))
+            {
                 //figure out which points should stay
                 //1) == current kind we're searching for                                
-                if (this[p].State == ((CurrentPlayer == Player.White) ? HexPieceState.White : HexPieceState.Black)) {
+                if (this[p].State == ((CurrentPlayer == Player.White) ? HexPieceState.White : HexPieceState.Black))
+                {
                     //2) not already in the list
-                    if (!m_connectionTest.ContainsKey(getIndex(p))) {
+                    if (!m_connectionTest.ContainsKey(getIndex(p)))
+                    {
                         adjacentPoints.Add(p);
                     }
                 }
@@ -227,28 +272,36 @@ namespace PixelLab.Wpf.Demo.Hex {
             //now adjacentPoints contains all of the points we should check for winning
             //if not won, go to the next level
 
-            if (adjacentPoints.Count == 0) {
+            if (adjacentPoints.Count == 0)
+            {
                 //_stackDepth--;
                 return false;
             }
-            else {
+            else
+            {
                 bool won = false;
 
                 //check for winner
-                if (CurrentPlayer == Player.White) {
+                if (CurrentPlayer == Player.White)
+                {
                     //see if this makes white win
-                    foreach (PointInt pnt in adjacentPoints) {
-                        if (pnt.Row == (m_size - 1)) {
+                    foreach (PointInt pnt in adjacentPoints)
+                    {
+                        if (pnt.Row == (m_size - 1))
+                        {
                             won = true;
                             setWinner(pnt);
                             break;
                         }
                     }
                 }
-                else {
+                else
+                {
                     //see if this makes black win
-                    foreach (PointInt pnt in adjacentPoints) {
-                        if (pnt.Column == (m_size - 1)) {
+                    foreach (PointInt pnt in adjacentPoints)
+                    {
+                        if (pnt.Column == (m_size - 1))
+                        {
                             won = true;
                             setWinner(pnt);
                             break;
@@ -256,24 +309,29 @@ namespace PixelLab.Wpf.Demo.Hex {
                     }
                 }
 
-                if (!won) {
+                if (!won)
+                {
                     //add adjacentPoints to global
-                    foreach (PointInt pnt in adjacentPoints) {
+                    foreach (PointInt pnt in adjacentPoints)
+                    {
                         Debug.Assert(!m_connectionTest.ContainsKey(getIndex(pnt)));
                         m_connectionTest.Add(getIndex(pnt));
                     }
 
                     //no winner, next level
-                    foreach (PointInt pnt in adjacentPoints) {
+                    foreach (PointInt pnt in adjacentPoints)
+                    {
                         won = checkPiece(pnt);
-                        if (won) {
+                        if (won)
+                        {
                             setWinner(pnt);
                             break;
                         }
                     }
 
                     //make sure to remove nodes added to _connectionTest during this search
-                    foreach (PointInt pnt in adjacentPoints) {
+                    foreach (PointInt pnt in adjacentPoints)
+                    {
                         Debug.Assert(m_connectionTest.ContainsKey(getIndex(pnt)));
                         m_connectionTest.Remove(getIndex(pnt));
                     }
@@ -285,40 +343,51 @@ namespace PixelLab.Wpf.Demo.Hex {
         }
 
         private int getIndex(int column, int row) { return getIndex(new PointInt(column, row)); }
-        private int getIndex(PointInt point) {
+        private int getIndex(PointInt point)
+        {
             validatePnt(point, m_size);
 
             return point.Row * m_size + point.Column;
         }
 
-        private static void validatePnt(PointInt point, int size) {
-            if (size < 0) {
+        private static void validatePnt(PointInt point, int size)
+        {
+            if (size < 0)
+            {
                 throw new ArgumentOutOfRangeException("size");
             }
-            if (point.Column >= size || point.Row >= size) {
+            if (point.Column >= size || point.Row >= size)
+            {
                 throw new ArgumentOutOfRangeException("point");
             }
         }
-        private static IList<PointInt> getAdjacent(PointInt point, int size) {
+        private static IList<PointInt> getAdjacent(PointInt point, int size)
+        {
             validatePnt(point, size);
             List<PointInt> adjacent = new List<PointInt>();
 
-            if (point.Column > 0) {
+            if (point.Column > 0)
+            {
                 adjacent.Add(new PointInt(point.Column - 1, point.Row));
             }
-            if (point.Row > 0) {
+            if (point.Row > 0)
+            {
                 adjacent.Add(new PointInt(point.Column, point.Row - 1));
             }
-            if (point.Column < (size - 1)) {
+            if (point.Column < (size - 1))
+            {
                 adjacent.Add(new PointInt(point.Column + 1, point.Row));
             }
-            if (point.Row < (size - 1)) {
+            if (point.Row < (size - 1))
+            {
                 adjacent.Add(new PointInt(point.Column, point.Row + 1));
             }
-            if (point.Column > 0 && point.Row < (size - 1)) {
+            if (point.Column > 0 && point.Row < (size - 1))
+            {
                 adjacent.Add(new PointInt(point.Column - 1, point.Row + 1));
             }
-            if (point.Column < (size - 1) && point.Row > 0) {
+            if (point.Column < (size - 1) && point.Row > 0)
+            {
                 adjacent.Add(new PointInt(point.Column + 1, point.Row - 1));
             }
 
@@ -341,35 +410,45 @@ namespace PixelLab.Wpf.Demo.Hex {
 
         public const int DefaultSize = 11;
 
-        private class BitArrayPlus {
-            public BitArrayPlus(int size) {
-                if (size < 0) {
+        private class BitArrayPlus
+        {
+            public BitArrayPlus(int size)
+            {
+                if (size < 0)
+                {
                     throw new ArgumentOutOfRangeException("size");
                 }
 
                 _bits = new BitArray(size);
             }
 
-            public void Add(int index) {
-                if (!_bits[index]) {
+            public void Add(int index)
+            {
+                if (!_bits[index])
+                {
                     _count++;
                     _bits[index] = true;
                 }
             }
 
-            public void Remove(int index) {
-                if (_bits[index]) {
+            public void Remove(int index)
+            {
+                if (_bits[index])
+                {
                     _bits[index] = false;
                     _count--;
                 }
             }
 
-            public bool ContainsKey(int index) {
+            public bool ContainsKey(int index)
+            {
                 return _bits[index];
             }
 
-            public int Count {
-                get {
+            public int Count
+            {
+                get
+                {
                     return _count;
                 }
             }
@@ -379,56 +458,53 @@ namespace PixelLab.Wpf.Demo.Hex {
         }
     }
 
-    public class HexPiece : INotifyPropertyChanged {
+    public class HexPiece : Changeable
+    {
         public HexPiece(int column, int row) : this(new PointInt(column, row)) { }
 
-        internal HexPiece(PointInt point) {
+        internal HexPiece(PointInt point)
+        {
             _point = point;
             _state = HexPieceState.Unused;
         }
 
-        public bool IsWinner {
+        public bool IsWinner
+        {
             get { return _isWinner; }
-            set {
+            set
+            {
                 _isWinner = value;
-                OnPropertyChange("IsWinner");
+                OnPropertyChanged("IsWinner");
             }
         }
 
-        public HexPieceState State {
+        public HexPieceState State
+        {
             get { return _state; }
-            set {
+            set
+            {
                 Debug.Assert(_state == HexPieceState.Unused, "shouldn't set the thing after its already been set");
                 Debug.Assert(value != HexPieceState.Unused);
                 _state = value;
-                OnPropertyChange("State");
+                OnPropertyChanged("State");
             }
         }
 
-        public int Number {
+        public int Number
+        {
             get { return _number; }
-            set {
+            set
+            {
                 Debug.Assert(_number == 0, "Shouldn't set this thing after its already been set.");
                 Debug.Assert(value > 0);
                 _number = value;
-                OnPropertyChange("Number");
+                OnPropertyChanged("Number");
             }
         }
 
-        public PointInt Point {
+        public PointInt Point
+        {
             get { return _point; }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChange(PropertyChangedEventArgs args) {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) {
-                handler(this, args);
-            }
-        }
-
-        private void OnPropertyChange(string propertyName) {
-            OnPropertyChange(new PropertyChangedEventArgs(propertyName));
         }
 
         private bool _isWinner;
@@ -437,8 +513,10 @@ namespace PixelLab.Wpf.Demo.Hex {
         private readonly PointInt _point;
     }
 
-    public struct PointInt : IEquatable<PointInt> {
-        public PointInt(int column, int row) {
+    public struct PointInt : IEquatable<PointInt>
+    {
+        public PointInt(int column, int row)
+        {
             _column = column;
             _row = row;
         }
@@ -446,31 +524,39 @@ namespace PixelLab.Wpf.Demo.Hex {
         public int Column { get { return _column; } }
         public int Row { get { return _row; } }
 
-        public override string ToString() {
+        public override string ToString()
+        {
             return string.Format("{0},{1}", _column, _row);
         }
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             return Util.GetHashCode(_column, _row);
         }
-        public override bool Equals(object obj) {
-            if (obj is PointInt) {
+        public override bool Equals(object obj)
+        {
+            if (obj is PointInt)
+            {
                 PointInt p = (PointInt)obj;
                 return this.Equals(p);
             }
-            else {
+            else
+            {
                 return false;
             }
         }
-        public bool Equals(PointInt other) {
+        public bool Equals(PointInt other)
+        {
             return (this._column == other._column && this._row == other._row);
         }
 
         private readonly int _row, _column;
 
-        public static bool operator ==(PointInt p1, PointInt p2) {
+        public static bool operator ==(PointInt p1, PointInt p2)
+        {
             return p1.Equals(p2);
         }
-        public static bool operator !=(PointInt p1, PointInt p2) {
+        public static bool operator !=(PointInt p1, PointInt p2)
+        {
             return !p1.Equals(p2);
         }
     }

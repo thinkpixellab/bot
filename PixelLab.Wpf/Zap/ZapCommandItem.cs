@@ -6,7 +6,7 @@ using PixelLab.Common;
 
 namespace PixelLab.Wpf
 {
-    public class ZapCommandItem : ICommand, INotifyPropertyChanged
+    public class ZapCommandItem : Changeable, ICommand
     {
         protected internal ZapCommandItem(ZapScroller zapScroller, int index)
         {
@@ -79,17 +79,6 @@ namespace PixelLab.Wpf
         void ICommand.Execute(object parameter)
         {
             MakeCurrent();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
         }
 
         public override string ToString()

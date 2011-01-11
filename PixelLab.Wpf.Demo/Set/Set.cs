@@ -7,23 +7,30 @@ using System.Diagnostics;
 using System.Linq;
 using PixelLab.Common;
 
-namespace PixelLab.Wpf.Demo.Set {
-    public class SetGame : INotifyPropertyChanged {
-        public SetGame() {
+namespace PixelLab.Wpf.Demo.Set
+{
+    public class SetGame : Changeable
+    {
+        public SetGame()
+        {
             m_playedSetsRO = new ReadOnlyObservableCollection<Set>(m_playedSets);
             newGame();
         }
 
         #region Public Properties
 
-        public SetCard this[int index] {
-            get {
+        public SetCard this[int index]
+        {
+            get
+            {
                 RequireValidBoardIndex(index, "index");
 
-                if (m_board[index] != c_noCard) {
+                if (m_board[index] != c_noCard)
+                {
                     return s_deck[m_board[index]];
                 }
-                else {
+                else
+                {
                     return null;
                 }
             }
@@ -31,55 +38,69 @@ namespace PixelLab.Wpf.Demo.Set {
 
         public bool CanPlay { get { return m_canPlay; } }
 
-        public int SetsOnBoard {
-            get {
+        public int SetsOnBoard
+        {
+            get
+            {
                 return setsOnBoard.Count;
             }
         }
 
-        public int CardsInDeck {
-            get {
+        public int CardsInDeck
+        {
+            get
+            {
                 return m_cardsInDeck;
             }
         }
 
-        public ReadOnlyObservableCollection<Set> PlayedSets {
-            get {
+        public ReadOnlyObservableCollection<Set> PlayedSets
+        {
+            get
+            {
                 return m_playedSetsRO;
             }
         }
 
         #endregion
 
-        public bool TryPlay(int boardIndex1, int boardIndex2, int boardIndex3) {
+        public bool TryPlay(int boardIndex1, int boardIndex2, int boardIndex3)
+        {
             RequirePlaying();
 
-            if (IsSet(boardIndex1, boardIndex2, boardIndex3)) {
+            if (IsSet(boardIndex1, boardIndex2, boardIndex3))
+            {
                 Play(boardIndex1, boardIndex2, boardIndex3);
 
                 SetToAvailable(boardIndex1);
                 SetToAvailable(boardIndex2);
                 SetToAvailable(boardIndex3);
 
-                if (SetsOnBoard == 0) {
-                    if (m_cardsInDeck == 0) {
+                if (SetsOnBoard == 0)
+                {
+                    if (m_cardsInDeck == 0)
+                    {
                         m_canPlay = false;
                     }
-                    else {
+                    else
+                    {
                         // Are there any sets possible with all remaining cards?
                         Set[] sets = GetPossibleSetsInRemainingCards().ToArray();
-                        if (sets.Length == 0) {
+                        if (sets.Length == 0)
+                        {
                             // Even through there are cards left in the deck, no combination of them and 
                             //  what's on the board will enable a set.
                             // Rare, but important to catch.
                             m_canPlay = false;
                         }
-                        else {
+                        else
+                        {
                             // There are some edge cases where this could spin a while, although
                             //  a good set will come up eventually.
                             // Alternative implementations that don't spin like this are
                             //  pretty crazy to implement with little real benefit.
-                            do {
+                            do
+                            {
                                 // The cards that have been played don't enable new sets
                                 // So unplay them and start over.
                                 UnPlaceCard(boardIndex1);
@@ -103,7 +124,8 @@ namespace PixelLab.Wpf.Demo.Set {
                 return true;
 
             } // if(IsSet...
-            else {
+            else
+            {
                 onPropertiesChanged();
                 return false;
 
@@ -111,21 +133,14 @@ namespace PixelLab.Wpf.Demo.Set {
 
         } //*** bool TryPlay(...
 
-        public void NewGame() {
+        public void NewGame()
+        {
             newGame();
             onPropertiesChanged();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e) {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) {
-                handler(this, e);
-            }
-        }
-
-        public static bool IsSet(SetCard setCard1, SetCard setCard2, SetCard setCard3) {
+        public static bool IsSet(SetCard setCard1, SetCard setCard2, SetCard setCard3)
+        {
             Util.RequireNotNull(setCard1, "setCard1");
             Util.RequireNotNull(setCard2, "setCard2");
             Util.RequireNotNull(setCard3, "setCard3");
@@ -138,15 +153,19 @@ namespace PixelLab.Wpf.Demo.Set {
             IList<int> c3 = setCard3.Profile;
 
             bool isSet = true;
-            for (int i = 0; i < 4; i++) {
-                if (c1[i] == c2[i]) {
+            for (int i = 0; i < 4; i++)
+            {
+                if (c1[i] == c2[i])
+                {
                     isSet = isSet && (c2[i] == c3[i]);
                 }
-                else {
+                else
+                {
                     isSet = isSet && ((c1[i] != c3[i]) && (c2[i] != c3[i]));
                 }
 
-                if (!isSet) {
+                if (!isSet)
+                {
                     break;
                 }
             }
@@ -159,10 +178,12 @@ namespace PixelLab.Wpf.Demo.Set {
 
 #if DEBUG
 
-        public void Test() {
+        public void Test()
+        {
             RequirePlaying();
 
-            if (SetsOnBoard > 0) {
+            if (SetsOnBoard > 0)
+            {
                 var item = setsOnBoard.Random();
                 TryPlay(
                     item[0],
@@ -171,8 +192,10 @@ namespace PixelLab.Wpf.Demo.Set {
             }
         }
 
-        public IList<IList<int>> SetsOnBoardList {
-            get {
+        public IList<IList<int>> SetsOnBoardList
+        {
+            get
+            {
                 return setsOnBoard;
             }
         }
@@ -183,14 +206,17 @@ namespace PixelLab.Wpf.Demo.Set {
 
         #region Private Methods
 
-        private void newGame() {
+        private void newGame()
+        {
             m_playedSets.Clear();
 
-            do {
+            do
+            {
                 m_playedCards.SetAll(false);
                 m_cardsInDeck = c_deckSize;
 
-                for (int i = 0; i < m_board.Length; i++) {
+                for (int i = 0; i < m_board.Length; i++)
+                {
                     m_board[i] = c_noCard;
                     SetToAvailable(i);
                 }
@@ -200,19 +226,23 @@ namespace PixelLab.Wpf.Demo.Set {
             m_canPlay = true;
         }
 
-        private void UnPlaceCard(int boardIndex) {
+        private void UnPlaceCard(int boardIndex)
+        {
             RequireValidBoardIndex(boardIndex, "boardIndex");
 
             int deckIndex = m_board[boardIndex];
-            if (deckIndex != c_noCard) {
+            if (deckIndex != c_noCard)
+            {
                 m_playedCards[deckIndex] = false;
                 m_cardsInDeck++;
                 m_board[boardIndex] = c_noCard;
             }
         }
 
-        private void Play(int boardIndex1, int boardIndex2, int boardIndex3) {
-            if (IsSet(boardIndex1, boardIndex2, boardIndex3)) {
+        private void Play(int boardIndex1, int boardIndex2, int boardIndex3)
+        {
+            if (IsSet(boardIndex1, boardIndex2, boardIndex3))
+            {
                 m_playedSets.Insert(0, new Set(this[boardIndex1], this[boardIndex2], this[boardIndex3]));
 
                 m_board[boardIndex1] = c_noCard;
@@ -221,13 +251,16 @@ namespace PixelLab.Wpf.Demo.Set {
 
                 m_setsOnBoard = null;
             }
-            else {
+            else
+            {
                 throw new ArgumentException("Not a set!");
             }
         }
 
-        private void SetToAvailable(int boardIndex) {
-            if (m_cardsInDeck > 0) {
+        private void SetToAvailable(int boardIndex)
+        {
+            if (m_cardsInDeck > 0)
+            {
                 RequireValidBoardIndex(boardIndex, "index");
 
                 Util.RequireArgument(m_board[boardIndex] == c_noCard, "boardIndex", "Cannot set a space that is already taken.");
@@ -235,9 +268,11 @@ namespace PixelLab.Wpf.Demo.Set {
                 int nthCard = m_random.Next(m_cardsInDeck);
 
                 int deckIndex = -1;
-                while (nthCard >= 0) {
+                while (nthCard >= 0)
+                {
                     deckIndex++;
-                    if (!m_playedCards[deckIndex]) {
+                    if (!m_playedCards[deckIndex])
+                    {
                         nthCard--;
                     }
                 }
@@ -247,7 +282,8 @@ namespace PixelLab.Wpf.Demo.Set {
         }
 
         // Changes stuff...
-        private void SetBoardCard(int boardIndex, int deckIndex) {
+        private void SetBoardCard(int boardIndex, int deckIndex)
+        {
             RequireValidBoardIndex(boardIndex, "boardIndex");
             Util.RequireArgumentRange(deckIndex >= 0 && deckIndex < 81, "deckIndex");
 
@@ -264,7 +300,8 @@ namespace PixelLab.Wpf.Demo.Set {
         ///     Given 3 indices into the *board* returns
         ///     true if they are a set; otherwise, false.
         /// </summary>
-        private bool IsSet(int boardIndex1, int boardIndex2, int boardIndex3) {
+        private bool IsSet(int boardIndex1, int boardIndex2, int boardIndex3)
+        {
             RequireValidBoardIndex(boardIndex1, "index1");
             RequireValidBoardIndex(boardIndex2, "index2");
             RequireValidBoardIndex(boardIndex3, "index3");
@@ -281,15 +318,20 @@ namespace PixelLab.Wpf.Demo.Set {
         } // bool IsSet()
 
         [DebuggerStepThrough]
-        private void RequirePlaying() {
-            if (!m_canPlay) {
+        private void RequirePlaying()
+        {
+            if (!m_canPlay)
+            {
                 throw new InvalidOperationException("Cann't play in the current board state.");
             }
         }
 
-        private IList<IList<int>> setsOnBoard {
-            get {
-                if (m_setsOnBoard == null) {
+        private IList<IList<int>> setsOnBoard
+        {
+            get
+            {
+                if (m_setsOnBoard == null)
+                {
 #if DEBUG
                     m_setsOnBoard = GetSetsOnBoard().ToReadOnlyCollection();
 #else
@@ -300,14 +342,22 @@ namespace PixelLab.Wpf.Demo.Set {
             }
         }
 
-        private IEnumerable<IList<int>> GetSetsOnBoard() {
-            for (int i = 0; i < m_board.Length; i++) {
-                if (m_board[i] != c_noCard) {
-                    for (int j = (i + 1); j < m_board.Length; j++) {
-                        if (m_board[j] != c_noCard) {
-                            for (int k = (j + 1); k < m_board.Length; k++) {
-                                if (m_board[k] != c_noCard) {
-                                    if (IsSet(i, j, k)) {
+        private IEnumerable<IList<int>> GetSetsOnBoard()
+        {
+            for (int i = 0; i < m_board.Length; i++)
+            {
+                if (m_board[i] != c_noCard)
+                {
+                    for (int j = (i + 1); j < m_board.Length; j++)
+                    {
+                        if (m_board[j] != c_noCard)
+                        {
+                            for (int k = (j + 1); k < m_board.Length; k++)
+                            {
+                                if (m_board[k] != c_noCard)
+                                {
+                                    if (IsSet(i, j, k))
+                                    {
 #if DEBUG
                                         yield return new ReadOnlyCollection<int>(new int[] { i, j, k });
 #else
@@ -322,13 +372,18 @@ namespace PixelLab.Wpf.Demo.Set {
             }
         }
 
-        private IEnumerable<Set> GetPossibleSetsInRemainingCards() {
+        private IEnumerable<Set> GetPossibleSetsInRemainingCards()
+        {
             SetCard[] cardsLeft = GetCardsOnBoard().Concat(GetCardsLeftinDeck()).ToArray();
 
-            for (int i = 0; i < cardsLeft.Length; i++) {
-                for (int j = i + 1; j < cardsLeft.Length; j++) {
-                    for (int k = j + 1; k < cardsLeft.Length; k++) {
-                        if (IsSet(cardsLeft[i], cardsLeft[j], cardsLeft[k])) {
+            for (int i = 0; i < cardsLeft.Length; i++)
+            {
+                for (int j = i + 1; j < cardsLeft.Length; j++)
+                {
+                    for (int k = j + 1; k < cardsLeft.Length; k++)
+                    {
+                        if (IsSet(cardsLeft[i], cardsLeft[j], cardsLeft[k]))
+                        {
                             yield return new Set(cardsLeft[i], cardsLeft[j], cardsLeft[k]);
                         }
                     }
@@ -336,15 +391,18 @@ namespace PixelLab.Wpf.Demo.Set {
             }
         }
 
-        private IEnumerable<SetCard> GetCardsOnBoard() {
+        private IEnumerable<SetCard> GetCardsOnBoard()
+        {
             return m_board.Where(index => (index != c_noCard)).Select(index => s_deck[index]);
         }
 
-        private IEnumerable<SetCard> GetCardsLeftinDeck() {
+        private IEnumerable<SetCard> GetCardsLeftinDeck()
+        {
             return s_deck.Where(setCard => !m_playedCards[setCard.Index]);
         }
 
-        private void onPropertiesChanged() {
+        private void onPropertiesChanged()
+        {
             OnPropertyChanged(new PropertyChangedEventArgs("SetsOnBoard"));
             OnPropertyChanged(new PropertyChangedEventArgs("CanPlay"));
             OnPropertyChanged(new PropertyChangedEventArgs("CardsInDeck"));
@@ -355,10 +413,12 @@ namespace PixelLab.Wpf.Demo.Set {
 #endif
         }
 
-        private static SetCard[] GetDeck() {
+        private static SetCard[] GetDeck()
+        {
             SetCard[] cards = new SetCard[c_deckSize];
 
-            for (int i = 0; i < c_deckSize; i++) {
+            for (int i = 0; i < c_deckSize; i++)
+            {
                 SetCard setCard = new SetCard(i);
                 cards[setCard.Index] = setCard;
             }
@@ -367,7 +427,8 @@ namespace PixelLab.Wpf.Demo.Set {
         }
 
         [DebuggerStepThrough]
-        private static void RequireValidBoardIndex(int index, string argumentName) {
+        private static void RequireValidBoardIndex(int index, string argumentName)
+        {
             Util.RequireNotNullOrEmpty(argumentName, "argumentName");
 
             Util.RequireArgumentRange(index >= 0 && index < c_boardSize, argumentName);
@@ -401,9 +462,11 @@ namespace PixelLab.Wpf.Demo.Set {
 
     }
 
-    public class Set : ReadOnlyCollection<SetCard> {
+    public class Set : ReadOnlyCollection<SetCard>
+    {
         public Set(params SetCard[] cards)
-            : base(cards.OrderBy(card => card.Index).ToArray()) {
+            : base(cards.OrderBy(card => card.Index).ToArray())
+        {
             Util.RequireArgument(
                 cards.Length == 3,
                 "cards",
@@ -415,14 +478,17 @@ namespace PixelLab.Wpf.Demo.Set {
                 "The provided cards don't make a set.");
         }
 
-        public override string ToString() {
+        public override string ToString()
+        {
             return string.Format("Set: {0}, {1}, {2}",
                 this[0], this[1], this[2]);
         }
     }
 
-    public class SetCard : IEquatable<SetCard> {
-        internal SetCard(int deckIndex) {
+    public class SetCard : IEquatable<SetCard>
+    {
+        internal SetCard(int deckIndex)
+        {
             Util.RequireArgumentRange(deckIndex >= 0 && deckIndex < 81, "deckIndex");
 
             Index = deckIndex;
@@ -446,15 +512,19 @@ namespace PixelLab.Wpf.Demo.Set {
 
         internal IList<int> Profile { get; private set; }
 
-        public override string ToString() {
+        public override string ToString()
+        {
             return string.Format("SetCard: ({0} {1} {2} {3})", Count, Color, Fill, Shape);
         }
 
-        public bool Equals(SetCard other) {
-            if (other == null) {
+        public bool Equals(SetCard other)
+        {
+            if (other == null)
+            {
                 return false;
             }
-            else {
+            else
+            {
                 // This is weird, but important.
                 // '==' is used for SetCard equality in SetGame, but it's not implemented
                 // Since '==' is weird on a reference type. This doesn't matter because
@@ -469,11 +539,13 @@ namespace PixelLab.Wpf.Demo.Set {
             }
         }
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object obj)
+        {
             return Equals(obj as SetCard);
         }
 
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             return Index;
         }
 

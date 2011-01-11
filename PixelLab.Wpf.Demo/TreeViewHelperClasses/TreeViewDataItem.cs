@@ -1,18 +1,13 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Threading;
-using System.Windows.Controls;
-using System.Diagnostics;
 using System.ComponentModel;
 using System.Reflection;
-using System.Collections;
-using System.Linq;
 using PixelLab.Common;
 
 namespace PixelLab.Wpf
 {
-    public class TreeViewDataItem : INotifyPropertyChanged
+    public class TreeViewDataItem : Changeable
     {
         public TreeViewDataItem(object dataItem, string childrenPropertyName) : this(dataItem, childrenPropertyName, null) { }
         internal TreeViewDataItem(object dataItem, string childrenPropertyName, TreeViewDataItem parent)
@@ -106,16 +101,6 @@ namespace PixelLab.Wpf
         {
             return Name;
         }
-
-        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
 
         #region implementation
 
