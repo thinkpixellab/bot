@@ -43,6 +43,7 @@
     <Compile Include="KeyBinding.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="ListBase.cs" />
+    <Compile Include="ListReorderUtil.cs" />
     <Compile Include="LockHelper.cs" />
     <Compile Include="ObservableCollectionPlus.cs" />
     <Compile Include="PageFlipper.cs" />

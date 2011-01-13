@@ -28,6 +28,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="FuncEnumerable.cs" />
     <Compile Include="ListBase.cs" />
+    <Compile Include="ListReorderUtil.cs" />
     <Compile Include="LockHelper.cs" />
     <Compile Include="ObservableCollectionPlus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
