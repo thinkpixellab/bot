@@ -28,6 +28,7 @@
     <Compile Include="Contracts_WP7.cs" />
     <Compile Include="DemoCollection.cs" />
     <Compile Include="DependencyPropHelper.cs" />
+    <Compile Include="DispatcherExtensions.cs" />
     <Compile Include="EnumConverter.cs" />
     <Compile Include="ErrorHelper.cs" />
     <Compile Include="Extensions.cs" />
