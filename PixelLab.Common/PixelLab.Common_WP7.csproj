@@ -25,6 +25,7 @@
     <Compile Include="ColorHelper.cs" />
     <Compile Include="CommandWrapper.cs" />
     <Compile Include="CompositionTargetRenderingListening.cs" />
+    <Compile Include="Contracts\Contract.cs" />
     <Compile Include="Contracts_WP7.cs" />
     <Compile Include="DemoCollection.cs" />
     <Compile Include="DependencyPropHelper.cs" />

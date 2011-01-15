@@ -30,6 +30,7 @@
     <Compile Include="CommandWrapper.cs" />
     <Compile Include="CompositionHelpers.cs" />
     <Compile Include="CompositionTargetRenderingListening.cs" />
+    <Compile Include="Contracts\Contract.cs" />
     <Compile Include="DemoCollection.cs" />
     <Compile Include="DependencyPropHelper.cs" />
     <Compile Include="DispatcherExtensions.cs" />
