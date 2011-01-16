@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+#if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -71,8 +75,8 @@ namespace PixelLab.Common
 
         public static void SetCommand(FrameworkElement element, string value)
         {
-            Util.RequireNotNull(element, "element");
-            Util.RequireNotNullOrEmpty(value, "value");
+            Contract.Requires<ArgumentNullException>(element != null);
+            Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(value));
 
             if (element is ButtonBase)
             {

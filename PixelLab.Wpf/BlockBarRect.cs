@@ -1,6 +1,10 @@
 using System.Windows;
 using System.Windows.Media;
-using PixelLab.Common;
+#if CONTRACTS_FULL
+using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 
 namespace PixelLab.Wpf {
     public class BlockBarRect : BlockBarBase {
@@ -21,9 +25,9 @@ namespace PixelLab.Wpf {
         }
 
         private static Rect GetRect(Size targetSize, int blockCount, double blockMargin, int blockNumber, double penThickness) {
-            Util.RequireArgument(!targetSize.IsEmpty, "targetSize");
-            Util.RequireArgumentRange(blockCount > 0, "blockCount");
-            Util.RequireArgumentRange(blockCount > blockNumber, "blockNumber");
+            Contract.Requires(!targetSize.IsEmpty, "targetSize");
+            Contract.Requires(blockCount > 0, "blockCount");
+            Contract.Requires(blockCount > blockNumber, "blockNumber");
 
             double width = (targetSize.Width - (blockCount - 1) * blockMargin - penThickness) / blockCount;
             double left = penThickness / 2 + (width + blockMargin) * blockNumber;

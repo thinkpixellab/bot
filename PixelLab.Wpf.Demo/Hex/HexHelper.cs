@@ -1,14 +1,19 @@
 using System;
 using System.Windows;
 using PixelLab.Common;
+#if CONTRACTS_FULL
+using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 
 namespace PixelLab.Wpf.Demo.Hex {
     static class HexHelper {
         public static readonly double HeightOverWidth = Math.Sqrt(3) / 2;
 
         public static Point GetTopLeft(int count, double itemHeight, PointInt location) {
-            Util.RequireArgumentRange(count >= 1, "count");
-            Util.RequireArgumentRange(itemHeight > 0 && itemHeight.IsValid(), "itemHeight");
+            Contract.Requires<ArgumentOutOfRangeException>(count >= 1, "count");
+            Contract.Requires<ArgumentOutOfRangeException>(itemHeight > 0 && itemHeight.IsValid(), "itemHeight");
 
             double itemWidth = itemHeight / HeightOverWidth;
 

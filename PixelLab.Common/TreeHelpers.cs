@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
+#if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;

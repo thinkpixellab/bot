@@ -1,4 +1,8 @@
-﻿using System.Diagnostics.Contracts;
+﻿#if CONTRACTS_FULL
+using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 
 namespace PixelLab.Common
 {

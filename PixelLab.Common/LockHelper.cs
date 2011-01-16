@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+#if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 using System.Threading;
 
 namespace PixelLab.Common

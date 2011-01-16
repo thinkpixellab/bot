@@ -1,15 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using PixelLab.Common;
+#if CONTRACTS_FULL
+using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 
 namespace PixelLab.Wpf.Demo.OrgTree {
   public class OrgViewItem {
     public OrgViewItem(OrgItem root) {
-      Util.RequireNotNull(root, "root");
-      _dataRoot = root;
+        Contract.Requires<ArgumentNullException>(root != null);
+        _dataRoot = root;
     }
 
     public ReadOnlyObservableCollection<OrgViewItem> VisibleChildren {

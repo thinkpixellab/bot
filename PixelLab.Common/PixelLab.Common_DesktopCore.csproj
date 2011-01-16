@@ -23,10 +23,12 @@
     <Compile Include="CastList.cs" />
     <Compile Include="Changeable.cs" />
     <Compile Include="CompositionHelpers.cs" />
+    <Compile Include="Contract.cs" />
     <Compile Include="DBUtil.cs" />
     <Compile Include="ErrorHelper.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="FuncEnumerable.cs" />
+    <Compile Include="InstanceFactory.cs" />
     <Compile Include="ListBase.cs" />
     <Compile Include="ListReorderUtil.cs" />
     <Compile Include="LockHelper.cs" />

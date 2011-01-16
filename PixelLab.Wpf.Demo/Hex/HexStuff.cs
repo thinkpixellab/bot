@@ -5,6 +5,11 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Input;
 using PixelLab.Common;
+#if CONTRACTS_FULL
+using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 
 namespace PixelLab.Wpf.Demo.Hex
 {
@@ -13,7 +18,7 @@ namespace PixelLab.Wpf.Demo.Hex
         public HexBoard() : this(DefaultSize) { }
         public HexBoard(int size)
         {
-            Util.RequireArgumentRange(size >= 2, "size");
+            Contract.Requires<ArgumentOutOfRangeException>(size >= 2);
             m_size = size;
             _pieces = new HexPiece[m_size * m_size];
 

@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using PixelLab.Common;
+#if CONTRACTS_FULL
+using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 using PixelLab.Demo.Core;
 
 namespace PixelLab.Wpf.Demo {
@@ -50,7 +55,7 @@ namespace PixelLab.Wpf.Demo {
     }
 
     public static ReadOnlyCollection<Agent> GetRandomList(int count) {
-      Util.RequireArgumentRange(count >= 0, "count");
+      Contract.Requires<ArgumentOutOfRangeException>(count >= 0);
 
       return Enumerable.Range(0, count).Select(index => GetRandom()).ToReadOnlyCollection();
     }

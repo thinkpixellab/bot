@@ -4,6 +4,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using PixelLab.Common;
+#if CONTRACTS_FULL
+using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 
 namespace PixelLab.Wpf.Demo.OrgTree
 {
@@ -11,7 +16,7 @@ namespace PixelLab.Wpf.Demo.OrgTree
     {
         protected OrgItem(string name, IEnumerable<OrgItem> children)
         {
-            Util.RequireNotNullOrEmpty(name, "name");
+            Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(name));
 
             if (children == null)
             {

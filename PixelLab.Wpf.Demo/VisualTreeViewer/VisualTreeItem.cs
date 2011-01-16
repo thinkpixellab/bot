@@ -2,12 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
-using PixelLab.Common;
+#if CONTRACTS_FULL
+using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 
 namespace PixelLab.Wpf.Demo {
   public class VisualTreeItem {
     public VisualTreeItem(DependencyObject element) {
-      Util.RequireNotNull(element, "element");
+        Contract.Requires<ArgumentNullException>(element != null);
 
       m_element = element;
     }

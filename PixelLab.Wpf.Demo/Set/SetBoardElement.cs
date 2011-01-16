@@ -8,6 +8,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using PixelLab.Common;
+#if CONTRACTS_FULL
+using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 
 namespace PixelLab.Wpf.Demo.Set {
     public class SetBoardElement : WrapperElement<Viewport3D>, IDisposable {
@@ -71,12 +76,13 @@ namespace PixelLab.Wpf.Demo.Set {
         }
 
         public void ProvideGame(SetGame set) {
+            Contract.Requires<ArgumentNullException>(set != null);
+
             VerifyAccess();
             if (m_set != null) {
                 throw new InvalidOperationException("Can only set the game once.");
             }
 
-            Util.RequireNotNull(set, "set");
             m_set = set;
             m_set.PropertyChanged += delegate(object sender, PropertyChangedEventArgs e) {
                 resetMaterials();

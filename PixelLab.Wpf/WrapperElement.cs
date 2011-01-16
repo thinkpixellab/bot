@@ -1,6 +1,12 @@
-﻿using System.Windows;
+﻿using System;
+using System.Diagnostics;
+using System.Windows;
 using System.Windows.Media;
-using PixelLab.Common;
+#if CONTRACTS_FULL
+using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 
 namespace PixelLab.Wpf
 {
@@ -9,7 +15,7 @@ namespace PixelLab.Wpf
     {
         protected WrapperElement(TElement element)
         {
-            Util.RequireNotNull(element, "element");
+            Contract.Requires<ArgumentNullException>(element != null);
 
             m_element = element;
 
@@ -38,7 +44,7 @@ namespace PixelLab.Wpf
 
         protected override Visual GetVisualChild(int index)
         {
-            Util.RequireArgumentRange(index == 0, "index", "index must be 0");
+            Debug.Assert(index == 0);
             return m_element;
         }
 

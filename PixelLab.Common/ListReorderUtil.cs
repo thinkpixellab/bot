@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+#if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 using System.Linq;
-using PixelLab.Common;
 
 namespace PixelLab.Common
 {

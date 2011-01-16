@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+#if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;

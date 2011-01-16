@@ -3,6 +3,11 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using PixelLab.Common;
+#if CONTRACTS_FULL
+using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 
 namespace PixelLab.Wpf
 {
@@ -10,8 +15,8 @@ namespace PixelLab.Wpf
     {
         protected internal ZapCommandItem(ZapScroller zapScroller, int index)
         {
-            Util.RequireNotNull(zapScroller, "zapScroller");
-            Util.RequireArgumentRange(index >= 0, "index");
+            Contract.Requires<ArgumentNullException>(zapScroller != null);
+            Contract.Requires<ArgumentOutOfRangeException>(index >= 0);
 
             m_zapScroller = zapScroller;
 

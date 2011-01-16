@@ -6,6 +6,11 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using PixelLab.Common;
+#if CONTRACTS_FULL
+using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 
 namespace PixelLab.Wpf.Demo.Set
 {
@@ -23,7 +28,7 @@ namespace PixelLab.Wpf.Demo.Set
         {
             get
             {
-                RequireValidBoardIndex(index, "index");
+                Contract.Requires<ArgumentOutOfRangeException>(index >= 0 && index < c_boardSize);
 
                 if (m_board[index] != c_noCard)
                 {
@@ -139,14 +144,15 @@ namespace PixelLab.Wpf.Demo.Set
             onPropertiesChanged();
         }
 
+        [Pure]
         public static bool IsSet(SetCard setCard1, SetCard setCard2, SetCard setCard3)
         {
-            Util.RequireNotNull(setCard1, "setCard1");
-            Util.RequireNotNull(setCard2, "setCard2");
-            Util.RequireNotNull(setCard3, "setCard3");
+            Contract.Requires<ArgumentNullException>(setCard1 != null);
+            Contract.Requires<ArgumentNullException>(setCard2 != null);
+            Contract.Requires<ArgumentNullException>(setCard3 != null);
 
-            Util.RequireArgumentRange(setCard1 != setCard2, "setCard2");
-            Util.RequireArgumentRange(setCard3 != setCard1 && setCard3 != setCard2, "setCard3");
+            Contract.Requires<ArgumentOutOfRangeException>(setCard1 != setCard2);
+            Contract.Requires<ArgumentOutOfRangeException>(setCard3 != setCard1 && setCard3 != setCard2);
 
             IList<int> c1 = setCard1.Profile;
             IList<int> c2 = setCard2.Profile;
@@ -228,7 +234,7 @@ namespace PixelLab.Wpf.Demo.Set
 
         private void UnPlaceCard(int boardIndex)
         {
-            RequireValidBoardIndex(boardIndex, "boardIndex");
+            Contract.Requires<ArgumentOutOfRangeException>(boardIndex >= 0 && boardIndex < c_boardSize);
 
             int deckIndex = m_board[boardIndex];
             if (deckIndex != c_noCard)
@@ -259,12 +265,11 @@ namespace PixelLab.Wpf.Demo.Set
 
         private void SetToAvailable(int boardIndex)
         {
+            Contract.Requires(m_cardsInDeck == 0 || m_board[boardIndex] == c_noCard);
+            Contract.Requires<ArgumentOutOfRangeException>(m_cardsInDeck == 0 || boardIndex >= 0 && boardIndex < c_boardSize);
+
             if (m_cardsInDeck > 0)
             {
-                RequireValidBoardIndex(boardIndex, "index");
-
-                Util.RequireArgument(m_board[boardIndex] == c_noCard, "boardIndex", "Cannot set a space that is already taken.");
-
                 int nthCard = m_random.Next(m_cardsInDeck);
 
                 int deckIndex = -1;
@@ -284,11 +289,10 @@ namespace PixelLab.Wpf.Demo.Set
         // Changes stuff...
         private void SetBoardCard(int boardIndex, int deckIndex)
         {
-            RequireValidBoardIndex(boardIndex, "boardIndex");
-            Util.RequireArgumentRange(deckIndex >= 0 && deckIndex < 81, "deckIndex");
-
-            Util.RequireArgument(!m_playedCards[deckIndex], "deckIndex");
-            Util.RequireArgument(m_board[boardIndex] == c_noCard, "boardIndex");
+            Contract.Requires<ArgumentOutOfRangeException>(deckIndex >= 0 && deckIndex < 81);
+            Contract.Requires(!m_playedCards[deckIndex], "deckIndex");
+            Contract.Requires(m_board[boardIndex] == c_noCard, "boardIndex");
+            Contract.Requires<ArgumentOutOfRangeException>(boardIndex >= 0 && boardIndex < c_boardSize);
 
             m_board[boardIndex] = deckIndex;
             m_playedCards[deckIndex] = true;
@@ -302,16 +306,16 @@ namespace PixelLab.Wpf.Demo.Set
         /// </summary>
         private bool IsSet(int boardIndex1, int boardIndex2, int boardIndex3)
         {
-            RequireValidBoardIndex(boardIndex1, "index1");
-            RequireValidBoardIndex(boardIndex2, "index2");
-            RequireValidBoardIndex(boardIndex3, "index3");
+            Contract.Requires<ArgumentOutOfRangeException>(boardIndex1 >= 0 && boardIndex1 < c_boardSize);
+            Contract.Requires<ArgumentOutOfRangeException>(boardIndex2 >= 0 && boardIndex2 < c_boardSize);
+            Contract.Requires<ArgumentOutOfRangeException>(boardIndex3 >= 0 && boardIndex3 < c_boardSize);
 
-            Util.RequireArgumentRange(boardIndex2 != boardIndex1, "index2");
-            Util.RequireArgumentRange(boardIndex3 != boardIndex1 && boardIndex3 != boardIndex2, "index3");
+            Contract.Requires(boardIndex2 != boardIndex1, "index2");
+            Contract.Requires(boardIndex3 != boardIndex1 && boardIndex3 != boardIndex2, "index3");
 
-            Util.RequireArgument(m_board[boardIndex1] != c_noCard, "index1");
-            Util.RequireArgument(m_board[boardIndex2] != c_noCard, "index2");
-            Util.RequireArgument(m_board[boardIndex3] != c_noCard, "index3");
+            Contract.Requires(m_board[boardIndex1] != c_noCard, "index1");
+            Contract.Requires(m_board[boardIndex2] != c_noCard, "index2");
+            Contract.Requires(m_board[boardIndex3] != c_noCard, "index3");
 
             return IsSet(this[boardIndex1], this[boardIndex2], this[boardIndex3]);
 
@@ -426,13 +430,6 @@ namespace PixelLab.Wpf.Demo.Set
             return cards;
         }
 
-        [DebuggerStepThrough]
-        private static void RequireValidBoardIndex(int index, string argumentName)
-        {
-            Util.RequireNotNullOrEmpty(argumentName, "argumentName");
-
-            Util.RequireArgumentRange(index >= 0 && index < c_boardSize, argumentName);
-        }
 
         #endregion
 
@@ -467,15 +464,8 @@ namespace PixelLab.Wpf.Demo.Set
         public Set(params SetCard[] cards)
             : base(cards.OrderBy(card => card.Index).ToArray())
         {
-            Util.RequireArgument(
-                cards.Length == 3,
-                "cards",
-                "A set must be three cards.");
-
-            Util.RequireArgument(
-                SetGame.IsSet(cards[0], cards[1], cards[2]),
-                "cards",
-                "The provided cards don't make a set.");
+            Contract.Requires(cards.Length == 3);
+            Contract.Requires(SetGame.IsSet(cards[0], cards[1], cards[2]));
         }
 
         public override string ToString()
@@ -489,7 +479,7 @@ namespace PixelLab.Wpf.Demo.Set
     {
         internal SetCard(int deckIndex)
         {
-            Util.RequireArgumentRange(deckIndex >= 0 && deckIndex < 81, "deckIndex");
+            Contract.Requires<ArgumentOutOfRangeException>(deckIndex >= 0 && deckIndex < 81, "deckIndex");
 
             Index = deckIndex;
             int[] profile = new int[] { deckIndex / 27, (deckIndex / 9) % 3, (deckIndex / 3) % 3, deckIndex % 3 };

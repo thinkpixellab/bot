@@ -1,8 +1,14 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using PixelLab.Common;
+#if CONTRACTS_FULL
+using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 
 namespace PixelLab.Wpf.Demo.Set {
     public static class SetCardDrawingFactory {
@@ -50,7 +56,7 @@ namespace PixelLab.Wpf.Demo.Set {
         }
 
         public static Drawing GetCardDesignDrawing(SetCard setCard) {
-            Util.RequireNotNull(setCard, "setCard");
+            Contract.Requires<ArgumentNullException>(setCard != null);
 
             DrawingGroup drawingGroup = new DrawingGroup();
 

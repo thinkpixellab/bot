@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using PixelLab.Common;
+#if CONTRACTS_FULL
+using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 
 namespace PixelLab.Wpf
 {
@@ -11,8 +17,8 @@ namespace PixelLab.Wpf
     {
         public void AddItem(UIElement item)
         {
-            Util.RequireNotNull(item, "item");
-            Util.RequireArgument(VisualTreeHelper.GetParent(item) == null, "item", "item should not have a parent");
+            Contract.Requires<ArgumentNullException>(item != null);
+            Debug.Assert(VisualTreeHelper.GetParent(item) == null, "item", "item should not have a parent");
 
             m_elements.Add(item);
             this.AddVisualChild(item);

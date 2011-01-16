@@ -1,5 +1,9 @@
 ﻿using System;
+#if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;

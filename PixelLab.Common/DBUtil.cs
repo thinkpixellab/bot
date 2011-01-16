@@ -1,4 +1,10 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
+#if CONTRACTS_FULL
+using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 
 namespace PixelLab.Common
 {
@@ -21,10 +27,10 @@ namespace PixelLab.Common
             string commandFormatString,
             params object[] parameters)
         {
-            SqlCommand command = new SqlCommand();
+            Contract.Requires<ArgumentNullException>(commandFormatString != null);
+            Contract.Requires<ArgumentNullException>(parameters != null);
 
-            Util.RequireNotNullOrEmpty(commandFormatString, "commandFormatString");
-            Util.RequireNotNull(parameters, "parameters");
+            SqlCommand command = new SqlCommand();
 
             string[] paramLabels = new string[parameters.Length];
             for (int paramIndex = 0; paramIndex < parameters.Length; paramIndex++)

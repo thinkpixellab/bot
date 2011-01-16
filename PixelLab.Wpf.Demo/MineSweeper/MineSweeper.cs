@@ -5,6 +5,11 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using PixelLab.Common;
+#if CONTRACTS_FULL
+using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 
 namespace PixelLab.Wpf.Demo.MineSweeper
 {
@@ -389,7 +394,8 @@ namespace PixelLab.Wpf.Demo.MineSweeper
     {
         public Square(MineField owner, int row, int column, bool isMine)
         {
-            Util.RequireNotNull(owner, "owner");
+            Contract.Requires<ArgumentNullException>(owner != null);
+
             if (row < 0 || row >= owner.Rows)
             {
                 throw new ArgumentOutOfRangeException("row");

@@ -25,8 +25,7 @@
     <Compile Include="ColorHelper.cs" />
     <Compile Include="CommandWrapper.cs" />
     <Compile Include="CompositionTargetRenderingListening.cs" />
-    <Compile Include="Contracts\Contract.cs" />
-    <Compile Include="Contracts_WP7.cs" />
+    <Compile Include="Contract.cs" />
     <Compile Include="DemoCollection.cs" />
     <Compile Include="DependencyPropHelper.cs" />
     <Compile Include="DispatcherExtensions.cs" />
@@ -36,6 +35,7 @@
     <Compile Include="FuncEnumerable.cs" />
     <Compile Include="GeoHelper.cs" />
     <Compile Include="HueConverter.cs" />
+    <Compile Include="InstanceFactory.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="ListBase.cs" />
     <Compile Include="LockHelper.cs" />

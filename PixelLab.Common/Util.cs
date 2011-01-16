@@ -1,6 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
+
+#if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -12,164 +16,6 @@ namespace PixelLab.Common
     /// </summary>
     public static class Util
     {
-        #region Methods to verify conditions (Require)
-
-        /// <summary>
-        ///     If <paramref name="condition"/> is false, throw an empty <see cref="InvalidOperationException"/>.
-        /// </summary>
-        /// <param name="condition">The 'truth' to evaluate.</param>
-        [DebuggerStepThrough]
-        public static void Require(bool condition)
-        {
-            if (!condition)
-            {
-                throw new InvalidOperationException();
-            }
-        }
-
-        /// <summary>
-        ///     If <paramref name="condition"/> is false, throw an 
-        ///     <see cref="InvalidOperationException"/> with the provided <paramref name="message"/>.
-        /// </summary>
-        /// <param name="condition">The 'truth' to evaluate.</param>
-        /// <param name="message">
-        ///     The <see cref="Exception.Message"/> if 
-        ///     <paramref name="condition"/> is false.
-        /// </param>
-        [DebuggerStepThrough]
-        public static void Require(bool condition, string message)
-        {
-            Contract.Requires(!message.IsNullOrWhiteSpace());
-            Contract.Requires(!message.IsNullOrWhiteSpace());
-            if (!condition)
-            {
-                throw new InvalidOperationException(message);
-            }
-        }
-
-        /// <summary>
-        ///     If <paramref name="condition"/> is false, throws 
-        ///     <paramref name="exception"/>.    
-        /// </summary>
-        /// <param name="condition">The 'truth' to evaluate.</param>
-        /// <param name="exception">
-        ///     The <see cref="Exception"/> to throw if <paramref name="condition"/> is false.
-        /// </param>
-        [DebuggerStepThrough]
-        public static void Require(bool condition, Exception exception)
-        {
-            Contract.Requires(exception != null);
-            if (!condition)
-            {
-                throw exception;
-            }
-        }
-
-        /// <summary>
-        ///     Throws an <see cref="ArgumentNullException"/> if the
-        ///     provided string is null.
-        ///     Throws an <see cref="ArgumentOutOfRangeException"/> if the
-        ///     provided string is empty.
-        /// </summary>
-        /// <param name="stringParameter">The object to test for null and empty.</param>
-        /// <param name="parameterName">The string for the ArgumentException parameter, if thrown.</param>
-        [DebuggerStepThrough]
-        public static void RequireNotNullOrEmpty(string stringParameter, string parameterName)
-        {
-            if (stringParameter == null)
-            {
-                throw new ArgumentNullException(parameterName);
-            }
-            else if (stringParameter.Length == 0)
-            {
-                throw new ArgumentOutOfRangeException(parameterName);
-            }
-        }
-
-        /// <summary>
-        ///     Throws an <see cref="ArgumentNullException"/> if the
-        ///     provided object is null.
-        /// </summary>
-        /// <param name="obj">The object to test for null.</param>
-        /// <param name="parameterName">The string for the ArgumentNullException parameter, if thrown.</param>
-        [DebuggerStepThrough]
-        public static void RequireNotNull(object obj, string parameterName)
-        {
-            if (obj == null)
-            {
-                throw new ArgumentNullException(parameterName);
-            }
-        }
-
-        /// <summary>
-        ///     Throws an <see cref="ArgumentException"/> if the provided truth is false.
-        /// </summary>
-        /// <param name="truth">The value assumed to be true.</param>
-        /// <param name="parameterName">The string for <see cref="ArgumentException"/>, if thrown.</param>
-        [DebuggerStepThrough]
-        public static void RequireArgument(bool truth, string parameterName)
-        {
-            Contract.Requires(!parameterName.IsNullOrWhiteSpace());
-
-            if (!truth)
-            {
-                throw new ArgumentException(parameterName);
-            }
-        }
-
-        /// <summary>
-        ///     Throws an <see cref="ArgumentException"/> if the provided truth is false.
-        /// </summary>
-        /// <param name="truth">The value assumed to be true.</param>
-        /// <param name="paramName">The paramName for the <see cref="ArgumentException"/>, if thrown.</param>
-        /// <param name="message">The message for <see cref="ArgumentException"/>, if thrown.</param>
-        [DebuggerStepThrough]
-        public static void RequireArgument(bool truth, string paramName, string message)
-        {
-            Contract.Assume(!paramName.IsNullOrWhiteSpace());
-            Contract.Assume(!message.IsNullOrWhiteSpace());
-
-            if (!truth)
-            {
-                throw new ArgumentException(message, paramName);
-            }
-        }
-
-        /// <summary>
-        ///     Throws an <see cref="ArgumentOutOfRangeException"/> if the provided truth is false.
-        /// </summary>
-        /// <param name="truth">The value assumed to be true.</param>
-        /// <param name="parameterName">The string for <see cref="ArgumentOutOfRangeException"/>, if thrown.</param>
-        [DebuggerStepThrough]
-        public static void RequireArgumentRange(bool truth, string parameterName)
-        {
-            Contract.Requires(!parameterName.IsNullOrWhiteSpace());
-            if (!truth)
-            {
-                throw new ArgumentOutOfRangeException(parameterName);
-            }
-        }
-
-        /// <summary>
-        ///     Throws an <see cref="ArgumentOutOfRangeException"/> if the provided truth is false.
-        /// </summary>
-        /// <param name="truth">The value assumed to be true.</param>
-        /// <param name="paramName">The paramName for the <see cref="ArgumentOutOfRangeException"/>, if thrown.</param>
-        /// <param name="message">The message for <see cref="ArgumentOutOfRangeException"/>, if thrown.</param>
-        [DebuggerStepThrough]
-        public static void RequireArgumentRange(bool truth, string paramName, string message)
-        {
-            Contract.Requires(!paramName.IsNullOrWhiteSpace());
-            Contract.Requires(!message.IsNullOrWhiteSpace());
-
-            if (!truth)
-            {
-                throw new ArgumentOutOfRangeException(message, paramName);
-            }
-        }
-
-        #endregion
-
         /// <summary>
         /// Returns an hash aggregation of an array of elements.
         /// </summary>

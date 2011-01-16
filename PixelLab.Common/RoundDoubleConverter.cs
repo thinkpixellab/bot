@@ -3,6 +3,11 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+#if CONTRACTS_FULL
+using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 
 namespace PixelLab.Common
 {
@@ -31,23 +36,28 @@ namespace PixelLab.Common
                 decimanlPlaces = (int)parameter;
             }
 
-            Util.RequireArgumentRange(decimanlPlaces >= 0, "parameter");
-
-            if (targetType == typeof(string))
-            {
-                string zeroFormat = new string(Enumerable.Repeat('0', decimanlPlaces).ToArray());
-                return val.ToString("0." + zeroFormat);
-            }
-            else
-            {
-                val = Math.Round(val, decimanlPlaces);
-                return val;
-            }
+            return convert(targetType, val, decimanlPlaces);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return Convert(value, targetType, parameter, culture);
+        }
+
+        private static object convert(Type targetType, double val, int decimalPlaces)
+        {
+            Contract.Requires<ArgumentOutOfRangeException>(decimalPlaces >= 0);
+
+            if (targetType == typeof(string))
+            {
+                string zeroFormat = new string(Enumerable.Repeat('0', decimalPlaces).ToArray());
+                return val.ToString("0." + zeroFormat);
+            }
+            else
+            {
+                val = Math.Round(val, decimalPlaces);
+                return val;
+            }
         }
 
     }
