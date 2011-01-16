@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\PixelLab.Common\_targets\WP7.targets" />
   <PropertyGroup>
     <ProjectGuid>{0EF6A204-D98A-4354-84BE-A7D2BEBC1FEF}</ProjectGuid>
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <RootNamespace>PixelLab.SL</RootNamespace>
-    <AssemblyName>PixelLab.SL</AssemblyName>
+    <AssemblyName>PixelLab.SL_WP7</AssemblyName>
   </PropertyGroup>
+  <Import Project="..\PixelLab.Common\_targets\WP7.targets" />
   <ItemGroup>
     <Reference Include="mscorlib" />
     <Reference Include="System.Windows" />
