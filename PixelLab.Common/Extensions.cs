@@ -456,6 +456,27 @@ namespace PixelLab.Common
         }
 #endif
 
+        /// <summary>
+        /// Creates an <see cref="ObservableCollection"/> from the <see cref="IEnumerable"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the source elements.</typeparam>
+        /// <param name="source">The <see cref="IEnumerable"/> to create the <see cref="ObservableCollection"/> from.</param>
+        /// <returns>An <see cref="ObservableCollection"/> that contains elements from the input sequence.</returns>
+        public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> source)
+        {
+            Contract.Requires(source != null);
+#if WP7
+            var result = new ObservableCollection<T>();
+            foreach (var item in source)
+            {
+                result.Add(item);
+            }
+            return result;
+#else
+            return new ObservableCollection<T>(source);
+#endif
+        }
+
         #region impl
         private class FuncComparer<T> : IComparer<T>
         {
