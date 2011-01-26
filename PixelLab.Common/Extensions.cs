@@ -22,6 +22,7 @@ namespace PixelLab.Common
         /// <summary>
         /// Calls the provided action on each item, providing the item and its index into the source.
         /// </summary>
+        [Pure]
         public static void CountForEach<T>(this IEnumerable<T> source, Action<T, int> action)
         {
             Contract.Requires(source != null);
@@ -31,6 +32,7 @@ namespace PixelLab.Common
             source.ForEach(item => action(item, i++));
         }
 
+        [Pure]
         public static IEnumerable<TTarget> CountSelect<TSource, TTarget>(this IEnumerable<TSource> source, Func<TSource, int, TTarget> func)
         {
             int i = 0;
@@ -45,6 +47,7 @@ namespace PixelLab.Common
         ///     <see cref="EqualityComparer{T}.Default">EqualityComparer&lt;T&gt;.Default</see>.
         /// </summary>
         /// <exception cref="ArgumentNullException">if <param name="source"/> is null.</exception>
+        [Pure]
         public static bool AllUnique<T>(this IList<T> source)
         {
             Contract.Requires<ArgumentNullException>(source != null);
@@ -58,6 +61,7 @@ namespace PixelLab.Common
         ///     Returns true if <paramref name="compare"/> returns
         ///     true for every pair of items in <paramref name="source"/>.
         /// </summary>
+        [Pure]
         public static bool TrueForAllPairs<T>(this IList<T> source, Func<T, T, bool> compare)
         {
             Contract.Requires(source != null);
@@ -92,6 +96,7 @@ namespace PixelLab.Common
         ///     If <paramref name="source"/> has 0 or 1 items, true is returned. 
         /// </para>
         /// </remarks>
+        [Pure]
         public static bool TrueForAllAdjacentPairs<T>(this IList<T> source, Func<T, T, bool> compare)
         {
             Contract.Requires(source != null);
@@ -113,6 +118,7 @@ namespace PixelLab.Common
         ///     null or empty.
         /// </summary>
         /// <exception cref="ArgumentNullException">if <param name="source"/> is null.</exception>
+        [Pure]
         public static bool AllNotNullOrEmpty(this IEnumerable<string> source)
         {
             Contract.Requires(source != null);
@@ -124,6 +130,7 @@ namespace PixelLab.Common
         ///     in <paramref name="set"/>.
         /// </summary>
         /// <exception cref="ArgumentNullException">if <param name="source"/> or <param name="set"/> are null.</exception>
+        [Pure]
         public static bool AllExistIn<TSource>(this IEnumerable<TSource> source, IEnumerable<TSource> set)
         {
             Contract.Requires(source != null);
@@ -171,6 +178,7 @@ namespace PixelLab.Common
         /// </summary>
         /// <param name="source">The source enumerable.</param>
         /// <param name="predicate">The function to evaluate on each element.</param>
+        [Pure]
         public static int IndexOf<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             Contract.Requires(source != null);
@@ -377,6 +385,7 @@ namespace PixelLab.Common
             };
         }
 
+        [Pure]
         public static bool Contains<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
         {
             return dictionary.Contains(new KeyValuePair<TKey, TValue>(key, value));
