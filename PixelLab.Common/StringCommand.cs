@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+#if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
+#else
+using PixelLab.Contracts;
+#endif
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls.Primitives;
@@ -26,7 +30,7 @@ namespace PixelLab.Common
         private static void element_commandChanged(ButtonBase source, string newValue, string oldValue)
         {
             Debug.Assert(source != null);
-            Debug.Assert(!string.IsNullOrWhiteSpace(newValue));
+            Debug.Assert(!newValue.IsNullOrWhiteSpace());
             Debug.Assert(oldValue == null);
 
             source.Loaded += commandElement_loaded;

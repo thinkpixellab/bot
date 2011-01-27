@@ -40,6 +40,7 @@
     <Compile Include="FuncEnumerable.cs" />
     <Compile Include="GeoHelper.cs" />
     <Compile Include="HueConverter.cs" />
+    <Compile Include="ICommandProxy.cs" />
     <Compile Include="InstanceFactory.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="ListBase.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="SimpleValueConverter.cs" />
     <Compile Include="SortHelper.cs" />
     <Compile Include="StreamHelpers.cs" />
+    <Compile Include="StringCommand.cs" />
     <Compile Include="System\DataErrorsChangedEventArgs.cs" />
     <Compile Include="System\INotifyDataErrorInfo.cs" />
     <Compile Include="TreeHelpers.cs" />
