@@ -13,26 +13,44 @@ namespace PixelLab.Common
     {
         public void AddKeyBinding(ICommand command, Key key, ModifierKeys modifierKeys = ModifierKeys.None)
         {
+            AddKeyBinding(command, null, key, modifierKeys);
+        }
+
+        public void AddKeyBinding(ICommand command, object param, Key key, ModifierKeys modifierKeys = ModifierKeys.None)
+        {
             Contract.Requires(command != null);
 
             var binding = new KeyBinding(key, modifierKeys);
-            m_keyBindings.Add(binding, command);
+            m_keyBindings.Add(binding, new CommandParamPair(command, param));
         }
 
         public bool TryExecuteKeyboardCommand(Key key, ModifierKeys modifierKeys)
         {
-            ICommand command;
-            if (m_keyBindings.TryGetValue(new KeyBinding(key, modifierKeys), out command))
+            CommandParamPair commandPair;
+            if (m_keyBindings.TryGetValue(new KeyBinding(key, modifierKeys), out commandPair))
             {
-                if (command.CanExecute(null))
+                if (commandPair.Command.CanExecute(commandPair.Param))
                 {
-                    command.Execute(null);
+                    commandPair.Command.Execute(commandPair.Param);
                     return true;
                 }
             }
+
             return false;
         }
 
-        private readonly Dictionary<KeyBinding, ICommand> m_keyBindings = new Dictionary<KeyBinding, ICommand>();
+        private readonly Dictionary<KeyBinding, CommandParamPair> m_keyBindings = new Dictionary<KeyBinding, CommandParamPair>();
+
+        private class CommandParamPair
+        {
+            public CommandParamPair(ICommand command, object param)
+            {
+                Command = command;
+                Param = param;
+            }
+
+            public ICommand Command { get; private set; }
+            public object Param { get; private set; }
+        }
     }
 }
