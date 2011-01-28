@@ -10,7 +10,7 @@ namespace PixelLab.Common
 {
     public static class DebugTrace
     {
-        public static void Write(string message)
+        public static void WriteLine(string message)
         {
             message = message ?? string.Empty;
 
@@ -20,17 +20,17 @@ namespace PixelLab.Common
             }
         }
 
-        public static void Write(object value)
+        public static void WriteLine(object value)
         {
             var message = value == null ? string.Empty : value.ToString();
-            Write(message);
+            WriteLine(message);
         }
 
-        public static void Write(string format, params object[] args)
+        public static void WriteLine(string format, params object[] args)
         {
             Contract.Requires(format != null);
             Contract.Requires(args != null);
-            Write(format.DoFormat(args));
+            WriteLine(format.DoFormat(args));
         }
     }
 }

@@ -58,7 +58,7 @@ namespace PixelLab.Common
             }
             else
             {
-                DebugTrace.Write("Could not bind command string '{0}' to {1}", commandName, source);
+                DebugTrace.WriteLine("Could not bind command string '{0}' to {1}", commandName, source);
                 source.Command = DeadCommand.Instance;
             }
         }
