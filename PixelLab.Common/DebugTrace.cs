@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
@@ -15,7 +16,7 @@ namespace PixelLab.Common
 
             if (Debugger.IsLogging())
             {
-                Debugger.Log(0, null, message);
+                Debugger.Log(0, null, message + Environment.NewLine);
             }
         }
 
