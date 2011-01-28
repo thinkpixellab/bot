@@ -58,7 +58,8 @@ namespace PixelLab.Common
             }
             else
             {
-                Debug.WriteLine("Could not bind command string '{0}' to {1}".DoFormat(commandName, source));
+                DebugTrace.Write("Could not bind command string '{0}' to {1}", commandName, source);
+                source.Command = DeadCommand.Instance;
             }
         }
 
@@ -80,6 +81,35 @@ namespace PixelLab.Common
                 }
             }
             return null;
+        }
+
+        private class DeadCommand : ICommand
+        {
+            public bool CanExecute(object parameter)
+            {
+                return false;
+            }
+
+            public event EventHandler CanExecuteChanged;
+
+            public void Execute(object parameter)
+            {
+                throw new NotSupportedException("This is a dead command. It never works.");
+            }
+
+            private static DeadCommand _instance;
+
+            public static DeadCommand Instance
+            {
+                get
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new DeadCommand();
+                    }
+                    return _instance;
+                }
+            }
         }
     }
 }
