@@ -48,7 +48,7 @@ namespace PixelLab.Common
             Contract.Requires(source != null);
             var commandName = GetCommand(source);
             var value = (from anscestor in source.GetAncestors().OfType<ICommandProxy>()
-                         let command = TryGetCommand(anscestor, commandName)
+                         let command = TryGetCommand(anscestor, source, commandName)
                          where command != null
                          select command).FirstOrDefault();
 
@@ -63,10 +63,13 @@ namespace PixelLab.Common
             }
         }
 
-        private static ICommand TryGetCommand(ICommandProxy source, string name)
+        private static ICommand TryGetCommand(ICommandProxy proxy, DependencyObject source, string name)
         {
+            Contract.Requires(proxy != null);
             Contract.Requires(source != null);
-            var realSource = source.CommandOwner;
+            Contract.Requires(!name.IsNullOrWhiteSpace());
+
+            var realSource = proxy.GetCommandOwner(source);
             if (realSource != null)
             {
                 var propInfo = (from property in realSource.GetType().GetProperties()

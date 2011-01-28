@@ -1,7 +1,9 @@
-﻿namespace PixelLab.Common
+﻿using System.Windows;
+
+namespace PixelLab.Common
 {
     public interface ICommandProxy
     {
-        object CommandOwner { get; }
+        object GetCommandOwner(DependencyObject source);
     }
 }
