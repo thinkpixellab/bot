@@ -26,6 +26,7 @@
     <Compile Include="CommandWrapper.cs" />
     <Compile Include="CompositionTargetRenderingListening.cs" />
     <Compile Include="Contract.cs" />
+    <Compile Include="DebugTrace.cs" />
     <Compile Include="DemoCollection.cs" />
     <Compile Include="DependencyPropHelper.cs" />
     <Compile Include="DispatcherExtensions.cs" />
