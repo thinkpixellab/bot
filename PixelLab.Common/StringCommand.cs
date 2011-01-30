@@ -14,53 +14,66 @@ namespace PixelLab.Common
 {
     public class StringCommand
     {
-        public static readonly DependencyProperty CommandProperty = DependencyPropHelper.RegisterAttached<StringCommand, ButtonBase, string>("Command", element_commandChanged);
+        public static readonly DependencyProperty CommandStringProperty = DependencyPropHelper.RegisterAttached<StringCommand, FrameworkElement, string>("CommandString", element_commandStringChanged);
 
-        public static string GetCommand(FrameworkElement element)
+        public static string GetCommandString(FrameworkElement element)
         {
             Contract.Requires(element != null);
-            return (string)element.GetValue(CommandProperty);
+            return (string)element.GetValue(CommandStringProperty);
         }
 
-        public static void SetCommand(FrameworkElement element, string value)
+        public static void SetCommandString(FrameworkElement element, string value)
         {
+            element.SetValue(CommandStringProperty, value);
+        }
+
+        public static readonly DependencyProperty CommandProperty = DependencyPropHelper.RegisterAttached<StringCommand, FrameworkElement, ICommand>("Command", element_commandChanged);
+
+        public static ICommand GetCommand(FrameworkElement element)
+        {
+            Contract.Requires(element != null);
+            return (ICommand)element.GetValue(CommandProperty);
+        }
+
+        public static void SetCommand(FrameworkElement element, ICommand value)
+        {
+            Contract.Requires(element != null);
             element.SetValue(CommandProperty, value);
         }
 
-        private static void element_commandChanged(ButtonBase source, string newValue, string oldValue)
+        #region impl
+
+        private static void element_commandStringChanged(FrameworkElement source, string newValue, string oldValue)
         {
             Debug.Assert(source != null);
             Debug.Assert(!newValue.IsNullOrWhiteSpace());
             Debug.Assert(oldValue == null);
 
-            source.Loaded += commandElement_loaded;
+            source.Loaded += commandStringElement_loaded;
         }
 
-        private static void commandElement_loaded(object sender, EventArgs args)
+        private static void commandStringElement_loaded(object sender, EventArgs args)
         {
-            var buttonBase = (ButtonBase)sender;
-            buttonBase.Loaded -= commandElement_loaded;
-            tryWire(buttonBase);
+            var element = (FrameworkElement)sender;
+            element.Loaded -= commandStringElement_loaded;
+            commandStringElement_loaded(element);
         }
 
-        private static void tryWire(ButtonBase source)
+        private static void commandStringElement_loaded(FrameworkElement element)
         {
-            Contract.Requires(source != null);
-            var commandName = GetCommand(source);
-            var value = (from anscestor in source.GetAncestors().OfType<ICommandProxy>()
-                         let command = TryGetCommand(anscestor, source, commandName)
+            Contract.Requires(element != null);
+            var commandName = GetCommandString(element);
+            var value = (from anscestor in element.GetAncestors().OfType<ICommandProxy>()
+                         let command = TryGetCommand(anscestor, element, commandName)
                          where command != null
                          select command).FirstOrDefault();
 
-            if (value != null)
+            if (value == null)
             {
-                source.Command = value;
+                DebugTrace.WriteLine("Could not bind command string '{0}' to {1}", commandName, element);
+                value = DeadCommand.Instance;
             }
-            else
-            {
-                DebugTrace.WriteLine("Could not bind command string '{0}' to {1}", commandName, source);
-                source.Command = DeadCommand.Instance;
-            }
+            SetCommand(element, value);
         }
 
         private static ICommand TryGetCommand(ICommandProxy proxy, DependencyObject source, string name)
@@ -85,5 +98,44 @@ namespace PixelLab.Common
             }
             return null;
         }
+
+        private static void element_commandChanged(FrameworkElement source, ICommand newValue, ICommand oldValue)
+        {
+            if (source is ButtonBase)
+            {
+                var button = (ButtonBase)source;
+                Debug.Assert(button.Command == oldValue);
+                button.Command = newValue;
+            }
+            else
+            {
+                // TODO: Do we want to ponder how to handled enabled changed? Perhaps disable the element? ...should ponder
+                if (oldValue != null)
+                {
+                    source.MouseLeftButtonDown -= source_MouseLeftButtonDown;
+                }
+                if (newValue != null)
+                {
+                    source.MouseLeftButtonDown += source_MouseLeftButtonDown;
+                }
+            }
+        }
+
+        private static void source_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var element = (FrameworkElement)sender;
+            Debug.Assert(!(element is ButtonBase));
+            var command = GetCommand(element);
+            Debug.Assert(command != null);
+            var param = element.DataContext;
+
+            if (!e.Handled && command.CanExecute(param))
+            {
+                e.Handled = true;
+                command.Execute(param);
+            }
+        }
+
+        #endregion
     }
 }
