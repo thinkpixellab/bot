@@ -31,6 +31,7 @@
     <Compile Include="CompositionTargetRenderingListening.cs" />
     <Compile Include="Contract.cs" />
     <Compile Include="DBUtil.cs" />
+    <Compile Include="DeadCommand.cs" />
     <Compile Include="DebugTrace.cs" />
     <Compile Include="DemoCollection.cs" />
     <Compile Include="DependencyPropHelper.cs" />
