@@ -77,9 +77,9 @@ namespace PixelLab.Wpf.Demo
         private readonly NodeCollection<T> m_parent;
     }
 
-    public class NodeChildrenChangedArgs<TNode> : EventArgs
+    public class NodeChildrenChangedArgs<T> : EventArgs
     {
-        public NodeChildrenChangedArgs(TNode parent, TNode child, NotifyCollectionChangedAction action)
+        public NodeChildrenChangedArgs(T parent, T child, NotifyCollectionChangedAction action)
         {
             Contract.Requires<ArgumentNullException>(parent != null);
             Contract.Requires<ArgumentNullException>(child != null);
@@ -94,64 +94,68 @@ namespace PixelLab.Wpf.Demo
             Action = action;
         }
 
-        public TNode Parent { get; private set; }
-        public TNode Child { get; private set; }
+        public T Parent { get; private set; }
+        public T Child { get; private set; }
         public NotifyCollectionChangedAction Action { get; private set; }
     }
 
-    public class NodeCollection<TNode> where TNode : IEquatable<TNode>
+    public class NodeCollection<T> where T : IEquatable<T>
     {
-        public NodeCollection(IEnumerable<TNode> nodes)
+        public NodeCollection(IEnumerable<T> nodes)
         {
             Contract.Requires<ArgumentNullException>(nodes != null);
             Contract.Requires(Contract.ForAll(nodes, item => item != null));
 
-            m_nodeValues = new ObservableCollectionPlus<TNode>(nodes);
+            m_nodeValues = new ObservableCollectionPlus<T>(nodes);
             if (!m_nodeValues.AllUnique())
             {
                 throw new ArgumentException();
             }
 
-            m_nodes = new Dictionary<TNode, Node<TNode>>();
-            m_nodeConnections = new Dictionary<TNode, HashSet<TNode>>();
+            m_nodes = new Dictionary<T, Node<T>>();
+            m_nodeConnections = new Dictionary<T, HashSet<T>>();
 
-            m_nodeValues.ForEach(node => m_nodeConnections.Add(node, new HashSet<TNode>()));
+            foreach (var node in m_nodeValues)
+            {
+                m_nodeConnections.Add(node, new HashSet<T>());
+            }
         }
 
-        public ReadOnlyCollection<TNode> Nodes { get { return m_nodeValues.ReadOnly; } }
+        public ReadOnlyCollection<T> Nodes { get { return m_nodeValues.ReadOnly; } }
 
-        public Node<TNode> this[TNode value]
+        public Node<T> this[T value]
         {
             get
             {
                 Contract.Requires(HasNode(value));
-
                 if (!m_nodes.ContainsKey(value))
                 {
-                    m_nodes[value] = new Node<TNode>(value, this);
+                    m_nodes[value] = new Node<T>(value, this);
                 }
                 return m_nodes[value];
             }
         }
 
         [Pure]
-        public bool HasNode(TNode value)
+        public bool HasNode(T value)
         {
-            return m_nodes.ContainsKey(value);
+            var has = m_nodeValues.Contains(value);
+            Debug.Assert(has == m_nodeConnections.ContainsKey(value));
+            return has;
         }
 
-        public void Add(TNode node)
+        public void Add(T node)
         {
             Contract.Requires(!HasNode(node));
-            m_nodeConnections.Add(node, new HashSet<TNode>());
             m_nodeValues.Add(node);
+            m_nodeConnections.Add(node, new HashSet<T>());
         }
 
-        public bool Remove(TNode node)
+        public bool Remove(T node)
         {
-            if (m_nodeConnections.ContainsKey(node))
+            if (m_nodeValues.Contains(node))
             {
-                Debug.Assert(m_nodeValues.Contains(node));
+                Debug.Assert(m_nodeConnections.ContainsKey(node));
 
                 m_nodeConnections.Values.ForEach(hashSet => hashSet.Remove(node));
                 m_nodes.Remove(node);
@@ -165,60 +169,52 @@ namespace PixelLab.Wpf.Demo
             }
         }
 
-        public void AddEdge(TNode node1, TNode node2)
+        public void AddEdge(T node1, T node2)
         {
             if (node1.Equals(node2))
             {
-                Debug.Assert(!m_nodeConnections[node1].Contains(node1));
-                Debug.Assert(!m_nodeConnections[node2].Contains(node2));
-
+                Debug.Assert(!hasPair(node1, node1));
                 throw new ArgumentException("Cannot create an edge between the same node.");
             }
-            else if (m_nodeConnections[node1].Contains(node2))
+            else if (hasPair(node1, node2))
             {
-                Debug.Assert(m_nodeConnections[node2].Contains(node1));
                 throw new ArgumentException("This edge already exists.");
             }
             else
             {
-                Debug.Assert(!m_nodeConnections[node2].Contains(node1));
-
                 m_nodeConnections[node1].Add(node2);
                 m_nodeConnections[node2].Add(node1);
 
                 OnNodeChildrenChanged(
-                    new NodeChildrenChangedArgs<TNode>(node1, node2, NotifyCollectionChangedAction.Add));
+                    new NodeChildrenChangedArgs<T>(node1, node2, NotifyCollectionChangedAction.Add));
                 OnNodeChildrenChanged(
-                    new NodeChildrenChangedArgs<TNode>(node2, node1, NotifyCollectionChangedAction.Add));
+                    new NodeChildrenChangedArgs<T>(node2, node1, NotifyCollectionChangedAction.Add));
             }
         }
 
-        public void RemoveEdge(TNode node1, TNode node2)
+        public void RemoveEdge(T node1, T node2)
         {
             Contract.Requires(!node1.Equals(node2));
 
-            if (m_nodeConnections[node1].Contains(node2))
+            if (hasPair(node1, node2))
             {
-                Debug.Assert(m_nodeConnections[node2].Contains(node1));
-
                 m_nodeConnections[node1].Remove(node2);
                 m_nodeConnections[node2].Remove(node1);
 
                 OnNodeChildrenChanged(
-                    new NodeChildrenChangedArgs<TNode>(node1, node2, NotifyCollectionChangedAction.Remove));
+                    new NodeChildrenChangedArgs<T>(node1, node2, NotifyCollectionChangedAction.Remove));
                 OnNodeChildrenChanged(
-                    new NodeChildrenChangedArgs<TNode>(node2, node1, NotifyCollectionChangedAction.Remove));
+                    new NodeChildrenChangedArgs<T>(node2, node1, NotifyCollectionChangedAction.Remove));
             }
             else
             {
-                Debug.Assert(!m_nodeConnections[node2].Contains(node1));
                 throw new ArgumentException("This edge does not exist");
             }
         }
 
-        public event EventHandler<NodeChildrenChangedArgs<TNode>> NodeChildrenChanged;
+        public event EventHandler<NodeChildrenChangedArgs<T>> NodeChildrenChanged;
 
-        protected void OnNodeChildrenChanged(NodeChildrenChangedArgs<TNode> args)
+        protected void OnNodeChildrenChanged(NodeChildrenChangedArgs<T> args)
         {
             var handler = NodeChildrenChanged;
             if (handler != null)
@@ -229,11 +225,11 @@ namespace PixelLab.Wpf.Demo
 
         #region Demo Methods
 
-        public void MoreFriends(TNode node)
+        public void MoreFriends(T node)
         {
             Contract.Requires(HasNode(node), "node");
 
-            HashSet<TNode> connections = m_nodeConnections[node];
+            HashSet<T> connections = m_nodeConnections[node];
             if (connections.Count < (m_nodeConnections.Count - 1))
             {
                 var options = m_nodeConnections.Keys
@@ -246,10 +242,10 @@ namespace PixelLab.Wpf.Demo
             }
         }
 
-        public void LessFriends(TNode node)
+        public void LessFriends(T node)
         {
             Contract.Requires(HasNode(node));
-            HashSet<TNode> connections = m_nodeConnections[node];
+            HashSet<T> connections = m_nodeConnections[node];
             if (connections.Count > c_minConnections)
             {
                 RemoveEdge(node, connections.ToArray().Random());
@@ -264,7 +260,7 @@ namespace PixelLab.Wpf.Demo
             }
 
             // step one: pick a node to play with
-            TNode item = m_nodeValues.Random();
+            T item = m_nodeValues.Random();
 
             double currentRatio = m_nodeConnections[item].Count / (double)(m_nodeConnections.Count - 1);
             Debug.Assert(currentRatio <= 1);
@@ -296,7 +292,7 @@ namespace PixelLab.Wpf.Demo
 
         #region Implementation
 
-        internal List<Node<TNode>> GetChildren(TNode item)
+        internal List<Node<T>> GetChildren(T item)
         {
             Debug.Assert(m_nodeConnections.ContainsKey(item));
 
@@ -306,10 +302,10 @@ namespace PixelLab.Wpf.Demo
         [Conditional("DEBUG")]
         private void validateConnections()
         {
-            Dictionary<TNode, object> _verified = new Dictionary<TNode, object>();
-            foreach (TNode item in m_nodeConnections.Keys)
+            Dictionary<T, object> _verified = new Dictionary<T, object>();
+            foreach (T item in m_nodeConnections.Keys)
             {
-                foreach (TNode connection in m_nodeConnections[item])
+                foreach (T connection in m_nodeConnections[item])
                 {
                     if (!_verified.ContainsKey(connection))
                     {
@@ -320,10 +316,29 @@ namespace PixelLab.Wpf.Demo
             }
         }
 
-        private readonly Dictionary<TNode, Node<TNode>> m_nodes;
-        private readonly Dictionary<TNode, HashSet<TNode>> m_nodeConnections;
+        private bool hasPair(T node1, T node2, bool check = true)
+        {
+            bool value;
+            HashSet<T> hashset;
+            if (m_nodeConnections.TryGetValue(node1, out hashset))
+            {
+                value = hashset.Contains(node2);
+            }
+            else
+            {
+                value = false;
+            }
+            if (check)
+            {
+                Debug.Assert(value == hasPair(node2, node1, false));
+            }
+            return value;
+        }
 
-        private readonly ObservableCollectionPlus<TNode> m_nodeValues;
+        private readonly Dictionary<T, Node<T>> m_nodes;
+        private readonly Dictionary<T, HashSet<T>> m_nodeConnections;
+
+        private readonly ObservableCollectionPlus<T> m_nodeValues;
 
         private const int c_minConnections = 2;
         private const double c_idealConnectionRatio = .4;
