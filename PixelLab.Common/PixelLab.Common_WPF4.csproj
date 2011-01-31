@@ -26,6 +26,7 @@
     <Compile Include="CastList.cs" />
     <Compile Include="Changeable.cs" />
     <Compile Include="ColorHelper.cs" />
+    <Compile Include="CommandHelpers.cs" />
     <Compile Include="CommandWrapper.cs" />
     <Compile Include="CompositionHelpers.cs" />
     <Compile Include="CompositionTargetRenderingListening.cs" />
@@ -56,7 +57,6 @@
     <Compile Include="SimpleValueConverter.cs" />
     <Compile Include="SortHelper.cs" />
     <Compile Include="StreamHelpers.cs" />
-    <Compile Include="StringCommand.cs" />
     <Compile Include="System\DataErrorsChangedEventArgs.cs" />
     <Compile Include="System\INotifyDataErrorInfo.cs" />
     <Compile Include="TreeHelpers.cs" />

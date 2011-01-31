@@ -49,7 +49,7 @@
     <Compile Include="ListBase.cs" />
     <Compile Include="ListReorderUtil.cs" />
     <Compile Include="LockHelper.cs" />
-    <Compile Include="StringCommand.cs" />
+    <Compile Include="CommandHelpers.cs" />
     <Compile Include="ObservableCollectionPlus.cs" />
     <Compile Include="PageFlipper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
