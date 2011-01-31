@@ -89,6 +89,5 @@ namespace PixelLab.Common
 
             private readonly CommandWrapper<T> m_owner;
         }
-
     }
 }

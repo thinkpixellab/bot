@@ -59,7 +59,6 @@ namespace PixelLab.Common
                 return val;
             }
         }
-
     }
 
     public class RoundFormatConverter : IValueConverter

@@ -6,12 +6,12 @@
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400">
 
-  <Grid x:Name="m_layoutRoot" >
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="Auto" />
-      <ColumnDefinition />
-    </Grid.ColumnDefinitions>
-    <ListBox Name="m_items" DisplayMemberPath="Metadata.Name" />
-    <Border Name="m_container" Grid.Column="1"/>
-  </Grid>
+    <Grid x:Name="m_layoutRoot" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <ListBox Name="m_items" DisplayMemberPath="Metadata.Name" />
+        <Border Name="m_container" Grid.Column="1"/>
+    </Grid>
 </UserControl>

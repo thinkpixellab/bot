@@ -7,11 +7,14 @@ using System.Diagnostics.Contracts;
 using PixelLab.Contracts;
 #endif
 
-namespace PixelLab.Wpf.Demo.Hex {
-    static class HexHelper {
+namespace PixelLab.Wpf.Demo.Hex
+{
+    static class HexHelper
+    {
         public static readonly double HeightOverWidth = Math.Sqrt(3) / 2;
 
-        public static Point GetTopLeft(int count, double itemHeight, PointInt location) {
+        public static Point GetTopLeft(int count, double itemHeight, PointInt location)
+        {
             Contract.Requires<ArgumentOutOfRangeException>(count >= 1, "count");
             Contract.Requires<ArgumentOutOfRangeException>(itemHeight > 0 && itemHeight.IsValid(), "itemHeight");
 

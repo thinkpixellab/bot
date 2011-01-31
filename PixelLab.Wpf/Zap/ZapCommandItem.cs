@@ -101,6 +101,5 @@ namespace PixelLab.Wpf
         private readonly ZapScroller m_zapScroller;
 
         #endregion
-
     } //*** class ZapCommandItem
 }

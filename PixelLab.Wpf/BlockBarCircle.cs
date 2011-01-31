@@ -1,10 +1,12 @@
 using System.Windows;
 using System.Windows.Media;
 
-namespace PixelLab.Wpf {
-    public class BlockBarCircle : BlockBarBase {
-
-        protected override void OnRender(System.Windows.Media.DrawingContext drawingContext) {
+namespace PixelLab.Wpf
+{
+    public class BlockBarCircle : BlockBarBase
+    {
+        protected override void OnRender(System.Windows.Media.DrawingContext drawingContext)
+        {
             double penThickness = BorderBen.Thickness;
             Size effectiveRenderSize = new Size(this.RenderSize.Width - penThickness, this.RenderSize.Height - penThickness);
 
@@ -15,7 +17,8 @@ namespace PixelLab.Wpf {
 
             double circleDiameter;
             circleDiameter = (effectiveRenderSize.Width - (BlockCount - 1) * BlockMargin) / BlockCount;
-            if (circleDiameter > effectiveRenderSize.Height) {
+            if (circleDiameter > effectiveRenderSize.Height)
+            {
                 circleDiameter = effectiveRenderSize.Height;
             }
 
@@ -28,7 +31,8 @@ namespace PixelLab.Wpf {
             int threshHold = BlockBarBase.GetThreshold(this.Value, this.BlockCount);
 
             Brush brushToUse;
-            for (int i = 0; i < this.BlockCount; i++) {
+            for (int i = 0; i < this.BlockCount; i++)
+            {
                 brushToUse = ((this.BlockCount - (i + 1)) < threshHold) ? Foreground : Background;
 
                 center.X = startLeft + circleRadius;

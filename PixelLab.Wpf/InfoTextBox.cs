@@ -10,7 +10,7 @@ namespace PixelLab.Wpf
             DefaultStyleKeyProperty.OverrideMetadata(typeof(InfoTextBox), new FrameworkPropertyMetadata(typeof(InfoTextBox)));
 
             TextProperty.OverrideMetadata(
-                typeof(InfoTextBox), 
+                typeof(InfoTextBox),
                 new FrameworkPropertyMetadata(new PropertyChangedCallback(TextPropertyChanged)));
         }
 
@@ -43,7 +43,7 @@ namespace PixelLab.Wpf
         }
 
         static void TextPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
-        {            
+        {
             InfoTextBox itb = (InfoTextBox)sender;
 
             bool actuallyHasText = itb.Text.Length > 0;

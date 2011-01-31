@@ -116,7 +116,7 @@ namespace PixelLab.Wpf
                     }
                 }
 
-                // Might be null. After postWork, if everything has worked, null 
+                // Might be null. After postWork, if everything has worked, null
                 //  is called to clear things out.
                 LastClientExceptionEventArgs = args;
             }
@@ -169,7 +169,6 @@ namespace PixelLab.Wpf
 
                 if (getInput && !m_disposed)
                 {
-
                     m_operation = Dispatcher.BeginInvoke(DispatcherPriority.Background, m_preWork);
 
                     if (!m_disposed && m_operation.Wait() == DispatcherOperationStatus.Completed)
@@ -215,17 +214,11 @@ namespace PixelLab.Wpf
                                 }
 
                                 m_operation = null;
-
                             } // if (!m_disposed && workSucceeded)
-
                         } // if (processInput && !m_disposed)
-
                     } // if Operation completed
-
                 } // if (getInput)
-
             } // while (!m_disposed)
-
         } //*** void work()
 
         private bool m_disposed;
@@ -240,7 +233,6 @@ namespace PixelLab.Wpf
         private readonly LockHelper m_lockHelper = new LockHelper("PollingWorker");
 
         #endregion
-
     } //*** class NotifyWorker
 
     public class NotifyWorkerClientExceptionEventArgs : EventArgs
@@ -258,5 +250,4 @@ namespace PixelLab.Wpf
             return string.Format("Exception: {0}", this.Exception);
         }
     }
-
 } //*** PixelLab.Wpf

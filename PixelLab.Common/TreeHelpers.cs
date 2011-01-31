@@ -13,7 +13,6 @@ namespace PixelLab.Common
 {
     public static class TreeHelpers
     {
-
         public static IEnumerable<T> VisualDescendentsOfType<T>(this DependencyObject obj) where T : DependencyObject
         {
             Contract.Requires(obj != null);
@@ -92,7 +91,7 @@ namespace PixelLab.Common
 
                 if (panel != null)
                 {
-                    // Walk the tree until we get to the ItemsPanel, once we get there we know 
+                    // Walk the tree until we get to the ItemsPanel, once we get there we know
                     // that the immediate child of the parent is going to be the ItemContainer
 
                     UIElement parent;

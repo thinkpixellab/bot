@@ -89,7 +89,6 @@ namespace PixelLab.Wpf
 
         private readonly UIListPagerCommand _firstCommand, _lastCommand, _nextCommand, _previousCommand;
         #endregion
-
     }
 
     [TypeConverter(typeof(UIListPagerCommandConverter))]
@@ -289,6 +288,4 @@ namespace PixelLab.Wpf
         PreviousPage, NextPage,
         SpecificPage
     }
-
-
 }

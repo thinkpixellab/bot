@@ -2,90 +2,89 @@
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 				    xmlns:lib="clr-namespace:PixelLab.Wpf">
 
-  <Style TargetType="lib:InfoTextBox" BasedOn="{StaticResource {x:Type TextBox}}">
-    <Setter Property="Margin" Value="1"/>
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="lib:InfoTextBox">
-          <ControlTemplate.Resources>
+    <Style TargetType="lib:InfoTextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter Property="Margin" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="lib:InfoTextBox">
+                    <ControlTemplate.Resources>
 
-            <Storyboard x:Key="enterGotFocus" >
-              <DoubleAnimation Duration="0:0:0.2" To=".33"
+                        <Storyboard x:Key="enterGotFocus" >
+                            <DoubleAnimation Duration="0:0:0.2" To=".33"
 			  	Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Message"/>
-            </Storyboard>
-            <Storyboard x:Key="exitGotFocus" >
-              <DoubleAnimation Duration="0:0:0.4"
+                        </Storyboard>
+                        <Storyboard x:Key="exitGotFocus" >
+                            <DoubleAnimation Duration="0:0:0.4"
 			  	Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Message"/>
-            </Storyboard>
+                        </Storyboard>
 
-            <Storyboard x:Key="enterHasText" >
-              <DoubleAnimation Duration="0:0:0.2" From=".33" To="0"
+                        <Storyboard x:Key="enterHasText" >
+                            <DoubleAnimation Duration="0:0:0.2" From=".33" To="0"
 			  	Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Message"/>
-            </Storyboard>
-            <Storyboard x:Key="exitHasText" >
-              <DoubleAnimation Duration="0:0:0.4"
+                        </Storyboard>
+                        <Storyboard x:Key="exitHasText" >
+                            <DoubleAnimation Duration="0:0:0.4"
 			  	Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Message"/>
-            </Storyboard>
+                        </Storyboard>
 
-          </ControlTemplate.Resources>
-          <lib:TemplateBorder Name="Bd">
-            <Grid>
-              <Decorator x:Name="PART_ContentHost" VerticalAlignment="Center" Margin="3"/>
-              <TextBlock Text="{TemplateBinding TextBoxInfo}" x:Name="Message"
+                    </ControlTemplate.Resources>
+                    <lib:TemplateBorder Name="Bd">
+                        <Grid>
+                            <Decorator x:Name="PART_ContentHost" VerticalAlignment="Center" Margin="3"/>
+                            <TextBlock Text="{TemplateBinding TextBoxInfo}" x:Name="Message"
 								Foreground="Navy" IsHitTestVisible="False"
 								FontStyle="Italic" Opacity="0.67" HorizontalAlignment="Left" VerticalAlignment="Center"
 								Margin="6,0,0,0"/>
-            </Grid>
-          </lib:TemplateBorder>
-          <ControlTemplate.Triggers>
+                        </Grid>
+                    </lib:TemplateBorder>
+                    <ControlTemplate.Triggers>
 
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="HasText" Value="False"/>
+                                <Condition Property="IsFocused" Value="True"/>
 
-            <MultiTrigger>
-              <MultiTrigger.Conditions>
-                <Condition Property="HasText" Value="False"/>
-                <Condition Property="IsFocused" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource enterGotFocus}"/>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource exitGotFocus}"/>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
 
-              </MultiTrigger.Conditions>
-              <MultiTrigger.EnterActions>
-                <BeginStoryboard Storyboard="{StaticResource enterGotFocus}"/>
-              </MultiTrigger.EnterActions>
-              <MultiTrigger.ExitActions>
-                <BeginStoryboard Storyboard="{StaticResource exitGotFocus}"/>
-              </MultiTrigger.ExitActions>
-            </MultiTrigger>
+                        <Trigger Property="HasText" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource enterHasText}"/>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource exitHasText}"/>
+                            </Trigger.ExitActions>
+                        </Trigger>
 
-            <Trigger Property="HasText" Value="True">
-              <Trigger.EnterActions>
-                <BeginStoryboard Storyboard="{StaticResource enterHasText}"/>
-              </Trigger.EnterActions>
-              <Trigger.ExitActions>
-                <BeginStoryboard Storyboard="{StaticResource exitHasText}"/>
-              </Trigger.ExitActions>
-            </Trigger>
-
-            <Trigger Property="IsEnabled"
+                        <Trigger Property="IsEnabled"
 								 Value="false">
-              <Setter TargetName="Bd"
+                            <Setter TargetName="Bd"
 									Property="Background"
 									Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
-              <Setter Property="Foreground"
+                            <Setter Property="Foreground"
 									Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-            </Trigger>
+                        </Trigger>
 
-            <!-- Width -->
-            <Trigger Property="Width" Value="Auto">
-              <Setter Property="MinWidth" Value="100"/>
-            </Trigger>
+                        <!-- Width -->
+                        <Trigger Property="Width" Value="Auto">
+                            <Setter Property="MinWidth" Value="100"/>
+                        </Trigger>
 
-            <!-- Height -->
-            <Trigger Property="Height" Value="Auto">
-              <Setter Property="MinHeight" Value="20"/>
-            </Trigger>
+                        <!-- Height -->
+                        <Trigger Property="Height" Value="Auto">
+                            <Setter Property="MinHeight" Value="20"/>
+                        </Trigger>
 
-          </ControlTemplate.Triggers>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

@@ -15,7 +15,6 @@ namespace PixelLab.Common
     /// <typeparam name="T">Any class. Silly to have weak references to value types, no?</typeparam>
     public class WeakEnumerable<T> : IEnumerable<T> where T : class
     {
-
         public void Add(T item)
         {
             Contract.Requires<ArgumentNullException>(item != null);

@@ -6,12 +6,12 @@
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400">
 
-  <Grid x:Name="LayoutRoot" HorizontalAlignment="Center" VerticalAlignment="Center">
-    <Grid.RowDefinitions>
-      <RowDefinition  />
-      <RowDefinition  />
-    </Grid.RowDefinitions>
-    <Image Source="/PixelLab.SL.Demo;component/logo.png" Stretch="None" />
-    <TextBlock Text="Welcome to the Silverlight Bag of Tricks." Grid.Row="1" HorizontalAlignment="Center" />
-  </Grid>
+    <Grid x:Name="LayoutRoot" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition  />
+            <RowDefinition  />
+        </Grid.RowDefinitions>
+        <Image Source="/PixelLab.SL.Demo;component/logo.png" Stretch="None" />
+        <TextBlock Text="Welcome to the Silverlight Bag of Tricks." Grid.Row="1" HorizontalAlignment="Center" />
+    </Grid>
 </UserControl>

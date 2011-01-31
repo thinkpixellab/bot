@@ -15,7 +15,6 @@ namespace PixelLab.Wpf
 {
     public class AnimatingTilePanel : AnimatingPanel
     {
-
         #region public properties
 
         public double ItemWidth
@@ -202,6 +201,5 @@ namespace PixelLab.Wpf
         private DoubleAnimation m_itemOpacityAnimation;
 
         #endregion
-
     } //*** class AnimatingTilePanel
 }

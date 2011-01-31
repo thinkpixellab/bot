@@ -31,7 +31,6 @@ namespace PixelLab.Common
             }
 
             return DependencyProperty.Register(name, typeof(TProperty), typeof(TElement), metadata);
-
         }
 
         public static DependencyProperty RegisterAttached<TOwner, TTarget, TProperty>(string name, Action<TTarget, TProperty, TProperty> changeHandler = null) where TTarget : DependencyObject

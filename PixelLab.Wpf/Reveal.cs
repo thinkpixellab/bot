@@ -21,7 +21,7 @@ namespace PixelLab.Wpf
         /// <summary>
         ///     Whether the child is expanded or not.
         ///     Note that an animation may be in progress when the value changes.
-        ///     This is not meant to be used with AnimationProgress and can overwrite any 
+        ///     This is not meant to be used with AnimationProgress and can overwrite any
         ///     animation or values in that property.
         /// </summary>
         public bool IsExpanded
@@ -33,9 +33,9 @@ namespace PixelLab.Wpf
         // Using a DependencyProperty as the backing store for IsExpanded.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsExpandedProperty =
             DependencyProperty.Register(
-                "IsExpanded", 
-                typeof(bool), 
-                typeof(Reveal), 
+                "IsExpanded",
+                typeof(bool),
+                typeof(Reveal),
                 new UIPropertyMetadata(false, new PropertyChangedCallback(OnIsExpandedChanged)));
 
         private static void OnIsExpandedChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -66,9 +66,9 @@ namespace PixelLab.Wpf
         // Using a DependencyProperty as the backing store for HorizontalReveal.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HorizontalRevealProperty =
             DependencyProperty.Register(
-                "HorizontalReveal", 
-                typeof(HorizontalRevealMode), 
-                typeof(Reveal), 
+                "HorizontalReveal",
+                typeof(HorizontalRevealMode),
+                typeof(Reveal),
                 new UIPropertyMetadata(HorizontalRevealMode.None));
 
         public VerticalRevealMode VerticalReveal
@@ -80,9 +80,9 @@ namespace PixelLab.Wpf
         // Using a DependencyProperty as the backing store for VerticalReveal.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty VerticalRevealProperty =
             DependencyProperty.Register(
-                "VerticalReveal", 
-                typeof(VerticalRevealMode), 
-                typeof(Reveal), 
+                "VerticalReveal",
+                typeof(VerticalRevealMode),
+                typeof(Reveal),
                 new UIPropertyMetadata(VerticalRevealMode.FromTopToBottom));
 
         /// <summary>
@@ -98,13 +98,13 @@ namespace PixelLab.Wpf
         // Using a DependencyProperty as the backing store for AnimationProgress.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty AnimationProgressProperty =
             DependencyProperty.Register(
-                "AnimationProgress", 
-                typeof(double), 
-                typeof(Reveal), 
+                "AnimationProgress",
+                typeof(double),
+                typeof(Reveal),
                 new FrameworkPropertyMetadata(
-                    0.0, 
-                    FrameworkPropertyMetadataOptions.AffectsMeasure, 
-                    null, 
+                    0.0,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure,
+                    null,
                     new CoerceValueCallback(OnCoerceAnimationProgress)));
 
         private static object OnCoerceAnimationProgress(DependencyObject d, object baseValue)

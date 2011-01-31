@@ -4,223 +4,220 @@
     xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf"
     xmlns:local="clr-namespace:PixelLab.Demo.Core"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
-  <Page.Resources>
-    <local:SampleImageHelper x:Key="ImagePathHolder" />
-  </Page.Resources>
+    <Page.Resources>
+        <local:SampleImageHelper x:Key="ImagePathHolder" />
+    </Page.Resources>
 
+    <TabControl>
+        <TabItem Header="Bill of Rights">
+            <lib:ZapScroller>
+                <lib:ZapScroller.ItemTemplate>
+                    <DataTemplate>
+                        <Viewbox>
+                            <TextBlock TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Center" Margin="5" Width="250" Height="250"/>
+                        </Viewbox>
+                    </DataTemplate>
+                </lib:ZapScroller.ItemTemplate>
+                <sys:String>Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof; or abridging the freedom of speech, or of the press; or the right of the people peaceably to assemble, and to petition the Government for a redress of grievances.</sys:String>
+                <sys:String>A well regulated Militia, being necessary to the security of a free State, the right of the people to keep and bear Arms, shall not be infringed.</sys:String>
+                <sys:String>No Soldier shall, in time of peace be quartered in any house, without the consent of the Owner, nor in time of war, but in a manner to be prescribed by law.</sys:String>
+                <sys:String>The right of the people to be secure in their persons, houses, papers, and effects, against unreasonable searches and seizures, shall not be violated, and no Warrants shall issue, but upon probable cause, supported by Oath or affirmation, and particularly describing the place to be searched, and the persons or things to be seized.</sys:String>
+                <sys:String>No person shall be held to answer for a capital, or otherwise infamous crime, unless on a presentment or indictment of a Grand Jury, except in cases arising in the land or naval forces, or in the Militia, when in actual service in time of War or public danger; nor shall any person be subject for the same offence to be twice put in jeopardy of life or limb; nor shall be compelled in any criminal case to be a witness against himself, nor be deprived of life, liberty, or property, without due process of law; nor shall private property be taken for public use, without just compensation.</sys:String>
+                <sys:String>In all criminal prosecutions, the accused shall enjoy the right to a speedy and public trial, by an impartial jury of the State and district wherein the crime shall have been committed, which district shall have been previously ascertained by law, and to be informed of the nature and cause of the accusation; to be confronted with the witnesses against him; to have compulsory process for obtaining witnesses in his favor, and to have the Assistance of Counsel for his defence.</sys:String>
+                <sys:String>In Suits at common law, where the value in controversy shall exceed twenty dollars, the right of trial by jury shall be preserved, and no fact tried by a jury, shall be otherwise re-examined in any Court of the United States, than according to the rules of the common law.</sys:String>
+                <sys:String>Excessive bail shall not be required, nor excessive fines imposed, nor cruel and unusual punishments inflicted.</sys:String>
+                <sys:String>The enumeration in the Constitution, of certain rights, shall not be construed to deny or disparage others retained by the people.</sys:String>
+                <sys:String>The powers not delegated to the United States by the Constitution, nor prohibited by it to the States, are reserved to the States respectively, or to the people.</sys:String>
+            </lib:ZapScroller>
 
-  <TabControl>
-    <TabItem Header="Bill of Rights">
-      <lib:ZapScroller>
-        <lib:ZapScroller.ItemTemplate>
-          <DataTemplate>
-            <Viewbox>
-              <TextBlock TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Center" Margin="5" Width="250" Height="250"/>
-            </Viewbox>
-          </DataTemplate>
-        </lib:ZapScroller.ItemTemplate>
-        <sys:String>Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof; or abridging the freedom of speech, or of the press; or the right of the people peaceably to assemble, and to petition the Government for a redress of grievances.</sys:String>
-        <sys:String>A well regulated Militia, being necessary to the security of a free State, the right of the people to keep and bear Arms, shall not be infringed.</sys:String>
-        <sys:String>No Soldier shall, in time of peace be quartered in any house, without the consent of the Owner, nor in time of war, but in a manner to be prescribed by law.</sys:String>
-        <sys:String>The right of the people to be secure in their persons, houses, papers, and effects, against unreasonable searches and seizures, shall not be violated, and no Warrants shall issue, but upon probable cause, supported by Oath or affirmation, and particularly describing the place to be searched, and the persons or things to be seized.</sys:String>
-        <sys:String>No person shall be held to answer for a capital, or otherwise infamous crime, unless on a presentment or indictment of a Grand Jury, except in cases arising in the land or naval forces, or in the Militia, when in actual service in time of War or public danger; nor shall any person be subject for the same offence to be twice put in jeopardy of life or limb; nor shall be compelled in any criminal case to be a witness against himself, nor be deprived of life, liberty, or property, without due process of law; nor shall private property be taken for public use, without just compensation.</sys:String>
-        <sys:String>In all criminal prosecutions, the accused shall enjoy the right to a speedy and public trial, by an impartial jury of the State and district wherein the crime shall have been committed, which district shall have been previously ascertained by law, and to be informed of the nature and cause of the accusation; to be confronted with the witnesses against him; to have compulsory process for obtaining witnesses in his favor, and to have the Assistance of Counsel for his defence.</sys:String>
-        <sys:String>In Suits at common law, where the value in controversy shall exceed twenty dollars, the right of trial by jury shall be preserved, and no fact tried by a jury, shall be otherwise re-examined in any Court of the United States, than according to the rules of the common law.</sys:String>
-        <sys:String>Excessive bail shall not be required, nor excessive fines imposed, nor cruel and unusual punishments inflicted.</sys:String>
-        <sys:String>The enumeration in the Constitution, of certain rights, shall not be construed to deny or disparage others retained by the people.</sys:String>
-        <sys:String>The powers not delegated to the United States by the Constitution, nor prohibited by it to the States, are reserved to the States respectively, or to the people.</sys:String>
-      </lib:ZapScroller>
+        </TabItem>
 
-
-
-    </TabItem>
-
-    <TabItem Header="Colors" Name="m_tabItemColors">
-      <DockPanel>
-
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
-          <StackPanel.Resources>
-
-            <Style TargetType="Button">
-              <Setter Property="HorizontalAlignment" Value="Center"/>
-              <Setter Property="VerticalAlignment" Value="Center"/>
-              <Setter Property="Margin" Value="10"/>
-              <Setter Property="Padding" Value="3"/>
-            </Style>
-
-            <Style TargetType="RepeatButton">
-              <Setter Property="HorizontalAlignment" Value="Center"/>
-              <Setter Property="VerticalAlignment" Value="Center"/>
-              <Setter Property="Margin" Value="10"/>
-              <Setter Property="Padding" Value="3"/>
-            </Style>
-
-          </StackPanel.Resources>
-
-          <RepeatButton Content="_Add" Command="{Binding Path=AddCommand, Mode=OneTime}"/>
-          <RepeatButton Content="_Remove" Command="{Binding Path=RemoveCommand, Mode=OneTime}"/>
-          <RepeatButton Content="_Move" Command="{Binding Path=MoveCommand, Mode=OneTime}"/>
-          <RepeatButton Content="_Change" Command="{Binding Path=ChangeCommand, Mode=OneTime}"/>
-          <Button Content="_Reset" Command="{Binding Path=ResetCommand, Mode=OneTime}"/>
-
-        </StackPanel>
-
-        <lib:ZapScroller ItemsSource="{Binding}">
-          <lib:ZapScroller.CommandItemTemplate>
-            <DataTemplate DataType="{x:Type lib:ZapCommandItem}">
-              <Button Command="{Binding}" Width="30" Height="30" Content="{Binding Path=Number}"
-                      Background="{Binding Path=Content}"/>
-            </DataTemplate>
-          </lib:ZapScroller.CommandItemTemplate>
-          
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <Grid>
-                <Rectangle Margin="20">
-                  <Rectangle.Fill>
-                    <SolidColorBrush Color="{Binding}"/>
-                  </Rectangle.Fill>
-                </Rectangle>
-                <Viewbox>
-                  <TextBlock Margin="5" Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Viewbox>
-              </Grid>
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </lib:ZapScroller>
-      </DockPanel>
-    </TabItem>
-
-    <TabItem Header="Pictures">
-
-      <lib:ZapScroller ItemsSource="{Binding Source={StaticResource ImagePathHolder}, Path=BitmapImages6}">
-        <lib:ZapScroller.Resources>
-
-          <ControlTemplate TargetType="ButtonBase" x:Key="buttonBaseTemplate">
-            <ContentPresenter Name="cp" Opacity=".67" Width="64" Height="48">
-              <ContentPresenter.RenderTransform>
-                <ScaleTransform ScaleX=".67" ScaleY=".67" CenterX="32" CenterY="24"/>
-              </ContentPresenter.RenderTransform>
-            </ContentPresenter>
-            <ControlTemplate.Triggers>
-              <Trigger Property="IsMouseOver" Value="True">
-                <Trigger.EnterActions>
-                  <BeginStoryboard >
-                    <BeginStoryboard.Storyboard>
-                      <Storyboard>
-                        <DoubleAnimation Duration="0:0:0.2" To=".9" Storyboard.TargetName="cp" Storyboard.TargetProperty="Opacity" />
-                        <DoubleAnimation Duration="0:0:0.2" To=".8" Storyboard.TargetName="cp" Storyboard.TargetProperty="RenderTransform.ScaleX" />
-                        <DoubleAnimation Duration="0:0:0.2" To=".8" Storyboard.TargetName="cp" Storyboard.TargetProperty="RenderTransform.ScaleY" />
-                      </Storyboard>
-                    </BeginStoryboard.Storyboard>
-                  </BeginStoryboard>
-                </Trigger.EnterActions>
-                <Trigger.ExitActions>
-                  <BeginStoryboard >
-                    <BeginStoryboard.Storyboard>
-                      <Storyboard TargetName="cp" TargetProperty="Opacity">
-                        <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetName="cp" Storyboard.TargetProperty="Opacity" />
-                        <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetName="cp" Storyboard.TargetProperty="RenderTransform.ScaleX" />
-                        <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetName="cp" Storyboard.TargetProperty="RenderTransform.ScaleY" />
-                      </Storyboard>
-                    </BeginStoryboard.Storyboard>
-                  </BeginStoryboard>
-                </Trigger.ExitActions>
-              </Trigger>
-              <Trigger Property="IsEnabled" Value="False">
-                <Trigger.EnterActions>
-                  <BeginStoryboard >
-                    <BeginStoryboard.Storyboard>
-                      <Storyboard>
-                        <DoubleAnimation Duration="0:0:0.2" To="1" Storyboard.TargetName="cp" Storyboard.TargetProperty="Opacity" />
-                        <DoubleAnimation Duration="0:0:0.2" To="1" Storyboard.TargetName="cp" Storyboard.TargetProperty="RenderTransform.ScaleX" />
-                        <DoubleAnimation Duration="0:0:0.2" To="1" Storyboard.TargetName="cp" Storyboard.TargetProperty="RenderTransform.ScaleY" />
-                      </Storyboard>
-                    </BeginStoryboard.Storyboard>
-                  </BeginStoryboard>
-                </Trigger.EnterActions>
-                <Trigger.ExitActions>
-                  <BeginStoryboard >
-                    <BeginStoryboard.Storyboard>
-                      <Storyboard TargetName="cp" TargetProperty="Opacity">
-                        <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetName="cp" Storyboard.TargetProperty="Opacity" />
-                        <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetName="cp" Storyboard.TargetProperty="RenderTransform.ScaleX" />
-                        <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetName="cp" Storyboard.TargetProperty="RenderTransform.ScaleY" />
-                      </Storyboard>
-                    </BeginStoryboard.Storyboard>
-                  </BeginStoryboard>
-                </Trigger.ExitActions>
-              </Trigger>
-            </ControlTemplate.Triggers>
-          </ControlTemplate>
-
-          <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}" x:Key="pageButtonStyle">
-            <Setter Property="Width" Value="64" />
-            <Setter Property="Height" Value="48" />
-            <Setter Property="Template" Value="{StaticResource buttonBaseTemplate}" />
-            <Setter Property="ContentTemplate">
-              <Setter.Value>
-                <DataTemplate>
-                  <Image Source="{Binding Path=Content }" Margin="2" Name="image"/>
-                </DataTemplate>
-              </Setter.Value>
-            </Setter>
-          </Style>
-
-          <Style TargetType="RepeatButton" BasedOn="{StaticResource {x:Type RepeatButton}}" x:Key="pageRepeatButtonStyle">
-            <Setter Property="Width" Value="64" />
-            <Setter Property="Height" Value="48" />
-            <Setter Property="Interval" Value="500" />
-          </Style>
-
-          <Style TargetType="ItemsControl" x:Key="ZapScrollerCommandItemsControlStyle">
-            <Setter Property="Template">
-              <Setter.Value>
-                <ControlTemplate TargetType="ItemsControl">
-                  <StackPanel Orientation="Horizontal" IsItemsHost="True"/>
-                </ControlTemplate>
-              </Setter.Value>
-            </Setter>
-            <Setter Property="ItemTemplate">
-              <Setter.Value>
-                <DataTemplate>
-                  <Button Command="{Binding}" Style="{StaticResource pageButtonStyle}" Content="{Binding}"/>
-                </DataTemplate>
-              </Setter.Value>
-            </Setter>
-          </Style>
-
-        </lib:ZapScroller.Resources>
-
-        <lib:ZapScroller.Template>
-          <ControlTemplate TargetType="lib:ZapScroller">
+        <TabItem Header="Colors" Name="m_tabItemColors">
             <DockPanel>
-              <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center" >
-                <RepeatButton Content="&lt;"
+
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel.Resources>
+
+                        <Style TargetType="Button">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Margin" Value="10"/>
+                            <Setter Property="Padding" Value="3"/>
+                        </Style>
+
+                        <Style TargetType="RepeatButton">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Margin" Value="10"/>
+                            <Setter Property="Padding" Value="3"/>
+                        </Style>
+
+                    </StackPanel.Resources>
+
+                    <RepeatButton Content="_Add" Command="{Binding Path=AddCommand, Mode=OneTime}"/>
+                    <RepeatButton Content="_Remove" Command="{Binding Path=RemoveCommand, Mode=OneTime}"/>
+                    <RepeatButton Content="_Move" Command="{Binding Path=MoveCommand, Mode=OneTime}"/>
+                    <RepeatButton Content="_Change" Command="{Binding Path=ChangeCommand, Mode=OneTime}"/>
+                    <Button Content="_Reset" Command="{Binding Path=ResetCommand, Mode=OneTime}"/>
+
+                </StackPanel>
+
+                <lib:ZapScroller ItemsSource="{Binding}">
+                    <lib:ZapScroller.CommandItemTemplate>
+                        <DataTemplate DataType="{x:Type lib:ZapCommandItem}">
+                            <Button Command="{Binding}" Width="30" Height="30" Content="{Binding Path=Number}"
+                      Background="{Binding Path=Content}"/>
+                        </DataTemplate>
+                    </lib:ZapScroller.CommandItemTemplate>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Rectangle Margin="20">
+                                    <Rectangle.Fill>
+                                        <SolidColorBrush Color="{Binding}"/>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <Viewbox>
+                                    <TextBlock Margin="5" Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Viewbox>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </lib:ZapScroller>
+            </DockPanel>
+        </TabItem>
+
+        <TabItem Header="Pictures">
+
+            <lib:ZapScroller ItemsSource="{Binding Source={StaticResource ImagePathHolder}, Path=BitmapImages6}">
+                <lib:ZapScroller.Resources>
+
+                    <ControlTemplate TargetType="ButtonBase" x:Key="buttonBaseTemplate">
+                        <ContentPresenter Name="cp" Opacity=".67" Width="64" Height="48">
+                            <ContentPresenter.RenderTransform>
+                                <ScaleTransform ScaleX=".67" ScaleY=".67" CenterX="32" CenterY="24"/>
+                            </ContentPresenter.RenderTransform>
+                        </ContentPresenter>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard >
+                                        <BeginStoryboard.Storyboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0:0:0.2" To=".9" Storyboard.TargetName="cp" Storyboard.TargetProperty="Opacity" />
+                                                <DoubleAnimation Duration="0:0:0.2" To=".8" Storyboard.TargetName="cp" Storyboard.TargetProperty="RenderTransform.ScaleX" />
+                                                <DoubleAnimation Duration="0:0:0.2" To=".8" Storyboard.TargetName="cp" Storyboard.TargetProperty="RenderTransform.ScaleY" />
+                                            </Storyboard>
+                                        </BeginStoryboard.Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard >
+                                        <BeginStoryboard.Storyboard>
+                                            <Storyboard TargetName="cp" TargetProperty="Opacity">
+                                                <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetName="cp" Storyboard.TargetProperty="Opacity" />
+                                                <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetName="cp" Storyboard.TargetProperty="RenderTransform.ScaleX" />
+                                                <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetName="cp" Storyboard.TargetProperty="RenderTransform.ScaleY" />
+                                            </Storyboard>
+                                        </BeginStoryboard.Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard >
+                                        <BeginStoryboard.Storyboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0:0:0.2" To="1" Storyboard.TargetName="cp" Storyboard.TargetProperty="Opacity" />
+                                                <DoubleAnimation Duration="0:0:0.2" To="1" Storyboard.TargetName="cp" Storyboard.TargetProperty="RenderTransform.ScaleX" />
+                                                <DoubleAnimation Duration="0:0:0.2" To="1" Storyboard.TargetName="cp" Storyboard.TargetProperty="RenderTransform.ScaleY" />
+                                            </Storyboard>
+                                        </BeginStoryboard.Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard >
+                                        <BeginStoryboard.Storyboard>
+                                            <Storyboard TargetName="cp" TargetProperty="Opacity">
+                                                <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetName="cp" Storyboard.TargetProperty="Opacity" />
+                                                <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetName="cp" Storyboard.TargetProperty="RenderTransform.ScaleX" />
+                                                <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetName="cp" Storyboard.TargetProperty="RenderTransform.ScaleY" />
+                                            </Storyboard>
+                                        </BeginStoryboard.Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}" x:Key="pageButtonStyle">
+                        <Setter Property="Width" Value="64" />
+                        <Setter Property="Height" Value="48" />
+                        <Setter Property="Template" Value="{StaticResource buttonBaseTemplate}" />
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <Image Source="{Binding Path=Content }" Margin="2" Name="image"/>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <Style TargetType="RepeatButton" BasedOn="{StaticResource {x:Type RepeatButton}}" x:Key="pageRepeatButtonStyle">
+                        <Setter Property="Width" Value="64" />
+                        <Setter Property="Height" Value="48" />
+                        <Setter Property="Interval" Value="500" />
+                    </Style>
+
+                    <Style TargetType="ItemsControl" x:Key="ZapScrollerCommandItemsControlStyle">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ItemsControl">
+                                    <StackPanel Orientation="Horizontal" IsItemsHost="True"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="ItemTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <Button Command="{Binding}" Style="{StaticResource pageButtonStyle}" Content="{Binding}"/>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                </lib:ZapScroller.Resources>
+
+                <lib:ZapScroller.Template>
+                    <ControlTemplate TargetType="lib:ZapScroller">
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center" >
+                                <RepeatButton Content="&lt;"
                               Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PreviousCommand}"
                               Style="{StaticResource pageRepeatButtonStyle}"/>
-                <ItemsControl ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Commands}"
+                                <ItemsControl ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Commands}"
                               Style="{StaticResource ZapScrollerCommandItemsControlStyle}"/>
-                <RepeatButton Content="&gt;" Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NextCommand}"
+                                <RepeatButton Content="&gt;" Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NextCommand}"
                               Style="{StaticResource pageRepeatButtonStyle}"/>
-              </StackPanel>
+                            </StackPanel>
 
-              <lib:ZapDecorator Name="PART_ZapDecorator">
-                <lib:ZapPanel IsItemsHost="true" />
-              </lib:ZapDecorator>
-            </DockPanel>
-          </ControlTemplate>
-        </lib:ZapScroller.Template>
-        <lib:ZapScroller.ItemTemplate>
-          <DataTemplate>
-            <Image Source="{Binding}" Margin="10"/>
-          </DataTemplate>
-        </lib:ZapScroller.ItemTemplate>
+                            <lib:ZapDecorator Name="PART_ZapDecorator">
+                                <lib:ZapPanel IsItemsHost="true" />
+                            </lib:ZapDecorator>
+                        </DockPanel>
+                    </ControlTemplate>
+                </lib:ZapScroller.Template>
+                <lib:ZapScroller.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding}" Margin="10"/>
+                    </DataTemplate>
+                </lib:ZapScroller.ItemTemplate>
 
-      </lib:ZapScroller>
+            </lib:ZapScroller>
 
-    </TabItem>
+        </TabItem>
 
-  </TabControl>
+    </TabControl>
 
 </Page>

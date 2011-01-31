@@ -10,9 +10,12 @@ using System.Diagnostics.Contracts;
 using PixelLab.Contracts;
 #endif
 
-namespace PixelLab.Wpf.Demo.Set {
-    public static class SetCardDrawingFactory {
-        static SetCardDrawingFactory() {
+namespace PixelLab.Wpf.Demo.Set
+{
+    public static class SetCardDrawingFactory
+    {
+        static SetCardDrawingFactory()
+        {
             s_borderPen = new Pen(Brushes.Transparent, 1);
             s_borderPen.Freeze();
 
@@ -42,8 +45,8 @@ namespace PixelLab.Wpf.Demo.Set {
             s_cardDrawing.Freeze();
         }
 
-        public static Drawing GetFullCardDrawing(SetCard setCard) {
-
+        public static Drawing GetFullCardDrawing(SetCard setCard)
+        {
             Drawing designDrawing = GetCardDesignDrawing(setCard);
 
             DrawingGroup group = new DrawingGroup();
@@ -51,17 +54,16 @@ namespace PixelLab.Wpf.Demo.Set {
             group.Children.Add(s_cardDrawing);
             group.Children.Add(designDrawing);
 
-
             return group;
         }
 
-        public static Drawing GetCardDesignDrawing(SetCard setCard) {
+        public static Drawing GetCardDesignDrawing(SetCard setCard)
+        {
             Contract.Requires<ArgumentNullException>(setCard != null);
 
             DrawingGroup drawingGroup = new DrawingGroup();
 
             #region Border
-
 
             RectangleGeometry cardBorderGeometry = new RectangleGeometry(new Rect(s_cardSize));
             GeometryDrawing cardBorderDrawing =
@@ -74,9 +76,11 @@ namespace PixelLab.Wpf.Demo.Set {
             #region Brush
 
             Brush itemBrush = null;
-            switch (setCard.Fill) {
+            switch (setCard.Fill)
+            {
                 case SetFill.Solid:
-                    switch (setCard.Color) {
+                    switch (setCard.Color)
+                    {
                         case SetColor.Green:
                             itemBrush = Brushes.Green;
                             break;
@@ -90,7 +94,8 @@ namespace PixelLab.Wpf.Demo.Set {
                     break;
 
                 case SetFill.Stripe:
-                    switch (setCard.Color) {
+                    switch (setCard.Color)
+                    {
                         case SetColor.Green:
                             itemBrush = s_stripedGreenBrush;
                             break;
@@ -111,7 +116,8 @@ namespace PixelLab.Wpf.Demo.Set {
             #endregion
 
             Pen itemPen = null;
-            switch (setCard.Color) {
+            switch (setCard.Color)
+            {
                 case SetColor.Green:
                     itemPen = s_greenPen;
                     break;
@@ -123,22 +129,25 @@ namespace PixelLab.Wpf.Demo.Set {
                     break;
             }
 
-
             Point startCenter = new Point(s_cardSize.Width / 2, s_cardSize.Height / 2);
 
-            if (setCard.Count == 2) {
+            if (setCard.Count == 2)
+            {
                 startCenter.Y -= c_centerOffset / 2;
             }
-            else if (setCard.Count == 3) {
+            else if (setCard.Count == 3)
+            {
                 startCenter.Y -= c_centerOffset;
             }
 
             GeometryGroup geometryGroup = new GeometryGroup();
 
-            for (int i = 0; i < setCard.Count; i++) {
+            for (int i = 0; i < setCard.Count; i++)
+            {
                 Geometry itemGeometry = null;
 
-                switch (setCard.Shape) {
+                switch (setCard.Shape)
+                {
                     case SetShape.Diamond:
 
                         itemGeometry = GetDiamondGeometry();
@@ -178,7 +187,8 @@ namespace PixelLab.Wpf.Demo.Set {
 
         #region Implementation
 
-        private static TranslateTransform GetCenterTransform(Geometry geometry, Point center) {
+        private static TranslateTransform GetCenterTransform(Geometry geometry, Point center)
+        {
             Rect bounds = geometry.Bounds;
 
             Vector centerAtOrigin = (Vector)center + ((Vector)bounds.TopLeft - (Vector)bounds.BottomRight) / 2;
@@ -186,7 +196,8 @@ namespace PixelLab.Wpf.Demo.Set {
             return new TranslateTransform(centerAtOrigin.X, centerAtOrigin.Y);
         }
 
-        private static Geometry GetDiamondGeometry() {
+        private static Geometry GetDiamondGeometry()
+        {
             Point[] points = new Point[]{
                 new Point(0, s_itemSize.Height / 2),
                 new Point(s_itemSize.Width / 2, s_itemSize.Height),
@@ -203,7 +214,8 @@ namespace PixelLab.Wpf.Demo.Set {
             return geometry;
         }
 
-        private static DrawingBrush GetStripeBrush(SolidColorBrush solidBrush) {
+        private static DrawingBrush GetStripeBrush(SolidColorBrush solidBrush)
+        {
             Geometry solidGeometry = new RectangleGeometry(new Rect(0, 0, 5, 5));
             Drawing solidDrawing = new GeometryDrawing(solidBrush, null, solidGeometry);
 
@@ -253,13 +265,13 @@ namespace PixelLab.Wpf.Demo.Set {
             "60,27 70,18 70,10 70,2 68,0 64,0 60,0 54,6 45,7 35,7 31,2 18,2 5,1 0,11 0,18z";
 
         #endregion
-
     }
 
-    public class CardImageSourceConverter : SimpleValueConverter<SetCard, DrawingImage> {
-        protected override DrawingImage ConvertBase(SetCard input) {
+    public class CardImageSourceConverter : SimpleValueConverter<SetCard, DrawingImage>
+    {
+        protected override DrawingImage ConvertBase(SetCard input)
+        {
             return new DrawingImage(SetCardDrawingFactory.GetCardDesignDrawing(input));
         }
     }
-
 }

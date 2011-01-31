@@ -4,7 +4,6 @@ namespace PixelLab.Common
 {
     public static class StreamHelpers
     {
-
         public static string ReadAllAsString(this Stream stream)
         {
             using (var sr = new StreamReader(stream))

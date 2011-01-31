@@ -87,13 +87,13 @@ namespace PixelLab.Common
         /// </summary>
         /// <remarks>
         /// <para>
-        ///     If there are n items in the collection, n-1 comparisons are done. 
+        ///     If there are n items in the collection, n-1 comparisons are done.
         /// </para>
         /// <para>
         ///     Every valid [i] and [i+1] pair are passed into <paramref name="compare"/>.
         /// </para>
         /// <para>
-        ///     If <paramref name="source"/> has 0 or 1 items, true is returned. 
+        ///     If <paramref name="source"/> has 0 or 1 items, true is returned.
         /// </para>
         /// </remarks>
         [Pure]
@@ -114,7 +114,7 @@ namespace PixelLab.Common
         }
 
         /// <summary>
-        ///     Returns true if all of the items in <paramref name="source"/> are not 
+        ///     Returns true if all of the items in <paramref name="source"/> are not
         ///     null or empty.
         /// </summary>
         /// <exception cref="ArgumentNullException">if <param name="source"/> is null.</exception>
@@ -150,9 +150,9 @@ namespace PixelLab.Common
         /// <para>
         ///     Yes, this does basically the same thing as the
         ///     <see cref="System.Linq.Enumerable.Any{TSource}(IEnumerable{TSource})"/>
-        ///     extention. The differences: 'IsEmpty' is easier to remember and it leverages 
+        ///     extention. The differences: 'IsEmpty' is easier to remember and it leverages
         ///     <see cref="ICollection{TSource}.Count">ICollection.Count</see> if it exists.
-        /// </para>    
+        /// </para>
         /// </remarks>
         [Pure]
         public static bool IsEmpty<TSource>(this IEnumerable<TSource> source)
@@ -213,7 +213,7 @@ namespace PixelLab.Common
         }
 
         /// <summary>
-        ///     Performs the specified <paramref name="action"/>  
+        ///     Performs the specified <paramref name="action"/>
         ///     on each element of the specified <paramref name="source"/>.
         /// </summary>
         /// <typeparam name="TSource">The type of the elements of <paramref name="source"/>.</typeparam>
@@ -302,7 +302,6 @@ namespace PixelLab.Common
                     stack.Pop().Dispose();
                 }
             }
-
         } //*** SelectRecursive
 
         public static IList<TTo> ToCastList<TFrom, TTo>(this IList<TFrom> source) where TFrom : TTo
@@ -434,7 +433,6 @@ namespace PixelLab.Common
             return string.Format(source, args);
         }
 
-
         public static IEnumerable<TSource> Except<TSource, TOther>(this IEnumerable<TSource> source, IEnumerable<TOther> other, Func<TSource, TOther, bool> comparer)
         {
             return from item in source
@@ -536,5 +534,4 @@ namespace PixelLab.Common
         }
         #endregion
     }
-
 } //*** namespace PixelLab.Common

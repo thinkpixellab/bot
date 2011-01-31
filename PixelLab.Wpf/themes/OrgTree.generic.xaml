@@ -115,7 +115,7 @@
                             ContentTemplate="{TemplateBinding HeaderTemplate}"
                             ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}">
                         </ToggleButton>
-                        <lib:Reveal 
+                        <lib:Reveal
                             HorizontalReveal="FromCenterToEdge"
                             Duration="100"
                             IsExpanded="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsExpanded}">

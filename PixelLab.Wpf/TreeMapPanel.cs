@@ -190,6 +190,5 @@ namespace PixelLab.Wpf
         private double[] m_weights;
 
         private const double c_tolerance = 1e-2;
-
     }
 }

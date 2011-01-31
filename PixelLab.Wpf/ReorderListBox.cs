@@ -118,7 +118,7 @@ namespace PixelLab.Wpf
                 new FrameworkPropertyMetadata((int)250));
 
         /// <summary>
-        /// Gets or sets the Duration property.  This dependency property 
+        /// Gets or sets the Duration property.  This dependency property
         /// indicates ....
         /// </summary>
         public int Duration
@@ -151,7 +151,7 @@ namespace PixelLab.Wpf
                     new PropertyChangedCallback(OnIsDragElementChanged)));
 
         /// <summary>
-        /// Gets the IsDragElement property.  This dependency property 
+        /// Gets the IsDragElement property.  This dependency property
         /// indicates ....
         /// </summary>
         public static bool GetIsDragElement(DependencyObject d)
@@ -160,7 +160,7 @@ namespace PixelLab.Wpf
         }
 
         /// <summary>
-        /// Sets the IsDragElement property.  This dependency property 
+        /// Sets the IsDragElement property.  This dependency property
         /// indicates ....
         /// </summary>
         public static void SetIsDragElement(DependencyObject d, bool value)
@@ -223,7 +223,7 @@ namespace PixelLab.Wpf
             = IsDraggingPropertyKey.DependencyProperty;
 
         /// <summary>
-        /// Gets the IsDragging property.  This dependency property 
+        /// Gets the IsDragging property.  This dependency property
         /// indicates ....
         /// </summary>
         public static bool GetIsDragging(DependencyObject d)
@@ -232,7 +232,7 @@ namespace PixelLab.Wpf
         }
 
         /// <summary>
-        /// Provides a secure method for setting the IsDragging property.  
+        /// Provides a secure method for setting the IsDragging property.
         /// This dependency property indicates ....
         /// </summary>
         private static void SetIsDragging(DependencyObject d, bool value)
@@ -328,7 +328,6 @@ namespace PixelLab.Wpf
 
         private static ReorderQuadrant PointToQuadrant(FrameworkElement element, Point p)
         {
-
             if (p.Y >= (element.ActualHeight / 2))
             {
                 // top half
@@ -426,7 +425,6 @@ namespace PixelLab.Wpf
             k.Value = yDelta;
             k.KeyTime = TimeSpan.FromMilliseconds(milliseconds);
             f.BeginStoryboard(sb);
-
         }
 
         private AdornerLayer m_adornerLayer
@@ -484,5 +482,4 @@ namespace PixelLab.Wpf
     public enum ReorderQuadrant { TopLeft, TopRight, BottomLeft, BottomRight }
 
     public enum ReorderPlacement { Before, After }
-
 }

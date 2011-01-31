@@ -213,7 +213,5 @@ namespace PixelLab.Common
         private readonly ReadOnlyCollection<T> m_sourceItems;
 
         #endregion
-
     }
-
 }

@@ -41,9 +41,6 @@ namespace PixelLab.Common
 
             command.CommandText = commandFormatString.DoFormat(paramLabels);
             return command;
-
         } //*** createSqlCommandWithParameters
-
     } //*** class SqlUtil
-
 } //*** PixelLab.Common

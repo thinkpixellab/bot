@@ -163,7 +163,6 @@ namespace PixelLab.SL
             {
                 if (m_newData != null)
                 {
-
                     var args = new FlippingEventArgs(m_currentData, m_newData);
                     var handler = FlipStarting;
                     if (handler != null)
@@ -245,7 +244,6 @@ namespace PixelLab.SL
                 m_currentContentSnapshot.CopyPixels(m_contentBitmapRight, m_contentBitmapRight.PixelWidth, 0);
                 m_flipper.PreviousPage();
             }
-
         }
 
         private WriteableBitmap m_contentBitmapLeft;
@@ -262,7 +260,6 @@ namespace PixelLab.SL
         private PageFlipper m_flipper;
 
         #endregion
-
     }
 
     public class FlippingEventArgs : EventArgs

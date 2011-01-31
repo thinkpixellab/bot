@@ -35,7 +35,7 @@ namespace PixelLab.Common
             base.OnAttached();
 
             // NOTE: For a better implementation of this behavior we should probably handle changes
-            //       to the DataContext, but a) there's no event for that in SL4 yet and b) we 
+            //       to the DataContext, but a) there's no event for that in SL4 yet and b) we
             //       we don't actually need it in this application.
             this.AssociatedObject.SelectionChanged += listBox_selectionChanged;
         }

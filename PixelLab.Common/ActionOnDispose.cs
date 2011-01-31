@@ -42,7 +42,7 @@ namespace PixelLab.Common
         }
 
         /// <summary>
-        ///     Calls the provided Action if it has not been called; 
+        ///     Calls the provided Action if it has not been called;
         ///     otherwise, throws an <see cref="Exception"/>.
         /// </summary>
         /// <exception cref="InvalidOperationException">If <see cref="Dispose()"/> has already been called.</exception>
@@ -64,7 +64,5 @@ namespace PixelLab.Common
         private Action m_unlockDelegate;
 
         #endregion
-
     } //*** class ActionOnDispose
-
 } //*** PixelLab.Common

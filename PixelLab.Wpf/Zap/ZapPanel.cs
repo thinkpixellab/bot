@@ -95,7 +95,5 @@ namespace PixelLab.Wpf
         private FrameworkElement _visualParent;
 
         #endregion
-
     } //** class ZapPanel
-
 }

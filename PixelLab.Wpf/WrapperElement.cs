@@ -52,5 +52,4 @@ namespace PixelLab.Wpf
 
         private readonly TElement m_element;
     }
-
 }

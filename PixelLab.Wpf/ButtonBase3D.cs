@@ -33,5 +33,4 @@ namespace PixelLab.Wpf
             base.OnMouseLeftButtonDown(e);
         }
     }
-
 }

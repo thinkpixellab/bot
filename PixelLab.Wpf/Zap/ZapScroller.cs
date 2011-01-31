@@ -24,7 +24,7 @@ namespace PixelLab.Wpf
         }
 
         public ZapScroller()
-        {   
+        {
             m_firstCommand = new CommandWrapper(First, canFirst);
             m_previousCommand = new CommandWrapper(Previous, canPrevious);
             m_nextCommand = new CommandWrapper(Next, canNext);
@@ -125,9 +125,9 @@ namespace PixelLab.Wpf
             return base.MeasureOverride(availableSize);
         }
 
-       public static readonly RoutedEvent CurrentItemIndexChangedEvent =
-            EventManager.RegisterRoutedEvent("CurrentItemIndexChanged", RoutingStrategy.Bubble,
-            typeof(RoutedPropertyChangedEventHandler<int>), typeof(ZapScroller));
+        public static readonly RoutedEvent CurrentItemIndexChangedEvent =
+             EventManager.RegisterRoutedEvent("CurrentItemIndexChanged", RoutingStrategy.Bubble,
+             typeof(RoutedPropertyChangedEventHandler<int>), typeof(ZapScroller));
 
         public event RoutedPropertyChangedEventHandler<int> CurrentItemChanged
         {
@@ -301,7 +301,5 @@ namespace PixelLab.Wpf
         #endregion
 
         public const string PART_ZapDecorator = "PART_ZapDecorator";
-
     }
-
 }

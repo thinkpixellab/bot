@@ -14,20 +14,25 @@ using System.Diagnostics.Contracts;
 using PixelLab.Contracts;
 #endif
 
-namespace PixelLab.Wpf.Demo.Set {
-    public class SetBoardElement : WrapperElement<Viewport3D>, IDisposable {
-        static SetBoardElement() {
+namespace PixelLab.Wpf.Demo.Set
+{
+    public class SetBoardElement : WrapperElement<Viewport3D>, IDisposable
+    {
+        static SetBoardElement()
+        {
             EventManager.RegisterClassHandler(
                 typeof(SetBoardElement),
                 SetCard3D.ClickEvent,
                 new RoutedEventHandler(
-                delegate(object sender, RoutedEventArgs e) {
+                delegate(object sender, RoutedEventArgs e)
+                {
                     ((SetBoardElement)sender).OnCardClick(e);
                 }));
         }
 
         public SetBoardElement()
-            : base(new Viewport3D()) {
+            : base(new Viewport3D())
+        {
             int row = 0, column = 0;
 
             Vector3D offset = new Vector3D(
@@ -37,7 +42,8 @@ namespace PixelLab.Wpf.Demo.Set {
 
             Vector3D delta = new Vector3D(s_setCard3DSize.Width + c_setCardMargin, -(s_setCard3DSize.Height + c_setCardMargin), 0);
 
-            for (int i = 0; i < m_cards.Count; i++) {
+            for (int i = 0; i < m_cards.Count; i++)
+            {
                 row = i / 4;
                 column = i % 4;
 
@@ -65,56 +71,65 @@ namespace PixelLab.Wpf.Demo.Set {
             m_listener.Rendering += m_listener_Rendering;
         }
 
-        protected override Size MeasureOverride(Size availableSize) {
+        protected override Size MeasureOverride(Size availableSize)
+        {
             base.MeasureOverride(s_setBoardElementSize);
             return s_setBoardElementSize;
         }
 
-        protected override Size ArrangeOverride(Size finalSize) {
+        protected override Size ArrangeOverride(Size finalSize)
+        {
             base.ArrangeOverride(s_setBoardElementSize);
             return s_setBoardElementSize;
         }
 
-        public void ProvideGame(SetGame set) {
+        public void ProvideGame(SetGame set)
+        {
             Contract.Requires<ArgumentNullException>(set != null);
 
             VerifyAccess();
-            if (m_set != null) {
+            if (m_set != null)
+            {
                 throw new InvalidOperationException("Can only set the game once.");
             }
 
             m_set = set;
-            m_set.PropertyChanged += delegate(object sender, PropertyChangedEventArgs e) {
+            m_set.PropertyChanged += delegate(object sender, PropertyChangedEventArgs e)
+            {
                 resetMaterials();
             };
 
             resetMaterials();
         }
 
-        public void ResetCards(bool animate) {
+        public void ResetCards(bool animate)
+        {
             m_cards.ForEach(card => card.IsChecked = false);
 
-            if (animate) {
+            if (animate)
+            {
                 m_cards.ForEach(card => card.CurrentZVelocity = -50);
             }
 
             m_listener.StartListening();
         }
 
-        protected virtual void OnCardClick(RoutedEventArgs e) {
+        protected virtual void OnCardClick(RoutedEventArgs e)
+        {
             SetCard3D card = (SetCard3D)e.OriginalSource;
 
-            if (m_set.CanPlay) {
+            if (m_set.CanPlay)
+            {
                 m_listener.StartListening();
 
-
-                if (m_checkedCards.Contains(card) && !card.IsChecked) {
+                if (m_checkedCards.Contains(card) && !card.IsChecked)
+                {
                     m_checkedCards.Remove(card);
 
                     card.CurrentZVelocity = -10;
-
                 }
-                else if (!m_checkedCards.Contains(card) && card.IsChecked) {
+                else if (!m_checkedCards.Contains(card) && card.IsChecked)
+                {
                     m_checkedCards.Add(card);
 
                     card.CurrentZVelocity = -20;
@@ -122,7 +137,8 @@ namespace PixelLab.Wpf.Demo.Set {
 
                 Debug.Assert(m_checkedCards.Count <= 3);
 
-                if (m_checkedCards.Count == 3) {
+                if (m_checkedCards.Count == 3)
+                {
                     int index0 = m_cards.IndexOf(m_checkedCards[0]);
                     int index1 = m_cards.IndexOf(m_checkedCards[1]);
                     int index2 = m_cards.IndexOf(m_checkedCards[2]);
@@ -144,30 +160,34 @@ namespace PixelLab.Wpf.Demo.Set {
                     m_cards[index1].CurrentZVelocity = velocity;
                     m_cards[index2].CurrentZVelocity = velocity;
                 }
-
             } // if can play
-            else {
+            else
+            {
                 card.IsChecked = false;
             }
-
         } //*** void OnCardClick
 
-        protected override void OnMouseMove(MouseEventArgs e) {
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
             m_listener.StartListening();
         }
 
-        public void Dispose() {
-            if (!m_listener.IsDisposed) {
+        public void Dispose()
+        {
+            if (!m_listener.IsDisposed)
+            {
                 m_listener.Dispose();
             }
         }
 
         #region Implementation
 
-        private void m_listener_Rendering(object sender, EventArgs e) {
+        private void m_listener_Rendering(object sender, EventArgs e)
+        {
             bool stillAnimating = false;
 
-            foreach (SetCard3D card in m_cards) {
+            foreach (SetCard3D card in m_cards)
+            {
                 double zTranslateTarget = (card.IsChecked) ? 50 : 0;
                 zTranslateTarget += (card.IsMouseOver) ? -10 : 0;
 
@@ -181,18 +201,20 @@ namespace PixelLab.Wpf.Demo.Set {
 
                 card.CurrentZVelocity = newVelocity;
                 card.TranslateTransform3D.OffsetZ = newTranslate;
-
             }
 
-            if (!stillAnimating) {
+            if (!stillAnimating)
+            {
                 m_listener.StopListening();
             }
-
         }
 
-        private void resetMaterials() {
-            if (m_set != null) {
-                for (int i = 0; i < m_cards.Count; i++) {
+        private void resetMaterials()
+        {
+            if (m_set != null)
+            {
+                for (int i = 0; i < m_cards.Count; i++)
+                {
                     SetCard card = m_set[i];
                     m_cards[i].SetCard(card);
                 }
@@ -211,8 +233,10 @@ namespace PixelLab.Wpf.Demo.Set {
 
         private const double c_setCardMargin = 5;
 
-        private class SetCard3D : ToggleButton3D {
-            public SetCard3D() {
+        private class SetCard3D : ToggleButton3D
+        {
+            public SetCard3D()
+            {
                 DiffuseMaterial material = new DiffuseMaterial(Brushes.LightGray);
 
                 this.Visual3DModel = m_geometry = GetQuad(
@@ -220,14 +244,16 @@ namespace PixelLab.Wpf.Demo.Set {
                     material, material, new Rect(0, 0, 1, 1));
 
                 this.Transform = TranslateTransform3D;
-
             }
 
-            public void SetCard(SetCard card) {
-                if (m_card != card) {
+            public void SetCard(SetCard card)
+            {
+                if (m_card != card)
+                {
                     m_card = card;
 
-                    if (m_card != null) {
+                    if (m_card != null)
+                    {
                         Drawing drawing = SetCardDrawingFactory.GetFullCardDrawing(m_card);
                         DrawingBrush brush = new DrawingBrush(drawing);
                         DiffuseMaterial material = new DiffuseMaterial(brush);
@@ -235,11 +261,11 @@ namespace PixelLab.Wpf.Demo.Set {
 
                         m_geometry.Material = material;
                     }
-                    else {
+                    else
+                    {
                         m_geometry.Material = new DiffuseMaterial(Brushes.Transparent);
                     }
                 }
-
             }
 
             public double CurrentZVelocity;
@@ -248,7 +274,8 @@ namespace PixelLab.Wpf.Demo.Set {
 
             private static GeometryModel3D GetQuad(
                 Point3D bottomLeft, Point3D bottomRight, Point3D topRight, Point3D topLeft,
-                Material material, Material backMaterial, Rect textureCoordinates) {
+                Material material, Material backMaterial, Rect textureCoordinates)
+            {
                 MeshGeometry3D mesh = new MeshGeometry3D();
                 mesh.Positions.Add(bottomLeft);
                 mesh.Positions.Add(bottomRight);
@@ -282,11 +309,12 @@ namespace PixelLab.Wpf.Demo.Set {
         }
 
         #endregion
-
     }
 
-    public class ToggleButton3D : ButtonBase3D {
-        public bool IsChecked {
+    public class ToggleButton3D : ButtonBase3D
+    {
+        public bool IsChecked
+        {
             get { return (bool)GetValue(IsCheckedProperty); }
             set { SetValue(IsCheckedProperty, value); }
         }
@@ -294,14 +322,15 @@ namespace PixelLab.Wpf.Demo.Set {
         public static readonly DependencyProperty IsCheckedProperty =
             DependencyProperty.Register("IsChecked", typeof(bool), typeof(ToggleButton3D), new PropertyMetadata(false));
 
-        protected override void OnClick() {
+        protected override void OnClick()
+        {
             OnToggle();
             base.OnClick();
         }
 
-        protected virtual void OnToggle() {
+        protected virtual void OnToggle()
+        {
             IsChecked = !IsChecked;
         }
-
     }
 }

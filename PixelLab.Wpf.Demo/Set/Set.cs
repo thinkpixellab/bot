@@ -93,7 +93,7 @@ namespace PixelLab.Wpf.Demo.Set
                         Set[] sets = GetPossibleSetsInRemainingCards().ToArray();
                         if (sets.Length == 0)
                         {
-                            // Even through there are cards left in the deck, no combination of them and 
+                            // Even through there are cards left in the deck, no combination of them and
                             //  what's on the board will enable a set.
                             // Rare, but important to catch.
                             m_canPlay = false;
@@ -115,27 +115,20 @@ namespace PixelLab.Wpf.Demo.Set
                                 SetToAvailable(boardIndex1);
                                 SetToAvailable(boardIndex2);
                                 SetToAvailable(boardIndex3);
-
                             }
                             while (SetsOnBoard == 0);
-
                         } // else(sets.Length = 0)
-
                     } // else(m_candInDeck.Length > 0)
-
                 } // if(SetsOnBoard == 0)
 
                 onPropertiesChanged();
                 return true;
-
             } // if(IsSet...
             else
             {
                 onPropertiesChanged();
                 return false;
-
             } // else (IsSet...
-
         } //*** bool TryPlay(...
 
         public void NewGame()
@@ -177,7 +170,6 @@ namespace PixelLab.Wpf.Demo.Set
             }
 
             return isSet;
-
         } // bool IsSet()
 
         #region Public Debug Members
@@ -226,7 +218,6 @@ namespace PixelLab.Wpf.Demo.Set
                     m_board[i] = c_noCard;
                     SetToAvailable(i);
                 }
-
             } while (SetsOnBoard == 0);
 
             m_canPlay = true;
@@ -318,7 +309,6 @@ namespace PixelLab.Wpf.Demo.Set
             Contract.Requires(m_board[boardIndex3] != c_noCard, "index3");
 
             return IsSet(this[boardIndex1], this[boardIndex2], this[boardIndex3]);
-
         } // bool IsSet()
 
         [DebuggerStepThrough]
@@ -430,7 +420,6 @@ namespace PixelLab.Wpf.Demo.Set
             return cards;
         }
 
-
         #endregion
 
         #region Private Fields
@@ -456,7 +445,6 @@ namespace PixelLab.Wpf.Demo.Set
         private const int c_noCard = -1234567;
 
         #endregion
-
     }
 
     public class Set : ReadOnlyCollection<SetCard>
@@ -538,11 +526,9 @@ namespace PixelLab.Wpf.Demo.Set
         {
             return Index;
         }
-
     }
 
     public enum SetColor { Green, Purple, Red }
     public enum SetFill { Empty, Stripe, Solid }
     public enum SetShape { Oval, Diamond, Squiggle }
-
 }

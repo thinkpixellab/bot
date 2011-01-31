@@ -6,11 +6,11 @@
   core:DemoMetadataProperties.DemoName="FlipTile3D"
   core:DemoMetadataProperties.DemoDescription="This is my first messing around with WPF 3D. Figured I'm make something cool. :-)">
 
-  <Page.Background>
-    <LinearGradientBrush EndPoint="0,0.5" StartPoint="0,0.95">
-      <GradientStop Color="#F999" Offset="0"/>
-      <GradientStop Color="#FFFFFFFF" Offset="1"/>
-    </LinearGradientBrush>
-  </Page.Background>
-  <local:FlipTile3D Width="500" Height="500"/>
+    <Page.Background>
+        <LinearGradientBrush EndPoint="0,0.5" StartPoint="0,0.95">
+            <GradientStop Color="#F999" Offset="0"/>
+            <GradientStop Color="#FFFFFFFF" Offset="1"/>
+        </LinearGradientBrush>
+    </Page.Background>
+    <local:FlipTile3D Width="500" Height="500"/>
 </Page>

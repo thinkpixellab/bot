@@ -115,7 +115,6 @@ namespace PixelLab.Wpf.Demo
             {
                 return GetSelectedDirectories(this.m_subDirectories);
             } // get
-
         } //*** IEnumerable<SelectableDirectory> SelectedDirectiories
 
         public string Name
@@ -232,7 +231,6 @@ namespace PixelLab.Wpf.Demo
 
             OnPropertyChanged(s_childSelectionChangedArgs);
             OnPropertyChanged(s_selectedDirectoriesChangedArgs);
-
         }
 
         private void dir_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -287,5 +285,4 @@ namespace PixelLab.Wpf.Demo
     }
 
     public enum ChildSelection { All, Some, None }
-
 }

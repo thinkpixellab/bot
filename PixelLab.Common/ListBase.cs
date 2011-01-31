@@ -312,7 +312,6 @@ namespace PixelLab.Common
         }
 
         #endregion
-
     } //*** class ListBase<T>
 
     [ContractClassFor(typeof(ListBase<>))]

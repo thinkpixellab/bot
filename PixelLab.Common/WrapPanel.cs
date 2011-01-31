@@ -93,8 +93,6 @@ namespace PixelLab.Common
             return new Size(w, h);
         }
 
-
-
         protected override Size ArrangeOverride(Size finalSize)
         {
             // if we have no children then what's the point?
@@ -137,7 +135,6 @@ namespace PixelLab.Common
                         leftSpace = 0;// (finalSize.Width - rowWidth) / 2;
                         innerSpace = 0;
                     }
-
                 }
 
                 left = leftSpace;
@@ -156,7 +153,6 @@ namespace PixelLab.Common
             double h = top;
             return new Size(w, h);
         }
-
 
         #region WrappingAlignment (DependencyProperty)
 
@@ -183,7 +179,6 @@ namespace PixelLab.Common
         }
 
         #endregion
-
     }
 
     public enum WrappingAlignment
@@ -192,5 +187,4 @@ namespace PixelLab.Common
         Center,
         Justify
     }
-
 }

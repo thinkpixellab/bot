@@ -5,34 +5,34 @@
   xmlns:local="clr-namespace:PixelLab.Demo.Core"
   xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf"
   ShowsNavigationUI="False" WindowTitle="The WPF Bag of Tricks - by Pixel Lab" Background="#00AB5B5B">
-  <Page.Resources>
+    <Page.Resources>
 
-    <local:IsStringEmptyConverter x:Key="IsStringEmptyConverter"/>
+        <local:IsStringEmptyConverter x:Key="IsStringEmptyConverter"/>
 
-    <Style x:Key="SampleItemStyle" TargetType="{x:Type ListBoxItem}">
-      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-      <Setter Property="FontFamily" Value="Consolas"/>
-      <Setter Property="HorizontalAlignment" Value="Stretch"/>
-      <Setter Property="HorizontalContentAlignment" Value="Center"/>
-      <Setter Property="Padding" Value="3"/>
-      <Setter Property="Background" Value="#EEE"/>
-      <Setter Property="Margin" Value="2"/>
-    </Style>
+        <Style x:Key="SampleItemStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="3"/>
+            <Setter Property="Background" Value="#EEE"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
 
-  </Page.Resources>
-  <DockPanel Margin="10">
+    </Page.Resources>
+    <DockPanel Margin="10">
 
-    <ListBox Name="m_sampleList" VerticalAlignment="Center" Margin="10" Padding="5" DockPanel.Dock="Left" Background="{x:Null}"
+        <ListBox Name="m_sampleList" VerticalAlignment="Center" Margin="10" Padding="5" DockPanel.Dock="Left" Background="{x:Null}"
       SelectedIndex="0" DisplayMemberPath="Name" ItemContainerStyle="{StaticResource SampleItemStyle}"
     BorderBrush="{x:Null}" BorderThickness="0"/>
 
-    <DockPanel Margin="10" DataContext="{Binding SelectedItem, ElementName=m_sampleList}">
-      <Expander DockPanel.Dock="Bottom" Header="Description" Style="{StaticResource SimpleExpander}"
+        <DockPanel Margin="10" DataContext="{Binding SelectedItem, ElementName=m_sampleList}">
+            <Expander DockPanel.Dock="Bottom" Header="Description" Style="{StaticResource SimpleExpander}"
                   Visibility="{Binding Path=Description, Converter={StaticResource IsStringEmptyConverter}}" MaxWidth="720" HorizontalAlignment="Center">
-        <TextBlock Text="{Binding Path=Description}" TextWrapping="Wrap" Margin="30 10" FontSize="12"/>
-      </Expander>
-      <Frame Name="m_contentFrame" NavigationUIVisibility="Hidden" Focusable="false" Content="{Binding Path=Instance}"/>
-    </DockPanel>
+                <TextBlock Text="{Binding Path=Description}" TextWrapping="Wrap" Margin="30 10" FontSize="12"/>
+            </Expander>
+            <Frame Name="m_contentFrame" NavigationUIVisibility="Hidden" Focusable="false" Content="{Binding Path=Instance}"/>
+        </DockPanel>
 
-  </DockPanel>
+    </DockPanel>
 </Page>

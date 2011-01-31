@@ -87,7 +87,7 @@ namespace PixelLab.Common
             get
             {
 #if !SILVERLIGHT
-        VerifyAccess();
+                VerifyAccess();
 #endif
                 return m_disposed;
             }
@@ -135,7 +135,7 @@ namespace PixelLab.Common
         private void requireAccessAndNotDisposed()
         {
 #if !SILVERLIGHT
-      VerifyAccess();
+            VerifyAccess();
 #endif
             if (m_disposed)
             {
@@ -160,7 +160,5 @@ namespace PixelLab.Common
 #endif
 
         #endregion
-
     }
-
 }

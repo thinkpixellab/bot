@@ -61,6 +61,5 @@ namespace PixelLab.Common
         private readonly IList<TFrom> m_source;
 
         #endregion
-
     }
 }

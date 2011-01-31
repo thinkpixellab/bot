@@ -6,7 +6,6 @@ using System.Diagnostics.Contracts;
 using PixelLab.Contracts;
 #endif
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace PixelLab.Common
@@ -35,7 +34,7 @@ namespace PixelLab.Common
         }
 
         /// <summary>
-        ///     Wraps <see cref="Interlocked.CompareExchange{T}(ref T,T,T)"/> 
+        ///     Wraps <see cref="Interlocked.CompareExchange{T}(ref T,T,T)"/>
         ///     for atomically setting null fields.
         /// </summary>
         /// <typeparam name="T">The type of the field to set.</typeparam>
@@ -51,8 +50,8 @@ namespace PixelLab.Common
             Contract.Requires(value != null);
 
             // Strictly speaking, this null check is not nessesary, but
-            // while CompareExchange is fast, it's still much slower than a 
-            // null check. 
+            // while CompareExchange is fast, it's still much slower than a
+            // null check.
             if (location == null)
             {
                 // This is a paranoid method. In a multi-threaded environment, it's possible
@@ -91,7 +90,7 @@ namespace PixelLab.Common
                     exception is StackOverflowException ||
                     exception is ThreadAbortException
 #if !WP7
- || exception is SEHException
+ || exception is System.Runtime.InteropServices.SEHException
 #endif
 ;
         } //*** static IsCriticalException
@@ -111,8 +110,5 @@ namespace PixelLab.Common
         }
 
         private static readonly WeakReference s_random = new WeakReference(null);
-
-
     } //*** public class Util
-
 } //*** namespace PixelLab.Common

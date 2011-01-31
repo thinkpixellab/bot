@@ -3,8 +3,10 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace PixelLab.Wpf.Demo.Hex {
-    public class Hexagon : Shape {
+namespace PixelLab.Wpf.Demo.Hex
+{
+    public class Hexagon : Shape
+    {
         public static readonly DependencyProperty RadiusProperty = DependencyProperty.Register(
             "Radius",
             typeof(double),
@@ -13,12 +15,14 @@ namespace PixelLab.Wpf.Demo.Hex {
             FrameworkPropertyMetadataOptions.AffectsMeasure, new PropertyChangedCallback(OnRadiusInvalidated),
             null));
 
-        public double Radius {
+        public double Radius
+        {
             get { return (double)GetValue(RadiusProperty); }
             set { SetValue(RadiusProperty, value); }
         }
 
-        private static void OnRadiusInvalidated(DependencyObject o, DependencyPropertyChangedEventArgs e) {
+        private static void OnRadiusInvalidated(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
             Hexagon rp = (Hexagon)o;
             rp._geometryCacheValid = false;
         }
@@ -32,19 +36,24 @@ namespace PixelLab.Wpf.Demo.Hex {
             new PropertyChangedCallback(StartAngleInvalidated),
             null));
 
-        public double StartAngle {
+        public double StartAngle
+        {
             get { return (double)GetValue(StartAngleProperty); }
             set { SetValue(StartAngleProperty, value); }
         }
 
-        private static void StartAngleInvalidated(DependencyObject o, DependencyPropertyChangedEventArgs e) {
+        private static void StartAngleInvalidated(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
             Hexagon hexagon = (Hexagon)o;
             hexagon._geometryCacheValid = false;
         }
 
-        protected override Geometry DefiningGeometry {
-            get {
-                if (_geometryCache == null || !_geometryCacheValid) {
+        protected override Geometry DefiningGeometry
+        {
+            get
+            {
+                if (_geometryCache == null || !_geometryCacheValid)
+                {
                     _geometryCache = getGeometry();
                     _geometryCacheValid = true;
                 }
@@ -52,12 +61,14 @@ namespace PixelLab.Wpf.Demo.Hex {
             }
         }
 
-        private PathGeometry getGeometry() {
+        private PathGeometry getGeometry()
+        {
             PointCollection pointCollection = new PointCollection();
             PathFigure pathFigure = new PathFigure();
 
             double radiansPerPoint = Math.PI * 2 / PointCount;
-            for (int i = 0; i < PointCount; i++) {
+            for (int i = 0; i < PointCount; i++)
+            {
                 Point p = new Point(
                     Math.Sin(radiansPerPoint * i + StartAngle) * Radius + Radius,
                     Math.Cos(radiansPerPoint * i + StartAngle) * Radius + Radius);
@@ -76,10 +87,12 @@ namespace PixelLab.Wpf.Demo.Hex {
             return pathGeometry;
         }
 
-        private static PointCollection OffsetPoints(PointCollection points) {
+        private static PointCollection OffsetPoints(PointCollection points)
+        {
             double minLeft = double.MaxValue;
             double minTop = double.MaxValue;
-            for (int i = 0; i < points.Count; i++) {
+            for (int i = 0; i < points.Count; i++)
+            {
                 if (points[i].X < minLeft)
                     minLeft = points[i].X;
                 if (points[i].Y < minTop)
@@ -87,12 +100,12 @@ namespace PixelLab.Wpf.Demo.Hex {
             }
 
             PointCollection pc = new PointCollection();
-            for (int i = 0; i < points.Count; i++) {
+            for (int i = 0; i < points.Count; i++)
+            {
                 pc.Add(new Point(points[i].X - minLeft, points[i].Y - minTop));
             }
             return pc;
         }
-
 
         private Geometry _geometryCache;
         private bool _geometryCacheValid;

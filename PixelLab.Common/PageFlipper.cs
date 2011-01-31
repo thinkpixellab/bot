@@ -166,7 +166,6 @@ namespace PixelLab.Common
 
         private void updateUI()
         {
-
             // THIS IS THE RAW FOLLOW
             if (m_follow.Subtract(m_mouse).Length > 1)
             {
@@ -233,7 +232,6 @@ namespace PixelLab.Common
                 nextPageClipTransform.Children.Add(pageHolderCliptransform);
                 m_nextPageClip.Transform = nextPageClipTransform;
 
-
                 if (m_curlShadow != null)
                 {
                     m_curlShadowTranslate.X = -m_curlShadow.Width + m_pageSize.Width - tangentBottom.X;
@@ -250,7 +248,6 @@ namespace PixelLab.Common
 
                 if (m_dropShadow != null)
                 {
-
                     var minDistance = Math.Min(
                       m_corner.Subtract(m_pointLeft).Length,
                       m_corner.Subtract(m_pointRight).Length);
@@ -265,7 +262,6 @@ namespace PixelLab.Common
 
         private Point getCorner(Point follow)
         {
-
             // CHECK DISTANCE FROM SPINE BOTTOM TO RAW FOLLOW
             var dx = follow.X;
             var dy = m_pageHalfHeight - follow.Y;
@@ -321,7 +317,6 @@ namespace PixelLab.Common
         private readonly TranslateTransform m_curlShadowTranslate;
         private readonly RotateTransform m_curlShadowRotate;
 
-
         //private readonly BlurEffect m_dropShadowBlurEffect;
 
         private readonly Geometry m_nextPageClip, m_pageHolderClip;
@@ -335,6 +330,5 @@ namespace PixelLab.Common
         #endregion
 
         private const double c_pageTurnSpeed = .15;
-
     }
 }

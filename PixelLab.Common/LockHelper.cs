@@ -133,7 +133,5 @@ namespace PixelLab.Common
         private readonly string m_name;
 
         #endregion
-
     } //*** class LockHelper
-
 } //*** namespace PixelLab.Common

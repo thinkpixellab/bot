@@ -62,6 +62,5 @@ namespace PixelLab.Common
 
         private readonly TKey m_key;
         private readonly TType m_defaultValue;
-
     }
 }

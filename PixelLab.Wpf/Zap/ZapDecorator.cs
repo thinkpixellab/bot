@@ -12,7 +12,6 @@ namespace PixelLab.Wpf
         {
             m_listener.Rendering += m_listener_rendering;
             m_listener.WireParentLoadedUnloaded(this);
-
         }
 
         public static readonly DependencyProperty TargetIndexProperty =
@@ -64,7 +63,6 @@ namespace PixelLab.Wpf
                 {
                     m_listener.StopListening();
                 }
-
             }
         }
 
@@ -83,7 +81,5 @@ namespace PixelLab.Wpf
         private const double c_diff = .00001;
 
         #endregion
-
     }
-
 }

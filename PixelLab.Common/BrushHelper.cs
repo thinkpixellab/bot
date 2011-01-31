@@ -5,7 +5,6 @@ namespace PixelLab.Common
 {
     public static class BrushHelper
     {
-
         public static SolidColorBrush ToBrush(this Color color)
         {
             return new SolidColorBrush(color);
@@ -31,6 +30,5 @@ namespace PixelLab.Common
         }
 
         private static Dictionary<Color, SolidColorBrush> s_brushes;
-
     }
 }

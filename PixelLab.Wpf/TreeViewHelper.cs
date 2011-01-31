@@ -133,7 +133,6 @@ namespace PixelLab.Wpf
         {
             ValidateItemsControl(treeViewThing);
 
-
             bool useObjectPath = true;
             TreeViewItem theItem = null;
 
@@ -164,7 +163,6 @@ namespace PixelLab.Wpf
                     Debug.Assert(treeViewThing is TreeView, "if it's not a TVI, it should be a TreeView");
                 }
 
-
                 //pump the dispatcher
                 WaitForPriority(DispatcherPriority.Background);
 
@@ -176,7 +174,6 @@ namespace PixelLab.Wpf
                 {
                     throw new ApplicationException("Error getting ahold of the item");
                 }
-
             }
 
             Debug.Assert(theItem != null);
@@ -226,7 +223,6 @@ namespace PixelLab.Wpf
                 {
                     throw new ArgumentException("indexPath.Length must be at least 1", "indexPath");
                 }
-
 
                 if (indexPath[0] < 0 || indexPath[0] >= treeViewThing.Items.Count)
                 {

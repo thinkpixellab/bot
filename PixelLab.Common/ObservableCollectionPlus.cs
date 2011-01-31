@@ -16,13 +16,14 @@ namespace PixelLab.Common
     {
         public ObservableCollectionPlus() : this(Enumerable.Empty<T>()) { }
 #if WP7
-    public ObservableCollectionPlus(IEnumerable<T> collection) {
-      m_roCollection = new ReadOnlyObservableCollection<T>(this);
-      m_lock = new WrappedLock(BeforeMultiUpdate, unlock);
+        public ObservableCollectionPlus(IEnumerable<T> collection)
+        {
+            m_roCollection = new ReadOnlyObservableCollection<T>(this);
+            m_lock = new WrappedLock(BeforeMultiUpdate, unlock);
 
-      // yes, crazy events are fired here. Who cares. No one can be listening. :-)
-      collection.ForEach(item => base.Add(item));
-    }
+            // yes, crazy events are fired here. Who cares. No one can be listening. :-)
+            collection.ForEach(item => base.Add(item));
+        }
 #else
         public ObservableCollectionPlus(IEnumerable<T> collection)
             : base(collection)

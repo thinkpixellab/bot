@@ -42,5 +42,4 @@ namespace PixelLab.Common
 
         private readonly Func<TSource, TTarget> m_func;
     }
-
 }

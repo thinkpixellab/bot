@@ -68,7 +68,6 @@ namespace PixelLab.Common
                         blue = num5;
                         break;
                 }
-
             }
 
             red = Math.Min(1f, Math.Max(0f, red));
@@ -78,10 +77,8 @@ namespace PixelLab.Common
 #if SILVERLIGHT
             return Color.FromArgb(255, (byte)(red / 255), (byte)(green / 255), (byte)(blue / 255));
 #else
-      return Color.FromScRgb(1, red, green, blue);
+            return Color.FromScRgb(1, red, green, blue);
 #endif
         }
-
-
     }
 }

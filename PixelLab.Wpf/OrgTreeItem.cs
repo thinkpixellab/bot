@@ -1,11 +1,14 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace PixelLab.Wpf{
-    public class OrgTreeItem : HeaderedItemsControl{
-        static OrgTreeItem(){
-            DefaultStyleKeyProperty.OverrideMetadata(typeof (OrgTreeItem),
-                                                     new FrameworkPropertyMetadata(typeof (OrgTreeItem)));
+namespace PixelLab.Wpf
+{
+    public class OrgTreeItem : HeaderedItemsControl
+    {
+        static OrgTreeItem()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(OrgTreeItem),
+                                                     new FrameworkPropertyMetadata(typeof(OrgTreeItem)));
         }
 
         #region DPs
@@ -16,16 +19,18 @@ namespace PixelLab.Wpf{
         public static readonly DependencyProperty DepthProperty = DepthPropertyKey.DependencyProperty;
 
         public static readonly DependencyProperty IsExpandedProperty =
-            DependencyProperty.Register("IsExpanded", typeof (bool), typeof (OrgTreeItem),
+            DependencyProperty.Register("IsExpanded", typeof(bool), typeof(OrgTreeItem),
                                         new FrameworkPropertyMetadata(false));
 
-        public bool IsExpanded{
-            get { return (bool) GetValue(IsExpandedProperty); }
+        public bool IsExpanded
+        {
+            get { return (bool)GetValue(IsExpandedProperty); }
             set { SetValue(IsExpandedProperty, value); }
         }
 
-        public int Depth{
-            get { return (int) GetValue(DepthProperty); }
+        public int Depth
+        {
+            get { return (int)GetValue(DepthProperty); }
             private set { SetValue(DepthPropertyKey, value); }
         }
 
@@ -33,16 +38,19 @@ namespace PixelLab.Wpf{
 
         #region overrides
 
-        protected override DependencyObject GetContainerForItemOverride(){
+        protected override DependencyObject GetContainerForItemOverride()
+        {
             return new OrgTreeItem();
         }
 
-        protected override bool IsItemItsOwnContainerOverride(object item){
+        protected override bool IsItemItsOwnContainerOverride(object item)
+        {
             return item is OrgTreeItem;
         }
 
-        protected override void PrepareContainerForItemOverride(DependencyObject element, object item){
-            ((OrgTreeItem) element).Depth = Depth + 1;
+        protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
+        {
+            ((OrgTreeItem)element).Depth = Depth + 1;
             base.PrepareContainerForItemOverride(element, item);
         }
 

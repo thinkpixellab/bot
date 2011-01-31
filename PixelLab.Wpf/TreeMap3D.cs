@@ -23,7 +23,7 @@ namespace PixelLab.Wpf
                 new RoutedEventHandler(child_click));
         }
 
-        public static readonly RoutedEvent SelectionChangedEvent = 
+        public static readonly RoutedEvent SelectionChangedEvent =
             Selector.SelectionChangedEvent.AddOwner(typeof(TreeMap3D));
 
         public event SelectionChangedEventHandler SelectionChanged
@@ -398,7 +398,6 @@ namespace PixelLab.Wpf
                         animation.Duration = new Duration(TimeSpan.FromSeconds(0.2));
                         m_scale.BeginAnimation(ScaleTransform3D.ScaleZProperty, animation);
                     }
-
                 }
             }
 
@@ -585,13 +584,10 @@ namespace PixelLab.Wpf
             }
 
             #endregion
-
         }
 
         #endregion
 
         #endregion
-
     }
-
 }

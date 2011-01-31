@@ -11,98 +11,116 @@ using PixelLab.Common;
 using PixelLab.Demo.Core;
 using PixelLab.Wpf.Transitions;
 
-namespace PixelLab.Wpf.Demo {
-  [DemoMetadata("TransitionPresenter", "Before Neil went off to hack on the Zune app, he made one of the most impressive WPF demos. Kudos!")]
-  public partial class TransitionPresenterPage : Page {
-    public TransitionPresenterPage() {
-      InitializeComponent();
-    }
-
-    private void OnLoaded(object sender, object e) {
-      PropertyInfo[] props = typeof(Brushes).GetProperties();
-
-      List<object> data = new List<object>(17);
-
-      data.Add(new UI());
-
-      SampleImageHelper.GetPicturePaths().Take(8).ForEach(path => data.Add(new Picture(path)));
-
-      for (int i = 0; i < Math.Min(props.Length, 8); i++) {
-        if (props[i].Name != "Transparent") {
-          data.Add(new Swatch(props[i].Name));
+namespace PixelLab.Wpf.Demo
+{
+    [DemoMetadata("TransitionPresenter", "Before Neil went off to hack on the Zune app, he made one of the most impressive WPF demos. Kudos!")]
+    public partial class TransitionPresenterPage : Page
+    {
+        public TransitionPresenterPage()
+        {
+            InitializeComponent();
         }
-      }
 
-      this.DataContext = _data.ItemsSource = data;
+        private void OnLoaded(object sender, object e)
+        {
+            PropertyInfo[] props = typeof(Brushes).GetProperties();
 
+            List<object> data = new List<object>(17);
 
-      // Setup 2 way transitions
-      Transition[] transitions = (Transition[])FindResource("ForwardBackTransitions");
+            data.Add(new UI());
 
-      for (int i = 0; i < transitions.Length; i += 2) {
-        ListTransitionSelector selector = new ListTransitionSelector(transitions[i], transitions[i + 1], data);
-        TextSearch.SetText(selector, TextSearch.GetText(transitions[i]));
-        _selectors.Items.Add(selector);
-      }
+            SampleImageHelper.GetPicturePaths().Take(8).ForEach(path => data.Add(new Picture(path)));
+
+            for (int i = 0; i < Math.Min(props.Length, 8); i++)
+            {
+                if (props[i].Name != "Transparent")
+                {
+                    data.Add(new Swatch(props[i].Name));
+                }
+            }
+
+            this.DataContext = _data.ItemsSource = data;
+
+            // Setup 2 way transitions
+            Transition[] transitions = (Transition[])FindResource("ForwardBackTransitions");
+
+            for (int i = 0; i < transitions.Length; i += 2)
+            {
+                ListTransitionSelector selector = new ListTransitionSelector(transitions[i], transitions[i + 1], data);
+                TextSearch.SetText(selector, TextSearch.GetText(transitions[i]));
+                _selectors.Items.Add(selector);
+            }
+        }
+
+        private void OnMouseLeftDown(object s, MouseEventArgs e)
+        {
+            _data.SelectedIndex = (_data.SelectedIndex + 1) % _data.Items.Count;
+            _data.ScrollIntoView(_data.SelectedItem);
+        }
+
+        private void OnMouseRightDown(object s, MouseEventArgs e)
+        {
+            _data.SelectedIndex = (_data.SelectedIndex + _data.Items.Count - 1) % _data.Items.Count;
+            _data.ScrollIntoView(_data.SelectedItem);
+        }
+
+        private void OnModeChanged(object s, object e)
+        {
+            if (!_twoWay.IsSelected) _selectors.SelectedIndex = -1;
+        }
     }
 
-    private void OnMouseLeftDown(object s, MouseEventArgs e) {
-      _data.SelectedIndex = (_data.SelectedIndex + 1) % _data.Items.Count;
-      _data.ScrollIntoView(_data.SelectedItem);
+    class ListTransitionSelector : TransitionSelector
+    {
+        public ListTransitionSelector(Transition forward, Transition backward, IList list)
+        {
+            _forward = forward;
+            _backward = backward;
+            _list = list;
+        }
+
+        public override Transition SelectTransition(object oldContent, object newContent)
+        {
+            int oldIndex = _list.IndexOf(oldContent);
+            int newIndex = _list.IndexOf(newContent);
+            return newIndex > oldIndex ? _forward : _backward;
+        }
+
+        private Transition _forward, _backward;
+        private IList _list;
     }
 
-    private void OnMouseRightDown(object s, MouseEventArgs e) {
-      _data.SelectedIndex = (_data.SelectedIndex + _data.Items.Count - 1) % _data.Items.Count;
-      _data.ScrollIntoView(_data.SelectedItem);
+    internal class UI
+    {
     }
 
-    private void OnModeChanged(object s, object e) {
-      if (!_twoWay.IsSelected) _selectors.SelectedIndex = -1;
-    }
-  }
+    internal class Picture
+    {
+        public Picture(string uri)
+        {
+            _uri = uri;
+        }
 
-  class ListTransitionSelector : TransitionSelector {
-    public ListTransitionSelector(Transition forward, Transition backward, IList list) {
-      _forward = forward;
-      _backward = backward;
-      _list = list;
-    }
+        public string Uri
+        {
+            get { return _uri; }
+        }
 
-    public override Transition SelectTransition(object oldContent, object newContent) {
-      int oldIndex = _list.IndexOf(oldContent);
-      int newIndex = _list.IndexOf(newContent);
-      return newIndex > oldIndex ? _forward : _backward;
+        private readonly string _uri;
     }
 
-    private Transition _forward, _backward;
-    private IList _list;
-  }
+    internal class Swatch
+    {
+        public Swatch(string colorName)
+        {
+            _colorName = colorName;
+        }
 
-  internal class UI {
-  }
+        public string ColorName
+        {
+            get { return _colorName; }
+        }
 
-  internal class Picture {
-    public Picture(string uri) {
-      _uri = uri;
+        private readonly string _colorName;
     }
-
-    public string Uri {
-      get { return _uri; }
-    }
-
-    private readonly string _uri;
-
-  }
-
-  internal class Swatch {
-    public Swatch(string colorName) {
-      _colorName = colorName;
-    }
-
-    public string ColorName {
-      get { return _colorName; }
-    }
-
-    private readonly string _colorName;
-  }
 }

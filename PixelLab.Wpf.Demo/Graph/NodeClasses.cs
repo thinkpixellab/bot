@@ -271,7 +271,6 @@ namespace PixelLab.Wpf.Demo
             Debug.Assert(currentRatio >= 0);
             if (currentRatio <= c_idealConnectionRatio || m_nodeConnections[item].Count < c_minConnections)
             {
-
                 Debug.Assert(m_nodeConnections[item].Count != (m_nodeConnections.Count - 1));
 
                 var toAdd = m_nodeConnections.Keys
@@ -281,7 +280,6 @@ namespace PixelLab.Wpf.Demo
                   .Random();
 
                 AddEdge(item, toAdd);
-
             }
             else
             {
@@ -331,7 +329,5 @@ namespace PixelLab.Wpf.Demo
         private const double c_idealConnectionRatio = .4;
 
         #endregion
-
     }
-
 }

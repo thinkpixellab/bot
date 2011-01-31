@@ -45,7 +45,6 @@ namespace PixelLab.Wpf.Demo.Hex
 
                 if (piece.State == HexPieceState.Unused)
                 {
-
                     piece.State = (CurrentPlayer == Player.Black) ? HexPieceState.Black : HexPieceState.White;
                     piece.Number = (++PlayCount);
 
@@ -263,7 +262,7 @@ namespace PixelLab.Wpf.Demo.Hex
             foreach (PointInt p in getAdjacent(point, m_size))
             {
                 //figure out which points should stay
-                //1) == current kind we're searching for                                
+                //1) == current kind we're searching for
                 if (this[p].State == ((CurrentPlayer == Player.White) ? HexPieceState.White : HexPieceState.Black))
                 {
                     //2) not already in the list

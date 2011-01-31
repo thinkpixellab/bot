@@ -102,5 +102,4 @@ namespace PixelLab.Wpf
             drawingContext.DrawLine(pen, startPoint, startPoint + GeoHelper.GetVectorFromAngle(angleRadians, length));
         }
     }
-
 } //*** namespace PixelLab.Wpf

@@ -1,16 +1,20 @@
 ﻿using System.Windows.Controls;
 using PixelLab.Demo.Core;
 
-namespace PixelLab.Wpf.Demo.OrgTree {
-  [DemoMetadata("Org Tree", "A play off treeview, but stacked like an org chart. Right-click on nodes to add or remove children.")]
-  public partial class OrgTreePage : Page {
-    public OrgTreePage() {
-      InitializeComponent();
-      _tree.ItemsSource = OrgViewItem.GetViewArray(GetDemoData());
-    }
+namespace PixelLab.Wpf.Demo.OrgTree
+{
+    [DemoMetadata("Org Tree", "A play off treeview, but stacked like an org chart. Right-click on nodes to add or remove children.")]
+    public partial class OrgTreePage : Page
+    {
+        public OrgTreePage()
+        {
+            InitializeComponent();
+            _tree.ItemsSource = OrgViewItem.GetViewArray(GetDemoData());
+        }
 
-    private static OrgItem[] GetDemoData() {
-      return new OrgItem[]{
+        private static OrgItem[] GetDemoData()
+        {
+            return new OrgItem[]{
         new Company("Acme", new OrgItem[]{
           new Department("Sales", new OrgItem[]{
               new Employee("Bill Jones", null),
@@ -34,6 +38,6 @@ namespace PixelLab.Wpf.Demo.OrgTree {
           })
           })
       };
+        }
     }
-  }
 }

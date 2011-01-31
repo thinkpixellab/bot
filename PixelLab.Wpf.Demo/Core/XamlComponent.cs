@@ -10,42 +10,45 @@ using System.Windows.Baml2006;
 using Microsoft.Xaml.Tools.XamlDom;
 using PixelLab.Demo.Core;
 
-namespace PixelLab.Core {
-  public static class XamlComponent {
+namespace PixelLab.Core
+{
+    public static class XamlComponent
+    {
+        public static IEnumerable<DemoMetadata> GetDemos(Assembly sourceAssembly)
+        {
+            var resourceSets = from resourceName in sourceAssembly.GetManifestResourceNames()
+                               let resourceStream = sourceAssembly.GetManifestResourceStream(resourceName)
+                               select new ResourceSet(resourceStream);
 
-    public static IEnumerable<DemoMetadata> GetDemos(Assembly sourceAssembly) {
+            var bamlEntries = from set in resourceSets
+                              from entry in set.Cast<DictionaryEntry>()
+                              where entry.Key is string
+                              where entry.Value is Stream
+                              let value = new { Path = (string)entry.Key, Stream = (Stream)entry.Value }
+                              where value.Path.EndsWith(".baml")
+                              select value;
 
-      var resourceSets = from resourceName in sourceAssembly.GetManifestResourceNames()
-                         let resourceStream = sourceAssembly.GetManifestResourceStream(resourceName)
-                         select new ResourceSet(resourceStream);
+            var rootTypes = from entry in bamlEntries
+                            let domObject = (XamlDomObject)XamlDomServices.Load(new Baml2006Reader(entry.Stream))
+                            let demoName = domObject.GetAttatchedPropertyValueOrDefault<string>(DemoMetadataProperties.DemoNameProperty)
+                            where demoName != null
+                            let demoDescription = domObject.GetAttatchedPropertyValueOrDefault<string>(DemoMetadataProperties.DemoDescriptionProperty)
+                            select new { Path = entry.Path, demoName, demoDescription };
 
-      var bamlEntries = from set in resourceSets
-                        from entry in set.Cast<DictionaryEntry>()
-                        where entry.Key is string
-                        where entry.Value is Stream
-                        let value = new { Path = (string)entry.Key, Stream = (Stream)entry.Value }
-                        where value.Path.EndsWith(".baml")
-                        select value;
+            foreach (var entry in rootTypes)
+            {
+                var path = entry.Path.Replace(".baml", ".xaml");
+                path = string.Format("/{0};component/{1}", sourceAssembly.GetName().Name, path);
 
-      var rootTypes = from entry in bamlEntries
-                      let domObject = (XamlDomObject)XamlDomServices.Load(new Baml2006Reader(entry.Stream))
-                      let demoName = domObject.GetAttatchedPropertyValueOrDefault<string>(DemoMetadataProperties.DemoNameProperty)
-                      where demoName != null
-                      let demoDescription = domObject.GetAttatchedPropertyValueOrDefault<string>(DemoMetadataProperties.DemoDescriptionProperty)
-                      select new { Path = entry.Path, demoName, demoDescription };
+                var uri = new Uri(path, UriKind.Relative);
 
-      foreach (var entry in rootTypes) {
-        var path = entry.Path.Replace(".baml", ".xaml");
-        path = string.Format("/{0};component/{1}", sourceAssembly.GetName().Name, path);
+                Func<FrameworkElement> factory = new Func<FrameworkElement>(() =>
+                {
+                    return (FrameworkElement)Application.LoadComponent(uri);
+                });
 
-        var uri = new Uri(path, UriKind.Relative);
-
-        Func<FrameworkElement> factory = new Func<FrameworkElement>(() => {
-          return (FrameworkElement)Application.LoadComponent(uri);
-        });
-
-        yield return new DemoMetadata(entry.demoName, entry.demoDescription, factory);
-      }
+                yield return new DemoMetadata(entry.demoName, entry.demoDescription, factory);
+            }
+        }
     }
-  }
 }

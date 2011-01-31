@@ -86,6 +86,5 @@ namespace PixelLab.Common
         }
 
         private Point m_p1, m_p2;
-
     }
 }

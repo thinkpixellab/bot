@@ -74,7 +74,6 @@ namespace PixelLab.Wpf.Demo.MineSweeper
                     _squares.Add(square);
                 }
             }
-
         }
 
         public ReadOnlyCollection<Square> Squares
@@ -251,7 +250,6 @@ namespace PixelLab.Wpf.Demo.MineSweeper
             }
         }
 
-
         private void IncrementCleared()
         {
             Debug.Assert(_state == WinState.Unknown);
@@ -360,7 +358,6 @@ namespace PixelLab.Wpf.Demo.MineSweeper
                             }
                         }
                     }
-
                 }
             }
             return adjacent;

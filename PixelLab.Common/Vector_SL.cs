@@ -105,6 +105,5 @@ namespace PixelLab.Common
         {
             return !p1.Equals(p2);
         }
-
     }
 }

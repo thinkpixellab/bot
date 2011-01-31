@@ -58,7 +58,6 @@ namespace PixelLab.Wpf
 
                     oldest.BeginAnimation(UIElement.OpacityProperty, fadeOut);
                 }
-
             }
 
             DoubleAnimation rotationAnimation = GetRandomRotateAnimation();
@@ -147,7 +146,6 @@ namespace PixelLab.Wpf
             animation.Freeze();
 
             return animation;
-
         }
 
         private static DoubleAnimation GetFadeOutAnimation()
@@ -177,7 +175,5 @@ namespace PixelLab.Wpf
         private static readonly Duration s_defaultDuration = new Duration(TimeSpan.FromSeconds(3));
 
         private const int c_maxCount = 5;
-
     }
-
 }
