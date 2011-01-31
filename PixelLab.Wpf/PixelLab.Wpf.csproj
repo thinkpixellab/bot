@@ -135,9 +135,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PixelLab.Common\PixelLab.Common_WPF4.csproj">
+    <ProjectReference Include="..\PixelLab.Common\PixelLab.Common.csproj">
       <Project>{273247A2-A3C8-42D0-8463-F95FC5C0A34C}</Project>
-      <Name>PixelLab.Common_WPF4</Name>
+      <Name>PixelLab.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

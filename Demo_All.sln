@@ -3,21 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.Common_SL4", "PixelLab.Common\PixelLab.Common_SL4.csproj", "{ACA535DF-6536-4FA4-8FFB-9CE2F05EF137}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.Common_WPF4", "PixelLab.Common\PixelLab.Common_WPF4.csproj", "{273247A2-A3C8-42D0-8463-F95FC5C0A34C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.Common", "PixelLab.Common\PixelLab.Common.csproj", "{273247A2-A3C8-42D0-8463-F95FC5C0A34C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.Wpf.Demo_WPF4", "PixelLab.Wpf.Demo\PixelLab.Wpf.Demo_WPF4.csproj", "{8D131626-B130-429D-A6F3-BB7D83A58F75}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.Wpf.Demo", "PixelLab.Wpf.Demo\PixelLab.Wpf.Demo.csproj", "{8D131626-B130-429D-A6F3-BB7D83A58F75}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.SL.Demo", "PixelLab.SL.Demo\PixelLab.SL.Demo.csproj", "{966B0BD5-F6EE-42E9-AD48-4864C456F204}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.SL", "PixelLab.SL\PixelLab.SL.csproj", "{74445E4D-56D4-40F5-A9FD-3793A014E76E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.Wpf_4", "PixelLab.Wpf\PixelLab.Wpf_4.csproj", "{E4BBC94F-B837-4668-A127-E36E6DE012F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.Wpf", "PixelLab.Wpf\PixelLab.Wpf.csproj", "{E4BBC94F-B837-4668-A127-E36E6DE012F5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.Common_WP7", "PixelLab.Common\PixelLab.Common_WP7.csproj", "{0ABF1FC9-50B9-4263-A9B5-B39D1A95C956}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.SL_WP7", "PixelLab.SL\PixelLab.SL_WP7.csproj", "{0EF6A204-D98A-4354-84BE-A7D2BEBC1FEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.Common_DesktopCore", "PixelLab.Common\PixelLab.Common_DesktopCore.csproj", "{8F249828-4E5F-4B75-B3A4-F67D74518F29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.Common_Core", "PixelLab.Common\PixelLab.Common_Core.csproj", "{8F249828-4E5F-4B75-B3A4-F67D74518F29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
