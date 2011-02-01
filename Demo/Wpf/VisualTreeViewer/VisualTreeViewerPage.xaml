@@ -1,0 +1,45 @@
+﻿<Page x:Class="PixelLab.Wpf.Demo.VisualTreeViewerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vtv="vtv">
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Button Click="load_click" Margin="5">_Load</Button>
+
+        <ListBox Name="listBox" Grid.Row="1" Margin="5">
+            <ListBoxItem>Radom UI 1</ListBoxItem>
+            <Button>Random UI 2</Button>
+            <CheckBox>cool beans 3</CheckBox>
+            <RadioButton>cool beans 4</RadioButton>
+            <ListBoxItem>cool beans 5</ListBoxItem>
+            <DockPanel>
+                <TextBlock>cool</TextBlock>
+                <TextBlock>beans</TextBlock>
+                <TextBlock>6</TextBlock>
+            </DockPanel>
+            <ListBoxItem>cool beans 7</ListBoxItem>
+            <ListBoxItem>cool beans 8</ListBoxItem>
+            <ListBoxItem>cool beans 9</ListBoxItem>
+            <ListBoxItem>cool beans 0</ListBoxItem>
+        </ListBox>
+
+        <TreeView Name="treeView" Grid.Column="1" Grid.RowSpan="2" Margin="5">
+
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                    <ContentPresenter Content="{Binding}"/>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+    </Grid>
+</Page>

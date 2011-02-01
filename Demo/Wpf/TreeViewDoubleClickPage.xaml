@@ -1,0 +1,56 @@
+﻿<Page x:Class="PixelLab.Wpf.Demo.TreeViewDoubleClickPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Page.Resources>
+
+        <XmlDataProvider x:Key="documents">
+            <x:XData>
+                <Documents xmlns="">
+                    <Document Name="Document1"/>
+                    <Document Name="Document2"/>
+                    <Document Name="Document3"/>
+                    <Document Name="Document4"/>
+                    <Document Name="Document5"/>
+                    <Document Name="Document6"/>
+                    <Folder Name="Folder1">
+                        <Document Name="Document1.1"/>
+                        <Document Name="Document1.2"/>
+                        <Document Name="Document1.3"/>
+                        <Document Name="Document1.4"/>
+                        <Document Name="Document1.5"/>
+                        <Document Name="Document1.6"/>
+                    </Folder>
+                    <Folder Name="Folder2">
+                        <Document Name="Document2.1"/>
+                        <Document Name="Document2.2"/>
+                        <Document Name="Document2.3"/>
+                        <Document Name="Document2.4"/>
+                        <Document Name="Document2.5"/>
+                        <Document Name="Document2.6"/> /
+                    </Folder>
+                </Documents>
+            </x:XData>
+        </XmlDataProvider>
+
+    </Page.Resources>
+
+    <Viewbox>
+        <DockPanel Width="400">
+
+            <TreeView Margin="10"
+			  Name="treeView"
+			  Height="150"
+			  ItemsSource="{Binding Source={StaticResource documents}, XPath=Documents/*}">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate
+					  ItemsSource="{Binding XPath=child::*}">
+                        <TextBlock Text="{Binding XPath=@Name}"/>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+
+            <TextBox IsReadOnly="True" Name="textBox" TextWrapping="Wrap" DockPanel.Dock="Bottom" Margin="10" Height="100"/>
+
+        </DockPanel>
+    </Viewbox>
+</Page>

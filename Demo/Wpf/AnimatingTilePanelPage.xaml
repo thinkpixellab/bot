@@ -1,0 +1,118 @@
+﻿<Page
+  x:Class="PixelLab.Wpf.Demo.AnimatingTilePanelPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:common="clr-namespace:PixelLab.Common;assembly=PixelLab.Common"
+  xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf"
+  Name="m_page">
+    <Page.Resources>
+        <Style TargetType="Rectangle">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <common:RoundDoubleConverter x:Key="RoundDoubleConverter"/>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+
+        <DataTemplate DataType="{x:Type Brush}">
+            <Rectangle Fill="{Binding}" Margin="5"/>
+        </DataTemplate>
+
+    </Page.Resources>
+    <DockPanel>
+
+        <Grid DockPanel.Dock="Top" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Target="{Binding ElementName=m_textBoxSize}" Content="Item _Size" Grid.Row="0"/>
+            <Label Target="{Binding ElementName=m_textBoxDampening}" Content="_Dampening" Grid.Row="1"/>
+            <Label Target="{Binding ElementName=m_textBoxAttraction}" Content="_Attraction Factor" Grid.Row="2"/>
+            <Label Target="{Binding ElementName=m_textBoxVariation}" Content="_Variation" Grid.Row="3"/>
+
+            <TextBox Name="m_textBoxSize"
+               Text="{Binding ElementName=_sliderSize, Path=Value, ValidatesOnExceptions=true,
+               Converter={StaticResource RoundDoubleConverter}, ConverterParameter=0}"
+               Grid.Column="1" Grid.Row="0"/>
+            <TextBox Name="m_textBoxDampening"
+               Text="{Binding ElementName=m_page, Path=Panel.Dampening, ValidatesOnExceptions=true,
+               Converter={StaticResource RoundDoubleConverter}, ConverterParameter=2}"
+               Grid.Column="1" Grid.Row="1"/>
+            <TextBox Name="m_textBoxAttraction"
+               Text="{Binding ElementName=m_page, Path=Panel.Attraction, ValidatesOnExceptions=true,
+               Converter={StaticResource RoundDoubleConverter}}"
+               Grid.Column="1" Grid.Row="2"/>
+            <TextBox Name="m_textBoxVariation"
+               Text="{Binding ElementName=m_page, Path=Panel.Variation, ValidatesOnExceptions=true,
+               Converter={StaticResource RoundDoubleConverter}, ConverterParameter=2}"
+               Grid.Column="1" Grid.Row="3"/>
+
+            <Slider Minimum="25" Maximum="600"
+           SmallChange="25" LargeChange="100" Name="_sliderSize"
+           Grid.Column="2" Grid.Row="0"
+           Value="50"/>
+            <Slider Minimum=".01" Maximum=".99"
+           SmallChange=".01" LargeChange=".1"
+           Grid.Column="2" Grid.Row="1"
+           Value="{Binding ElementName=m_page, Path=Panel.Dampening, ValidatesOnExceptions=true}"/>
+            <Slider Minimum=".01" Maximum="10"
+           SmallChange=".1" LargeChange="1"
+           Grid.Column="2" Grid.Row="2"
+           Value="{Binding ElementName=m_page, Path=Panel.Attraction, ValidatesOnExceptions=true}"/>
+            <Slider Minimum="0" Maximum="1"
+           SmallChange=".1" LargeChange=".5"
+           Grid.Column="2" Grid.Row="3"
+           Value="{Binding ElementName=m_page, Path=Panel.Variation, ValidatesOnExceptions=true}"/>
+
+        </Grid>
+
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center" Name="m_stackPanelCommands">
+            <StackPanel.Resources>
+
+                <Style TargetType="RepeatButton">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Margin" Value="5"/>
+                    <Setter Property="Padding" Value="5 3"/>
+                </Style>
+
+                <Style TargetType="Button">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Margin" Value="5"/>
+                    <Setter Property="Padding" Value="5 3"/>
+                </Style>
+
+            </StackPanel.Resources>
+            <RepeatButton Content="_Add" Command="{Binding Path=AddCommand, Mode=OneTime}"/>
+            <RepeatButton Content="_Insert" Command="{Binding Path=InsertCommand, Mode=OneTime}"/>
+            <RepeatButton Content="_Remove" Command="{Binding Path=RemoveCommand, Mode=OneTime}"/>
+            <RepeatButton Content="_Move" Command="{Binding Path=MoveCommand, Mode=OneTime}"/>
+            <Button Content="_Reset" Command="{Binding Path=ResetCommand, Mode=OneTime}"/>
+        </StackPanel>
+
+        <ItemsControl Name="m_itemsControl" Focusable="false"
+      lib:AnimatingTilePanel.ItemHeight="{Binding ElementName=_sliderSize, Path=Value}"
+      lib:AnimatingTilePanel.ItemWidth="{Binding ElementName=_sliderSize, Path=Value}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <lib:AnimatingTilePanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+
+    </DockPanel>
+</Page>

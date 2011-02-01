@@ -1,0 +1,12 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+          xmlns:lib="clr-namespace:PixelLab.Wpf">
+
+    <Style TargetType="lib:TemplateBorder">
+        <Setter Property="Background" Value="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+        <Setter Property="BorderBrush" Value="{Binding Path=BorderBrush, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+        <Setter Property="BorderThickness" Value="{Binding Path=BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+        <Setter Property="Padding" Value="{Binding Path=Padding, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+    </Style>
+
+</ResourceDictionary>

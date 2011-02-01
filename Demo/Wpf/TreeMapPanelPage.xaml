@@ -1,0 +1,9 @@
+﻿<Page
+  x:Class="PixelLab.Wpf.Demo.TreeMapPanelPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf">
+
+    <lib:TreeMapPanel Name="m_treeMap"/>
+
+</Page>

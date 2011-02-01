@@ -1,0 +1,748 @@
+﻿<Page x:Class="PixelLab.Wpf.Demo.TransitionPresenterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:lib="clr-namespace:PixelLab.Wpf.Transitions;assembly=PixelLab.Wpf"
+    xmlns:app="clr-namespace:PixelLab.Wpf.Demo"
+    Loaded="OnLoaded">
+    <Page.Resources>
+        <x:Array x:Key="Transitions" Type="{x:Type lib:Transition}">
+            <lib:Transition TextSearch.Text="Base"/>
+            <lib:FadeTransition Duration="0:0:0.5"
+                            TextSearch.Text="Fade"/>
+            <lib:StoryboardTransition TextSearch.Text="Fade Wipe 2">
+                <lib:StoryboardTransition.NewContentStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.7"/>
+                    </Storyboard>
+                </lib:StoryboardTransition.NewContentStoryboard>
+            </lib:StoryboardTransition>
+
+            <lib:StoryboardTransition TextSearch.Text="Star">
+                <lib:StoryboardTransition.NewContentStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="OpacityMask">
+                            <Setter.Value>
+                                <ImageBrush ImageSource="/PixelLab.Wpf.Demo;component/TransitionPresenter/star.png" Stretch="Uniform">
+                                    <ImageBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="0" ScaleY="0"/>
+                                            <RotateTransform CenterX="0.5" CenterY="0.5"/>
+                                        </TransformGroup>
+                                    </ImageBrush.RelativeTransform>
+                                </ImageBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </lib:StoryboardTransition.NewContentStyle>
+                <lib:StoryboardTransition.NewContentStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="OpacityMask.RelativeTransform.Children[0].ScaleX" From="0" To="4" Duration="0:0:0.7"/>
+                        <DoubleAnimation Storyboard.TargetProperty="OpacityMask.RelativeTransform.Children[0].ScaleY" From="0" To="4" Duration="0:0:0.7"/>
+                    </Storyboard>
+                </lib:StoryboardTransition.NewContentStoryboard>
+            </lib:StoryboardTransition>
+
+            <lib:StoryboardTransition TextSearch.Text="Melt">
+                <lib:StoryboardTransition.NewContentStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="OpacityMask">
+                            <Setter.Value>
+                                <LinearGradientBrush EndPoint="1,0">
+                                    <GradientStop Offset="0"/>
+                                    <GradientStop Offset="0.1"/>
+                                    <GradientStop Offset="0.2"/>
+                                    <GradientStop Offset="0.3"/>
+                                    <GradientStop Offset="0.4"/>
+                                    <GradientStop Offset="0.5"/>
+                                    <GradientStop Offset="0.6"/>
+                                    <GradientStop Offset="0.7"/>
+                                    <GradientStop Offset="0.8"/>
+                                    <GradientStop Offset="0.9"/>
+                                    <GradientStop Offset="1"/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </lib:StoryboardTransition.NewContentStyle>
+                <lib:StoryboardTransition.NewContentStoryboard>
+                    <Storyboard>
+                        <ColorAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[0].Color" To="White" Duration="0:0:0.2" BeginTime="0:0:0.14"/>
+                        <ColorAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[1].Color" To="White" Duration="0:0:0.3" BeginTime="0:0:0.2"/>
+                        <ColorAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[2].Color" To="White" Duration="0:0:0.5" BeginTime="0:0:0.031"/>
+                        <ColorAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[3].Color" To="White" Duration="0:0:0.3" BeginTime="0:0:0.02"/>
+                        <ColorAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[4].Color" To="White" Duration="0:0:0.45" BeginTime="0:0:0.3"/>
+                        <ColorAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[5].Color" To="White" Duration="0:0:0.25" BeginTime="0:0:0.12"/>
+                        <ColorAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[6].Color" To="White" Duration="0:0:0.3" BeginTime="0:0:0.19"/>
+                        <ColorAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[7].Color" To="White" Duration="0:0:0.4" BeginTime="0:0:0"/>
+                        <ColorAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[8].Color" To="White" Duration="0:0:0.13" BeginTime="0:0:0.081"/>
+                        <ColorAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[9].Color" To="White" Duration="0:0:0.34" BeginTime="0:0:0.331"/>
+                        <ColorAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[10].Color" To="White" Duration="0:0:0.42" BeginTime="0:0:.0121"/>
+                    </Storyboard>
+                </lib:StoryboardTransition.NewContentStoryboard>
+            </lib:StoryboardTransition>
+
+            <lib:StoryboardTransition TextSearch.Text="Horizontal Wipe">
+                <lib:StoryboardTransition.NewContentStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="OpacityMask">
+                            <Setter.Value>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="#FF000000" Offset="0"/>
+                                    <GradientStop Color="#00000000" Offset="0"/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </lib:StoryboardTransition.NewContentStyle>
+                <lib:StoryboardTransition.NewContentStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[1].Offset" From="0" To="1" Duration="0:0:0.4"/>
+                        <DoubleAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[0].Offset" From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0.05"/>
+                    </Storyboard>
+                </lib:StoryboardTransition.NewContentStoryboard>
+            </lib:StoryboardTransition>
+
+            <lib:StoryboardTransition TextSearch.Text="Vertical Wipe">
+                <lib:StoryboardTransition.NewContentStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="OpacityMask">
+                            <Setter.Value>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FF000000" Offset="0"/>
+                                    <GradientStop Color="#00000000" Offset="0"/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </lib:StoryboardTransition.NewContentStyle>
+                <lib:StoryboardTransition.NewContentStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[1].Offset" From="0" To="1" Duration="0:0:0.4"/>
+                        <DoubleAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[0].Offset" From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0.05"/>
+                    </Storyboard>
+                </lib:StoryboardTransition.NewContentStoryboard>
+
+            </lib:StoryboardTransition>
+
+            <lib:StoryboardTransition TextSearch.Text="Diagonal Wipe">
+                <lib:StoryboardTransition.NewContentStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="OpacityMask">
+                            <Setter.Value>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#FF000000" Offset="0"/>
+                                    <GradientStop Color="#00000000" Offset="0"/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </lib:StoryboardTransition.NewContentStyle>
+                <lib:StoryboardTransition.NewContentStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[1].Offset" From="0" To="1" Duration="0:0:0.4"/>
+                        <DoubleAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[0].Offset" From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0.05"/>
+                    </Storyboard>
+                </lib:StoryboardTransition.NewContentStoryboard>
+            </lib:StoryboardTransition>
+
+            <lib:StoryboardTransition TextSearch.Text="Rotate Wipe">
+                <lib:StoryboardTransition.NewContentStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="OpacityMask">
+                            <Setter.Value>
+                                <LinearGradientBrush EndPoint="1,0">
+                                    <LinearGradientBrush.Transform>
+                                        <RotateTransform Angle="10"/>
+                                    </LinearGradientBrush.Transform>
+                                    <GradientStop Offset="0" Color="White"/>
+                                    <GradientStop Offset="0.1" />
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </lib:StoryboardTransition.NewContentStyle>
+                <lib:StoryboardTransition.NewContentStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="OpacityMask.Transform.Angle" To="-90" Duration="0:0:0.5"/>
+                    </Storyboard>
+                </lib:StoryboardTransition.NewContentStoryboard>
+            </lib:StoryboardTransition>
+
+            <lib:StoryboardTransition TextSearch.Text="Double Rotate Wipe">
+                <lib:StoryboardTransition.NewContentStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="OpacityMask">
+                            <Setter.Value>
+                                <DrawingBrush>
+                                    <DrawingBrush.Drawing>
+                                        <DrawingGroup>
+                                            <GeometryDrawing Geometry="M0,0 L1,0 L1,1 L0,1 z">
+                                                <GeometryDrawing.Brush>
+                                                    <LinearGradientBrush EndPoint="1,0">
+                                                        <LinearGradientBrush.Transform>
+                                                            <RotateTransform Angle="5"/>
+                                                        </LinearGradientBrush.Transform>
+                                                        <GradientStop Offset="0"   Color="White"/>
+                                                        <GradientStop Offset="0.1" />
+                                                    </LinearGradientBrush>
+                                                </GeometryDrawing.Brush>
+                                            </GeometryDrawing>
+
+                                            <GeometryDrawing Geometry="M0,0 L1,0 L1,1 L0,1 z">
+                                                <GeometryDrawing.Brush>
+                                                    <LinearGradientBrush StartPoint="1,1" EndPoint="0,1">
+                                                        <LinearGradientBrush.Transform>
+                                                            <RotateTransform Angle="5" CenterX="1" CenterY="1"/>
+                                                        </LinearGradientBrush.Transform>
+                                                        <GradientStop Offset="0"  Color="White" />
+                                                        <GradientStop Offset="0.1" />
+                                                    </LinearGradientBrush>
+                                                </GeometryDrawing.Brush>
+                                            </GeometryDrawing>
+                                        </DrawingGroup>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </lib:StoryboardTransition.NewContentStyle>
+                <lib:StoryboardTransition.NewContentStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="OpacityMask.Drawing.Children[0].Brush.Transform.Angle" To="-45" Duration="0:0:0.5"/>
+                        <DoubleAnimation Storyboard.TargetProperty="OpacityMask.Drawing.Children[1].Brush.Transform.Angle" To="-45" Duration="0:0:0.5"/>
+                    </Storyboard>
+                </lib:StoryboardTransition.NewContentStoryboard>
+            </lib:StoryboardTransition>
+
+            <lib:StoryboardTransition TextSearch.Text="Vertical Blinds">
+                <lib:StoryboardTransition.NewContentStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="OpacityMask">
+                            <Setter.Value>
+                                <LinearGradientBrush MappingMode="Absolute" SpreadMethod="Repeat" StartPoint="0,0" EndPoint="30,0">
+                                    <GradientStop Color="White"/>
+                                    <GradientStop/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </lib:StoryboardTransition.NewContentStyle>
+                <lib:StoryboardTransition.NewContentStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[0].Offset" To="1" Duration="0:0:0.5" BeginTime="0:0:0.2"/>
+                        <DoubleAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[1].Offset" To="1" Duration="0:0:0.5"/>
+                    </Storyboard>
+                </lib:StoryboardTransition.NewContentStoryboard>
+            </lib:StoryboardTransition>
+
+            <lib:StoryboardTransition TextSearch.Text="Horizontal Blinds">
+                <lib:StoryboardTransition.NewContentStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="OpacityMask">
+                            <Setter.Value>
+                                <LinearGradientBrush MappingMode="Absolute" SpreadMethod="Repeat" StartPoint="0,0" EndPoint="0,30">
+                                    <GradientStop Color="White"/>
+                                    <GradientStop/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </lib:StoryboardTransition.NewContentStyle>
+                <lib:StoryboardTransition.NewContentStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[0].Offset" To="1" Duration="0:0:0.5" BeginTime="0:0:0.2"/>
+                        <DoubleAnimation Storyboard.TargetProperty="OpacityMask.GradientStops[1].Offset" To="1" Duration="0:0:0.5"/>
+                    </Storyboard>
+                </lib:StoryboardTransition.NewContentStoryboard>
+            </lib:StoryboardTransition>
+
+            <lib:StoryboardTransition TextSearch.Text="Diamonds">
+                <lib:StoryboardTransition.NewContentStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="OpacityMask">
+                            <Setter.Value>
+                                <DrawingBrush TileMode="FlipXY" ViewboxUnits="Absolute" Viewport="0,0,30,30" ViewportUnits="Absolute">
+                                    <DrawingBrush.Drawing>
+                                        <GeometryDrawing Brush="White">
+                                            <GeometryDrawing.Geometry>
+                                                <RectangleGeometry Rect="-1,-1,2,2">
+                                                    <RectangleGeometry.Transform>
+                                                        <RotateTransform Angle="90" CenterX="1" CenterY="1"/>
+                                                    </RectangleGeometry.Transform>
+                                                </RectangleGeometry>
+                                            </GeometryDrawing.Geometry>
+                                        </GeometryDrawing>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </lib:StoryboardTransition.NewContentStyle>
+                <lib:StoryboardTransition.NewContentStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="OpacityMask.Drawing.Geometry.Transform.Angle" To="0" Duration="0:0:0.5"/>
+                    </Storyboard>
+                </lib:StoryboardTransition.NewContentStoryboard>
+            </lib:StoryboardTransition>
+
+            <lib:StoryboardTransition TextSearch.Text="Checkerboard">
+                <lib:StoryboardTransition.NewContentStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="OpacityMask">
+                            <Setter.Value>
+                                <DrawingBrush TileMode="Tile" ViewboxUnits="Absolute" Viewbox="0,0,2,2" Viewport="0,0,60,60" ViewportUnits="Absolute">
+                                    <DrawingBrush.Drawing>
+                                        <GeometryDrawing Brush="White">
+                                            <GeometryDrawing.Geometry>
+                                                <GeometryGroup>
+                                                    <RectangleGeometry Rect="0,0,0,1" />
+                                                    <RectangleGeometry Rect="0,1,0,1"/>
+                                                    <RectangleGeometry Rect="1,1,0,1"/>
+                                                </GeometryGroup>
+                                            </GeometryDrawing.Geometry>
+                                        </GeometryDrawing>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </lib:StoryboardTransition.NewContentStyle>
+                <lib:StoryboardTransition.NewContentStoryboard>
+                    <Storyboard>
+                        <RectAnimation Storyboard.TargetProperty="OpacityMask.Drawing.Geometry.Children[0].Rect" To="0,0,2,1" Duration="0:0:0.8" BeginTime="0:0:0"/>
+                        <RectAnimation Storyboard.TargetProperty="OpacityMask.Drawing.Geometry.Children[1].Rect" To="0,1,1,1" Duration="0:0:0.4" BeginTime="0:0:0.4"/>
+                        <RectAnimation Storyboard.TargetProperty="OpacityMask.Drawing.Geometry.Children[2].Rect" To="1,1,1,1" Duration="0:0:0.4" BeginTime="0:0:0"/>
+                    </Storyboard>
+                </lib:StoryboardTransition.NewContentStoryboard>
+            </lib:StoryboardTransition>
+
+            <lib:StoryboardTransition TextSearch.Text="Roll" IsNewContentTopmost="false" ClipToBounds="true">
+                <lib:StoryboardTransition.OldContentStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="RenderTransformOrigin" Value="0,1"/>
+                        <Setter Property="RenderTransform">
+                            <Setter.Value>
+                                <RotateTransform/>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </lib:StoryboardTransition.OldContentStyle>
+                <lib:StoryboardTransition.OldContentStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="-90" Duration="0:0:0.5"/>
+                    </Storyboard>
+                </lib:StoryboardTransition.OldContentStoryboard>
+            </lib:StoryboardTransition>
+
+            <lib:StoryboardTransition TextSearch.Text="Dots">
+                <lib:StoryboardTransition.NewContentStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="OpacityMask">
+                            <Setter.Value>
+                                <DrawingBrush ViewportUnits="Absolute" Viewport="0,0,30,30" ViewboxUnits="Absolute" Viewbox="-1,-1,2,2" TileMode="Tile">
+                                    <DrawingBrush.Drawing>
+                                        <GeometryDrawing Geometry="M0,0 L1,0 L1,1 L0,1 z">
+                                            <GeometryDrawing.Brush>
+                                                <RadialGradientBrush>
+                                                    <GradientStop Color="White" Offset="0.5"/>
+                                                    <GradientStop Color="Transparent" Offset="1"/>
+                                                </RadialGradientBrush>
+                                            </GeometryDrawing.Brush>
+                                        </GeometryDrawing>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </lib:StoryboardTransition.NewContentStyle>
+                <lib:StoryboardTransition.NewContentStoryboard>
+                    <Storyboard>
+                        <RectAnimation Storyboard.TargetProperty="OpacityMask.Viewbox" From="-1,-1,3,3" To="0.49,0.49,0.02,0.02" Duration="0:0:0.5"/>
+                    </Storyboard>
+                </lib:StoryboardTransition.NewContentStoryboard>
+            </lib:StoryboardTransition>
+
+            <lib:StoryboardTransition TextSearch.Text="Fade And Grow" IsNewContentTopmost="False">
+                <lib:StoryboardTransition.OldContentStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                        <Setter Property="RenderTransform">
+                            <Setter.Value>
+                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </lib:StoryboardTransition.OldContentStyle>
+                <lib:StoryboardTransition.OldContentStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.5"/>
+                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="1.2" Duration="0:0:0.5"/>
+                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1" To="1.2" Duration="0:0:0.5"/>
+                    </Storyboard>
+                </lib:StoryboardTransition.OldContentStoryboard>
+
+                <lib:StoryboardTransition.NewContentStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                        <Setter Property="RenderTransform">
+                            <Setter.Value>
+                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </lib:StoryboardTransition.NewContentStyle>
+                <lib:StoryboardTransition.NewContentStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5"/>
+                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="0.8" To="1" Duration="0:0:0.5"/>
+                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="0.8" To="1" Duration="0:0:0.5"/>
+                    </Storyboard>
+                </lib:StoryboardTransition.NewContentStoryboard>
+            </lib:StoryboardTransition>
+
+            <lib:TranslateTransition TextSearch.Text="2D Translate Transition" Duration="0:0:0.5" StartPoint="-1,0"/>
+            <lib:FlipTransition TextSearch.Text="3D Flip" Duration="0:0:0.5"/>
+            <lib:DoorTransition TextSearch.Text="3D Door" Duration="0:0:0.5" FieldOfView="40"/>
+            <lib:RotateTransition TextSearch.Text="3D Rotate" Duration="0:0:0.75" FieldOfView="40" Angle="90"/>
+            <lib:RotateTransition TextSearch.Text="3D Spin" Duration="0:0:0.75" FieldOfView="40" Angle="0" Contained="true" Direction="Up"/>
+            <lib:ExplosionTransition TextSearch.Text="3D Explosion"/>
+            <lib:ClothTransition TextSearch.Text="Cloth"/>
+            <lib:PageTransition TextSearch.Text="Page" FieldOfView="10" ClipToBounds="true"/>
+
+        </x:Array>
+
+        <DataTemplate DataType="{x:Type lib:Transition}">
+            <TextBlock Text="{Binding (TextSearch.Text)}" FontWeight="Bold"/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type lib:TranslateTransition}">
+            <DockPanel >
+                <DockPanel DockPanel.Dock="Top">
+                    <CheckBox DockPanel.Dock="Right" Name="ShowDetails"/>
+                    <TextBlock Text="{Binding (TextSearch.Text)}" FontWeight="Bold"/>
+                </DockPanel>
+
+                <Grid Name="Details" Visibility="Collapsed" Margin="10,0,0,0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                        <ColumnDefinition SharedSizeGroup="Settings"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right">
+            Duration
+                    </TextBlock>
+                    <TextBox Grid.Row="0" Grid.Column="1" Margin="5,0,0,0"  Width="70"
+                   Text="{Binding Duration}"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">
+            StartPoint
+                    </TextBlock>
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="5,0,0,0"
+                   Text="{Binding StartPoint}"/>
+                </Grid>
+            </DockPanel>
+            <DataTemplate.Triggers>
+                <Trigger SourceName="ShowDetails" Property="IsChecked" Value="true">
+                    <Setter TargetName="Details" Property="Visibility" Value="Visible"/>
+                </Trigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type lib:FlipTransition}">
+            <DockPanel >
+                <DockPanel DockPanel.Dock="Top">
+                    <CheckBox DockPanel.Dock="Right" Name="ShowDetails"/>
+                    <TextBlock Text="{Binding (TextSearch.Text)}" FontWeight="Bold"/>
+                </DockPanel>
+
+                <Grid Name="Details" Visibility="Collapsed" Margin="10,0,0,0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                        <ColumnDefinition SharedSizeGroup="Settings"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right">
+            Direction
+                    </TextBlock>
+                    <ComboBox Grid.Row="0" Grid.Column="1" Margin="5,0,0,0"  Width="70"
+                    SelectedItem="{Binding Path=Direction, Mode=TwoWay}">
+                        <x:Static Member="lib:RotateDirection.Left"/>
+                        <x:Static Member="lib:RotateDirection.Right"/>
+                        <x:Static Member="lib:RotateDirection.Up"/>
+                        <x:Static Member="lib:RotateDirection.Down"/>
+                    </ComboBox>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">
+            Duration
+                    </TextBlock>
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="5,0,0,0"  Width="70"
+                   Text="{Binding Duration}"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">
+            ClipToBounds
+                    </TextBlock>
+                    <CheckBox Grid.Row="2" Grid.Column="1" Margin="5,0,0,0"
+                    IsChecked="{Binding ClipToBounds}"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right">
+            FieldOfView
+                    </TextBlock>
+                    <TextBox Grid.Row="3" Grid.Column="1" Margin="5,0,0,0"
+                   Text="{Binding FieldOfView}"/>
+                </Grid>
+            </DockPanel>
+            <DataTemplate.Triggers>
+                <Trigger SourceName="ShowDetails" Property="IsChecked" Value="true">
+                    <Setter TargetName="Details" Property="Visibility" Value="Visible"/>
+                </Trigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type lib:DoorTransition}">
+            <DockPanel >
+                <DockPanel DockPanel.Dock="Top">
+                    <CheckBox DockPanel.Dock="Right" Name="ShowDetails"/>
+                    <TextBlock Text="{Binding (TextSearch.Text)}" FontWeight="Bold"/>
+                </DockPanel>
+
+                <Grid Name="Details" Visibility="Collapsed" Margin="10,0,0,0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                        <ColumnDefinition SharedSizeGroup="Settings"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right">
+            Duration
+                    </TextBlock>
+                    <TextBox Grid.Row="0" Grid.Column="1" Margin="5,0,0,0"  Width="70"
+                   Text="{Binding Duration}"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">
+            ClipToBounds
+                    </TextBlock>
+                    <CheckBox Grid.Row="1" Grid.Column="1" Margin="5,0,0,0"
+                    IsChecked="{Binding ClipToBounds}"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">
+            FieldOfView
+                    </TextBlock>
+                    <TextBox Grid.Row="2" Grid.Column="1" Margin="5,0,0,0"
+                   Text="{Binding FieldOfView}"/>
+                </Grid>
+            </DockPanel>
+            <DataTemplate.Triggers>
+                <Trigger SourceName="ShowDetails" Property="IsChecked" Value="true">
+                    <Setter TargetName="Details" Property="Visibility" Value="Visible"/>
+                </Trigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type lib:RotateTransition}">
+            <DockPanel >
+                <DockPanel DockPanel.Dock="Top">
+                    <CheckBox DockPanel.Dock="Right" Name="ShowDetails"/>
+                    <TextBlock Text="{Binding (TextSearch.Text)}" FontWeight="Bold"/>
+                </DockPanel>
+
+                <Grid Name="Details" Visibility="Collapsed" Margin="10,0,0,0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                        <ColumnDefinition SharedSizeGroup="Settings"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right">
+            Angle
+                    </TextBlock>
+                    <TextBox Grid.Row="0" Grid.Column="1" Margin="5,0,0,0"
+                   Text="{Binding Angle}"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">
+            Direction
+                    </TextBlock>
+                    <ComboBox Grid.Row="1" Grid.Column="1" Margin="5,0,0,0"  Width="70"
+                    SelectedItem="{Binding Path=Direction, Mode=TwoWay}">
+                        <x:Static Member="lib:RotateDirection.Left"/>
+                        <x:Static Member="lib:RotateDirection.Right"/>
+                        <x:Static Member="lib:RotateDirection.Up"/>
+                        <x:Static Member="lib:RotateDirection.Down"/>
+                    </ComboBox>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">
+            Duration
+                    </TextBlock>
+                    <TextBox Grid.Row="2" Grid.Column="1" Margin="5,0,0,0"  Width="70"
+                   Text="{Binding Duration}"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right">
+            ClipToBounds
+                    </TextBlock>
+                    <CheckBox Grid.Row="3" Grid.Column="1" Margin="5,0,0,0"
+                    IsChecked="{Binding ClipToBounds}"/>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right">
+            Contained
+                    </TextBlock>
+                    <CheckBox Grid.Row="4" Grid.Column="1" Margin="5,0,0,0"
+                    IsChecked="{Binding Contained}"/>
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right">
+            FieldOfView
+                    </TextBlock>
+                    <TextBox Grid.Row="5" Grid.Column="1" Margin="5,0,0,0"
+                   Text="{Binding FieldOfView}"/>
+                </Grid>
+            </DockPanel>
+            <DataTemplate.Triggers>
+                <Trigger SourceName="ShowDetails" Property="IsChecked" Value="true">
+                    <Setter TargetName="Details" Property="Visibility" Value="Visible"/>
+                </Trigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+        <!-- even indicies are forward, odd are back -->
+        <x:Array x:Key="ForwardBackTransitions" Type="{x:Type lib:Transition}">
+            <lib:TranslateTransition Duration="0:0:0.75" StartPoint="-1,0" TextSearch.Text="Translation"/>
+            <lib:TranslateTransition Duration="0:0:0.75" EndPoint="-1,0" IsNewContentTopmost="false"/>
+
+            <lib:RotateTransition Duration="0:0:0.75" FieldOfView="40" Angle="90" TextSearch.Text="Cube"/>
+            <lib:RotateTransition Duration="0:0:0.75" FieldOfView="40" Angle="90" Direction="Right"/>
+        </x:Array>
+
+        <DataTemplate DataType="{x:Type lib:TransitionSelector}">
+            <TextBlock Text="{Binding (TextSearch.Text)}" FontWeight="Bold"/>
+        </DataTemplate>
+
+        <Style x:Key="DataListBoxStyle" TargetType="ListBox">
+            <Setter Property="SelectedIndex" Value="0"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="190"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.RowSpan="2" SelectionChanged="OnModeChanged">
+            <TabItem Header="1 Way">
+                <ListBox x:Name="_transitions"
+                 ItemsSource="{DynamicResource Transitions}"
+                 HorizontalContentAlignment="Stretch"
+                 ScrollViewer.CanContentScroll="False"
+                 ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+            </TabItem>
+
+            <TabItem Header="2 Way" Name="_twoWay">
+                <ListBox x:Name="_selectors"
+                 HorizontalContentAlignment="Stretch"
+                 ScrollViewer.CanContentScroll="False"
+                 ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+            </TabItem>
+        </TabControl>
+        <ListBox Name="_data"
+             Grid.Column="1"
+             Style="{StaticResource DataListBoxStyle}">
+            <ListBox.Resources>
+                <DataTemplate DataType="{x:Type app:UI}">
+                    <Border Background="White" BorderThickness="1" BorderBrush="Black" Width="32" Height="32" Margin="2">
+                        <TextBlock Text="UI" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type app:Picture}">
+                    <Border Background="White" BorderThickness="1" BorderBrush="Black" Width="32" Height="32" Margin="2">
+                        <Image Source="{Binding Uri}"/>
+                    </Border>
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type app:Swatch}">
+                    <Border Background="{Binding ColorName}" BorderThickness="1" BorderBrush="Black" Width="32" Height="32" Margin="2"/>
+                </DataTemplate>
+            </ListBox.Resources>
+        </ListBox>
+
+        <lib:TransitionPresenter Transition="{Binding ElementName=_transitions, Path=SelectedItem}"
+                             TransitionSelector="{Binding ElementName=_selectors, Path=SelectedItem}"
+                             Margin="10"
+                             Grid.Row="1"
+                             Grid.Column="1"
+                             Content="{Binding ElementName=_data, Path=SelectedItem}"
+                             MouseLeftButtonDown="OnMouseLeftDown"
+                             MouseRightButtonDown="OnMouseRightDown"
+                             MaxWidth="640" MaxHeight="480">
+
+            <lib:TransitionPresenter.Resources>
+                <DataTemplate DataType="{x:Type app:UI}">
+                    <Border Background="White" BorderThickness="1" BorderBrush="Black">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <StackPanel Margin="5">
+                                <TextBox>Text</TextBox>
+                                <Button HorizontalAlignment="Left" Padding="4" Margin="2">OK</Button>
+                                <CheckBox Margin="2">CheckBox</CheckBox>
+                                <Slider/>
+                                <ProgressBar Height="15" IsIndeterminate="true"/>
+                            </StackPanel>
+                            <TabControl Width="150">
+                                <TabItem Header="RichTextBox">
+                                    <RichTextBox Width="100"/>
+                                </TabItem>
+                                <TabItem Header="Button">
+                                    <Button Content="Button" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10"/>
+                                </TabItem>
+                            </TabControl>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type app:Picture}">
+                    <Border Background="White" BorderThickness="1" BorderBrush="Black">
+                        <Image Source="{Binding Uri}" Margin="2"/>
+                    </Border>
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type app:Swatch}">
+                    <Border Background="{Binding ColorName}" BorderThickness="1" BorderBrush="Black">
+                        <TextBlock Text="{Binding ColorName}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="24"/>
+                    </Border>
+                </DataTemplate>
+            </lib:TransitionPresenter.Resources>
+        </lib:TransitionPresenter>
+
+    </Grid>
+</Page>

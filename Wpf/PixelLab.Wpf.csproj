@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectGuid>{E4BBC94F-B837-4668-A127-E36E6DE012F5}</ProjectGuid>
+    <AssemblyName>PixelLab.Wpf</AssemblyName>
+    <OutputType>library</OutputType>
+    <RootNamespace>PixelLab.Wpf</RootNamespace>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <Import Project="..\Common\_targets\WPF4.targets" />
+  <ItemGroup>
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.XML" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnimatingPanel.cs" />
+    <Compile Include="AnimatingTilePanel.cs" />
+    <Compile Include="ButtonBase3D.cs" />
+    <Compile Include="ColorBrushConverter.cs" />
+    <Compile Include="DragPreviewAdorner.cs" />
+    <Compile Include="NotifyWorker.cs" />
+    <Compile Include="OrgTree.cs" />
+    <Compile Include="OrgTreeItem.cs" />
+    <Compile Include="ReorderListBox.cs" />
+    <Compile Include="ShowElement.cs" />
+    <Compile Include="TemplateBorder.cs" />
+    <Compile Include="TreeMap3DUserControl.xaml.cs">
+      <DependentUpon>TreeMap3DUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BlockBarBase.cs" />
+    <Compile Include="BlockBarCircle.cs" />
+    <Compile Include="BlockBarRect.cs" />
+    <Compile Include="ListPager.cs" />
+    <Compile Include="UIListPager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="NumericUpDown.cs" />
+    <Compile Include="InfoTextBox.cs" />
+    <Compile Include="ColorPicker.cs" />
+    <Compile Include="RevealModeHorizontal.cs" />
+    <Compile Include="Reveal.cs" />
+    <Compile Include="RevealModeVertical.cs" />
+    <Compile Include="Transition3D.cs" />
+    <Compile Include="Transitions\ClothTransition.cs" />
+    <Compile Include="Transitions\DoorTransition.cs" />
+    <Compile Include="Transitions\ExplosionTransition.cs" />
+    <Compile Include="Transitions\FadeTransition.cs" />
+    <Compile Include="Transitions\FlipTransition.cs" />
+    <Compile Include="Transitions\PageTransition.cs" />
+    <Compile Include="Transitions\RotateTransition.cs" />
+    <Compile Include="Transitions\StoryboardTransition.cs" />
+    <Compile Include="Transitions\Transition.cs" />
+    <Compile Include="Transitions\Transition3D.cs" />
+    <Compile Include="Transitions\TransitionPresenter.cs" />
+    <Compile Include="Transitions\TransitionSelector.cs" />
+    <Compile Include="Transitions\TranslateTransition.cs" />
+    <Compile Include="Transitions\TwoWayTransitionSelector.cs" />
+    <Compile Include="TreeMap3D.cs" />
+    <Compile Include="TreeMapPanel.cs" />
+    <Compile Include="TreeViewHelper.cs" />
+    <Compile Include="Graph.cs" />
+    <Compile Include="WpfUtil.cs" />
+    <Compile Include="WrapperElement.cs" />
+    <Compile Include="Zap\ZapCommandItem.cs" />
+    <Compile Include="Zap\ZapDecorator.cs" />
+    <Compile Include="Zap\ZapPanel.cs" />
+    <Compile Include="Zap\ZapScroller.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Themes\generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Luna.NormalColor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Themes\ColorPicker.generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Themes\NumericUpDown.generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\TemplateBorder.generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\OrgTree.generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeMap3DUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\InfoTextBox.generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Zap.Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\PixelLab.Common.csproj">
+      <Project>{273247A2-A3C8-42D0-8463-F95FC5C0A34C}</Project>
+      <Name>PixelLab.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

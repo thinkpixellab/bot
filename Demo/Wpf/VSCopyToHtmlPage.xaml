@@ -1,0 +1,27 @@
+﻿<Page x:Class="PixelLab.Wpf.Demo.VSCopyToHtmlPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label Content="_Paste from Visual Studio Here..." Target="{Binding ElementName=m_richTextBox}" FontSize="15"/>
+        <Label Content="_Html" Grid.Column="1" Target="{Binding ElementName=m_textBoxHtml}" FontSize="15"/>
+
+        <RichTextBox Name="m_richTextBox" TextChanged="m_richTextBox_TextChanged" Grid.Row="1"
+                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="5"/>
+        <TextBox Grid.Column="1" Grid.Row="1" Name="m_textBoxHtml" IsReadOnly="true"
+             VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="5"/>
+
+    </Grid>
+
+</Page>

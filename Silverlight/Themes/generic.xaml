@@ -1,0 +1,28 @@
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:plsl="clr-namespace:PixelLab.SL">
+
+    <Style TargetType="plsl:SpriteButton">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="{x:Null}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="plsl:SpriteButton">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <plsl:SpriteElement HorizontalAlignment="Center" VerticalAlignment="Center"
+                                SpriteWidth="{TemplateBinding SpriteWidth}" SpriteHeight="{TemplateBinding SpriteHeight}"
+                                ImageSource="{TemplateBinding ImageSource}"
+                                NextOffsetX="{TemplateBinding NextOffsetX}" NextOffsetY="{TemplateBinding NextOffsetY}"
+                                IsMouseOver="{TemplateBinding IsMouseOver}"
+                                MouseOverOffsetX="{TemplateBinding MouseOverOffsetX}" MouseOverOffsetY="{TemplateBinding MouseOverOffsetY}"
+                                IsPressed="{TemplateBinding IsPressed}"
+                                PressedOffsetX="{TemplateBinding PressedOffsetX}" PressedOffsetY="{TemplateBinding PressedOffsetY}"
+                                SpriteIndex="{TemplateBinding SpriteIndex}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

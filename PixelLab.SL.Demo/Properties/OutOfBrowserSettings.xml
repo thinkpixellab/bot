@@ -1,7 +1,0 @@
-<OutOfBrowserSettings ShortName="Bag of Tricks - Silverlight" EnableGPUAcceleration="True" ShowInstallMenuItem="True">
-  <OutOfBrowserSettings.Blurb>Bag of Tricks - Silverlight</OutOfBrowserSettings.Blurb>
-  <OutOfBrowserSettings.WindowSettings>
-    <WindowSettings Title="Bag of Tricks - Silverlight - by Pixel Lab" />
-  </OutOfBrowserSettings.WindowSettings>
-  <OutOfBrowserSettings.Icons />
-</OutOfBrowserSettings>
