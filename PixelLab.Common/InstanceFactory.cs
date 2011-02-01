@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
@@ -50,6 +52,55 @@ namespace PixelLab.Common
             {
                 throw new ArgumentException("The provided type does not have a matching constructor");
             }
+        }
+
+        public static T CreateInstance<T>(params object[] ctorParams)
+        {
+            return (T)typeof(T).CreateInstance(ctorParams);
+        }
+
+        public static object CreateInstance(this Type type, params object[] ctorParams)
+        {
+            var ctor = type.GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).Single(ci => ci.IsCompatible(ctorParams));
+            return ctor.Invoke(ctorParams);
+        }
+
+        public static bool IsCompatible(this ConstructorInfo ctorInfo, IList<object> ctorParams)
+        {
+            Contract.Requires(ctorInfo != null);
+            Contract.Requires(ctorParams != null);
+
+            var pInfos = ctorInfo.GetParameters();
+            if (pInfos.Length != ctorParams.Count)
+            {
+                return false;
+            }
+            for (int i = 0; i < pInfos.Length; i++)
+            {
+                var type = pInfos[i].ParameterType;
+                var p = ctorParams[i];
+                if (!IsCompatible(type, p))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool IsCompatible(this Type type, object p)
+        {
+            if (p == null)
+            {
+                if (type.IsValueType)
+                {
+                    return false;
+                }
+            }
+            else if (!type.IsAssignableFrom(p.GetType()))
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
