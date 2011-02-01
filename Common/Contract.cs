@@ -17,7 +17,7 @@ namespace PixelLab.Contracts
         {
             if (!truth)
             {
-                throw InstanceFactory.CreateInstance<TException, string>(message);
+                throw InstanceFactory.CreateInstance<TException>(message);
             }
         }
 
