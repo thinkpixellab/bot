@@ -10,13 +10,13 @@ namespace PixelLab.Common
 {
     public static class InstanceFactory
     {
-        public static T GetInstance<T, TParam>(TParam param)
+        public static T CreateInstance<T, TParam>(TParam param)
         {
             Contract.Requires(typeof(T).IsVisible);
             return CreateInstance<T>(new Type[] { typeof(TParam) }, new object[] { param });
         }
 
-        public static T GetInstance<T, TParam1, TParam2>(TParam1 param1, TParam2 param2)
+        public static T CreateInstance<T, TParam1, TParam2>(TParam1 param1, TParam2 param2)
         {
             Contract.Requires(typeof(T).IsVisible);
             return CreateInstance<T>(new Type[] { typeof(TParam1), typeof(TParam2) }, new object[] { param1, param2 });
