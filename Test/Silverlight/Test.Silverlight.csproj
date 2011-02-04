@@ -36,6 +36,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AssertPlus.cs" />
+    <Compile Include="ListMoverTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ContractTests.cs" />
   </ItemGroup>
