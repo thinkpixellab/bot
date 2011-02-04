@@ -463,6 +463,12 @@ namespace PixelLab.Common
         }
 #endif
 
+        public static bool NextBool(this Random rnd)
+        {
+            Contract.Requires(rnd != null);
+            return rnd.Next() % 2 == 0;
+        }
+
         /// <summary>
         /// Creates an <see cref="ObservableCollection"/> from the <see cref="IEnumerable"/>.
         /// </summary>
