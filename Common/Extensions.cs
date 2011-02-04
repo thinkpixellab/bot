@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 #if CONTRACTS_FULL
@@ -10,7 +7,6 @@ using System.Diagnostics.Contracts;
 #else
 using PixelLab.Contracts;
 #endif
-using System.Linq;
 
 namespace PixelLab.Common
 {
@@ -90,9 +86,10 @@ namespace PixelLab.Common
         }
 
 #if SILVERLIGHT
-        public static void VerifyAccess(this System.Windows.Deployment deployment)
+        public static void VerifyAccess(this System.Windows.DependencyObject dependencyObj)
         {
-            if (!deployment.Dispatcher.CheckAccess())
+            Contract.Requires(dependencyObj != null);
+            if (!dependencyObj.CheckAccess())
             {
                 throw new InvalidOperationException("A call was made off the Dispatcher thread.");
             }
