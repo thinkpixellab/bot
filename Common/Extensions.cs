@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection;
+using System.Linq;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
@@ -100,6 +102,12 @@ namespace PixelLab.Common
         {
             Contract.Requires(rnd != null);
             return rnd.Next() % 2 == 0;
+        }
+
+        public static IEnumerable<T> GetCustomAttributes<T>(this MemberInfo memberInfo, bool inherit) where T : Attribute
+        {
+            Contract.Requires(memberInfo != null);
+            return memberInfo.GetCustomAttributes(typeof(T), inherit).Cast<T>();
         }
 
         #region impl
