@@ -1,16 +1,25 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Windows;
+using PixelLab.Common;
+using System.ComponentModel;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
 using PixelLab.Contracts;
 #endif
-using System.Windows;
-using PixelLab.Common;
 
 namespace PixelLab.SL
 {
-    public abstract class AsyncValueBase<T> : Changeable
+    public interface IAsyncValue<T> : INotifyPropertyChanged
+    {
+        LoadState State { get; }
+        T Value { get; set; }
+        void Load();
+        event EventHandler ValueLoaded;
+    }
+
+    public abstract class AsyncValueBase<T> : Changeable, IAsyncValue<T>
     {
         private LoadState _state;
         private IAsyncResult _loadingResult;
