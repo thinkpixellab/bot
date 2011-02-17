@@ -41,7 +41,7 @@ namespace PixelLab.Contracts
         public static void Ensures(bool truth) { }
 
         [Conditional("NEVER")]
-        public static void Invariant(bool truth)
+        public static void Invariant(bool truth, string message = null)
         {
             throw new NotSupportedException();
         }
