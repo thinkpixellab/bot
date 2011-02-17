@@ -24,10 +24,12 @@ namespace PixelLab.SL
         private LoadState _state;
         private IAsyncResult _loadingResult;
         private T _value;
+        private bool _doingLoad;
 
         public AsyncValueBase()
         {
             _state = LoadState.Unloaded;
+            _doingLoad = false;
         }
 
         public LoadState State
@@ -63,12 +65,46 @@ namespace PixelLab.SL
 
         public void Load()
         {
-            Contract.Requires(State == LoadState.Unloaded);
+            Contract.Requires(State != LoadState.Loading);
             Deployment.Current.VerifyAccess();
+            Debug.Assert(!DoingLoad);
 
-            _loadingResult = LoadCore();
+            try
+            {
+                DoingLoad = true;
+                State = LoadState.Loading;
+                var asyncResult = LoadCore();
+                Debug.Assert(asyncResult != null, "The provided delegate should always return a non-null IAsnycResult");
+                if (State == LoadState.Loading)
+                {
+                    // load did not do anything syncronously. Cool. Let's store the result
+                    Debug.Assert(!asyncResult.IsCompleted);
+                    _loadingResult = asyncResult;
+                }
+                else
+                {
+                    Debug.Assert(asyncResult.IsCompleted);
+                    Debug.Assert(asyncResult.CompletedSynchronously);
+                }
+            }
+            finally
+            {
+                DoingLoad = false;
+            }
+        }
 
-            State = LoadState.Loading;
+        protected bool DoingLoad
+        {
+            get
+            {
+                Deployment.Current.VerifyAccess();
+                return _doingLoad;
+            }
+            private set
+            {
+                Deployment.Current.VerifyAccess();
+                _doingLoad = value;
+            }
         }
 
         protected abstract IAsyncResult LoadCore();
@@ -77,8 +113,17 @@ namespace PixelLab.SL
         {
             Contract.Requires(State == LoadState.Loading);
             Deployment.Current.VerifyAccess();
-            Debug.Assert(_loadingResult != null);
-            _loadingResult = null;
+            if (DoingLoad)
+            {
+                Debug.Assert(_loadingResult == null);
+            }
+            else
+            {
+                Debug.Assert(_loadingResult != null);
+                Debug.Assert(!_loadingResult.CompletedSynchronously);
+                Debug.Assert(_loadingResult.IsCompleted);
+                _loadingResult = null;
+            }
             internalValueSet(value);
         }
 
@@ -86,8 +131,17 @@ namespace PixelLab.SL
         {
             Contract.Requires(State == LoadState.Loading);
             Deployment.Current.VerifyAccess();
-            Debug.Assert(_loadingResult != null);
-            _loadingResult = null;
+            if (DoingLoad)
+            {
+                Debug.Assert(_loadingResult == null);
+            }
+            else
+            {
+                Debug.Assert(_loadingResult != null);
+                Debug.Assert(!_loadingResult.CompletedSynchronously);
+                Debug.Assert(_loadingResult.IsCompleted);
+                _loadingResult = null;
+            }
             _value = default(T);
             State = LoadState.Error;
             OnPropertyChanged("Value");
