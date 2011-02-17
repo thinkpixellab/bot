@@ -8,11 +8,13 @@ namespace PixelLab.Contracts
 {
     public static class Contract
     {
+        [DebuggerStepThrough]
         public static void Requires(bool truth, string message = null)
         {
             Requires<Exception>(truth, message);
         }
 
+        [DebuggerStepThrough]
         public static void Requires<TException>(bool truth, string message = null) where TException : Exception
         {
             if (!truth)
@@ -21,6 +23,7 @@ namespace PixelLab.Contracts
             }
         }
 
+        [DebuggerStepThrough]
         public static void Requires<TException>(bool truth) where TException : Exception, new()
         {
             if (!truth)
