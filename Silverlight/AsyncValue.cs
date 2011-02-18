@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Windows;
 using PixelLab.Common;
-using System.ComponentModel;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
@@ -11,14 +10,6 @@ using PixelLab.Contracts;
 
 namespace PixelLab.SL
 {
-    public interface IAsyncValue<T> : INotifyPropertyChanged
-    {
-        LoadState State { get; }
-        T Value { get; set; }
-        void Load();
-        event EventHandler ValueLoaded;
-    }
-
     public abstract class AsyncValueBase<T> : Changeable, IAsyncValue<T>
     {
         private LoadState _state;
@@ -56,7 +47,6 @@ namespace PixelLab.SL
             }
             set
             {
-                Contract.Requires(State != LoadState.Loading);
                 internalValueSet(value);
             }
         }
@@ -65,7 +55,6 @@ namespace PixelLab.SL
 
         public void Load()
         {
-            Contract.Requires(State != LoadState.Loading);
             Deployment.Current.VerifyAccess();
             Debug.Assert(!DoingLoad);
 

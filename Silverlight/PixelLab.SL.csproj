@@ -25,6 +25,7 @@
     <Compile Include="Helpers_Phone.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="IAsyncValue.cs" />
     <Compile Include="IsolatedStorage\IsolatedFileSystemInfo.cs" />
     <Compile Include="LoadState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
