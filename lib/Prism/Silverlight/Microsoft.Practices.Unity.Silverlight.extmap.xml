@@ -1,0 +1,10 @@
+﻿<?xml version="1.0"?>
+<manifest>
+  <assembly>
+    <name>Microsoft.Practices.Unity.Silverlight</name>
+    <version>2.0.414.0</version>
+    <publickeytoken>31bf3856ad364e35</publickeytoken>
+    <relpath>Microsoft.Practices.Unity.Silverlight.dll</relpath>
+    <extension downloadUri="Microsoft.Practices.Unity.Silverlight.zip" />
+  </assembly>
+</manifest>
