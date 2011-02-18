@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
 using PixelLab.Common;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
@@ -12,6 +14,7 @@ namespace PixelLab.SL
 {
     public abstract class AsyncValueBase<T> : Changeable, IAsyncValue<T>
     {
+        private readonly DelegateCommand _loadCommand;
         private LoadState _state;
         private IAsyncResult _loadingResult;
         private T _value;
@@ -21,6 +24,7 @@ namespace PixelLab.SL
         {
             _state = LoadState.Unloaded;
             _doingLoad = false;
+            _loadCommand = new DelegateCommand(Load, () => State != LoadState.Loading);
         }
 
         public LoadState State
@@ -50,6 +54,8 @@ namespace PixelLab.SL
                 internalValueSet(value);
             }
         }
+
+        public ICommand LoadCommand { get { return _loadCommand; } }
 
         public event EventHandler ValueLoaded;
 
