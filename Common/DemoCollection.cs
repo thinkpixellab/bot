@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Microsoft.Practices.Prism.Commands;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
@@ -138,12 +139,12 @@ namespace PixelLab.Common
             }
         }
 
-        public ICommand AddCommand { get { return m_addCommand.Command; } }
-        public ICommand RemoveCommand { get { return m_removeCommand.Command; } }
-        public ICommand MoveCommand { get { return m_moveCommand.Command; } }
-        public ICommand ChangeCommand { get { return m_changeCommand.Command; } }
-        public ICommand InsertCommand { get { return m_insertCommand.Command; } }
-        public ICommand ResetCommand { get { return m_resetCommand.Command; } }
+        public ICommand AddCommand { get { return m_addCommand; } }
+        public ICommand RemoveCommand { get { return m_removeCommand; } }
+        public ICommand MoveCommand { get { return m_moveCommand; } }
+        public ICommand ChangeCommand { get { return m_changeCommand; } }
+        public ICommand InsertCommand { get { return m_insertCommand; } }
+        public ICommand ResetCommand { get { return m_resetCommand; } }
 
         #region Implementation
 
@@ -166,20 +167,20 @@ namespace PixelLab.Common
             m_activeItems = activeItems;
             m_sourceItems = sourceItems;
 
-            m_addCommand = new CommandWrapper(Add, () => canAddOrInsert);
-            m_insertCommand = new CommandWrapper(Insert, () => canAddOrInsert);
-            m_removeCommand = new CommandWrapper(Remove, () => canRemove);
-            m_moveCommand = new CommandWrapper(Move, () => canMove);
-            m_changeCommand = new CommandWrapper(Change, () => canChange);
-            m_resetCommand = new CommandWrapper(Reset);
+            m_addCommand = new DelegateCommand(Add, () => canAddOrInsert);
+            m_insertCommand = new DelegateCommand(Insert, () => canAddOrInsert);
+            m_removeCommand = new DelegateCommand(Remove, () => canRemove);
+            m_moveCommand = new DelegateCommand(Move, () => canMove);
+            m_changeCommand = new DelegateCommand(Change, () => canChange);
+            m_resetCommand = new DelegateCommand(Reset);
 
             activeItems.CollectionChanged += (sender, e) =>
             {
-                m_removeCommand.UpdateCanExecute();
-                m_addCommand.UpdateCanExecute();
-                m_moveCommand.UpdateCanExecute();
-                m_changeCommand.UpdateCanExecute();
-                m_insertCommand.UpdateCanExecute();
+                m_removeCommand.RaiseCanExecuteChanged();
+                m_addCommand.RaiseCanExecuteChanged();
+                m_moveCommand.RaiseCanExecuteChanged();
+                m_changeCommand.RaiseCanExecuteChanged();
+                m_insertCommand.RaiseCanExecuteChanged();
             };
         }
 
@@ -206,7 +207,7 @@ namespace PixelLab.Common
             Contract.Invariant(m_insertCommand != null);
         }
 
-        private readonly CommandWrapper m_addCommand, m_removeCommand, m_moveCommand, m_changeCommand, m_insertCommand, m_resetCommand;
+        private readonly DelegateCommand m_addCommand, m_removeCommand, m_moveCommand, m_changeCommand, m_insertCommand, m_resetCommand;
         private readonly int m_minCount, m_maxCount, m_initialCount;
         private readonly Random m_random = Util.Rnd;
         private readonly ObservableCollectionPlus<T> m_activeItems;

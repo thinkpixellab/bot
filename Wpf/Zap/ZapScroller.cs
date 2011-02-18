@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
 using PixelLab.Common;
 
 namespace PixelLab.Wpf
@@ -25,19 +26,19 @@ namespace PixelLab.Wpf
 
         public ZapScroller()
         {
-            m_firstCommand = new CommandWrapper(First, canFirst);
-            m_previousCommand = new CommandWrapper(Previous, canPrevious);
-            m_nextCommand = new CommandWrapper(Next, canNext);
-            m_lastCommand = new CommandWrapper(Last, canLast);
+            m_firstCommand = new DelegateCommand(First, canFirst);
+            m_previousCommand = new DelegateCommand(Previous, canPrevious);
+            m_nextCommand = new DelegateCommand(Next, canNext);
+            m_lastCommand = new DelegateCommand(Last, canLast);
         }
 
-        public ICommand FirstCommand { get { return m_firstCommand.Command; } }
+        public ICommand FirstCommand { get { return m_firstCommand; } }
 
-        public ICommand PreviousCommand { get { return m_previousCommand.Command; } }
+        public ICommand PreviousCommand { get { return m_previousCommand; } }
 
-        public ICommand NextCommand { get { return m_nextCommand.Command; } }
+        public ICommand NextCommand { get { return m_nextCommand; } }
 
-        public ICommand LastCommand { get { return m_lastCommand.Command; } }
+        public ICommand LastCommand { get { return m_lastCommand; } }
 
         public ReadOnlyObservableCollection<ZapCommandItem> Commands
         {
@@ -179,10 +180,10 @@ namespace PixelLab.Wpf
 
         private void resetEdgeCommands()
         {
-            m_firstCommand.UpdateCanExecute();
-            m_lastCommand.UpdateCanExecute();
-            m_nextCommand.UpdateCanExecute();
-            m_previousCommand.UpdateCanExecute();
+            m_firstCommand.RaiseCanExecuteChanged();
+            m_lastCommand.RaiseCanExecuteChanged();
+            m_nextCommand.RaiseCanExecuteChanged();
+            m_previousCommand.RaiseCanExecuteChanged();
         }
 
         private void resetCommands()
@@ -294,7 +295,7 @@ namespace PixelLab.Wpf
 
         private ZapDecorator m_zapDecorator;
 
-        private readonly CommandWrapper m_firstCommand, m_previousCommand, m_nextCommand, m_lastCommand;
+        private readonly DelegateCommand m_firstCommand, m_previousCommand, m_nextCommand, m_lastCommand;
 
         private readonly ObservableCollectionPlus<ZapCommandItem> m_commandItems = new ObservableCollectionPlus<ZapCommandItem>();
 

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using PixelLab.Common;
+using Microsoft.Practices.Prism.Commands;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
@@ -92,10 +93,10 @@ namespace PixelLab.Wpf.Demo.OrgTree
 
         #endregion
 
-        public static ICommand ToggleVisibilityCommand { get { return s_toggleVisibilityCommand.Command; } }
+        public static ICommand ToggleVisibilityCommand { get { return s_toggleVisibilityCommand; } }
 
-        private static readonly CommandWrapper<OrgItem> s_toggleVisibilityCommand =
-            new CommandWrapper<OrgItem>(oi =>
+        private static readonly ICommand s_toggleVisibilityCommand =
+            new DelegateCommand<OrgItem>(oi =>
             {
                 oi.IsVisible = !oi.IsVisible;
                 if (oi.IsVisible)

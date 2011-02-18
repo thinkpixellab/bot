@@ -8,6 +8,9 @@
   </PropertyGroup>
   <Import Project="_targets\WPF4.targets" />
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.Prism, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\lib\Prism\Desktop\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -28,7 +31,6 @@
     <Compile Include="CollectionExtensions.cs" />
     <Compile Include="ColorHelper.cs" />
     <Compile Include="CommandHelpers.cs" />
-    <Compile Include="CommandWrapper.cs" />
     <Compile Include="CompositionHelpers.cs" />
     <Compile Include="CompositionTargetRenderingListening.cs" />
     <Compile Include="Contract.cs" />

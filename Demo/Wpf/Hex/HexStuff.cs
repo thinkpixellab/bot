@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Input;
 using PixelLab.Common;
+using Microsoft.Practices.Prism.Commands;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
@@ -22,7 +23,7 @@ namespace PixelLab.Wpf.Demo.Hex
             m_size = size;
             _pieces = new HexPiece[m_size * m_size];
 
-            m_resetCommand = new CommandWrapper(Reset, () => m_playCount > 0);
+            m_resetCommand = new DelegateCommand(Reset, () => m_playCount > 0);
 
             m_connectionTest = new BitArrayPlus(m_size * m_size);
 
@@ -74,7 +75,7 @@ namespace PixelLab.Wpf.Demo.Hex
                 if (value != m_playCount)
                 {
                     m_playCount = value;
-                    m_resetCommand.UpdateCanExecute();
+                    m_resetCommand.RaiseCanExecuteChanged();
                     onPropertyChanged("PlayCount");
                 }
             }
@@ -135,7 +136,7 @@ namespace PixelLab.Wpf.Demo.Hex
         {
             get
             {
-                return m_resetCommand.Command;
+                return m_resetCommand;
             }
         }
 
@@ -405,7 +406,7 @@ namespace PixelLab.Wpf.Demo.Hex
         private int m_playCount;
         private bool m_isFinished;
 
-        private readonly CommandWrapper m_resetCommand;
+        private readonly DelegateCommand m_resetCommand;
         private readonly BitArrayPlus m_connectionTest;
         private readonly int m_size;
         private readonly HexPiece[] _pieces;

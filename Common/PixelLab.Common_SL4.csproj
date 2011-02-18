@@ -9,6 +9,9 @@
   </PropertyGroup>
   <Import Project="_targets\SL4.targets" />
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.Prism, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\lib\Prism\Silverlight\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
@@ -29,7 +32,6 @@
     <Compile Include="CollectionExtensions.cs" />
     <Compile Include="ColorHelper.cs" />
     <Compile Include="CommandKeyMapper.cs" />
-    <Compile Include="CommandWrapper.cs" />
     <Compile Include="CompositionHelpers.cs" />
     <Compile Include="CompositionTargetRenderingListening.cs" />
     <Compile Include="Contract.cs" />
