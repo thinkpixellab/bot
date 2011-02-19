@@ -1,4 +1,4 @@
-![BOT!](https://github.com/thinkpixellab/bot/raw/master/PixelLab.Wpf.Demo/logo.png)
+![BOT!](https://github.com/thinkpixellab/bot/raw/master/Demo/Wpf/logo.png)
 
 The **[Bag of Tricks](http://github.com/thinkpixellab/bot)** (BOT) Started in December 2005. [Kevin](http://github.com/kevmoo) was working at Microsoft on v1 of Windows Presentation Foundation (WPF). He was blogging a lot of code samples and wanted to keep them all together and ensure everything kept working as features changed and evolved as WPF moved towards shipping.
 
