@@ -8,6 +8,9 @@
   </PropertyGroup>
   <Import Project="..\Common\_targets\WP7.targets" />
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.Prism, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\lib\Prism\Phone\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -21,6 +24,7 @@
       <DependentUpon>FlipControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers_Phone.cs" />
+    <Compile Include="IAsyncValue.cs" />
     <Compile Include="IsolatedStorage\IsolatedFileSystemInfo.cs" />
     <Compile Include="LoadState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
