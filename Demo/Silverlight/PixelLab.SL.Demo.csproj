@@ -15,6 +15,9 @@
     <OutOfBrowserSettingsFile>Properties\OutOfBrowserSettings.xml</OutOfBrowserSettingsFile>
     <UsePlatformExtensions>false</UsePlatformExtensions>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
   <Import Project="..\..\Common\_targets\SL4.targets" />
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -40,6 +43,9 @@
     <Compile Include="FlipControlPage.xaml.cs">
       <DependentUpon>FlipControlPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PanZoomPage.xaml.cs">
+      <DependentUpon>PanZoomPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpriteButtonPage.xaml.cs">
       <DependentUpon>SpriteButtonPage.xaml</DependentUpon>
@@ -58,6 +64,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FlipControlPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PanZoomPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

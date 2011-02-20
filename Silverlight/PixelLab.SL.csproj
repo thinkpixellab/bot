@@ -21,16 +21,20 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsBigAsYouWantPanel.cs" />
     <Compile Include="AsyncValue.cs" />
+    <Compile Include="DiscreteSlider.cs" />
     <Compile Include="FlipControl.xaml.cs">
       <DependentUpon>FlipControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helpers_Phone.cs">
-      <SubType>Code</SubType>
+    <Compile Include="GridLineControl.xaml.cs">
+      <DependentUpon>GridLineControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers_Phone.cs" />
     <Compile Include="IAsyncValue.cs" />
     <Compile Include="IsolatedStorage\IsolatedFileSystemInfo.cs" />
     <Compile Include="LoadState.cs" />
+    <Compile Include="PanZoomControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SLExtentions.cs" />
     <Compile Include="SpriteButton.cs" />
@@ -44,6 +48,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="FlipControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GridLineControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

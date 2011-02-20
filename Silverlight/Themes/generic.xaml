@@ -25,4 +25,61 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="plsl:PanZoomControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="plsl:PanZoomControl">
+                    <Grid Background="{TemplateBinding Background}" UseLayoutRounding="True">
+
+                        <plsl:GridLineControl x:Name="glc"
+                                               IsHitTestVisible="False"
+                                               MajorGridLineColor="{TemplateBinding MajorGridLineColor}"
+                                               MajorGridLineDistance="{TemplateBinding MajorGridLineDistance}"
+                                               MinorGridLineColor="{TemplateBinding MinorGridLineColor}"
+                                               MinorGridLineSubDivisions="{TemplateBinding Subdivisions}"
+                                               OffsetX="{TemplateBinding ScaledOffsetX}"
+                                               OffsetY="{TemplateBinding ScaledOffsetY}"
+                                               Scale="{TemplateBinding Scale}"
+                                               UseLayoutRounding="True" />
+                        <Canvas RenderTransformOrigin="0,0">
+                            <Canvas.RenderTransform>
+                                <ScaleTransform ScaleX="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Scale}"
+                                                ScaleY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Scale}" />
+                            </Canvas.RenderTransform>
+                            <ContentPresenter x:Name="PART_ContentHost"
+                                              Canvas.Left="{TemplateBinding OffsetX}" 
+                                              Canvas.Top="{TemplateBinding OffsetY}" 
+                                              Content="{TemplateBinding Content}" />
+                        </Canvas>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <ScrollBar x:Name="PART_Horizontal"
+                                   Orientation="Horizontal"
+                                   Grid.Row="1"
+                                   LargeChange="0.25"
+                                   SmallChange="0.05"
+                                   Minimum="0"
+                                   Maximum="1" />
+                            <ScrollBar x:Name="PART_Vertical"
+                                   Grid.Column="1"
+                                   Orientation="Vertical"  
+                                   LargeChange="0.25"
+                                   SmallChange="0.05"
+                                   Minimum="0"
+                                   Maximum="1" />
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

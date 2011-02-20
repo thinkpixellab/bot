@@ -1,0 +1,12 @@
+﻿<UserControl
+    x:Class="PixelLab.SL.GridLineControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
+
+    <Canvas x:Name="RootCanvas" UseLayoutRounding="True">
+        <Border x:Name="ImageHost" Background="Transparent">
+            <Image x:Name="DisplayImage" UseLayoutRounding="True" />
+        </Border>
+    </Canvas>
+
+</UserControl>
