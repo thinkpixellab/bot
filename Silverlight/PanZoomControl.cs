@@ -4,12 +4,13 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using Microsoft.Practices.Prism.Commands;
+using PixelLab.Common;
 
 namespace PixelLab.SL
 {
     [TemplatePart(Name = "PART_Horizontal", Type = typeof(ScrollBar))]
     [TemplatePart(Name = "PART_Vertical", Type = typeof(ScrollBar))]
-
     public class PanZoomControl : ContentControl
     {
         // ********************************************************************
@@ -23,6 +24,7 @@ namespace PixelLab.SL
         // private variables
         // ********************************************************************
 
+        private readonly DelegateCommand _resetCommand;
         private ScrollBar _horizontal;
         private ScrollBar _vertical;
         private bool _isMouseDown;
@@ -45,7 +47,7 @@ namespace PixelLab.SL
         {
             this.DefaultStyleKey = typeof(PanZoomControl);
             this.SizeChanged += this.PanZoomControl_SizeChanged;
-
+            _resetCommand = new DelegateCommand(Reset, () => !isReset);
         }
 
         // ********************************************************************
@@ -62,9 +64,8 @@ namespace PixelLab.SL
             get { return (Color)GetValue(MajorGridLineColorProperty); }
             set { SetValue(MajorGridLineColorProperty, value); }
         }
-        public static readonly DependencyProperty MajorGridLineColorProperty =
-            DependencyProperty.Register("MajorGridLineColor", typeof(Color), typeof(PanZoomControl),
-              new PropertyMetadata(Colors.Gray));
+
+        public static readonly DependencyProperty MajorGridLineColorProperty = DependencyPropHelper.Register<PanZoomControl, Color>("MajorGridLineColor", Colors.Gray);
 
         #endregion
 
@@ -78,9 +79,7 @@ namespace PixelLab.SL
             get { return (Color)GetValue(MinorGridLineColorProperty); }
             set { SetValue(MinorGridLineColorProperty, value); }
         }
-        public static readonly DependencyProperty MinorGridLineColorProperty =
-            DependencyProperty.Register("MinorGridLineColor", typeof(Color), typeof(PanZoomControl),
-              new PropertyMetadata(Colors.LightGray));
+        public static readonly DependencyProperty MinorGridLineColorProperty = DependencyPropHelper.Register<PanZoomControl, Color>("MinorGridLineColor", Colors.LightGray);
 
         #endregion
 
@@ -94,9 +93,7 @@ namespace PixelLab.SL
             get { return (int)GetValue(MajorGridLineDistanceProperty); }
             set { SetValue(MajorGridLineDistanceProperty, value); }
         }
-        public static readonly DependencyProperty MajorGridLineDistanceProperty =
-            DependencyProperty.Register("MajorGridLineDistance", typeof(int), typeof(PanZoomControl),
-              new PropertyMetadata(40));
+        public static readonly DependencyProperty MajorGridLineDistanceProperty = DependencyPropHelper.Register<PanZoomControl, int>("MajorGridLineDistance", 40);
 
         #endregion
 
@@ -110,9 +107,7 @@ namespace PixelLab.SL
             get { return (int)GetValue(SubdivisionsProperty); }
             set { SetValue(SubdivisionsProperty, value); }
         }
-        public static readonly DependencyProperty SubdivisionsProperty =
-            DependencyProperty.Register("Subdivisions", typeof(int), typeof(PanZoomControl),
-              new PropertyMetadata(4));
+        public static readonly DependencyProperty SubdivisionsProperty = DependencyPropHelper.Register<PanZoomControl, int>("Subdivisions", 4);
 
         #endregion
 
@@ -126,21 +121,15 @@ namespace PixelLab.SL
             get { return (double)GetValue(ScaleProperty); }
             set { SetValue(ScaleProperty, value); }
         }
-        public static readonly DependencyProperty ScaleProperty =
-            DependencyProperty.Register("Scale", typeof(double), typeof(PanZoomControl),
-            new PropertyMetadata(1.0, PanZoomControl.OnScaleChanged));
+        public static readonly DependencyProperty ScaleProperty = DependencyPropHelper.Register<PanZoomControl, double>("Scale", 1.0, (pzc, newVal, oldVal) => pzc.OnScaleChanged(oldVal));
 
-        private static void OnScaleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        protected virtual void OnScaleChanged(double oldVal)
         {
-            ((PanZoomControl)d).OnScaleChanged(e);
-        }
-
-        protected virtual void OnScaleChanged(DependencyPropertyChangedEventArgs e)
-        {
-            double oldX = OffsetToRelativeOffset(this.OffsetX, (double)e.OldValue, this.ActualWidth, this.ContentSize.Width);
-            double oldY = OffsetToRelativeOffset(this.OffsetY, (double)e.OldValue, this.ActualHeight, this.ContentSize.Height);
+            double oldX = OffsetToRelativeOffset(this.OffsetX, oldVal, this.ActualWidth, this.ContentSize.Width);
+            double oldY = OffsetToRelativeOffset(this.OffsetY, oldVal, this.ActualHeight, this.ContentSize.Height);
             this.RelativeOffsetX = oldX;
             this.RelativeOffsetY = oldY;
+            _resetCommand.RaiseCanExecuteChanged();
         }
 
         #endregion
@@ -157,26 +146,22 @@ namespace PixelLab.SL
             get { return (double)GetValue(OffsetXProperty); }
             set { SetValue(OffsetXProperty, value); }
         }
-        public static readonly DependencyProperty OffsetXProperty =
-            DependencyProperty.Register("OffsetX", typeof(double), typeof(PanZoomControl),
-            new PropertyMetadata(0.0, PanZoomControl.OnOffsetXChanged));
 
-        private static void OnOffsetXChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((PanZoomControl)d).OnOffsetXChanged(e);
-        }
+        public static readonly DependencyProperty OffsetXProperty = DependencyPropHelper.Register<PanZoomControl, double>("OffsetX", 0.0, (pzc, newVal, oldval) => pzc.OnOffsetYChanged(oldval, newVal));
 
         public static bool IsClose(double a, double b)
         {
-            if (Math.Abs(a - b) < 0.0000001) return true;
-            return false;
+            return Math.Abs(a - b) < 0.0000001;
         }
 
-        protected virtual void OnOffsetXChanged(DependencyPropertyChangedEventArgs e)
+        protected virtual void OnOffsetXChanged(double oldVal, double newVal)
         {
-            if (IsClose((double)e.NewValue, (double)e.OldValue)) return;
-            this.ScaledOffsetX = (double)e.NewValue * this.Scale;
-            UpdateScrollBars();
+            if (!IsClose(oldVal, newVal))
+            {
+                this.ScaledOffsetX = newVal * this.Scale;
+                UpdateScrollBars();
+                _resetCommand.RaiseCanExecuteChanged();
+            }
         }
 
         #endregion
@@ -192,20 +177,16 @@ namespace PixelLab.SL
             get { return (double)GetValue(OffsetYProperty); }
             set { SetValue(OffsetYProperty, value); }
         }
-        public static readonly DependencyProperty OffsetYProperty =
-            DependencyProperty.Register("OffsetY", typeof(double), typeof(PanZoomControl),
-            new PropertyMetadata(0.0, PanZoomControl.OnOffsetYChanged));
+        public static readonly DependencyProperty OffsetYProperty = DependencyPropHelper.Register<PanZoomControl, double>("OffsetY", 0.0, (pzc, newVal, oldVal) => pzc.OnOffsetYChanged(oldVal, newVal));
 
-        private static void OnOffsetYChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        protected virtual void OnOffsetYChanged(double oldVal, double newVal)
         {
-            ((PanZoomControl)d).OnOffsetYChanged(e);
-        }
-
-        protected virtual void OnOffsetYChanged(DependencyPropertyChangedEventArgs e)
-        {
-            if (IsClose((double)e.NewValue, (double)e.OldValue)) return;
-            this.ScaledOffsetY = (double)e.NewValue * this.Scale;
-            UpdateScrollBars();
+            if (!IsClose(oldVal, newVal))
+            {
+                this.ScaledOffsetY = newVal * this.Scale;
+                UpdateScrollBars();
+                _resetCommand.RaiseCanExecuteChanged();
+            }
         }
 
         #endregion
@@ -217,9 +198,8 @@ namespace PixelLab.SL
             get { return (double)GetValue(ScaledOffsetXProperty); }
             private set { SetValue(ScaledOffsetXProperty, value); }
         }
-        public static readonly DependencyProperty ScaledOffsetXProperty =
-            DependencyProperty.Register("ScaledOffsetX", typeof(double), typeof(PanZoomControl),
-              new PropertyMetadata(0.0));
+
+        public static readonly DependencyProperty ScaledOffsetXProperty = DependencyPropHelper.Register<PanZoomControl, double>("ScaledOffsetX", 0.0);
 
         #endregion
 
@@ -230,9 +210,7 @@ namespace PixelLab.SL
             get { return (double)GetValue(ScaledOffsetYProperty); }
             private set { SetValue(ScaledOffsetYProperty, value); }
         }
-        public static readonly DependencyProperty ScaledOffsetYProperty =
-            DependencyProperty.Register("ScaledOffsetY", typeof(double), typeof(PanZoomControl),
-              new PropertyMetadata(0.0));
+        public static readonly DependencyProperty ScaledOffsetYProperty = DependencyPropHelper.Register<PanZoomControl, double>("ScaledOffsetY", 0.0);
 
         #endregion
 
@@ -246,16 +224,9 @@ namespace PixelLab.SL
             get { return (bool)GetValue(CliptoBoundsProperty); }
             set { SetValue(CliptoBoundsProperty, value); }
         }
-        public static readonly DependencyProperty CliptoBoundsProperty =
-            DependencyProperty.Register("CliptoBounds", typeof(bool), typeof(PanZoomControl),
-            new PropertyMetadata(true, new PropertyChangedCallback(OnCliptoBoundsChanged)));
+        public static readonly DependencyProperty CliptoBoundsProperty = DependencyPropHelper.Register<PanZoomControl, bool>("CliptoBounds", true, (pzc, newVal, oldVal) => pzc.OnCliptoBoundsChanged());
 
-        private static void OnCliptoBoundsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((PanZoomControl)d).OnCliptoBoundsChanged(e);
-        }
-
-        protected virtual void OnCliptoBoundsChanged(DependencyPropertyChangedEventArgs e)
+        protected virtual void OnCliptoBoundsChanged()
         {
             this.UpdateClip(new Size(this.ActualHeight, this.ActualHeight));
         }
@@ -340,6 +311,14 @@ namespace PixelLab.SL
             }
         }
 
+        public ICommand ResetCommand { get { return _resetCommand; } }
+
+        public void Reset()
+        {
+            Scale = 1;
+            CenterContent();
+        }
+
         // ********************************************************************
         // overrides and event handlers
         // ********************************************************************
@@ -407,59 +386,6 @@ namespace PixelLab.SL
         // ********************************************************************
         // private methods
         // ********************************************************************
-
-        public void UpdateScrollBars()
-        {
-            if (_suspendScrollBarUpdates || _horizontal == null || _vertical == null) return;
-
-            // horizontal 
-
-            double offsetx = this.OffsetX;
-            double scaledoffsetx = (offsetx * this.Scale);
-            double scaledwidth = (this.ContentSize.Width * this.Scale);
-
-            // do we need to show the scroll bars
-            if (offsetx >= 0 && ((scaledwidth + scaledoffsetx) <= this.ActualWidth))
-            {
-                _horizontal.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                _scrollminx = scaledwidth * -1;
-                _scrollminx = Math.Min(_scrollminx, scaledoffsetx);
-
-                _scrollmaxx = this.ActualWidth;
-                _scrollmaxx = Math.Max(_scrollmaxx, scaledoffsetx);
-
-                _horizontal.Value = 1 - ((scaledoffsetx - _scrollminx) / (_scrollmaxx - _scrollminx));
-                _horizontal.ViewportSize = this.ActualWidth / (_scrollmaxx - _scrollminx);
-                _horizontal.Visibility = Visibility.Visible;
-            }
-
-            // vertical 
-
-            double offsety = this.OffsetY;
-            double scaledoffsety = (offsety * this.Scale);
-            double scaledheight = (this.ContentSize.Height * this.Scale);
-
-            // do we need to show the scroll bars
-            if (offsety >= 0 && ((scaledheight + scaledoffsety) <= this.ActualHeight))
-            {
-                _vertical.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                _scrollminy = scaledheight * -1;
-                _scrollminy = Math.Min(_scrollminy, scaledoffsety);
-
-                _scrollmaxy = this.ActualHeight;
-                _scrollmaxy = Math.Max(_scrollmaxy, scaledoffsety);
-
-                _vertical.Value = 1 - ((scaledoffsety - _scrollminy) / (_scrollmaxy - _scrollminy));
-                _vertical.ViewportSize = this.ActualHeight / (_scrollmaxy - _scrollminy);
-                _vertical.Visibility = Visibility.Visible;
-            }
-        }
 
         /// <summary>
         /// When overridden in a derived class, is invoked whenever application code or internal processes (such as a rebuilding layout pass) call <see cref="M:System.Windows.Controls.Control.ApplyTemplate"/>. In simplest terms, this means the method is called just before a UI element displays in an application. For more information, see Remarks.
@@ -576,6 +502,67 @@ namespace PixelLab.SL
             else
             {
                 this.Clip = null;
+            }
+        }
+
+        private void UpdateScrollBars()
+        {
+            if (_suspendScrollBarUpdates || _horizontal == null || _vertical == null) return;
+
+            // horizontal 
+
+            double offsetx = this.OffsetX;
+            double scaledoffsetx = (offsetx * this.Scale);
+            double scaledwidth = (this.ContentSize.Width * this.Scale);
+
+            // do we need to show the scroll bars
+            if (offsetx >= 0 && ((scaledwidth + scaledoffsetx) <= this.ActualWidth))
+            {
+                _horizontal.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                _scrollminx = scaledwidth * -1;
+                _scrollminx = Math.Min(_scrollminx, scaledoffsetx);
+
+                _scrollmaxx = this.ActualWidth;
+                _scrollmaxx = Math.Max(_scrollmaxx, scaledoffsetx);
+
+                _horizontal.Value = 1 - ((scaledoffsetx - _scrollminx) / (_scrollmaxx - _scrollminx));
+                _horizontal.ViewportSize = this.ActualWidth / (_scrollmaxx - _scrollminx);
+                _horizontal.Visibility = Visibility.Visible;
+            }
+
+            // vertical 
+
+            double offsety = this.OffsetY;
+            double scaledoffsety = (offsety * this.Scale);
+            double scaledheight = (this.ContentSize.Height * this.Scale);
+
+            // do we need to show the scroll bars
+            if (offsety >= 0 && ((scaledheight + scaledoffsety) <= this.ActualHeight))
+            {
+                _vertical.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                _scrollminy = scaledheight * -1;
+                _scrollminy = Math.Min(_scrollminy, scaledoffsety);
+
+                _scrollmaxy = this.ActualHeight;
+                _scrollmaxy = Math.Max(_scrollmaxy, scaledoffsety);
+
+                _vertical.Value = 1 - ((scaledoffsety - _scrollminy) / (_scrollmaxy - _scrollminy));
+                _vertical.ViewportSize = this.ActualHeight / (_scrollmaxy - _scrollminy);
+                _vertical.Visibility = Visibility.Visible;
+            }
+        }
+
+        private bool isReset
+        {
+            get
+            {
+                return IsClose(Scale, 1) && IsClose(RelativeOffsetX, 0.5) && IsClose(RelativeOffsetY, 0.5);
             }
         }
     }

@@ -18,6 +18,31 @@ namespace PixelLab.Common
             return new PropertyMetadata(GetTypedDPChangedHandler<TElement, TProperty>(handler));
         }
 
+        public static PropertyMetadata GetTypePropertyMetadata<TElement, TProperty>(TProperty defaultValue, Action<TElement, TProperty, TProperty> handler) where TElement : DependencyObject
+        {
+            return new PropertyMetadata(defaultValue, GetTypedDPChangedHandler<TElement, TProperty>(handler));
+        }
+
+        public static PropertyMetadata GetTypePropertyMetadata<TElement, TProperty>(TProperty defaultValue) where TElement : DependencyObject
+        {
+            return new PropertyMetadata(defaultValue);
+        }
+
+        public static DependencyProperty Register<TElement, TProperty>(string name, TProperty defaultValue, Action<TElement, TProperty, TProperty> changeHandler = null) where TElement : DependencyObject
+        {
+            PropertyMetadata metadata;
+            if (changeHandler == null)
+            {
+                metadata = GetTypePropertyMetadata<TElement, TProperty>(defaultValue);
+            }
+            else
+            {
+                metadata = GetTypePropertyMetadata(defaultValue, changeHandler);
+            }
+
+            return DependencyProperty.Register(name, typeof(TProperty), typeof(TElement), metadata);
+        }
+
         public static DependencyProperty Register<TElement, TProperty>(string name, Action<TElement, TProperty, TProperty> changeHandler = null) where TElement : DependencyObject
         {
             PropertyMetadata metadata;

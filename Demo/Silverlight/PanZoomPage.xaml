@@ -17,7 +17,7 @@
         </plsl:PanZoomControl>
         
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
-            <Button Content="1:1" Click="Button_Click" Padding="5" />
+            <Button Content="1:1" Command="{Binding Path=ResetCommand, ElementName=PanZoom}" Padding="5" />
             <plsl:DiscreteSlider x:Name="ZoomSlider" Minimum="0.2" Maximum="2" SmallChange="0.2" LargeChange="0.2" Value="{Binding Path=Scale, ElementName=PanZoom, Mode=TwoWay}" Width="200" />
         </StackPanel>
 

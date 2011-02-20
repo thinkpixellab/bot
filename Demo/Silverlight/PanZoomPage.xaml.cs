@@ -16,11 +16,5 @@ namespace PixelLab.SL.Demo
         {
             PanZoom.CenterContent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            PanZoom.Scale = 1;
-            PanZoom.CenterContent();
-        }
     }
 }
