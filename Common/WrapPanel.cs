@@ -165,15 +165,9 @@ namespace PixelLab.Common
             set { SetValue(WrappingAlignmentProperty, value); }
         }
         public static readonly DependencyProperty WrappingAlignmentProperty =
-            DependencyProperty.Register("WrappingAlignment", typeof(WrappingAlignment), typeof(WrapPanel),
-            new PropertyMetadata(WrappingAlignment.Left, new PropertyChangedCallback(OnWrappingAlignmentChanged)));
+            DependencyPropHelper.Register<WrapPanel, WrappingAlignment>("WrappingAlignment", WrappingAlignment.Left, (panel, newVal, oldVal) => panel.OnWrappingAlignmentChanged());
 
-        private static void OnWrappingAlignmentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((WrapPanel)d).OnWrappingAlignmentChanged(e);
-        }
-
-        protected virtual void OnWrappingAlignmentChanged(DependencyPropertyChangedEventArgs e)
+        protected virtual void OnWrappingAlignmentChanged()
         {
             this.InvalidateArrange();
         }

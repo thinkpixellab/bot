@@ -47,7 +47,7 @@ namespace PixelLab.SL
         }
 
         public static readonly DependencyProperty NextOffsetXProperty =
-            DependencyProperty.Register("NextOffsetX", typeof(int), typeof(SpriteButton), null);
+            DependencyPropHelper.Register<SpriteButton, int>("NextOffsetX");
 
         public int NextOffsetY
         {
@@ -56,7 +56,7 @@ namespace PixelLab.SL
         }
 
         public static readonly DependencyProperty NextOffsetYProperty =
-            DependencyProperty.Register("NextOffsetY", typeof(int), typeof(SpriteButton), null);
+            DependencyPropHelper.Register<SpriteButton, int>("NextOffsetY");
 
         public int SpriteIndex
         {
@@ -65,7 +65,7 @@ namespace PixelLab.SL
         }
 
         public static readonly DependencyProperty SpriteIndexProperty =
-            DependencyProperty.Register("SpriteIndex", typeof(int), typeof(SpriteButton), null);
+            DependencyPropHelper.Register<SpriteButton, int>("SpriteIndex");
 
         public int PressedOffsetX
         {

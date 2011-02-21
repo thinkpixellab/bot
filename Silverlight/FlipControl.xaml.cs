@@ -120,7 +120,7 @@ namespace PixelLab.SL
         }
 
         public static readonly DependencyProperty PageWidthProperty =
-            DependencyProperty.Register("PageWidth", typeof(double), typeof(FlipControl), new PropertyMetadata(0.0));
+            DependencyPropHelper.Register<FlipControl, double>("PageWidth");
 
         public double PageHeight
         {
@@ -129,7 +129,7 @@ namespace PixelLab.SL
         }
 
         public static readonly DependencyProperty PageHeightProperty =
-            DependencyProperty.Register("PageHeight", typeof(double), typeof(FlipControl), new PropertyMetadata(0.0));
+            DependencyPropHelper.Register<FlipControl, double>("PageHeight");
 
         public double PageDoubleWidth
         {
@@ -138,7 +138,8 @@ namespace PixelLab.SL
         }
 
         public static readonly DependencyProperty PageDoubleWidthProperty =
-            DependencyProperty.Register("PageDoubleWidth", typeof(double), typeof(FlipControl), new PropertyMetadata(0.0));
+            DependencyPropHelper.Register<FlipControl, double>("PageDoubleWidth");
+
         #endregion
 
         #region private impl

@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using PixelLab.Common;
 
 namespace PixelLab.SL
 {
@@ -53,7 +54,6 @@ namespace PixelLab.SL
             UpdateGrid();
         }
 
-
         #region MajorGridLineDistance (DependencyProperty)
 
         /// <summary>
@@ -65,18 +65,7 @@ namespace PixelLab.SL
             set { SetValue(MajorGridLineDistanceProperty, value); }
         }
         public static readonly DependencyProperty MajorGridLineDistanceProperty =
-            DependencyProperty.Register("MajorGridLineDistance", typeof(int), typeof(GridLineControl),
-            new PropertyMetadata(40, new PropertyChangedCallback(OnMajorGridLineDistanceChanged)));
-
-        private static void OnMajorGridLineDistanceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((GridLineControl)d).OnMajorGridLineDistanceChanged(e);
-        }
-
-        protected virtual void OnMajorGridLineDistanceChanged(DependencyPropertyChangedEventArgs e)
-        {
-            RequestGridUpdate();
-        }
+            DependencyPropHelper.Register<GridLineControl, int>("MajorGridLineDistance", 40, (e, n, o) => e.RequestGridUpdate());
 
         #endregion
 
@@ -91,18 +80,7 @@ namespace PixelLab.SL
             set { SetValue(MajorGridLineColorProperty, value); }
         }
         public static readonly DependencyProperty MajorGridLineColorProperty =
-            DependencyProperty.Register("MajorGridLineColor", typeof(Color), typeof(GridLineControl),
-            new PropertyMetadata(Colors.Black, new PropertyChangedCallback(OnMajorGridLineColorChanged)));
-
-        private static void OnMajorGridLineColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((GridLineControl)d).OnMajorGridLineColorChanged(e);
-        }
-
-        protected virtual void OnMajorGridLineColorChanged(DependencyPropertyChangedEventArgs e)
-        {
-            RequestGridUpdate();
-        }
+            DependencyPropHelper.Register<GridLineControl, Color>("MajorGridLineColor", Colors.Black, (e, n, o) => e.RequestGridUpdate());
 
         #endregion
 
@@ -117,18 +95,7 @@ namespace PixelLab.SL
             set { SetValue(MinorGridLineSubDivisionsProperty, value); }
         }
         public static readonly DependencyProperty MinorGridLineSubDivisionsProperty =
-            DependencyProperty.Register("MinorGridLineSubDivisions", typeof(int), typeof(GridLineControl),
-            new PropertyMetadata(4, new PropertyChangedCallback(OnMinorGridLineSubDivisionsChanged)));
-
-        private static void OnMinorGridLineSubDivisionsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((GridLineControl)d).OnMinorGridLineSubDivisionsChanged(e);
-        }
-
-        protected virtual void OnMinorGridLineSubDivisionsChanged(DependencyPropertyChangedEventArgs e)
-        {
-            RequestGridUpdate();
-        }
+            DependencyPropHelper.Register<GridLineControl, int>("MinorGridLineSubDivisions", 4, (glc, newVal, oldVal) => glc.RequestGridUpdate());
 
         #endregion
 
@@ -143,18 +110,7 @@ namespace PixelLab.SL
             set { SetValue(MinorGridLineColorProperty, value); }
         }
         public static readonly DependencyProperty MinorGridLineColorProperty =
-            DependencyProperty.Register("MinorGridLineColor", typeof(Color), typeof(GridLineControl),
-            new PropertyMetadata(Colors.LightGray, new PropertyChangedCallback(OnMinorGridLineColorChanged)));
-
-        private static void OnMinorGridLineColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((GridLineControl)d).OnMinorGridLineColorChanged(e);
-        }
-
-        protected virtual void OnMinorGridLineColorChanged(DependencyPropertyChangedEventArgs e)
-        {
-            RequestGridUpdate();
-        }
+            DependencyPropHelper.Register<GridLineControl, Color>("MinorGridLineColor", Colors.LightGray, (glc, n, o) => glc.RequestGridUpdate());
 
         #endregion
 
@@ -169,18 +125,7 @@ namespace PixelLab.SL
             set { SetValue(ScaleProperty, value); }
         }
         public static readonly DependencyProperty ScaleProperty =
-            DependencyProperty.Register("Scale", typeof(double), typeof(GridLineControl),
-            new PropertyMetadata(1.0, new PropertyChangedCallback(OnScaleChanged)));
-
-        private static void OnScaleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((GridLineControl)d).OnScaleChanged(e);
-        }
-
-        protected virtual void OnScaleChanged(DependencyPropertyChangedEventArgs e)
-        {
-            RequestGridUpdate();
-        }
+            DependencyPropHelper.Register<GridLineControl, double>("Scale", 1.0, (e, n, o) => e.RequestGridUpdate());
 
         #endregion
 
@@ -195,18 +140,7 @@ namespace PixelLab.SL
             set { SetValue(OffsetXProperty, value); }
         }
         public static readonly DependencyProperty OffsetXProperty =
-            DependencyProperty.Register("OffsetX", typeof(double), typeof(GridLineControl),
-            new PropertyMetadata(0.0, new PropertyChangedCallback(OnOffsetXChanged)));
-
-        private static void OnOffsetXChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((GridLineControl)d).OnOffsetXChanged(e);
-        }
-
-        protected virtual void OnOffsetXChanged(DependencyPropertyChangedEventArgs e)
-        {
-            this.UpdateOffset();
-        }
+            DependencyPropHelper.Register<GridLineControl, double>("OffsetX", 0.0, (e, n, o) => e.UpdateOffset());
 
         #endregion
 
@@ -221,18 +155,7 @@ namespace PixelLab.SL
             set { SetValue(OffsetYProperty, value); }
         }
         public static readonly DependencyProperty OffsetYProperty =
-            DependencyProperty.Register("OffsetY", typeof(double), typeof(GridLineControl),
-            new PropertyMetadata(0.0, new PropertyChangedCallback(OnOffsetYChanged)));
-
-        private static void OnOffsetYChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((GridLineControl)d).OnOffsetYChanged(e);
-        }
-
-        protected virtual void OnOffsetYChanged(DependencyPropertyChangedEventArgs e)
-        {
-            this.UpdateOffset();
-        }
+            DependencyPropHelper.Register<GridLineControl, double>("OffsetY", 0.0, (e, n, o) => e.UpdateOffset());
 
         #endregion
 
