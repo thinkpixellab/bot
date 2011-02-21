@@ -5,39 +5,16 @@ namespace PixelLab.Common
 {
     public static class DependencyPropHelper
     {
-        public static PropertyChangedCallback GetTypedDPChangedHandler<TElement, TProperty>(Action<TElement, TProperty, TProperty> handler) where TElement : DependencyObject
-        {
-            return new PropertyChangedCallback((element, args) =>
-            {
-                handler((TElement)element, (TProperty)args.NewValue, (TProperty)args.OldValue);
-            });
-        }
-
-        public static PropertyMetadata GetTypePropertyMetadata<TElement, TProperty>(Action<TElement, TProperty, TProperty> handler) where TElement : DependencyObject
-        {
-            return new PropertyMetadata(GetTypedDPChangedHandler<TElement, TProperty>(handler));
-        }
-
-        public static PropertyMetadata GetTypePropertyMetadata<TElement, TProperty>(TProperty defaultValue, Action<TElement, TProperty, TProperty> handler) where TElement : DependencyObject
-        {
-            return new PropertyMetadata(defaultValue, GetTypedDPChangedHandler<TElement, TProperty>(handler));
-        }
-
-        public static PropertyMetadata GetTypePropertyMetadata<TElement, TProperty>(TProperty defaultValue) where TElement : DependencyObject
-        {
-            return new PropertyMetadata(defaultValue);
-        }
-
         public static DependencyProperty Register<TElement, TProperty>(string name, TProperty defaultValue, Action<TElement, TProperty, TProperty> changeHandler = null) where TElement : DependencyObject
         {
             PropertyMetadata metadata;
             if (changeHandler == null)
             {
-                metadata = GetTypePropertyMetadata<TElement, TProperty>(defaultValue);
+                metadata = new PropertyMetadata(defaultValue);
             }
             else
             {
-                metadata = GetTypePropertyMetadata(defaultValue, changeHandler);
+                metadata = new PropertyMetadata(defaultValue, GetPropertyChangedCallback(changeHandler));
             }
 
             return DependencyProperty.Register(name, typeof(TProperty), typeof(TElement), metadata);
@@ -52,7 +29,7 @@ namespace PixelLab.Common
             }
             else
             {
-                metadata = GetTypePropertyMetadata(changeHandler);
+                metadata = new PropertyMetadata(GetPropertyChangedCallback(changeHandler));
             }
 
             return DependencyProperty.Register(name, typeof(TProperty), typeof(TElement), metadata);
@@ -67,10 +44,18 @@ namespace PixelLab.Common
             }
             else
             {
-                metadata = GetTypePropertyMetadata(changeHandler);
+                metadata = new PropertyMetadata(GetPropertyChangedCallback(changeHandler));
             }
 
             return DependencyProperty.RegisterAttached(name, typeof(TProperty), typeof(TOwner), metadata);
+        }
+
+        private static PropertyChangedCallback GetPropertyChangedCallback<TElement, TProperty>(Action<TElement, TProperty, TProperty> handler) where TElement : DependencyObject
+        {
+            return new PropertyChangedCallback((element, args) =>
+            {
+                handler((TElement)element, (TProperty)args.NewValue, (TProperty)args.OldValue);
+            });
         }
     }
 }
