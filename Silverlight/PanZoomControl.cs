@@ -48,6 +48,7 @@ namespace PixelLab.SL
             this.DefaultStyleKey = typeof(PanZoomControl);
             this.SizeChanged += this.PanZoomControl_SizeChanged;
             _resetCommand = new DelegateCommand(Reset, () => !isReset);
+            this.CanPan = true;
         }
 
         // ********************************************************************
@@ -214,19 +215,19 @@ namespace PixelLab.SL
 
         #endregion
 
-        #region CliptoBounds (DependencyProperty)
+        #region ClipToBounds (DependencyProperty)
 
         /// <summary>
         /// A description of the property.
         /// </summary>
-        public bool CliptoBounds
+        public bool ClipToBounds
         {
-            get { return (bool)GetValue(CliptoBoundsProperty); }
-            set { SetValue(CliptoBoundsProperty, value); }
+            get { return (bool)GetValue(ClipToBoundsProperty); }
+            set { SetValue(ClipToBoundsProperty, value); }
         }
-        public static readonly DependencyProperty CliptoBoundsProperty = DependencyPropHelper.Register<PanZoomControl, bool>("CliptoBounds", true, (pzc, newVal, oldVal) => pzc.OnCliptoBoundsChanged());
+        public static readonly DependencyProperty ClipToBoundsProperty = DependencyPropHelper.Register<PanZoomControl, bool>("ClipToBounds", true, (pzc, newVal, oldVal) => pzc.OnCliptTBoundsChanged());
 
-        protected virtual void OnCliptoBoundsChanged()
+        protected virtual void OnCliptTBoundsChanged()
         {
             this.UpdateClip(new Size(this.ActualHeight, this.ActualHeight));
         }
@@ -249,6 +250,12 @@ namespace PixelLab.SL
         // ********************************************************************
         // public properties
         // ********************************************************************
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance can pan.
+        /// </summary>
+        /// <value><c>True</c> if this instance can pan; otherwise, <c>false</c>.</value>
+        public bool CanPan { get; set; }
 
         public Size ContentSize
         {
@@ -348,9 +355,12 @@ namespace PixelLab.SL
         /// <param name="e">The data for the event.</param>
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            this._lastDown = e.GetPosition(this);
-            this._isMouseDown = true;
-            this.CaptureMouse();
+            if (this.CanPan)
+            {
+                this._lastDown = e.GetPosition(this);
+                this._isMouseDown = true;
+                this.CaptureMouse();
+            }
         }
 
         /// <summary>
@@ -405,6 +415,7 @@ namespace PixelLab.SL
 
         private void child_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            this.CenterContent();
             this.UpdateScrollBars();
         }
 
@@ -493,7 +504,7 @@ namespace PixelLab.SL
         private void UpdateClip(Size s)
         {
 
-            if (this.CliptoBounds)
+            if (this.ClipToBounds)
             {
                 RectangleGeometry r = new RectangleGeometry();
                 r.Rect = new Rect(0, 0, s.Width, s.Height);
