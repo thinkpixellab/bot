@@ -33,15 +33,16 @@
                     <Grid Background="{TemplateBinding Background}" UseLayoutRounding="True">
 
                         <plsl:GridLineControl x:Name="glc"
-                                               IsHitTestVisible="False"
-                                               MajorGridLineColor="{TemplateBinding MajorGridLineColor}"
-                                               MajorGridLineDistance="{TemplateBinding MajorGridLineDistance}"
-                                               MinorGridLineColor="{TemplateBinding MinorGridLineColor}"
-                                               MinorGridLineSubDivisions="{TemplateBinding Subdivisions}"
-                                               OffsetX="{TemplateBinding ScaledOffsetX}"
-                                               OffsetY="{TemplateBinding ScaledOffsetY}"
-                                               Scale="{TemplateBinding Scale}"
-                                               UseLayoutRounding="True" />
+                                              IsHitTestVisible="False"
+                                              MajorGridLineColor="{TemplateBinding MajorGridLineColor}"
+                                              MajorGridLineDistance="{TemplateBinding MajorGridLineDistance}"
+                                              MinorGridLineColor="{TemplateBinding MinorGridLineColor}"
+                                              MinorGridLineSubDivisions="{TemplateBinding Subdivisions}"
+                                              OffsetX="{TemplateBinding ScaledOffsetX}"
+                                              OffsetY="{TemplateBinding ScaledOffsetY}"
+                                              Scale="{TemplateBinding Scale}"
+                                              UseLayoutRounding="True"
+                                              Visibility="{TemplateBinding GridLineVisibility}"/>
                         <Canvas RenderTransformOrigin="0,0">
                             <Canvas.RenderTransform>
                                 <ScaleTransform ScaleX="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Scale}"

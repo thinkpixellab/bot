@@ -55,6 +55,20 @@ namespace PixelLab.SL
         // dependency properties
         // ********************************************************************
 
+        #region GridLineVisibility (DependencyProperty)
+        public Visibility GridLineVisibility
+        {
+            get { return (Visibility)GetValue(GridLineVisibilityProperty); }
+            set { SetValue(GridLineVisibilityProperty, value); }
+        }
+        public static readonly DependencyProperty GridLineVisibilityProperty =
+            DependencyProperty.Register(
+                "GridLineVisibility",
+                typeof(Visibility),
+                typeof(PanZoomControl),
+                new PropertyMetadata(Visibility.Visible));
+        #endregion
+
         #region MajorGridLineColor (DependencyProperty)
 
         /// <summary>
