@@ -429,7 +429,6 @@ namespace PixelLab.SL
 
         private void child_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            this.CenterContent();
             this.UpdateScrollBars();
         }
 
