@@ -62,11 +62,9 @@ namespace PixelLab.SL
             set { SetValue(GridLineVisibilityProperty, value); }
         }
         public static readonly DependencyProperty GridLineVisibilityProperty =
-            DependencyProperty.Register(
+            DependencyPropHelper.Register<PanZoomControl, Visibility>(
                 "GridLineVisibility",
-                typeof(Visibility),
-                typeof(PanZoomControl),
-                new PropertyMetadata(Visibility.Visible));
+                Visibility.Visible);
         #endregion
 
         #region MajorGridLineColor (DependencyProperty)
@@ -162,12 +160,11 @@ namespace PixelLab.SL
             set { SetValue(OffsetXProperty, value); }
         }
 
-        public static readonly DependencyProperty OffsetXProperty = DependencyPropHelper.Register<PanZoomControl, double>("OffsetX", 0.0, (pzc, newVal, oldval) => pzc.OnOffsetYChanged(oldval, newVal));
-
-        public static bool IsClose(double a, double b)
-        {
-            return Math.Abs(a - b) < 0.0000001;
-        }
+        public static readonly DependencyProperty OffsetXProperty =
+            DependencyPropHelper.Register<PanZoomControl, double>(
+                "OffsetX",
+                0.0,
+                (pzc, newVal, oldval) => pzc.OnOffsetXChanged(oldval, newVal));
 
         protected virtual void OnOffsetXChanged(double oldVal, double newVal)
         {
@@ -192,7 +189,11 @@ namespace PixelLab.SL
             get { return (double)GetValue(OffsetYProperty); }
             set { SetValue(OffsetYProperty, value); }
         }
-        public static readonly DependencyProperty OffsetYProperty = DependencyPropHelper.Register<PanZoomControl, double>("OffsetY", 0.0, (pzc, newVal, oldVal) => pzc.OnOffsetYChanged(oldVal, newVal));
+        public static readonly DependencyProperty OffsetYProperty =
+            DependencyPropHelper.Register<PanZoomControl, double>(
+                "OffsetY",
+                0.0,
+                (pzc, newVal, oldVal) => pzc.OnOffsetYChanged(oldVal, newVal));
 
         protected virtual void OnOffsetYChanged(double oldVal, double newVal)
         {
@@ -588,6 +589,11 @@ namespace PixelLab.SL
             {
                 return IsClose(Scale, 1) && IsClose(RelativeOffsetX, 0.5) && IsClose(RelativeOffsetY, 0.5);
             }
+        }
+
+        private static bool IsClose(double a, double b)
+        {
+            return Math.Abs(a - b) < 0.0000001;
         }
     }
 }
