@@ -26,6 +26,14 @@ namespace PixelLab.Common
             }, null);
         }
 
+        public static IAsyncResult Invoke<T1, T2, TResult>(this Dispatcher dispatcher, T1 param1, T2 param2, Func<T1, T2, AsyncCallback, object, IAsyncResult> beginFunction, Func<IAsyncResult, TResult> endFunction, Action<TResult> handler, Action<Exception> exceptionHandler)
+        {
+            return beginFunction(param1, param2, asyncResult =>
+            {
+                dispatcher.InvokeHandleCatch(asyncResult, endFunction, handler, exceptionHandler);
+            }, null);
+        }
+
         // TODO: add logic for 'critical' exception - out of memory, stack overflow, etc
         private static void InvokeHandleCatch<TResult>(this Dispatcher dispatcher, IAsyncResult asyncResult, Func<IAsyncResult, TResult> endFunction, Action<TResult> handler, Action<Exception> exceptionHandler)
         {
