@@ -14,7 +14,25 @@ namespace PixelLab.Common
 {
     public class CommandHelpers
     {
-        public static readonly DependencyProperty CommandStringProperty = DependencyPropHelper.RegisterAttached<CommandHelpers, FrameworkElement, string>("CommandString", element_commandStringChanged);
+        public static readonly DependencyProperty CommandParameterProperty =
+            DependencyPropHelper.RegisterAttached<CommandHelpers, FrameworkElement, object>("CommandParameter");
+
+        public static object GetCommandParameter(FrameworkElement element)
+        {
+            Contract.Requires(element != null);
+            return element.GetValue(CommandParameterProperty);
+        }
+
+        public static void SetCommandParameter(FrameworkElement element, object value)
+        {
+            Contract.Requires(element != null);
+            element.SetValue(CommandParameterProperty, value);
+        }
+
+        public static readonly DependencyProperty CommandStringProperty =
+            DependencyPropHelper.RegisterAttached<CommandHelpers, FrameworkElement, string>(
+                "CommandString",
+                element_commandStringChanged);
 
         public static string GetCommandString(FrameworkElement element)
         {
@@ -27,7 +45,10 @@ namespace PixelLab.Common
             element.SetValue(CommandStringProperty, value);
         }
 
-        public static readonly DependencyProperty CommandProperty = DependencyPropHelper.RegisterAttached<CommandHelpers, FrameworkElement, ICommand>("Command", element_commandChanged);
+        public static readonly DependencyProperty CommandProperty =
+            DependencyPropHelper.RegisterAttached<CommandHelpers, FrameworkElement, ICommand>(
+                "Command",
+                element_commandChanged);
 
         public static ICommand GetCommand(FrameworkElement element)
         {
@@ -109,7 +130,7 @@ namespace PixelLab.Common
             }
             else
             {
-                // TODO: Do we want to ponder how to handled enabled changed? Perhaps disable the element? ...should ponder
+                // TODO: Do we want to ponder how to handle enabled changed? Perhaps disable the element? ...should ponder
                 if (oldValue != null)
                 {
                     source.MouseLeftButtonDown -= source_MouseLeftButtonDown;
@@ -123,16 +144,19 @@ namespace PixelLab.Common
 
         private static void source_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var element = (FrameworkElement)sender;
-            Debug.Assert(!(element is ButtonBase));
-            var command = GetCommand(element);
-            Debug.Assert(command != null);
-            var param = element.DataContext;
-
-            if (!e.Handled && command.CanExecute(param))
+            if (!e.Handled)
             {
-                e.Handled = true;
-                command.Execute(param);
+                var element = (FrameworkElement)sender;
+                Debug.Assert(!(element is ButtonBase));
+                var command = GetCommand(element);
+                Debug.Assert(command != null);
+                var param = GetCommandParameter(element) ?? element.DataContext;
+
+                if (command.CanExecute(param))
+                {
+                    e.Handled = true;
+                    command.Execute(param);
+                }
             }
         }
 
