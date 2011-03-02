@@ -9,6 +9,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Collections.Generic;
+using System.Windows.Controls;
 
 namespace PixelLab.Common
 {
@@ -134,10 +136,41 @@ namespace PixelLab.Common
                 if (oldValue != null)
                 {
                     source.MouseLeftButtonDown -= source_MouseLeftButtonDown;
+                    if (elementLookup.ContainsKey(oldValue))
+                    {
+                        elementLookup[oldValue].Remove(source);
+                    }
+
+                    oldValue.CanExecuteChanged -= Command_CanExecuteChanged;
                 }
                 if (newValue != null)
                 {
                     source.MouseLeftButtonDown += source_MouseLeftButtonDown;
+                    if (!elementLookup.ContainsKey(newValue))
+                    {
+                        elementLookup.Add(newValue, new List<FrameworkElement>());
+                    }
+
+                    elementLookup[newValue].Add(source);
+                    newValue.CanExecuteChanged += Command_CanExecuteChanged;
+                }
+            }
+        }
+
+        private static void Command_CanExecuteChanged(object sender, EventArgs e)
+        {
+            var command = sender as ICommand;
+            if ((command != null) && (elementLookup.ContainsKey(command)))
+            {
+                var elements = elementLookup[command];
+                var controls = from el in elements
+                               where el is Control
+                               select (Control)el;
+                foreach (var control in controls)
+                {
+                    var param = GetCommandParameter(control);
+                    bool canExecute = command.CanExecute(param);
+                    control.IsEnabled = canExecute;
                 }
             }
         }
@@ -159,6 +192,8 @@ namespace PixelLab.Common
                 }
             }
         }
+
+        private static readonly Dictionary<ICommand, List<FrameworkElement>> elementLookup = new Dictionary<ICommand, List<FrameworkElement>>();
 
         #endregion
     }
