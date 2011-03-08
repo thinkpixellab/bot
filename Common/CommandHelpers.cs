@@ -9,7 +9,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Collections.Generic;
 using System.Windows.Controls;
 
 namespace PixelLab.Common
@@ -132,46 +131,7 @@ namespace PixelLab.Common
             }
             else
             {
-                // TODO: Do we want to ponder how to handle enabled changed? Perhaps disable the element? ...should ponder
-                if (oldValue != null)
-                {
-                    source.MouseLeftButtonDown -= source_MouseLeftButtonDown;
-                    if (elementLookup.ContainsKey(oldValue))
-                    {
-                        elementLookup[oldValue].Remove(source);
-                    }
-
-                    oldValue.CanExecuteChanged -= Command_CanExecuteChanged;
-                }
-                if (newValue != null)
-                {
-                    source.MouseLeftButtonDown += source_MouseLeftButtonDown;
-                    if (!elementLookup.ContainsKey(newValue))
-                    {
-                        elementLookup.Add(newValue, new List<FrameworkElement>());
-                    }
-
-                    elementLookup[newValue].Add(source);
-                    newValue.CanExecuteChanged += Command_CanExecuteChanged;
-                }
-            }
-        }
-
-        private static void Command_CanExecuteChanged(object sender, EventArgs e)
-        {
-            var command = sender as ICommand;
-            if ((command != null) && (elementLookup.ContainsKey(command)))
-            {
-                var elements = elementLookup[command];
-                var controls = from el in elements
-                               where el is Control
-                               select (Control)el;
-                foreach (var control in controls)
-                {
-                    var param = GetCommandParameter(control);
-                    bool canExecute = command.CanExecute(param);
-                    control.IsEnabled = canExecute;
-                }
+                CommandState.WireCommand(source, oldValue, newValue);
             }
         }
 
@@ -193,8 +153,71 @@ namespace PixelLab.Common
             }
         }
 
-        private static readonly Dictionary<ICommand, List<FrameworkElement>> elementLookup = new Dictionary<ICommand, List<FrameworkElement>>();
-
         #endregion
+
+        private class CommandState
+        {
+            public CommandState(FrameworkElement owner)
+            {
+                Contract.Requires(owner != null);
+                _owner = owner;
+            }
+
+            public static void WireCommand(FrameworkElement element, ICommand oldValue, ICommand newValue)
+            {
+                UnWireCommand(element, oldValue);
+                WireCommand(element, newValue);
+            }
+
+            private static void UnWireCommand(FrameworkElement element, ICommand oldValue)
+            {
+                var state = GetCommandState(element);
+                if (oldValue == null)
+                {
+                    Debug.Assert(state == null);
+                }
+                else
+                {
+                    Debug.Assert(state != null);
+                    state._owner.MouseLeftButtonDown -= source_MouseLeftButtonDown;
+                    oldValue.CanExecuteChanged -= state.Command_CanExecuteChanged;
+                    element.ClearValue(CommandStateProperty);
+                }
+            }
+
+            private static void WireCommand(FrameworkElement element, ICommand newValue)
+            {
+                Debug.Assert(GetCommandState(element) == null);
+                if (newValue != null)
+                {
+                    var state = new CommandState(element);
+                    element.SetValue(CommandStateProperty, state);
+                    state._owner.MouseLeftButtonDown += source_MouseLeftButtonDown;
+                    newValue.CanExecuteChanged += state.Command_CanExecuteChanged;
+                }
+            }
+
+            private static readonly DependencyProperty CommandStateProperty = DependencyPropHelper.RegisterAttached<CommandState, FrameworkElement, CommandState>("CommandState");
+
+            private void Command_CanExecuteChanged(object sender, EventArgs e)
+            {
+                var command = (ICommand)sender;
+                if (_owner is Control)
+                {
+                    var control = (Control)_owner;
+                    var param = GetCommandParameter(control);
+                    bool canExecute = command.CanExecute(param);
+                    control.IsEnabled = canExecute;
+                }
+            }
+
+            private readonly FrameworkElement _owner;
+
+            private static CommandState GetCommandState(FrameworkElement element)
+            {
+                Contract.Requires(element != null);
+                return (CommandState)element.GetValue(CommandStateProperty);
+            }
+        }
     }
 }
