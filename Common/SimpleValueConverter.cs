@@ -1,23 +1,41 @@
 ﻿using System;
+using System.Globalization;
+using System.Windows.Data;
+using System.Windows;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
 using PixelLab.Contracts;
 #endif
-using System.Windows.Data;
 
 namespace PixelLab.Common
 {
     public abstract class SimpleValueConverter<TSource, TTarget> : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ConvertBase((TSource)value);
+            if (value is TSource)
+            {
+                try
+                {
+                    return ConvertBase((TSource)value);
+                }
+                catch (NotSupportedException) { }
+            }
+            return DependencyProperty.UnsetValue;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ConvertBackBase((TTarget)value);
+            if (value is TTarget)
+            {
+                try
+                {
+                    return ConvertBackBase((TTarget)value);
+                }
+                catch (NotSupportedException) { }
+            }
+            return DependencyProperty.UnsetValue;
         }
 
         protected abstract TTarget ConvertBase(TSource input);
