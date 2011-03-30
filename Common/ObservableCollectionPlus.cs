@@ -89,6 +89,16 @@ namespace PixelLab.Common
             }
         }
 
+        public void Sort(Comparison<T> comparison)
+        {
+            Contract.Requires(comparison != null);
+            var changed = Items.QuickSort(comparison);
+            if (changed)
+            {
+                raiseReset();
+            }
+        }
+
         protected virtual void BeforeMultiUpdate() { }
 
         protected virtual void AfterMultiUpdate() { }
