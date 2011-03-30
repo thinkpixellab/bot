@@ -27,6 +27,7 @@
     </Style>
 
     <Style TargetType="plsl:PanZoomControl">
+        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="plsl:PanZoomControl">
