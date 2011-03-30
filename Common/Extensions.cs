@@ -29,6 +29,12 @@ namespace PixelLab.Common
             return new FuncComparer<T>(compareFunction);
         }
 
+        public static IComparer<T> ToComparer<T>(this Comparison<T> compareFunction)
+        {
+            Contract.Requires(compareFunction != null);
+            return new ComparisonComparer<T>(compareFunction);
+        }
+
         public static TValue EnsureItem<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Func<TValue> valueFactory)
         {
             Contract.Requires(dictionary != null);
@@ -124,13 +130,23 @@ namespace PixelLab.Common
                 return m_func(x, y);
             }
 
-            [ContractInvariantMethod]
-            void ObjectInvariant()
+            private readonly Func<T, T, int> m_func;
+        }
+
+        private class ComparisonComparer<T> : IComparer<T>
+        {
+            public ComparisonComparer(Comparison<T> func)
             {
-                Contract.Invariant(m_func != null);
+                Contract.Requires(func != null);
+                m_func = func;
             }
 
-            private readonly Func<T, T, int> m_func;
+            public int Compare(T x, T y)
+            {
+                return m_func(x, y);
+            }
+
+            private readonly Comparison<T> m_func;
         }
 
         private class FuncEqualityComparer<T> : IEqualityComparer<T>

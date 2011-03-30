@@ -58,6 +58,13 @@ namespace PixelLab.Common
             return Sort(list, 0, list.Count, comparer);
         }
 
+        public static bool QuickSort<T>(this IList<T> list, Comparison<T> comparison)
+        {
+            Contract.Requires(list != null);
+            Contract.Requires(comparison != null);
+            return Sort(list, 0, list.Count, comparison.ToComparer());
+        }
+
         public static bool QuickSort<T>(this IList<T> list)
         {
             Contract.Requires(list != null);
