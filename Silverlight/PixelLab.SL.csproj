@@ -23,6 +23,9 @@
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\lib\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Browser" />
@@ -30,7 +33,9 @@
   <ItemGroup>
     <Compile Include="AsBigAsYouWantPanel.cs" />
     <Compile Include="AsyncValue.cs" />
+    <Compile Include="CollapseOnDisableBehavior.cs" />
     <Compile Include="DiscreteSlider.cs" />
+    <Compile Include="DoubleClickBehavior.cs" />
     <Compile Include="FlipControl.xaml.cs">
       <DependentUpon>FlipControl.xaml</DependentUpon>
     </Compile>
