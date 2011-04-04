@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Diagnostics;
 
 namespace PixelLab.SL.Demo
 {
@@ -15,6 +16,7 @@ namespace PixelLab.SL.Demo
 
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
+            Debugger.Break();
             // If the app is running outside of the debugger then report the exception using
             // the browser's exception mechanism. On IE this will display it a yellow alert
             // icon in the status bar and Firefox will display a script error.
