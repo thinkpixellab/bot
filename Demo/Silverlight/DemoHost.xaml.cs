@@ -40,8 +40,7 @@ namespace PixelLab.SL.Demo
                 }
             };
 
-            //m_items.SelectedIndex = 0;
-            m_items.SelectedIndex = Catalog.IndexOf(ef => ef.Metadata.Name == "EditableTextBlock");
+            m_items.SelectedIndex = 0;
         }
 
         [ImportMany(DemoMetadataAttribute.DemoContractName)]
