@@ -40,6 +40,9 @@
     <Compile Include="DemoHost.xaml.cs">
       <DependentUpon>DemoHost.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditableTextBlockPage.xaml.cs">
+      <DependentUpon>EditableTextBlockPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FlipControlPage.xaml.cs">
       <DependentUpon>FlipControlPage.xaml</DependentUpon>
     </Compile>
@@ -60,6 +63,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="DemoHost.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditableTextBlockPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

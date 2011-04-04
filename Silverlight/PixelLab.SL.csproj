@@ -36,6 +36,7 @@
     <Compile Include="CollapseOnDisableBehavior.cs" />
     <Compile Include="DiscreteSlider.cs" />
     <Compile Include="DoubleClickBehavior.cs" />
+    <Compile Include="EditableTextBlock.cs" />
     <Compile Include="FlipControl.xaml.cs">
       <DependentUpon>FlipControl.xaml</DependentUpon>
     </Compile>
@@ -74,6 +75,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\cross.png" />
+    <Resource Include="Images\pencil.png" />
+    <Resource Include="Images\tick.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
