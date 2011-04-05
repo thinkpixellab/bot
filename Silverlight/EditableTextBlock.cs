@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using PixelLab.Common;
@@ -61,6 +60,7 @@ namespace PixelLab.SL
         public EditableTextBlock()
         {
             this.DefaultStyleKey = typeof(EditableTextBlock);
+            TextChanged += (sender, args) => updateInfoTextBlockVisibility();
         }
 
         public bool IsEditing
@@ -128,7 +128,7 @@ namespace PixelLab.SL
             }
 
             _contentElement = this.GetTemplateChild("ContentElement") as Control;
-            SetBinding(InfoTextVisibilityProperty, new Binding("Text") { Source = this, Converter = new stringLengthToVisibilityConverter() });
+            updateInfoTextBlockVisibility();
         }
 
         protected override void OnLostFocus(RoutedEventArgs e)
@@ -238,19 +238,18 @@ namespace PixelLab.SL
             IsEditing = false;
         }
 
-        private class stringLengthToVisibilityConverter : SimpleValueConverter<string, Visibility>
+        private void updateInfoTextBlockVisibility()
         {
-            protected override Visibility ConvertBase(string input)
+            Visibility value;
+            if (IsReadOnly || (Text != null && Text.Length > 0))
             {
-                if (input == null || input.Length == 0)
-                {
-                    return Visibility.Visible;
-                }
-                else
-                {
-                    return Visibility.Collapsed;
-                }
+                value = System.Windows.Visibility.Collapsed;
             }
+            else
+            {
+                value = System.Windows.Visibility.Visible;
+            }
+            SetValue(InfoTextVisibilityProperty, value);
         }
     }
 }
