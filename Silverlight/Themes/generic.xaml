@@ -183,10 +183,29 @@
                                                          To="1"
                                                          Storyboard.TargetProperty="(UIElement.Opacity)"
                                                          Storyboard.TargetName="PART_Edit" />
+                                        <DoubleAnimation Duration="0"
+                                                         To="1"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         Storyboard.TargetName="FocusVisualElement" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled" />
-                                <VisualState x:Name="ReadOnly" />
+                                <VisualState x:Name="ReadOnly">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Cursor"
+                                                                       Storyboard.TargetName="TextBlockBorder">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Arrow"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility"
+                                                                       Storyboard.TargetName="FocusVisualElement">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility"
+                                                                       Storyboard.TargetName="MouseOverBorder">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="EditStates">
                                 <VisualState x:Name="Editing" >
@@ -232,12 +251,6 @@
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Unfocused">
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0"
-                                                         To="0"
-                                                         Storyboard.TargetProperty="Opacity"
-                                                         Storyboard.TargetName="FocusVisualElement" />
-                                    </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="ValidationStates">
@@ -270,14 +283,13 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Border x:Name="ReadOnlyVisualElement" Background="#5EC9C9C9" Grid.RowSpan="2" Opacity="0"/>
-                                <Border x:Name="MouseOverBorder" BorderBrush="Transparent" BorderThickness="1">
-                                    <ContentControl x:Name="ContentElement" VerticalAlignment="Center" />
+                                <Border x:Name="MouseOverBorder" BorderBrush="Transparent" BorderThickness="1" HorizontalAlignment="Stretch">
+                                    <ContentControl x:Name="ContentElement" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
                                 </Border>
-                                <StackPanel x:Name="Buttons"
-                                    Grid.Column="1" HorizontalAlignment="Right" Visibility="Collapsed">
+                                <StackPanel x:Name="Buttons" Grid.Column="1" Visibility="Collapsed">
                                     <Image x:Name="PART_Commit" Cursor="Hand" Source="/PixelLab.SL;component/images/tick.png" Width="16" Height="16" />
                                     <Image x:Name="PART_Cancel" Cursor="Hand" Source="/PixelLab.SL;component/images/cross.png" Width="16" Height="16" />
                                 </StackPanel>
@@ -288,6 +300,7 @@
                                 Padding="1"
                                 CornerRadius="1"
                                 Cursor="Hand"
+                                Background="Transparent"
                                 BorderBrush="Transparent">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -320,7 +333,6 @@
                                            TextAlignment="{TemplateBinding TextAlignment}"
                                            TextTrimming="WordEllipsis"
                                            TextWrapping="{TemplateBinding TextWrapping}"
-                                           Cursor="Hand"
                                            Padding="1"
                                            Visibility="{TemplateBinding InfoTextVisibility}" />
                                 <Image x:Name="PART_Edit"
