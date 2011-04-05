@@ -21,7 +21,7 @@ namespace PixelLab.SL
         private const string PartCancel = "PART_Cancel";
         private const string PartEdit = "PART_Edit";
         private const string StateEditing = "Editing", StateNotEditing = "NotEditing";
-        private const int DoubleClickTicks = 200;
+        private const int DoubleClickTicks = 250;
 
         private string _lastValue;
         private long _lastDown = int.MinValue;
