@@ -9,8 +9,13 @@
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400">
 
-    <sl:EditableTextBlock
-        Width="200"
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <sl:EditableTextBlock
+        Width="200" Margin="10"
+        IsReadOnly="{Binding Path=IsChecked, ElementName=_readOnlyCheckBox, Mode=TwoWay}" Text="News"
         HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <CheckBox Content="IsReadOnly" Name="_readOnlyCheckBox"/>
+    </StackPanel>
 
 </UserControl>
