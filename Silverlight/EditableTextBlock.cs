@@ -61,8 +61,6 @@ namespace PixelLab.SL
         public EditableTextBlock()
         {
             this.DefaultStyleKey = typeof(EditableTextBlock);
-
-            SetBinding(InfoTextVisibilityProperty, new Binding("Text") { Source = this, Converter = new stringLengthToVisibilityConverter() });
         }
 
         public bool IsEditing
@@ -130,6 +128,7 @@ namespace PixelLab.SL
             }
 
             _contentElement = this.GetTemplateChild("ContentElement") as Control;
+            SetBinding(InfoTextVisibilityProperty, new Binding("Text") { Source = this, Converter = new stringLengthToVisibilityConverter() });
         }
 
         protected override void OnLostFocus(RoutedEventArgs e)
