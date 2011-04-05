@@ -134,8 +134,13 @@ namespace PixelLab.SL
         protected override void OnLostFocus(RoutedEventArgs e)
         {
             base.OnLostFocus(e);
-            var foo = FocusManager.GetFocusedElement();
             this.IsEditing = false;
+        }
+
+        protected override void OnGotFocus(RoutedEventArgs e)
+        {
+            base.OnGotFocus(e);
+            tryEdit();
         }
 
         /// <summary>
@@ -196,7 +201,6 @@ namespace PixelLab.SL
 
         private void tryEdit()
         {
-            Debug.Assert(!IsEditing);
             if (!IsReadOnly && IsEnabled)
             {
                 IsEditing = true;
