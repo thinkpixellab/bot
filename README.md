@@ -8,12 +8,15 @@ It now includes a set of helper libraries that are generally useful for .NET pro
 
 It is actively maintained by [Kevin](http://github.com/kevmoo) and your friends at [Pixel Lab](http://thinkpixellab.com "Pixel Lab").
 
+### NuGet
+The **BOT** is on [NuGet](http://nuget.org/). Search for [PixelLab.BOT](http://nuget.org/List/Packages/PixelLab.BOT). Only the Silverlight libraries are included at the moment.
+
 ### Code Contracts
 Parts of the **Bag of Tricks** are built using [Code Contracts](http://msdn.microsoft.com/en-us/devlabs/dd491992.aspx). You may wish to install and use these tools when you are working with **BOT**.
 
 ### The MIT License
 
-*Copyright (c) 2010 Pixel Lab*
+*Copyright (c) 2010, 2011 Pixel Lab*
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
