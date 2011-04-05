@@ -324,7 +324,7 @@
                                            Padding="1"
                                            Visibility="{TemplateBinding InfoTextVisibility}" />
                                 <Image x:Name="PART_Edit"
-                                       Source="/PixelLab.SL;component/Images/pencil.png"
+                                       Source="/PixelLab.SL;component/images/pencil.png"
                                        Width="16" Height="16"
                                        Margin="0 8" Opacity="0"
                                        VerticalAlignment="Top" 

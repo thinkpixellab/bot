@@ -114,7 +114,7 @@ namespace PixelLab.SL
             var editContral = GetTemplateChild(PartEdit) as FrameworkElement;
             if (editContral != null)
             {
-                editContral.MouseLeftButtonDown += (sender, args) => IsEditing = true;
+                editContral.MouseLeftButtonDown += (sender, args) => tryEdit();
             }
 
             var commit = GetTemplateChild(PartCommit) as FrameworkElement;
@@ -152,7 +152,7 @@ namespace PixelLab.SL
                 if (delta < DoubleClickTicks)
                 {
                     _lastDown = int.MinValue;
-                    IsEditing = true;
+                    tryEdit();
                 }
                 else
                 {
@@ -188,11 +188,20 @@ namespace PixelLab.SL
                 {
                     if (e.Key == Key.Enter)
                     {
-                        this.IsEditing = true;
+                        tryEdit();
                     }
                 }
             }
             base.OnKeyDown(e);
+        }
+
+        private void tryEdit()
+        {
+            Debug.Assert(!IsEditing);
+            if (!IsReadOnly && IsEnabled)
+            {
+                IsEditing = true;
+            }
         }
 
         private void editingChanged()
