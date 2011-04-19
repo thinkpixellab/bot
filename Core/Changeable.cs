@@ -4,12 +4,10 @@ using System.Diagnostics.Contracts;
 #else
 using PixelLab.Contracts;
 #endif
-using System.Runtime.Serialization;
 using System.Collections.Generic;
 
 namespace PixelLab.Common
 {
-    [DataContract]
     public abstract class Changeable : INotifyPropertyChanged
     {
 #if DEBUG
