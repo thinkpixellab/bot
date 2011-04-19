@@ -6,3 +6,4 @@ obj
 *.userprefs
 *.vs10x
 StyleCop.Cache
+Thumbs.db
