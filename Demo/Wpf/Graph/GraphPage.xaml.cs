@@ -1,7 +1,6 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -36,81 +35,64 @@ namespace PixelLab.Wpf.Demo
                 "Rebecca", "Becca", "Megan", "Shanna", "Beth",
                 "Aaron", "Gabriel", "Dhruv", "Jill", "Sarah"});
 
-            this.AddHandler(Button.ClickEvent, new RoutedEventHandler(click));
-
             theGraph.CenterObject = m_nodes["Okoboji"];
 
             this.Unloaded += (sender, e) => m_dispatchTimer.Stop();
+
+            m_churnNodesButton.Click += (sender, args) =>
+            {
+                if (m_dispatchTimer.IsEnabled)
+                {
+                    m_dispatchTimer.Stop();
+                    m_churnNodesButton.Content = "Start Churning";
+                }
+                else
+                {
+                    m_dispatchTimer.Start();
+                    m_churnNodesButton.Content = "Stop Churning";
+                }
+            };
+
+            m_churnSelectorButton.Click += (sender, args) =>
+            {
+                if (theGraph.NodeTemplateSelector == null)
+                {
+                    m_churnSelectorButton.Content = "Remove NodeTemplateSelector";
+                    theGraph.NodeTemplateSelector = new NodeTemplateSelector();
+                }
+                else
+                {
+                    m_churnSelectorButton.Content = "Set NodeTemplateSelector";
+                    theGraph.NodeTemplateSelector = null;
+                }
+            };
+
+            m_clearButton.Click += (sender, args) =>
+            {
+                if (theGraph.CenterObject == null)
+                {
+                    theGraph.CenterObject = m_nodes["Okoboji"];
+                    m_clearButton.Content = "Clear Center Node";
+                }
+                else
+                {
+                    theGraph.CenterObject = null;
+                    m_clearButton.Content = "Set Center Node";
+                }
+            };
         }
 
         public static readonly RoutedUICommand ChangeCenter = new RoutedUICommand("Change Center", "ChangeCenter", typeof(GraphPage));
 
         #region Implementation
 
-        private void click(object sender, RoutedEventArgs args)
-        {
-            ButtonBase button = (ButtonBase)args.OriginalSource;
-
-            Node<string> node;
-
-            switch (button.Name)
-            {
-                case "ChurnNodes":
-                    if (m_dispatchTimer.IsEnabled)
-                    {
-                        m_dispatchTimer.Stop();
-                        button.Content = "Start Churning";
-                    }
-                    else
-                    {
-                        m_dispatchTimer.Start();
-                        button.Content = "Stop Churning";
-                    }
-                    break;
-
-                case "ChurnSelector":
-                    if (theGraph.NodeTemplateSelector == null)
-                    {
-                        button.Content = "Remove NodeTemplateSelector";
-                        theGraph.NodeTemplateSelector = new NodeTemplateSelector();
-                    }
-                    else
-                    {
-                        button.Content = "Set NodeTemplateSelector";
-                        theGraph.NodeTemplateSelector = null;
-                    }
-                    break;
-                case "Clear":
-                    if (theGraph.CenterObject == null)
-                    {
-                        theGraph.CenterObject = m_nodes["Okoboji"];
-                        button.Content = "Clear Center Node";
-                    }
-                    else
-                    {
-                        theGraph.CenterObject = null;
-                        button.Content = "Set Center Node";
-                    }
-                    break;
-                case "MoreFriends":
-                    node = (Node<String>)theGraph.CenterObject;
-                    m_nodes.MoreFriends(node.Item);
-                    break;
-                case "LessFriends":
-                    node = (Node<String>)theGraph.CenterObject;
-                    m_nodes.LessFriends(node.Item);
-                    break;
-            } // switch
-        } //*** click
-
         private void churn(object sender, EventArgs e)
         {
             if (Util.Rnd.Next(20) == 0)
             {
-                Node<string> node = (Node<string>)theGraph.CenterObject;
-                if (node != null && node.ChildNodes.Count > 0)
+                if (CenterNode != null && CenterNode.ChildNodes.Count > 0)
                 {
-                    theGraph.CenterObject = node.ChildNodes.Random();
+                    theGraph.CenterObject = CenterNode.ChildNodes.Random();
                 }
             }
             else
@@ -119,11 +101,30 @@ namespace PixelLab.Wpf.Demo
             }
         }
 
+        private Node<string> CenterNode
+        {
+            get
+            {
+                return (Node<string>)theGraph.CenterObject;
+            }
+        }
+
+        private void moreButtonClick(object sender, RoutedEventArgs e)
+        {
+            m_nodes.MoreFriends(CenterNode.Item);
+        }
+
+        private void lessButtonClick(object sender, RoutedEventArgs e)
+        {
+            m_nodes.LessFriends(CenterNode.Item);
+        }
+
         private readonly DispatcherTimer m_dispatchTimer = new DispatcherTimer(DispatcherPriority.Background);
 
         private readonly NodeCollection<string> m_nodes;
 
         #endregion
+
     }
 
     internal class NodeTemplateSelector : DataTemplateSelector

@@ -24,13 +24,13 @@
 
     <DockPanel>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Name="ChurnNodes" Content="Churn Nodes"/>
-            <Button Name="ChurnSelector" Content="Remove NodeTemplateSelector"/>
+            <Button Name="m_churnNodesButton" Content="Churn Nodes"/>
+            <Button Name="m_churnSelectorButton" Content="Remove NodeTemplateSelector"/>
         </StackPanel>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Name="Clear" Content="Clear"/>
-            <RepeatButton Name="MoreFriends" Content="More Friends"/>
-            <RepeatButton Name="LessFriends" Content="Less Friends"/>
+            <Button Name="m_clearButton" Content="Clear"/>
+            <RepeatButton Content="More Friends" Click="moreButtonClick"/>
+            <RepeatButton Content="Less Friends" Click="lessButtonClick"/>
         </StackPanel>
 
         <Grid DockPanel.Dock="Top" HorizontalAlignment="Center">
