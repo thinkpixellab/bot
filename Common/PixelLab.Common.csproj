@@ -33,6 +33,9 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\XamlAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="BrushHelper.cs" />
     <Compile Include="ColorHelper.cs" />
     <Compile Include="CommandHelpers.cs" />

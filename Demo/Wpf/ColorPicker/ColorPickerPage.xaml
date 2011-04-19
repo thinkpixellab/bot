@@ -1,7 +1,7 @@
 ﻿<Page
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf"
+  xmlns:lib="http://schemas.thinkpixellab.com/2011/xaml/presentation"
   xmlns:local="clr-namespace:PixelLab.Wpf.Demo"
   xmlns:core="clr-namespace:PixelLab.Core"
   core:DemoMetadataProperties.DemoName="ColorPicker Control"

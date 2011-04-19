@@ -1,7 +1,7 @@
 ﻿<Page x:Class="PixelLab.Wpf.Demo.TreeViewHelperPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:tvh="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf">
+    xmlns:tvh="http://schemas.thinkpixellab.com/2011/xaml/presentation">
     <Page.Resources>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Margin" Value="3"/>

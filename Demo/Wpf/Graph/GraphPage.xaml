@@ -1,13 +1,12 @@
 ﻿<Page x:Class="PixelLab.Wpf.Demo.GraphPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:common="clr-namespace:PixelLab.Common;assembly=PixelLab.Common"
-    xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf"
+    xmlns:lib="http://schemas.thinkpixellab.com/2011/xaml/presentation"
     xmlns:local="clr-namespace:PixelLab.Wpf.Demo"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <Page.Resources>
 
-        <common:RoundDoubleConverter x:Key="RoundDoubleConverter"/>
+        <lib:RoundDoubleConverter x:Key="RoundDoubleConverter"/>
         <local:NodeTemplateSelector x:Key="nodeTemplateSelector" />
         <local:NodeColorConverter x:Key="NodeColorConverter"/>
 

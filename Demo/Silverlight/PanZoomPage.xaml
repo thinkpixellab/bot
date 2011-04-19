@@ -2,7 +2,7 @@
     x:Class="PixelLab.SL.Demo.PanZoomPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:plsl="clr-namespace:PixelLab.SL;assembly=PixelLab.SL"
+    xmlns:bot="http://schemas.thinkpixellab.com/2011/xaml/presentation"
     
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -10,15 +10,15 @@
     d:DesignHeight="300" d:DesignWidth="400">
     
     <Grid x:Name="LayoutRoot" Background="White">
-        <plsl:PanZoomControl x:Name="PanZoom" Background="Transparent" MajorGridLineColor="#ebf4e9" MinorGridLineColor="#ebf4e9">
-            <plsl:AsBigAsYouWantPanel SizeChanged="AsBigAsYouWantPanel_SizeChanged">
+        <bot:PanZoomControl x:Name="PanZoom" Background="Transparent" MajorGridLineColor="#ebf4e9" MinorGridLineColor="#ebf4e9">
+            <bot:AsBigAsYouWantPanel SizeChanged="AsBigAsYouWantPanel_SizeChanged">
                 <TextBlock Text="Monkey!" FontSize="50" />
-            </plsl:AsBigAsYouWantPanel>
-        </plsl:PanZoomControl>
+            </bot:AsBigAsYouWantPanel>
+        </bot:PanZoomControl>
         
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
             <Button Content="1:1" Command="{Binding Path=ResetCommand, ElementName=PanZoom}" Padding="5" />
-            <plsl:DiscreteSlider x:Name="ZoomSlider" Minimum="0.2" Maximum="2" SmallChange="0.2" LargeChange="0.2" Value="{Binding Path=Scale, ElementName=PanZoom, Mode=TwoWay}" Width="200" />
+            <bot:DiscreteSlider x:Name="ZoomSlider" Minimum="0.2" Maximum="2" SmallChange="0.2" LargeChange="0.2" Value="{Binding Path=Scale, ElementName=PanZoom, Mode=TwoWay}" Width="200" />
         </StackPanel>
 
     </Grid>

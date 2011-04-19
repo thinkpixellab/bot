@@ -1,7 +1,7 @@
 ﻿<Page
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf"
+  xmlns:lib="http://schemas.thinkpixellab.com/2011/xaml/presentation"
   xmlns:core="clr-namespace:PixelLab.Core"
   core:DemoMetadataProperties.DemoName="BlockBar Control"
   core:DemoMetadataProperties.DemoDescription="Sometimes you just want a control that does its own rendering without worrying about a template. This is an example of a control that supports all of the standard data binding tricks and also draws itself. A baseclass is used to centralize common infrastructure.">

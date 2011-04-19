@@ -2,8 +2,7 @@
     x:Class="PixelLab.SL.Demo.EditableTextBlockPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:bot="clr-namespace:PixelLab.Common;assembly=PixelLab.Common_SL4"
-    xmlns:sl="clr-namespace:PixelLab.SL;assembly=PixelLab.SL"
+    xmlns:bot="http://schemas.thinkpixellab.com/2011/xaml/presentation"
 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -15,7 +14,7 @@
     </UserControl.Resources>
 
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-        <sl:EditableTextBlock
+        <bot:EditableTextBlock
         Width="200" Margin="10"
         IsReadOnly="{Binding Path=IsChecked, ElementName=_readOnlyCheckBox, Mode=TwoWay}"
         IsTabStop="{Binding Path=IsChecked, ElementName=_readOnlyCheckBox, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter='true->false,true'}"

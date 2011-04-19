@@ -1,17 +1,17 @@
 ﻿<ResourceDictionary
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:plsl="clr-namespace:PixelLab.SL">
+  xmlns:bot="http://schemas.thinkpixellab.com/2011/xaml/presentation">
 
-    <Style TargetType="plsl:SpriteButton">
+    <Style TargetType="bot:SpriteButton">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{x:Null}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="plsl:SpriteButton">
+                <ControlTemplate TargetType="bot:SpriteButton">
                     <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                        <plsl:SpriteElement HorizontalAlignment="Center" VerticalAlignment="Center"
+                        <bot:SpriteElement HorizontalAlignment="Center" VerticalAlignment="Center"
                                 SpriteWidth="{TemplateBinding SpriteWidth}" SpriteHeight="{TemplateBinding SpriteHeight}"
                                 ImageSource="{TemplateBinding ImageSource}"
                                 NextOffsetX="{TemplateBinding NextOffsetX}" NextOffsetY="{TemplateBinding NextOffsetY}"
@@ -26,14 +26,14 @@
         </Setter>
     </Style>
 
-    <Style TargetType="plsl:PanZoomControl">
+    <Style TargetType="bot:PanZoomControl">
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="plsl:PanZoomControl">
+                <ControlTemplate TargetType="bot:PanZoomControl">
                     <Grid Background="{TemplateBinding Background}" UseLayoutRounding="True">
 
-                        <plsl:GridLineControl x:Name="glc"
+                        <bot:GridLineControl x:Name="glc"
                                               IsHitTestVisible="False"
                                               MajorGridLineColor="{TemplateBinding MajorGridLineColor}"
                                               MajorGridLineDistance="{TemplateBinding MajorGridLineDistance}"
@@ -159,7 +159,7 @@
         <Setter Property="Margin" Value="0 0 2 0" />
     </Style>
 
-    <Style TargetType="plsl:EditableTextBlock">
+    <Style TargetType="bot:EditableTextBlock">
         <Setter Property="BorderBrush">
             <Setter.Value>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -179,7 +179,7 @@
         <Setter Property="ReadOnlyForeground" Value="#FF000000"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="plsl:EditableTextBlock">
+                <ControlTemplate TargetType="bot:EditableTextBlock">
                     <Grid x:Name="RootElement">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">

@@ -1,7 +1,7 @@
 ﻿<Page x:Class="PixelLab.Wpf.Demo.NotifyWorkerPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:common="clr-namespace:PixelLab.Common;assembly=PixelLab.Common">
+    xmlns:common="http://schemas.thinkpixellab.com/2011/xaml/presentation">
 
     <Page.Resources>
 
