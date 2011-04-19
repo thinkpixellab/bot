@@ -1,12 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{8F249828-4E5F-4B75-B3A4-F67D74518F29}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>PixelLab.Common</RootNamespace>
-    <AssemblyName>PixelLab.Common_Core</AssemblyName>
+    <AssemblyName>PixelLab.Core</AssemblyName>
   </PropertyGroup>
-  <Import Project="_targets\WPF4.targets" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <DocumentationFile>_build\bin\Release\PixelLab.Core.xml</DocumentationFile>
+  </PropertyGroup>
+  <Import Project="..\Common\_targets\WPF4.targets" />
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />

@@ -348,6 +348,10 @@
       <Project>{273247A2-A3C8-42D0-8463-F95FC5C0A34C}</Project>
       <Name>PixelLab.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Core\PixelLab.Core.csproj">
+      <Project>{8F249828-4E5F-4B75-B3A4-F67D74518F29}</Project>
+      <Name>PixelLab.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Wpf\PixelLab.Wpf.csproj">
       <Project>{E4BBC94F-B837-4668-A127-E36E6DE012F5}</Project>
       <Name>PixelLab.Wpf</Name>

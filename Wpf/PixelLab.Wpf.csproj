@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectGuid>{E4BBC94F-B837-4668-A127-E36E6DE012F5}</ProjectGuid>
@@ -150,6 +150,10 @@
     <ProjectReference Include="..\Common\PixelLab.Common.csproj">
       <Project>{273247A2-A3C8-42D0-8463-F95FC5C0A34C}</Project>
       <Name>PixelLab.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\PixelLab.Core.csproj">
+      <Project>{8F249828-4E5F-4B75-B3A4-F67D74518F29}</Project>
+      <Name>PixelLab.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

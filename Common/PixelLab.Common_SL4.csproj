@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{ACA535DF-6536-4FA4-8FFB-9CE2F05EF137}</ProjectGuid>
@@ -36,53 +36,93 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ActionOnDispose.cs" />
+    <Compile Include="..\Core\ActionOnDispose.cs">
+      <Link>ActionOnDispose.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\CastList.cs">
+      <Link>CastList.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Changeable.cs">
+      <Link>Changeable.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\CollectionExtensions.cs">
+      <Link>CollectionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\CompositionHelpers.cs">
+      <Link>CompositionHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Contract.cs">
+      <Link>Contract.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ErrorHelper.cs">
+      <Link>ErrorHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Extensions.cs">
+      <Link>Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\FuncEnumerable.cs">
+      <Link>FuncEnumerable.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\InstanceFactory.cs">
+      <Link>InstanceFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ListBase.cs">
+      <Link>ListBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ListReorderUtil.cs">
+      <Link>ListReorderUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\LockHelper.cs">
+      <Link>LockHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ObservableCollectionPlus.cs">
+      <Link>ObservableCollectionPlus.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\SortHelper.cs">
+      <Link>SortHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\StreamHelpers.cs">
+      <Link>StreamHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\TypedDictionaryExtensions.cs">
+      <Link>TypedDictionaryExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Util.cs">
+      <Link>Util.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\WeakEnumerable.cs">
+      <Link>WeakEnumerable.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\WrappedLock.cs">
+      <Link>WrappedLock.cs</Link>
+    </Compile>
     <Compile Include="ActualSizePropertyProxy.cs" />
     <Compile Include="BrushHelper.cs" />
-    <Compile Include="CastList.cs" />
-    <Compile Include="Changeable.cs" />
-    <Compile Include="CollectionExtensions.cs" />
     <Compile Include="ColorHelper.cs" />
     <Compile Include="CommandKeyMapper.cs" />
-    <Compile Include="CompositionHelpers.cs" />
     <Compile Include="CompositionTargetRenderingListening.cs" />
-    <Compile Include="Contract.cs" />
     <Compile Include="DeadCommand.cs" />
     <Compile Include="DemoCollection.cs" />
     <Compile Include="DependencyPropHelper.cs" />
     <Compile Include="DispatcherExtensions.cs" />
     <Compile Include="EnumConverter.cs" />
-    <Compile Include="ErrorHelper.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="FuncEnumerable.cs" />
     <Compile Include="GeoHelper.cs" />
     <Compile Include="HueConverter.cs" />
     <Compile Include="ICommandProxy.cs" />
     <Compile Include="IDynamicValue.cs" />
-    <Compile Include="InstanceFactory.cs" />
     <Compile Include="KeyBinding.cs" />
     <Compile Include="Line.cs" />
-    <Compile Include="ListBase.cs" />
-    <Compile Include="ListReorderUtil.cs" />
-    <Compile Include="LockHelper.cs" />
     <Compile Include="CommandHelpers.cs" />
-    <Compile Include="ObservableCollectionPlus.cs" />
     <Compile Include="PageFlipper.cs" />
     <Compile Include="PathWatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoundDoubleConverter.cs" />
     <Compile Include="SelectedItemsBehavior.cs" />
     <Compile Include="SimpleValueConverter.cs" />
-    <Compile Include="SortHelper.cs" />
-    <Compile Include="StreamHelpers.cs" />
     <Compile Include="DebugTrace.cs" />
     <Compile Include="TreeHelpers.cs" />
-    <Compile Include="TypedDictionaryExtensions.cs" />
-    <Compile Include="Util.cs" />
     <Compile Include="Vector_SL.cs" />
-    <Compile Include="WeakEnumerable.cs" />
     <Compile Include="WrapPanel.cs" />
-    <Compile Include="WrappedLock.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
