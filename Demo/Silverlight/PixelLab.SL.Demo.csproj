@@ -18,7 +18,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
-  <Import Project="..\..\Common\_targets\SL4.targets" />
+  <Import Project="..\..\targets\SL4.targets" />
   <ItemGroup>
     <Reference Include="mscorlib" />
     <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />

@@ -7,7 +7,7 @@
     <RootNamespace>PixelLab.Wpf</RootNamespace>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
-  <Import Project="..\Common\_targets\WPF4.targets" />
+  <Import Project="..\targets\NET4.targets" />
   <ItemGroup>
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\packages\Prism.4.0.0.0\lib\NET40\Microsoft.Practices.Prism.dll</HintPath>

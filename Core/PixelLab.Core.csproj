@@ -9,7 +9,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <DocumentationFile>_build\bin\Release\PixelLab.Core.xml</DocumentationFile>
   </PropertyGroup>
-  <Import Project="..\Common\_targets\WPF4.targets" />
+  <Import Project="..\targets\NET4.targets" />
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />

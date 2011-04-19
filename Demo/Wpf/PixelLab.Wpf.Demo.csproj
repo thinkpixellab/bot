@@ -7,7 +7,7 @@
     <AssemblyName>PixelLab.Wpf.Demo</AssemblyName>
     <OutputType>winexe</OutputType>
   </PropertyGroup>
-  <Import Project="..\..\Common\_targets\WPF4.targets" />
+  <Import Project="..\..\targets\NET4.targets" />
   <PropertyGroup>
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
