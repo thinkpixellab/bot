@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows.Input;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
@@ -15,13 +16,13 @@ namespace PixelLab.SL
         T Value { get; set; }
         void Load();
         event EventHandler ValueLoaded;
+        ICommand LoadCommand { get; }
+        event EventHandler<UnhandledExceptionEventArgs> LoadError;
     }
 
     [ContractClassFor(typeof(IAsyncValue<>))]
     internal abstract class IAsyncValueContract<T> : IAsyncValue<T>
     {
-        #region IAsyncValue<T> Members
-
         public LoadState State
         {
             get { throw new NotImplementedException(); }
@@ -46,7 +47,14 @@ namespace PixelLab.SL
             throw new NotImplementedException();
         }
 
-        #endregion
+        public ICommand LoadCommand
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<ICommand>() != null);
+                return default(ICommand);
+            }
+        }
 
         event EventHandler IAsyncValue<T>.ValueLoaded
         {
@@ -55,6 +63,12 @@ namespace PixelLab.SL
         }
 
         event PropertyChangedEventHandler INotifyPropertyChanged.PropertyChanged
+        {
+            add { throw new NotImplementedException(); }
+            remove { throw new NotImplementedException(); }
+        }
+
+        event EventHandler<UnhandledExceptionEventArgs> IAsyncValue<T>.LoadError
         {
             add { throw new NotImplementedException(); }
             remove { throw new NotImplementedException(); }

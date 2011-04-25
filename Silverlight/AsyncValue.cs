@@ -60,6 +60,8 @@ namespace PixelLab.SL
 
         public event EventHandler ValueLoaded;
 
+        public event EventHandler<UnhandledExceptionEventArgs> LoadError;
+
         public void Load()
         {
             Deployment.Current.VerifyAccess();
@@ -127,7 +129,8 @@ namespace PixelLab.SL
         {
             Contract.Requires(State == LoadState.Loading);
             Deployment.Current.VerifyAccess();
-            if (DoingLoad)
+
+            if (DoingLoad) // result came back within the Load call...
             {
                 Debug.Assert(_loadingResult == null);
             }
@@ -141,6 +144,12 @@ namespace PixelLab.SL
             _value = default(T);
             State = LoadState.Error;
             OnPropertyChanged("Value");
+
+            var handler = LoadError;
+            if (handler != null)
+            {
+                handler(this, new UnhandledExceptionEventArgs(exception, false));
+            }
         }
 
         private void internalValueSet(T value)

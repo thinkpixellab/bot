@@ -9,7 +9,7 @@ namespace Test.Silverlight
     [TestClass]
     public class AsyncValueTests : SilverlightTest
     {
-        private static readonly int MagicValue = 42;
+        private static readonly int MagicValue = Environment.TickCount;
 
         [TestMethod]
         [Asynchronous]
@@ -25,7 +25,7 @@ namespace Test.Silverlight
         }
 
         [TestMethod]
-        public void BasincSynchronous()
+        public void BasicSynchronous()
         {
             var asyncValue = new AsyncValue<int>(SyncTestInput);
             Assert.AreEqual(LoadState.Unloaded, asyncValue.State);
@@ -35,13 +35,35 @@ namespace Test.Silverlight
             asyncValue.ValueLoaded += (sender, args) =>
             {
                 loadHappened = true;
-
             };
             asyncValue.Load();
             Assert.IsTrue(loadHappened);
         }
 
-        // TODO: test error sync
+        [TestMethod]
+        public void SyncException()
+        {
+            var asyncValue = new AsyncValue<int>(SyncErrorInput);
+            Assert.AreEqual(LoadState.Unloaded, asyncValue.State);
+            Assert.AreEqual(default(int), asyncValue.Value);
+
+            var loadHappened = false;
+            asyncValue.ValueLoaded += (sender, args) =>
+            {
+                loadHappened = true;
+            };
+
+            var errorHappened = false;
+            asyncValue.LoadError += (sender, args) =>
+            {
+                errorHappened = true;
+            };
+
+            asyncValue.Load();
+            Assert.IsFalse(loadHappened);
+            Assert.IsTrue(errorHappened);
+        }
+
         // TODO: test error async
 
         private void asyncValue_handleLoad(IAsyncValue<int> asyncValue)
@@ -66,6 +88,14 @@ namespace Test.Silverlight
         private IAsyncResult SyncTestInput(Action<int> resultHandler, Action<Exception> exceptionHandler)
         {
             resultHandler(MagicValue);
+            var result = new DummyAsyncResult();
+            result.MarkCompletedSync();
+            return result;
+        }
+
+        private IAsyncResult SyncErrorInput(Action<int> resultHandler, Action<Exception> exceptionHandler)
+        {
+            exceptionHandler(new NotSupportedException());
             var result = new DummyAsyncResult();
             result.MarkCompletedSync();
             return result;
