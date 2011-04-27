@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
 using PixelLab.Contracts;
 #endif
-using System.Linq;
 
 namespace PixelLab.Common
 {
@@ -27,10 +27,16 @@ namespace PixelLab.Common
             }
             else
             {
-                if (_errors.Remove(property))
-                {
-                    OnErrorsChanged(property);
-                }
+                ClearErrors(property);
+            }
+        }
+
+        public void ClearErrors(string property)
+        {
+            Contract.Requires(!property.IsNullOrWhiteSpace());
+            if (_errors.Remove(property))
+            {
+                OnErrorsChanged(property);
             }
         }
 
