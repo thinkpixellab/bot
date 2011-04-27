@@ -35,6 +35,9 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\Core\DataErrorHelper.cs">
+      <Link>DataErrorHelper.cs</Link>
+    </Compile>
     <Compile Include="..\XamlAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
@@ -55,9 +58,6 @@
     </Compile>
     <Compile Include="..\Core\Contract.cs">
       <Link>Contract.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\ErrorHelper.cs">
-      <Link>ErrorHelper.cs</Link>
     </Compile>
     <Compile Include="..\Core\Extensions.cs">
       <Link>Extensions.cs</Link>

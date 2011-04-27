@@ -30,7 +30,7 @@
     <Compile Include="CompositionHelpers.cs" />
     <Compile Include="Contract.cs" />
     <Compile Include="DBUtil.cs" />
-    <Compile Include="ErrorHelper.cs" />
+    <Compile Include="DataErrorHelper.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="FuncEnumerable.cs" />
     <Compile Include="InstanceFactory.cs" />
