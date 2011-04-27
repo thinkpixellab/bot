@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Linq;
+using System.Threading;
 
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
 using PixelLab.Contracts;
 #endif
-using System.Linq;
-using System.Threading;
 
 namespace PixelLab.Common
 {
@@ -23,14 +23,18 @@ namespace PixelLab.Common
         {
             if (items == null)
             {
-                return 0;
+                items = new object[0];
             }
-            else
-            {
-                return items
-                    .Select(item => (item == null) ? 0 : item.GetHashCode())
-                    .Aggregate(0, (current, next) => current ^ next);
-            }
+
+            return items
+                .Select(item => (item == null) ? 0 : item.GetHashCode())
+                .Aggregate(0, (current, next) =>
+                {
+                    unchecked
+                    {
+                        return (current * 397) ^ next;
+                    }
+                });
         }
 
         /// <summary>
