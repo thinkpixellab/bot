@@ -69,6 +69,16 @@ namespace PixelLab.Common
         }
 #endif
 
+        /// <remarks>It's recommended that you use this method within BeginMultiUpdate</remarks>
+        public void AddRange(IEnumerable<T> source)
+        {
+            Contract.Requires(source != null);
+            foreach (var item in source)
+            {
+                Add(item);
+            }
+        }
+
         public void Sort(Func<T, T, int> comparer)
         {
             Contract.Requires(comparer != null);
