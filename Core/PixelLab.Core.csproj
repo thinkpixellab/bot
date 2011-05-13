@@ -39,6 +39,7 @@
     <Compile Include="LockHelper.cs" />
     <Compile Include="ObservableCollectionPlus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyChangeWatcher.cs" />
     <Compile Include="ReaderWriterLockHelper.cs" />
     <Compile Include="SortHelper.cs" />
     <Compile Include="StreamHelpers.cs" />
