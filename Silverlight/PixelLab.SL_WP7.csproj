@@ -6,12 +6,13 @@
     <RootNamespace>PixelLab.SL</RootNamespace>
     <AssemblyName>PixelLab.SL_WP7</AssemblyName>
   </PropertyGroup>
-  <Import Project="..\Common\_targets\WP7.targets" />
+  <Import Project="..\targets\WP7.targets" />
   <ItemGroup>
     <Reference Include="Microsoft.Practices.Prism, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\lib\Prism\Phone\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
+    <Reference Include="System.Observable" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
