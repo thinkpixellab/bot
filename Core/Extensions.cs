@@ -110,10 +110,10 @@ namespace PixelLab.Common
             return rnd.Next() % 2 == 0;
         }
 
-        public static IEnumerable<T> GetCustomAttributes<T>(this MemberInfo memberInfo, bool inherit) where T : Attribute
+        public static IEnumerable<T> GetCustomAttributes<T>(this ICustomAttributeProvider attributeProvider, bool inherit) where T : Attribute
         {
-            Contract.Requires(memberInfo != null);
-            return memberInfo.GetCustomAttributes(typeof(T), inherit).Cast<T>();
+            Contract.Requires(attributeProvider != null);
+            return attributeProvider.GetCustomAttributes(typeof(T), inherit).Cast<T>();
         }
 
         #region impl
