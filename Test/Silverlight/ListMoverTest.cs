@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PixelLab.Common;
 
-namespace Test.Silverlight
+namespace PixelLab.Test.SL
 {
     [TestClass]
     public class ListMoverTest

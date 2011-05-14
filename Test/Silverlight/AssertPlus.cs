@@ -6,7 +6,7 @@ using System.Diagnostics.Contracts;
 using PixelLab.Contracts;
 #endif
 
-namespace Test.Silverlight
+namespace PixelLab.Test
 {
     public static class AssertPlus
     {

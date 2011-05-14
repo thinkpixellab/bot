@@ -3,14 +3,14 @@
   <PropertyGroup>
     <ProjectGuid>{AA0B1C80-97AE-49F5-8310-5A7683BE47BF}</ProjectGuid>
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
-    <RootNamespace>Test.Silverlight</RootNamespace>
-    <AssemblyName>Test.Silverlight</AssemblyName>
+    <RootNamespace>PixelLab.Test</RootNamespace>
+    <AssemblyName>PixelLab.Test_SL</AssemblyName>
     <SilverlightApplication>true</SilverlightApplication>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
-    <XapFilename>Test.Silverlight.xap</XapFilename>
+    <XapFilename>PixelLab.Test_SL.xap</XapFilename>
     <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
-    <SilverlightAppEntry>Test.Silverlight.App</SilverlightAppEntry>
+    <SilverlightAppEntry>PixelLab.Test.App</SilverlightAppEntry>
     <EnableOutOfBrowser>true</EnableOutOfBrowser>
     <OutOfBrowserSettingsFile>Properties\OutOfBrowserSettings.xml</OutOfBrowserSettingsFile>
     <UsePlatformExtensions>false</UsePlatformExtensions>

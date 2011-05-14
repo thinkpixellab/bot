@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading;
 using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PixelLab.Common;
 
-namespace PixelLab.Common.Test
+namespace PixelLab.Test.Common
 {
     [TestClass]
     public class WeakEnumerableTest : SilverlightTest

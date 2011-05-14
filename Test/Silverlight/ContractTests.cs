@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PixelLab.Contracts;
 
-namespace Test.Silverlight
+namespace PixelLab.Test.SL
 {
     [TestClass]
     public class ContractTests

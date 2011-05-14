@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows Presentation Founda
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows Phone 7", "Windows Phone 7", "{2090ADBB-A25B-4753-9664-5A07427A28B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Silverlight", "Test\Silverlight\Test.Silverlight.csproj", "{AA0B1C80-97AE-49F5-8310-5A7683BE47BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.Test_SL", "Test\Silverlight\PixelLab.Test_SL.csproj", "{AA0B1C80-97AE-49F5-8310-5A7683BE47BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelLab.Core", "Core\PixelLab.Core.csproj", "{8F249828-4E5F-4B75-B3A4-F67D74518F29}"
 EndProject

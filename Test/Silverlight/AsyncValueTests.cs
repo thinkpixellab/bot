@@ -4,7 +4,7 @@ using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PixelLab.SL;
 
-namespace Test.Silverlight
+namespace PixelLab.Test.SL
 {
     [TestClass]
     public class AsyncValueTests : SilverlightTest

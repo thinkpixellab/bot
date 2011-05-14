@@ -4,8 +4,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PixelLab.Common;
 
-namespace PixelLab.Common.Test
+namespace PixelLab.Test.Common
 {
     [TestClass]
     public class WatcherTest
