@@ -1,6 +1,6 @@
 # Bag of Tricks Change Log #
 
-## Unreleased ##
+## v1.0.4 ##
 * A mountain of clean-up in demo and test code
 * Added `WatchProperty` extension method to `Extensions`
 * **NEW** `PropertyChangeWatcher` - *Issue #16*

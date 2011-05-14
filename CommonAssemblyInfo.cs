@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 #region General information
 [assembly: AssemblyCompany("Pixel Lab")]
 [assembly: AssemblyCopyright("Copyright © 2010, 2011 Pixel Lab. All rights reserved.")]
-[assembly: AssemblyVersion("1.0.3")]
-[assembly: AssemblyFileVersion("1.0.3")]
+[assembly: AssemblyVersion("1.0.4")]
+[assembly: AssemblyFileVersion("1.0.4")]
 [assembly: AssemblyDescription("https://github.com/thinkpixellab/bot/")]
 
 #if (DEBUG)
