@@ -59,6 +59,8 @@
     <Compile Include="Core\DemoMetadataAttribute.cs" />
     <Compile Include="Core\DemoMetadataProperties.cs" />
     <Compile Include="Core\XamlComponent.cs" />
+    <Compile Include="FolderPicker\LocalDrives.cs" />
+    <Compile Include="FolderPicker\SelectableDirectory.cs" />
     <Compile Include="Hex\Hexagon.cs" />
     <Compile Include="Hex\HexBoardElement.cs" />
     <Compile Include="Hex\HexHelper.cs" />
@@ -124,7 +126,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="FolderPicker\Data.cs" />
+    <Compile Include="FolderPicker\ChildSelection.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorPicker\Code.cs" />
