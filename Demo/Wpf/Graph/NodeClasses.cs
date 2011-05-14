@@ -101,16 +101,13 @@ namespace PixelLab.Wpf.Demo
 
     public class NodeCollection<T> where T : IEquatable<T>
     {
-        public NodeCollection(IEnumerable<T> nodes)
+        public NodeCollection(IList<T> nodes)
         {
             Contract.Requires<ArgumentNullException>(nodes != null);
             Contract.Requires(Contract.ForAll(nodes, item => item != null));
+            Contract.Requires(nodes.AllUnique(), "All of the nodes must be unique.");
 
             m_nodeValues = new ObservableCollectionPlus<T>(nodes);
-            if (!m_nodeValues.AllUnique())
-            {
-                throw new ArgumentException();
-            }
 
             m_nodes = new Dictionary<T, Node<T>>();
             m_nodeConnections = new Dictionary<T, HashSet<T>>();

@@ -49,14 +49,8 @@ namespace PixelLab.Common
         public void Dispose()
         {
             Action action = Interlocked.Exchange(ref m_unlockDelegate, null);
-            if (action != null)
-            {
-                action();
-            }
-            else
-            {
-                throw new InvalidOperationException("Dispose was called more than once.");
-            }
+            Util.ThrowUnless<ObjectDisposedException>(action != null, "Dispose has already been called on this object.");
+            action();
         }
 
         #region Implementation

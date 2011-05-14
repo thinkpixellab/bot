@@ -89,10 +89,7 @@ namespace PixelLab.Common
         [DebuggerStepThrough]
         public void VerifyAccess()
         {
-            if (!CheckAccess())
-            {
-                throw new InvalidOperationException("Code was run that does not have the nessesary lock.");
-            }
+            Util.ThrowUnless<InvalidOperationException>(CheckAccess(), "Code was run that does not have the nessesary lock.");
         }
 
         #region Implementation

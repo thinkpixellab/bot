@@ -137,10 +137,7 @@ namespace PixelLab.Common
 #if !SILVERLIGHT
             VerifyAccess();
 #endif
-            if (m_disposed)
-            {
-                throw new ObjectDisposedException(string.Empty);
-            }
+            Util.ThrowUnless<ObjectDisposedException>(!m_disposed, "This object has been disposed");
         }
 
         private void compositionTarget_Rendering(object sender, EventArgs e)
