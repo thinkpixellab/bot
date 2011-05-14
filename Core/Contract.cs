@@ -11,25 +11,19 @@ namespace PixelLab.Contracts
         [DebuggerStepThrough]
         public static void Requires(bool truth, string message = null)
         {
-            Requires<Exception>(truth, message);
+            Util.ThrowUnless(truth, message);
         }
 
         [DebuggerStepThrough]
-        public static void Requires<TException>(bool truth, string message = null) where TException : Exception
+        public static void Requires<TException>(bool truth, string message) where TException : Exception
         {
-            if (!truth)
-            {
-                throw InstanceFactory.CreateInstance<TException>(message);
-            }
+            Util.ThrowUnless<TException>(truth, message);
         }
 
         [DebuggerStepThrough]
         public static void Requires<TException>(bool truth) where TException : Exception, new()
         {
-            if (!truth)
-            {
-                throw new TException();
-            }
+            Util.ThrowUnless<TException>(truth);
         }
 
         public static void Assume(bool truth, string message = null)
