@@ -34,7 +34,7 @@ namespace PixelLab.Wpf
                 {
                     _dataItemsChildrenCache = new List<TreeViewDataItem>();
 
-                    PropertyInfo childrenProperty = _dataItem.GetType().GetProperty(_childrenPropertyName);
+                    PropertyInfo childrenProperty = _dataItem.GetType().GetProperty(_childrenPropertyName, BindingFlags.Instance | BindingFlags.Public);
                     if (childrenProperty != null)
                     {
                         IEnumerable children = childrenProperty.GetGetMethod().Invoke(_dataItem, null) as IEnumerable;

@@ -33,7 +33,7 @@ namespace PixelLab.Common
             Contract.Requires(propertyNames != null);
             Contract.Requires(propertyNames.Length > 0);
             Contract.Requires(propertyNames.AllUnique());
-            Contract.Requires(Contract.ForAll(propertyNames, name => OwnerType.GetProperty(name) != null), "The target object does not contain one or more of the properties provided");
+            Contract.Requires(Contract.ForAll(propertyNames, name => OwnerType.HasPublicInstanceProperty(name)), "The target object does not contain one or more of the properties provided");
 
             lock (_handlers)
             {

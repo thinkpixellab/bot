@@ -71,10 +71,7 @@ namespace PixelLab.Common
             var myType = element.GetType();
             element.PropertyChanged += (sender, args) =>
             {
-                if (myType.GetProperty(args.PropertyName) == null)
-                {
-                    throw new ArgumentException("Property not found", args.PropertyName);
-                }
+                Util.ThrowUnless<InvalidOperationException>(myType.HasPublicInstanceProperty(args.PropertyName), "The object '{0}' of type '{1}' raised a property change for '{2}' which isn't a public property on the type.".DoFormat(element, myType, args.PropertyName));
             };
         }
 
@@ -114,6 +111,13 @@ namespace PixelLab.Common
         {
             Contract.Requires(attributeProvider != null);
             return attributeProvider.GetCustomAttributes(typeof(T), inherit).Cast<T>();
+        }
+
+        [Pure]
+        public static bool HasPublicInstanceProperty(this IReflect type, string name)
+        {
+            Contract.Requires(type != null);
+            return type.GetProperty(name, BindingFlags.Public | BindingFlags.Instance) != null;
         }
 
         #region impl
