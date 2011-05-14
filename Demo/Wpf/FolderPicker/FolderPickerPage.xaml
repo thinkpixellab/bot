@@ -3,7 +3,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
   xmlns:local="clr-namespace:PixelLab.Wpf.Demo.FolderPicker"
-  xmlns:core="clr-namespace:PixelLab.Core"
+  xmlns:core="clr-namespace:PixelLab.Wpf.Demo.Core"
   core:DemoMetadataProperties.DemoName="Folder Picker"
   core:DemoMetadataProperties.DemoDescription="This is an example of building a data layer to enable data binding. In this case, around multi-selecting folders.">
 

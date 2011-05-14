@@ -3,7 +3,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
   xmlns:lib="http://schemas.thinkpixellab.com/2011/xaml/presentation"
-  xmlns:core="clr-namespace:PixelLab.Core"
+  xmlns:core="clr-namespace:PixelLab.Wpf.Demo.Core"
   core:DemoMetadataProperties.DemoName="Reveal"
   core:DemoMetadataProperties.DemoDescription="This is a great example of how a custom widget--namely, Reveal--can be used in a number of places. TreeView and Expander, for example.">
     <Grid>

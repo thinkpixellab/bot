@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using PixelLab.Common;
 
-namespace PixelLab.Demo.Core
+namespace PixelLab.Wpf.Demo.Core
 {
     public class IsStringEmptyConverter : SimpleValueConverter<string, Visibility>
     {

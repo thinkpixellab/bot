@@ -2,7 +2,7 @@
 using System.Windows;
 using Microsoft.Xaml.Tools.XamlDom;
 
-namespace PixelLab.Core
+namespace PixelLab.Wpf.Demo.Core
 {
     public static class DemoMetadataProperties
     {

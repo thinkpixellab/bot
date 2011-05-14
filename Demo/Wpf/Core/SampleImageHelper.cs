@@ -8,7 +8,7 @@ using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using PixelLab.Common;
 
-namespace PixelLab.Demo.Core
+namespace PixelLab.Wpf.Demo.Core
 {
     public class SampleImageHelper
     {

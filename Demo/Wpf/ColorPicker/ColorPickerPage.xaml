@@ -3,7 +3,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:lib="http://schemas.thinkpixellab.com/2011/xaml/presentation"
   xmlns:local="clr-namespace:PixelLab.Wpf.Demo"
-  xmlns:core="clr-namespace:PixelLab.Core"
+  xmlns:core="clr-namespace:PixelLab.Wpf.Demo.Core"
   core:DemoMetadataProperties.DemoName="ColorPicker Control"
   core:DemoMetadataProperties.DemoDescription="This is ColorPicker. This control was written for my PDC'05 talk and put in the SDK. I've fixed a bunch of stuff since I posted the control for the PDC. I now use a private DP to handle the many-to-one binding of Color. I also implemented automation and cleaned up the default style (we're smarter about resources in theme files now).">
 

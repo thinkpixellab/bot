@@ -1,7 +1,7 @@
 ﻿<Page
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:core="clr-namespace:PixelLab.Core"
+  xmlns:core="clr-namespace:PixelLab.Wpf.Demo.Core"
   core:DemoMetadataProperties.DemoName="XAML T-Shirt"
   core:DemoMetadataProperties.DemoDescription="A super-simple and super-silly example of control templates gone too far.">
     <Grid>

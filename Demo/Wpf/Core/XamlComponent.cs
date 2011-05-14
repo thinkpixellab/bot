@@ -10,7 +10,7 @@ using System.Windows.Baml2006;
 using Microsoft.Xaml.Tools.XamlDom;
 using PixelLab.Demo.Core;
 
-namespace PixelLab.Core
+namespace PixelLab.Wpf.Demo.Core
 {
     public static class XamlComponent
     {

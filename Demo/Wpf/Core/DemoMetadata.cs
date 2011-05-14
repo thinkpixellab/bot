@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using PixelLab.Common;
-using PixelLab.Core;
+using PixelLab.Wpf.Demo.Core;
 
 namespace PixelLab.Demo.Core
 {

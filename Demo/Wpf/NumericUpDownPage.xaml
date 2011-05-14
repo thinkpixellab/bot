@@ -2,7 +2,7 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:lib="http://schemas.thinkpixellab.com/2011/xaml/presentation"
-  xmlns:core="clr-namespace:PixelLab.Core"
+  xmlns:core="clr-namespace:PixelLab.Wpf.Demo.Core"
   core:DemoMetadataProperties.DemoName="NumericUpDown Control"
   core:DemoMetadataProperties.DemoDescription="NumericUpDown is a control I am frequently asked about, so I thought I'd write it. I was briefly tempted to subclass RangeBase for this, but at the end of the day, one really wants Decimal to be the base value, and RangeBase uses Double. There's quite a bit going on here: lot's of nested, styled controls. Binding. Commands. RoutedEvents. DependencyProperty Coercion. Like InfoTextBox, this control and its resources lives in an external library. Feel free to reuse it. This is still a work in progress, but I think most of the work is in the style (maybe a little to handle up-down arrow keys).">
 

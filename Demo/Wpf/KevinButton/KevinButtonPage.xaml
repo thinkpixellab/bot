@@ -2,7 +2,7 @@
   Background="#272627"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:core="clr-namespace:PixelLab.Core"
+  xmlns:core="clr-namespace:PixelLab.Wpf.Demo.Core"
   core:DemoMetadataProperties.DemoName="Kevin Button"
   core:DemoMetadataProperties.DemoDescription="If you must know: http://channel9.msdn.com/showpost.aspx?postid=222817">
 

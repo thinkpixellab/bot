@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using PixelLab.Demo.Core;
+using PixelLab.Wpf.Demo.Core;
 
 namespace PixelLab.Wpf.Demo
 {

@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Reflection;
 using PixelLab.Common;
 
-namespace PixelLab.Wpf
+namespace PixelLab.Wpf.Demo
 {
     public class TreeViewDataItem : Changeable
     {

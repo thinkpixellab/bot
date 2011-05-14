@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Threading;
 using PixelLab.Common;
-using PixelLab.Demo.Core;
+using PixelLab.Wpf.Demo.Core;
 
 namespace PixelLab.Wpf.Demo.FlipTile3D
 {
