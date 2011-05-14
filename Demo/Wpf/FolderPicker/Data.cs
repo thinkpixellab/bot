@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Security;
@@ -13,24 +12,22 @@ namespace PixelLab.Wpf.Demo
     {
         public LocalDrives()
         {
-            List<SelectableDirectory> driveList = new List<SelectableDirectory>();
+            var drives = Enumerable.Empty<SelectableDirectory>();
 
             try
             {
-                DriveInfo[] drives = DriveInfo.GetDrives();
-                foreach (DriveInfo d in drives)
-                {
-                    if (d.DriveType == DriveType.Fixed && d.IsReady)
-                    {
-                        SelectableDirectory sd = new SelectableDirectory(d);
-                        driveList.Add(sd);
-                        sd.PropertyChanged += new PropertyChangedEventHandler(sd_PropertyChanged);
-                    }
-                }
+                drives = from d in DriveInfo.GetDrives()
+                         where d.DriveType == DriveType.Fixed && d.IsReady
+                         select new SelectableDirectory(d);
             }
             catch (SecurityException) { } // This will fail in an XBap
 
-            m_drives = new ReadOnlyCollection<SelectableDirectory>(driveList);
+            m_drives = drives.ToReadOnlyCollection();
+
+            foreach (var sd in m_drives)
+            {
+                sd.WatchProperty(() => OnPropertyChanged(SelectableDirectory.c_selectedDirectoriesPropertyName), SelectableDirectory.c_selectedDirectoriesPropertyName);
+            }
         }
 
         public IList<SelectableDirectory> Drives
@@ -50,15 +47,7 @@ namespace PixelLab.Wpf.Demo
 
         #region Implementation
 
-        private void sd_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == SelectableDirectory.c_selectedDirectoriesPropertyName)
-            {
-                OnPropertyChanged(SelectableDirectory.s_selectedDirectoriesChangedArgs);
-            }
-        }
-
-        private ReadOnlyCollection<SelectableDirectory> m_drives;
+        private readonly ReadOnlyCollection<SelectableDirectory> m_drives;
 
         #endregion
     }
@@ -87,23 +76,23 @@ namespace PixelLab.Wpf.Demo
             {
                 if (m_subDirectories == null)
                 {
-                    List<SelectableDirectory> directoryList = new List<SelectableDirectory>();
+                    var directoryList = Enumerable.Empty<SelectableDirectory>();
 
                     try
                     {
-                        foreach (DirectoryInfo di in m_directoryInfo.GetDirectories())
-                        {
-                            SelectableDirectory dir = new SelectableDirectory(di);
-                            dir.PropertyChanged += new PropertyChangedEventHandler(dir_PropertyChanged);
-                            directoryList.Add(dir);
-                        }
+                        directoryList = from di in m_directoryInfo.GetDirectories()
+                                        select new SelectableDirectory(di);
                     }
                     catch (UnauthorizedAccessException)
                     {
                         //the directory may be restricted
                     }
 
-                    m_subDirectories = new ReadOnlyCollection<SelectableDirectory>(directoryList);
+                    m_subDirectories = directoryList.ToReadOnlyCollection();
+                    foreach (var subDir in m_subDirectories)
+                    {
+                        subDir.WatchProperty(childSelectionChanged, c_isSelectedPropertyName, c_selectedDirectoriesPropertyName);
+                    }
                 }
 
                 return m_subDirectories;
@@ -127,7 +116,6 @@ namespace PixelLab.Wpf.Demo
                     name = (name.EndsWith("\\")) ? name.Substring(0, name.Length - 1) : name;
                     return string.Format("Local Disk ({0})", name);
                 }
-
                 else
                 {
                     return m_directoryInfo.Name;
@@ -220,8 +208,8 @@ namespace PixelLab.Wpf.Demo
 
         private void isSelectedChanged()
         {
-            OnPropertyChanged(s_isSelectedChangedArgs);
-            OnPropertyChanged(s_selectedDirectoriesChangedArgs);
+            OnPropertyChanged(c_isSelectedPropertyName);
+            OnPropertyChanged(c_selectedDirectoriesPropertyName);
         }
 
         private void childSelectionChanged()
@@ -229,19 +217,8 @@ namespace PixelLab.Wpf.Demo
             m_subSelectionCountCache = null;
             m_subCountCache = null;
 
-            OnPropertyChanged(s_childSelectionChangedArgs);
-            OnPropertyChanged(s_selectedDirectoriesChangedArgs);
-        }
-
-        private void dir_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case c_selectedDirectoriesPropertyName:
-                case c_isSelectedPropertyName:
-                    childSelectionChanged();
-                    break;
-            }
+            OnPropertyChanged(c_childSelectionPropertyName);
+            OnPropertyChanged(c_selectedDirectoriesPropertyName);
         }
 
         private void getChildSelectionCount(out int childCount, out int selectionCount)
@@ -270,12 +247,6 @@ namespace PixelLab.Wpf.Demo
 
         private readonly DirectoryInfo m_directoryInfo;
         private readonly bool m_isDrive;
-
-        private static readonly PropertyChangedEventArgs s_childSelectionChangedArgs =
-            new PropertyChangedEventArgs(c_childSelectionPropertyName);
-        private static readonly PropertyChangedEventArgs s_isSelectedChangedArgs =
-            new PropertyChangedEventArgs(c_isSelectedPropertyName);
-        internal static readonly PropertyChangedEventArgs s_selectedDirectoriesChangedArgs = new PropertyChangedEventArgs(c_selectedDirectoriesPropertyName);
 
         private const string c_isSelectedPropertyName = "IsSelected";
         private const string c_childSelectionPropertyName = "ChildSelection";

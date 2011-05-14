@@ -120,6 +120,11 @@ namespace PixelLab.Common
             return type.GetProperty(name, BindingFlags.Public | BindingFlags.Instance) != null;
         }
 
+        public static PropertyChangeWatcher WatchProperty(this INotifyPropertyChanged source, Action handler, params string[] propertyNames)
+        {
+            return PropertyChangeWatcher.Watch(source, handler, propertyNames);
+        }
+
         #region impl
         private class FuncComparer<T> : IComparer<T>
         {

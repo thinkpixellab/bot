@@ -54,17 +54,7 @@ namespace PixelLab.Wpf.Demo.OrgTree
                     if (_children == null)
                     {
                         _children = _dataRoot.Children.Select(child => new OrgViewItem(child)).ToArray();
-                        _children.ForEach(
-                            child =>
-                            {
-                                child.Data.PropertyChanged += (sender, args) =>
-                                {
-                                    if (args.PropertyName == "IsVisible")
-                                    {
-                                        refreshVisible(child);
-                                    }
-                                };
-                            });
+                        _children.ForEach(child => child.Data.WatchProperty(() => refreshVisible(child), "IsVisible"));
                     }
                     _childrenRO = new ReadOnlyCollection<OrgViewItem>(_children);
                 }

@@ -37,11 +37,7 @@ namespace PixelLab.Wpf.Demo.OrgTree
             get { return m_isVisible; }
             set
             {
-                if (value != m_isVisible)
-                {
-                    m_isVisible = value;
-                    OnPropertyChanged("IsVisible");
-                }
+                UpdateProperty("IsVisible", ref m_isVisible, value);
             }
         }
 
@@ -50,11 +46,7 @@ namespace PixelLab.Wpf.Demo.OrgTree
             get { return m_isExpanded; }
             set
             {
-                if (value != m_isExpanded)
-                {
-                    m_isExpanded = value;
-                    OnPropertyChanged("IsExpanded");
-                }
+                UpdateProperty("IsExpanded", ref m_isExpanded, value);
             }
         }
 
