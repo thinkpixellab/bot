@@ -112,6 +112,8 @@ namespace PixelLab.Common
             }
         }
 
+        protected bool MultiUpdateActive { get { return m_lock.IsLocked; } }
+
         protected virtual void AppendItems(IEnumerable<T> source)
         {
             Contract.Requires(source != null);
