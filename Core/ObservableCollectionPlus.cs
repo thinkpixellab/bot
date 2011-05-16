@@ -73,9 +73,15 @@ namespace PixelLab.Common
         public void AddRange(IEnumerable<T> source)
         {
             Contract.Requires(source != null);
-            foreach (var item in source)
+            AppendItems(source);
+        }
+
+        public void Reset(IEnumerable<T> source)
+        {
+            using (BeginMultiUpdate())
             {
-                Add(item);
+                ClearItems();
+                AppendItems(source);
             }
         }
 
@@ -106,6 +112,18 @@ namespace PixelLab.Common
             if (changed)
             {
                 raiseReset();
+            }
+        }
+
+        protected virtual void AppendItems(IEnumerable<T> source)
+        {
+            Contract.Requires(source != null);
+            using (BeginMultiUpdate())
+            {
+                foreach (var item in source)
+                {
+                    InsertItem(this.Count, item);
+                }
             }
         }
 
