@@ -1,5 +1,12 @@
 # Bag of Tricks Change Log #
 
+## v1.0.5 ##
+* A mountain of changes to `ObservableCollectionPlus<T>`
+  * Added `Reset` method - *Closes #21*
+  * Made sort methods safe - *Closes #22*
+  * Added `MultiUpdateActive`
+  * Changed the location of the call to protected `AfterMultiUpdate` to before raising reset
+
 ## v1.0.4 ##
 * A mountain of clean-up in demo and test code
 * Added `WatchProperty` extension method to `Extensions`
