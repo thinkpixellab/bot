@@ -88,30 +88,27 @@ namespace PixelLab.Common
         public void Sort(Func<T, T, int> comparer)
         {
             Contract.Requires(comparer != null);
-            var changed = Items.QuickSort(comparer);
-            if (changed)
+            using (this.BeginMultiUpdate())
             {
-                raiseReset();
+                this.QuickSort(comparer);
             }
         }
 
         public void Sort(IComparer<T> comparer)
         {
             Contract.Requires(comparer != null);
-            var changed = Items.QuickSort(comparer);
-            if (changed)
+            using (this.BeginMultiUpdate())
             {
-                raiseReset();
+                this.QuickSort(comparer);
             }
         }
 
         public void Sort(Comparison<T> comparison)
         {
             Contract.Requires(comparison != null);
-            var changed = Items.QuickSort(comparison);
-            if (changed)
+            using (this.BeginMultiUpdate())
             {
-                raiseReset();
+                this.QuickSort(comparison);
             }
         }
 
