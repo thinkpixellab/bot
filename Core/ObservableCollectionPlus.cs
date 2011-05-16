@@ -29,7 +29,7 @@ namespace PixelLab.Common
             : base(collection)
         {
             m_roCollection = new ReadOnlyObservableCollection<T>(this);
-            m_lock = new WrappedLock(BeforeMultiUpdate, unlock);
+            m_lock = new WrappedLock(BeforeMultiUpdate, finishMultiUpdate);
         }
 #endif
         public IDisposable BeginMultiUpdate()
@@ -154,14 +154,14 @@ namespace PixelLab.Common
             }
         }
 
-        private void unlock()
+        private void finishMultiUpdate()
         {
+            AfterMultiUpdate();
             if (m_isChanged)
             {
                 raiseReset();
                 m_isChanged = false;
             }
-            AfterMultiUpdate();
         }
 
         private void raiseReset()
