@@ -88,16 +88,23 @@ namespace PixelLab.Common
         /// </remarks>
         public static bool IsCriticalException(this Exception exception)
         {
-            Contract.Requires(exception != null);
             // Copied with respect from WPF WindowsBase->MS.Internal.CriticalExceptions.IsCriticalException
             // NullReferencException, SecurityException --> not going to consider these critical
-            return exception is OutOfMemoryException ||
-                    exception is StackOverflowException ||
-                    exception is ThreadAbortException
+            while (exception != null)
+            {
+                if (exception is OutOfMemoryException ||
+                        exception is StackOverflowException ||
+                        exception is ThreadAbortException
 #if !WP7
  || exception is System.Runtime.InteropServices.SEHException
 #endif
-;
+)
+                {
+                    return true;
+                }
+                exception = exception.InnerException;
+            }
+            return false;
         } //*** static IsCriticalException
 
         public static Random Rnd
