@@ -27,11 +27,21 @@ namespace PixelLab.Common
             OwnerType = _owner.GetType();
         }
 
-        public PropertyChangeWatcher AddWatcher(Action handler, params string[] propertyNames)
+        public PropertyChangeWatcher AddWatcher(string propertyName, Action handler)
+        {
+            return AddWatcher(new[] { propertyName }, handler);
+        }
+
+        public PropertyChangeWatcher AddWatcher(string propertyName1, string propertyName2, Action handler)
+        {
+            return AddWatcher(new[] { propertyName1, propertyName2 }, handler);
+        }
+
+        public PropertyChangeWatcher AddWatcher(IList<string> propertyNames, Action handler)
         {
             Contract.Requires(handler != null);
             Contract.Requires(propertyNames != null);
-            Contract.Requires(propertyNames.Length > 0);
+            Contract.Requires(propertyNames.Count > 0);
             Contract.Requires(propertyNames.AllUnique());
             Contract.Requires(Contract.ForAll(propertyNames, name => OwnerType.HasPublicInstanceProperty(name)), "The target object does not contain one or more of the properties provided");
 
@@ -85,9 +95,9 @@ namespace PixelLab.Common
             }
         }
 
-        public static PropertyChangeWatcher AddWatcher(INotifyPropertyChanged source, Action handler, params string[] propertyNames)
+        public static PropertyChangeWatcher AddWatcher(INotifyPropertyChanged source, IList<string> propertyNames, Action handler)
         {
-            return (new PropertyChangeWatcher(source)).AddWatcher(handler, propertyNames);
+            return (new PropertyChangeWatcher(source)).AddWatcher(propertyNames, handler);
         }
 
         private void _owner_PropertyChanged(object sender, PropertyChangedEventArgs e)

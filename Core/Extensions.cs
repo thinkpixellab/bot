@@ -120,9 +120,19 @@ namespace PixelLab.Common
             return type.GetProperty(name, BindingFlags.Public | BindingFlags.Instance) != null;
         }
 
-        public static PropertyChangeWatcher AddWatcher(this INotifyPropertyChanged source, Action handler, params string[] propertyNames)
+        public static PropertyChangeWatcher AddWatcher(this INotifyPropertyChanged source, string propertyName, Action handler)
         {
-            return PropertyChangeWatcher.AddWatcher(source, handler, propertyNames);
+            return PropertyChangeWatcher.AddWatcher(source, new[] { propertyName }, handler);
+        }
+
+        public static PropertyChangeWatcher AddWatcher(this INotifyPropertyChanged source, string propertyName1, string propertyName2, Action handler)
+        {
+            return PropertyChangeWatcher.AddWatcher(source, new[] { propertyName1, propertyName2 }, handler);
+        }
+
+        public static PropertyChangeWatcher AddWatcher(this INotifyPropertyChanged source, IList<string> propertyNames, Action handler)
+        {
+            return PropertyChangeWatcher.AddWatcher(source, propertyNames, handler);
         }
 
         #region impl
