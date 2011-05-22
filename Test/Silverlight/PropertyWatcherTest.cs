@@ -61,6 +61,5 @@ namespace PixelLab.Test
             Assert.IsFalse(watcher.IsWatching("Bar"));
             Assert.IsFalse(watcher.IsWatching("Baz"));
         }
-
     }
 }

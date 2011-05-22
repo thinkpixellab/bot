@@ -48,15 +48,16 @@ namespace PixelLab.Common
             ref T propertyValue,
             T value)
         {
-            if (true == EqualityComparer<T>.Default.Equals(propertyValue, value))
+            if (EqualityComparer<T>.Default.Equals(propertyValue, value))
             {
                 return false;
             }
-
-            propertyValue = value;
-            this.OnPropertyChanged(propertyName);
-
-            return true;
+            else
+            {
+                propertyValue = value;
+                this.OnPropertyChanged(propertyName);
+                return true;
+            }
         }
     }
 }
