@@ -27,7 +27,7 @@ namespace PixelLab.Common
             OwnerType = _owner.GetType();
         }
 
-        public PropertyChangeWatcher Watch(Action handler, params string[] propertyNames)
+        public PropertyChangeWatcher AddWatcher(Action handler, params string[] propertyNames)
         {
             Contract.Requires(handler != null);
             Contract.Requires(propertyNames != null);
@@ -85,9 +85,9 @@ namespace PixelLab.Common
             }
         }
 
-        public static PropertyChangeWatcher Watch(INotifyPropertyChanged source, Action handler, params string[] propertyNames)
+        public static PropertyChangeWatcher AddWatcher(INotifyPropertyChanged source, Action handler, params string[] propertyNames)
         {
-            return (new PropertyChangeWatcher(source)).Watch(handler, propertyNames);
+            return (new PropertyChangeWatcher(source)).AddWatcher(handler, propertyNames);
         }
 
         private void _owner_PropertyChanged(object sender, PropertyChangedEventArgs e)
