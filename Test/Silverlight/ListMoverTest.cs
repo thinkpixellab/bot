@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PixelLab.Common;
+using PixelLab.Test.Helpers;
 
 namespace PixelLab.Test.SL
 {

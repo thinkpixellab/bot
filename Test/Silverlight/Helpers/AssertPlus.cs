@@ -6,8 +6,9 @@ using System.Diagnostics.Contracts;
 using PixelLab.Contracts;
 #endif
 
-namespace PixelLab.Test
+namespace PixelLab.Test.Helpers
 {
+    // Question: Kevin - 2011-05-22: why throw AssertFailedException instead of Assert.Fail?
     public static class AssertPlus
     {
         public static TException ExceptionThrown<TException>(Action testAction) where TException : Exception

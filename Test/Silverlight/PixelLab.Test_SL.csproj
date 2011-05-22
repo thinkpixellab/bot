@@ -35,7 +35,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AssertPlus.cs" />
+    <Compile Include="Helpers\AssertPlus.cs" />
     <Compile Include="AsyncValueTests.cs" />
     <Compile Include="ListMoverTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

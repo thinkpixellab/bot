@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PixelLab.Contracts;
+using PixelLab.Test.Helpers;
 
 namespace PixelLab.Test.SL
 {
