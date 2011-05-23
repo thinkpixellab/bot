@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using PixelLab.Common;
 
 namespace PixelLab.SL
 {
@@ -7,19 +8,17 @@ namespace PixelLab.SL
     {
         protected override Size MeasureOverride(Size availableSize)
         {
-            double widest = 0;
-            double tallest = 0;
-            Size YouCanBeAsBigAsYouWant = new Size(double.PositiveInfinity, double.PositiveInfinity);
+            double widest = 0, tallest = 0;
 
             foreach (UIElement element in this.Children)
             {
-                element.Measure(YouCanBeAsBigAsYouWant);
+                element.Measure(GeoHelper.SizeInfinite);
 
                 double dw = element.DesiredSize.Width;
-                if (double.IsNaN(dw) || double.IsInfinity(dw)) dw = 0;
+                dw = dw.IsValid() ? dw : 0;
 
                 double dh = element.DesiredSize.Height;
-                if (double.IsNaN(dh) || double.IsInfinity(dh)) dh = 0;
+                dh = dh.IsValid() ? dh : 0;
 
                 if (dw > widest) widest = dw;
                 if (dh > tallest) tallest = dh;
@@ -30,26 +29,20 @@ namespace PixelLab.SL
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            double top = 0;
-            double left = 0;
-            double widest = 0;
-            double tallest = 0;
+            double widest = 0, tallest = 0;
 
-
-            foreach (UIElement element in this.Children)
+            foreach (var element in this.Children)
             {
-
                 double dw = element.DesiredSize.Width;
-                if (double.IsNaN(dw) || double.IsInfinity(dw)) dw = 0;
+                dw = dw.IsValid() ? dw : 0;
 
                 double dh = element.DesiredSize.Height;
-                if (double.IsNaN(dh) || double.IsInfinity(dh)) dh = 0;
+                dh = dh.IsValid() ? dh : 0;
 
-                element.Arrange(new Rect(left, top, dw, dh));
+                element.Arrange(new Rect(0, 0, dw, dh));
 
                 if (dw > widest) widest = dw;
                 if (dh > tallest) tallest = dh;
-
             }
 
             return new Size(widest, tallest);
