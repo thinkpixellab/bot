@@ -1,5 +1,13 @@
 # Bag of Tricks Change Log #
 
+## v1.0.6 ##
+* Added support for critical inner exceptions to `IsCritical`
+* Moved `DispatcherExtensions` methods to use `SynchronizationContext`, which is more general
+  * Should likely rename the class to `SynchronizationContextExtensions`, huh?
+* Naming and param order changes to `PropertyChangeWatcher` - **Breaking Change**
+* Clean-up in the SL test project
+* Added test for `PropertyChangeWatcher`
+
 ## v1.0.5 ##
 * A mountain of changes to `ObservableCollectionPlus<T>`
   * Added `Reset` method - *Closes #21*
