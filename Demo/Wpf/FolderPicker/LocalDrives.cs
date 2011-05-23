@@ -25,7 +25,7 @@ namespace PixelLab.Wpf.Demo.FolderPicker
 
             foreach (var sd in m_drives)
             {
-                sd.WatchProperty(() => OnPropertyChanged(SelectableDirectory.c_selectedDirectoriesPropertyName), SelectableDirectory.c_selectedDirectoriesPropertyName);
+                sd.AddWatcher(SelectableDirectory.c_selectedDirectoriesPropertyName, () => OnPropertyChanged(SelectableDirectory.c_selectedDirectoriesPropertyName));
             }
         }
 

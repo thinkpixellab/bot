@@ -46,7 +46,7 @@ namespace PixelLab.Wpf.Demo.FolderPicker
                     m_subDirectories = directoryList.ToReadOnlyCollection();
                     foreach (var subDir in m_subDirectories)
                     {
-                        subDir.WatchProperty(childSelectionChanged, c_isSelectedPropertyName, c_selectedDirectoriesPropertyName);
+                        subDir.AddWatcher(c_isSelectedPropertyName, c_selectedDirectoriesPropertyName, childSelectionChanged);
                     }
                 }
 
