@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
 using PixelLab.Contracts;
 #endif
-using System.Linq;
 
 namespace PixelLab.Common
 {
@@ -13,8 +13,14 @@ namespace PixelLab.Common
     /// Keeps a collection of items 'weakly'. On enumeration, valid references to items are returned. Invalid references are cleaned up.
     /// </summary>
     /// <typeparam name="T">Any class. Silly to have weak references to value types, no?</typeparam>
+    /// <remarks>Very much NOT thread safe.</remarks>
     public class WeakEnumerable<T> : IEnumerable<T> where T : class
     {
+        /// <summary>
+        /// Adds an item to the end of the enumerable.
+        /// </summary>
+        /// <remarks>This method requires the entire collection to be enumerated.
+        /// If adding to the end is not required, use Prepend. It's faster.</remarks>
         public void Add(T item)
         {
             Contract.Requires<ArgumentNullException>(item != null);
@@ -30,6 +36,19 @@ namespace PixelLab.Common
             {
                 last.Next = node;
             }
+        }
+
+        /// <summary>
+        /// Adds an item to the begining (head) of the collection.
+        /// </summary>
+        /// <remarks>Potentially a lot faster than Add.</remarks>
+        public void Insert(T item)
+        {
+            Contract.Requires<ArgumentNullException>(item != null);
+
+            var node = new WeakNode(item);
+            node.Next = m_head;
+            m_head = node;
         }
 
         public IEnumerator<T> GetEnumerator()

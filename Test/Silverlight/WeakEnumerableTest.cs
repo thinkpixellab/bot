@@ -36,7 +36,17 @@ namespace PixelLab.Test.Common
 
             EnqueueCallback(() =>
             {
-                m_weirds.ForEach(w => m_weirdEnum.Add(w));
+                for (var i = 0; i < m_weirds.Count; i++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        m_weirdEnum.Add(m_weirds[i]);
+                    }
+                    else
+                    {
+                        m_weirdEnum.Insert(m_weirds[i]);
+                    }
+                }
             });
 
             EnqueueCallback(GC.Collect);
@@ -57,14 +67,13 @@ namespace PixelLab.Test.Common
             });
 
             EnqueueCallback(GC.Collect);
-            EnqueueCallback(GC.Collect);
 
             EnqueueCallback(() =>
             {
                 Assert.AreEqual(half, m_weirds.Count);
                 Assert.AreEqual(half, WeirdThing.Count);
                 Assert.AreEqual(half, m_weirdEnum.Count());
-                Assert.IsTrue(m_weirds.SequenceEqual(m_weirdEnum));
+                Assert.AreEqual(half, m_weirds.Intersect(m_weirdEnum).Count());
             });
 
             EnqueueTestComplete();
