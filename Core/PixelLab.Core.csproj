@@ -41,6 +41,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyChangeWatcher.cs" />
     <Compile Include="ReaderWriterLockHelper.cs" />
+    <Compile Include="SortedObservableEnumerable.cs" />
     <Compile Include="SortHelper.cs" />
     <Compile Include="StreamHelpers.cs" />
     <Compile Include="System\DataErrorsChangedEventArgs.cs" />
