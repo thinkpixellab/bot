@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Collections.Specialized;
+using System.Diagnostics;
+using System.Linq;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
@@ -396,6 +397,57 @@ namespace PixelLab.Common
 #else
             return new ObservableCollection<T>(source);
 #endif
+        }
+
+        public static void Synchronize<TSource, TTarget>(this ObservableCollectionPlus<TTarget> targetCollection, IList<TSource> sourceCollection, Func<TSource, TTarget, bool> matcher, Func<TSource, TTarget> mapper) where TSource : IEquatable<TSource>
+        {
+            Contract.Requires(targetCollection != null);
+            Contract.Requires(mapper != null);
+            Contract.Requires(sourceCollection != null);
+            Contract.Requires(sourceCollection.AllUnique());
+
+            using (targetCollection.BeginMultiUpdate())
+            {
+                // move wrappers around to the right places
+                // or create a new one
+                for (int i = 0; i < sourceCollection.Count; i++)
+                {
+                    var sourceItem = sourceCollection[i];
+                    var targetIndex = targetCollection.IndexOf(targetItem => matcher(sourceItem, targetItem));
+                    if (targetIndex >= 0)
+                    {
+                        if (targetIndex != i)
+                        {
+                            Debug.Assert(targetIndex > i, "this would only happen if we have duplicates...which we should never have!");
+                            targetCollection.Move(targetIndex, i);
+                        }
+                        else
+                        {
+                            // NOOP - already in the right spot! :-)
+                        }
+                    }
+                    else
+                    {
+                        var newItem = mapper(sourceItem);
+                        Debug.Assert(matcher(sourceItem, newItem));
+                        targetCollection.Insert(i, newItem);
+                    }
+                }
+
+                // Remove anything left
+                while (targetCollection.Count > sourceCollection.Count)
+                {
+                    targetCollection.RemoveLast();
+                }
+
+                Debug.Assert(sourceCollection.Count == targetCollection.Count);
+#if DEBUG
+                for (int i = 0; i < sourceCollection.Count; i++)
+                {
+                    Debug.Assert(matcher(sourceCollection[i], targetCollection[i]));
+                }
+#endif
+            }
         }
     }
 }
