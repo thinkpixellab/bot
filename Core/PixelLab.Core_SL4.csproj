@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{A5A55BBF-F2D5-4938-B5A8-9A950EF7D014}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <RootNamespace>PixelLab.Common</RootNamespace>
+    <AssemblyName>PixelLab.Core_SL4</AssemblyName>
+    <SilverlightApplication>false</SilverlightApplication>
+  </PropertyGroup>
+  <Import Project="..\targets\SL4.targets" />
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\DataErrorHelper.cs">
+      <Link>DataErrorHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\PropertyChangeWatcher.cs">
+      <Link>PropertyChangeWatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\SortedObservableEnumerable.cs">
+      <Link>SortedObservableEnumerable.cs</Link>
+    </Compile>
+    <Compile Include="..\XamlAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ActionOnDispose.cs">
+      <Link>ActionOnDispose.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\CastList.cs">
+      <Link>CastList.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Changeable.cs">
+      <Link>Changeable.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\CollectionExtensions.cs">
+      <Link>CollectionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\CompositionHelpers.cs">
+      <Link>CompositionHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Contract.cs">
+      <Link>Contract.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Extensions.cs">
+      <Link>Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\FuncEnumerable.cs">
+      <Link>FuncEnumerable.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\InstanceFactory.cs">
+      <Link>InstanceFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ListBase.cs">
+      <Link>ListBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ListReorderUtil.cs">
+      <Link>ListReorderUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\LockHelper.cs">
+      <Link>LockHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ObservableCollectionPlus.cs">
+      <Link>ObservableCollectionPlus.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\SortHelper.cs">
+      <Link>SortHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\StreamHelpers.cs">
+      <Link>StreamHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\TypedDictionaryExtensions.cs">
+      <Link>TypedDictionaryExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Util.cs">
+      <Link>Util.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\WeakEnumerable.cs">
+      <Link>WeakEnumerable.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\WrappedLock.cs">
+      <Link>WrappedLock.cs</Link>
+    </Compile>
+    <Compile Include="ActionOnDispose.cs" />
+    <Compile Include="CastList.cs" />
+    <Compile Include="Changeable.cs" />
+    <Compile Include="CollectionExtensions.cs" />
+    <Compile Include="CompositionHelpers.cs" />
+    <Compile Include="Contract.cs" />
+    <Compile Include="DataErrorHelper.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="FuncEnumerable.cs" />
+    <Compile Include="InstanceFactory.cs" />
+    <Compile Include="ListBase.cs" />
+    <Compile Include="ListReorderUtil.cs" />
+    <Compile Include="LockHelper.cs" />
+    <Compile Include="ObservableCollectionPlus.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyChangeWatcher.cs" />
+    <Compile Include="SortHelper.cs" />
+    <Compile Include="StreamHelpers.cs" />
+    <Compile Include="TypedDictionaryExtensions.cs" />
+    <Compile Include="Util.cs" />
+    <Compile Include="WeakEnumerable.cs" />
+    <Compile Include="WrappedLock.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PixelLab.Core.csproj" />
+    <Content Include="PixelLab.Core.csproj.user" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
