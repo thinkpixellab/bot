@@ -114,10 +114,6 @@
     <Compile Include="WeakEnumerable.cs" />
     <Compile Include="WrappedLock.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="PixelLab.Core.csproj" />
-    <Content Include="PixelLab.Core.csproj.user" />
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
