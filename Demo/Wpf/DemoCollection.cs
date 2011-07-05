@@ -8,8 +8,9 @@ using System.Diagnostics.Contracts;
 using PixelLab.Contracts;
 #endif
 using System.Windows.Input;
+using PixelLab.Common;
 
-namespace PixelLab.Common
+namespace PixelLab.Wpf.Demo
 {
     /// <remarks>
     ///     The members of this class are only safe to use via one thread (usually the UI thread in a WPF application).

@@ -44,7 +44,6 @@
     <Compile Include="CommandKeyMapper.cs" />
     <Compile Include="CompositionTargetRenderingListening.cs" />
     <Compile Include="DeadCommand.cs" />
-    <Compile Include="DemoCollection.cs" />
     <Compile Include="DependencyPropHelper.cs" />
     <Compile Include="DispatcherExtensions.cs" />
     <Compile Include="EnumConverter.cs" />
@@ -65,9 +64,6 @@
     <Compile Include="TreeHelpers.cs" />
     <Compile Include="Vector_SL.cs" />
     <Compile Include="WrapPanel.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\PixelLab.Core_SL4.csproj">

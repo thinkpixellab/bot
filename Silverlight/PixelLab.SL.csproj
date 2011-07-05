@@ -9,8 +9,7 @@
   </PropertyGroup>
   <Import Project="..\targets\SL4.targets" />
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.Prism, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\packages\Prism.4.0.0.0\lib\SL4\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism.Interactivity">

@@ -59,6 +59,7 @@
     <Compile Include="Core\DemoMetadataAttribute.cs" />
     <Compile Include="Core\DemoMetadataProperties.cs" />
     <Compile Include="Core\XamlComponent.cs" />
+    <Compile Include="DemoCollection.cs" />
     <Compile Include="FolderPicker\LocalDrives.cs" />
     <Compile Include="FolderPicker\SelectableDirectory.cs" />
     <Compile Include="Hex\Hexagon.cs" />
