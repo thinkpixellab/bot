@@ -1,0 +1,23 @@
+﻿<UserControl 
+    x:Class="PixelLab.SL.Demo.DoubleClickBehaviorPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sdk="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:bot="http://schemas.thinkpixellab.com/2011/xaml/presentation"
+
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+
+    <Border HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10" CornerRadius="10" BorderBrush="Black" BorderThickness="1">
+        <sdk:Interaction.Behaviors>
+            <bot:DoubleClickBehavior Command="{Binding}" CommandParameter="An interesting Command Paramater" />
+        </sdk:Interaction.Behaviors>
+        <StackPanel>
+            <TextBlock Text="Not a button" />
+            <TextBlock Text="Double-click me!" />
+        </StackPanel>
+    </Border>
+
+</UserControl>
