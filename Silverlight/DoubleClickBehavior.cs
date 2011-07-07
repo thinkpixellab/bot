@@ -15,12 +15,62 @@ namespace PixelLab.SL
 
         public event EventHandler DoubleClick;
 
+        public ICommand Command
+        {
+            get
+            {
+                return (ICommand)GetValue(CommandProperty);
+            }
+            set
+            {
+                SetValue(CommandProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty CommandProperty =
+            DependencyProperty.Register(
+                "CommandParameter",
+                typeof(ICommand),
+                typeof(DoubleClickBehavior),
+                null);
+
+        public object CommandParameter
+        {
+            get
+            {
+                return (ICommand)GetValue(CommandParameterProperty);
+            }
+            set
+            {
+                SetValue(CommandParameterProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty CommandParameterProperty =
+            DependencyProperty.Register(
+                "CommandParameterProperty",
+                typeof(object),
+                typeof(DoubleClickBehavior),
+                null);
+
+
         protected virtual void OnDoubleClick(EventArgs e = null)
         {
             var handler = DoubleClick;
             if (handler != null)
             {
                 handler(this, e ?? EventArgs.Empty);
+            }
+            this.ExecuteCommand();
+        }
+
+        private void ExecuteCommand()
+        {
+            object commandParameter = this.CommandParameter;
+            ICommand command = this.Command;
+            if ((command != null) && command.CanExecute(commandParameter))
+            {
+                command.Execute(commandParameter);
             }
         }
 
