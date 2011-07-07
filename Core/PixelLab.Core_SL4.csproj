@@ -96,6 +96,7 @@
     <Compile Include="CollectionExtensions.cs" />
     <Compile Include="CompositionHelpers.cs" />
     <Compile Include="Contract.cs" />
+    <Compile Include="FilteredObservableEnumerable.cs" />
     <Compile Include="DataErrorHelper.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="FuncEnumerable.cs" />

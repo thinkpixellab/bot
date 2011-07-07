@@ -32,6 +32,7 @@
     <Compile Include="DBUtil.cs" />
     <Compile Include="DataErrorHelper.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="FilteredObservableEnumerable.cs" />
     <Compile Include="FuncEnumerable.cs" />
     <Compile Include="InstanceFactory.cs" />
     <Compile Include="ListBase.cs" />
