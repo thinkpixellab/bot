@@ -20,8 +20,6 @@ namespace PixelLab.SL
 
         private long _lastDown = int.MinValue;
 
-        public event EventHandler DoubleClick;
-
         public ICommand Command
         {
             get { return (ICommand)GetValue(CommandProperty); }
@@ -33,6 +31,8 @@ namespace PixelLab.SL
             get { return (object)GetValue(CommandParameterProperty); }
             set { SetValue(CommandParameterProperty, value); }
         }
+
+        public event EventHandler DoubleClick;
 
         protected virtual void OnDoubleClick(EventArgs e = null)
         {
@@ -54,6 +54,7 @@ namespace PixelLab.SL
             AssociatedObject.RemoveHandler(UIElement.MouseLeftButtonDownEvent, (MouseButtonEventHandler)target_mouse_down);
         }
 
+        /// <returns>An instance of DoubleClickBehavior if one is defined, otherwise null.</returns>
         public static DoubleClickBehavior Get(UIElement element)
         {
             Contract.Requires(element != null);
