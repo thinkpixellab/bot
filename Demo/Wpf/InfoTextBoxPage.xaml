@@ -12,6 +12,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -30,6 +31,10 @@
             <Label Grid.Row="2" Grid.Column="0">City and State</Label>
             <lib:InfoTextBox TextBoxInfo="Put your city and state here, separated by a comma."
              Grid.Row="2" Grid.Column="2"/>
+
+            <Label Grid.Row="3" Grid.Column="0">Age</Label>
+            <lib:InfoTextBox TextBoxInfo="Age" Width="30" HorizontalAlignment="Left"
+             Grid.Row="3" Grid.Column="2"/>
 
         </Grid>
     </Viewbox>

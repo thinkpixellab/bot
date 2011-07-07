@@ -30,7 +30,7 @@
                     </ControlTemplate.Resources>
                     <lib:TemplateBorder Name="Bd">
                         <Grid>
-                            <Decorator x:Name="PART_ContentHost" VerticalAlignment="Center" Margin="3"/>
+                            <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center" Margin="3"/>
                             <TextBlock Text="{TemplateBinding TextBoxInfo}" x:Name="Message"
 								Foreground="Navy" IsHitTestVisible="False"
 								FontStyle="Italic" Opacity="0.67" HorizontalAlignment="Left" VerticalAlignment="Center"
