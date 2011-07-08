@@ -6,6 +6,7 @@ using PixelLab.Contracts;
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PixelLab.Common
 {
@@ -43,7 +44,7 @@ namespace PixelLab.Common
             Contract.Requires(propertyNames != null);
             Contract.Requires(propertyNames.Count > 0);
             Contract.Requires(propertyNames.AllUnique());
-            Contract.Requires(Contract.ForAll(propertyNames, name => OwnerType.HasPublicInstanceProperty(name)), "The target object does not contain one or more of the properties provided");
+            Util.ThrowUnless(propertyNames.All(name => OwnerType.HasPublicInstanceProperty(name)), "The target object does not contain one or more of the properties provided");
 
             lock (_handlers)
             {
