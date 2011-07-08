@@ -1,5 +1,14 @@
 # Bag of Tricks Change Log #
 
+## v3.0.0 - 2011-07-08
+
+*Because this rev contains non-compatible breaking changes, I'm bumping the version number. If this is annoying, let me know and I'll be more careful.*
+
+* Added command support to `DoubleClickBehavior` - *thanks, Larry*
+* Added demo for `DoubleClickBehavior`
+* Added `FilteredObservableEnumerable`
+* Using *Reactive Extensions* for async features
+
 ## v2.0.0 - 2011-07-05
 
 *In the `NuGet` world, BOT is not three projects: Core, Common, BOT. This allows one to minimize dependencies on external assemblies (mostly Prism) when not needed.*
