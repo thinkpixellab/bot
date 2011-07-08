@@ -73,69 +73,37 @@ namespace PixelLab.Test.SL
             Assert.AreEqual(MagicValue, asyncValue.Value);
         }
 
-        private IAsyncResult AsyncTestInput(Action<int> resultHandle, Action<Exception> exceptionHandler)
+        private IDisposable AsyncTestInput(Action<int> resultHandle, Action<Exception> exceptionHandler)
         {
             var result = new DummyAsyncResult();
 
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
-                result.MarkCompletedAsync();
                 resultHandle(MagicValue);
             });
             return result;
         }
 
-        private IAsyncResult SyncTestInput(Action<int> resultHandler, Action<Exception> exceptionHandler)
+        private IDisposable SyncTestInput(Action<int> resultHandler, Action<Exception> exceptionHandler)
         {
             resultHandler(MagicValue);
             var result = new DummyAsyncResult();
-            result.MarkCompletedSync();
             return result;
         }
 
-        private IAsyncResult SyncErrorInput(Action<int> resultHandler, Action<Exception> exceptionHandler)
+        private IDisposable SyncErrorInput(Action<int> resultHandler, Action<Exception> exceptionHandler)
         {
             exceptionHandler(new NotSupportedException());
             var result = new DummyAsyncResult();
-            result.MarkCompletedSync();
             return result;
         }
     }
 
-    internal class DummyAsyncResult : IAsyncResult
+    internal class DummyAsyncResult : IDisposable
     {
-        public void MarkCompletedSync()
+        public void Dispose()
         {
-            CompletedSynchronously = true;
-            IsCompleted = true;
-        }
-
-        public void MarkCompletedAsync()
-        {
-            CompletedSynchronously = false;
-            IsCompleted = true;
-        }
-
-        public object AsyncState
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public System.Threading.WaitHandle AsyncWaitHandle
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool CompletedSynchronously
-        {
-            get;
-            private set;
-        }
-
-        public bool IsCompleted
-        {
-            get;
-            private set;
+            throw new NotImplementedException();
         }
     }
 
