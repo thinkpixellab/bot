@@ -16,7 +16,7 @@ namespace PixelLab.SL
     {
         private readonly DelegateCommand _loadCommand;
         private LoadState _state;
-        private IAsyncResult _loadingResult;
+        private IDisposable _loadingResult;
         private T _value;
         private bool _doingLoad;
 
@@ -75,14 +75,7 @@ namespace PixelLab.SL
                 Debug.Assert(asyncResult != null, "The provided delegate should always return a non-null IAsnycResult");
                 if (State == LoadState.Loading)
                 {
-                    // load did not do anything syncronously. Cool. Let's store the result
-                    Debug.Assert(!asyncResult.IsCompleted);
                     _loadingResult = asyncResult;
-                }
-                else
-                {
-                    Debug.Assert(asyncResult.IsCompleted);
-                    Debug.Assert(asyncResult.CompletedSynchronously);
                 }
             }
             finally
@@ -105,7 +98,7 @@ namespace PixelLab.SL
             }
         }
 
-        protected abstract IAsyncResult LoadCore();
+        protected abstract IDisposable LoadCore();
 
         protected void LoadSuccessCallback(T value)
         {
@@ -118,8 +111,6 @@ namespace PixelLab.SL
             else
             {
                 Debug.Assert(_loadingResult != null);
-                Debug.Assert(!_loadingResult.CompletedSynchronously);
-                Debug.Assert(_loadingResult.IsCompleted);
                 _loadingResult = null;
             }
             internalValueSet(value);
@@ -137,8 +128,6 @@ namespace PixelLab.SL
             else
             {
                 Debug.Assert(_loadingResult != null);
-                Debug.Assert(!_loadingResult.CompletedSynchronously);
-                Debug.Assert(_loadingResult.IsCompleted);
                 _loadingResult = null;
             }
             _value = default(T);
@@ -171,16 +160,16 @@ namespace PixelLab.SL
     public class AsyncValue<TResult, TParam> : AsyncValueBase<TResult>
     {
         private readonly TParam _param;
-        private readonly Func<TParam, Action<TResult>, Action<Exception>, IAsyncResult> _callback;
+        private readonly Func<TParam, Action<TResult>, Action<Exception>, IDisposable> _callback;
 
-        public AsyncValue(TParam param, Func<TParam, Action<TResult>, Action<Exception>, IAsyncResult> callBack)
+        public AsyncValue(TParam param, Func<TParam, Action<TResult>, Action<Exception>, IDisposable> callBack)
         {
             Contract.Requires(callBack != null);
             _param = param;
             _callback = callBack;
         }
 
-        protected override IAsyncResult LoadCore()
+        protected override IDisposable LoadCore()
         {
             return _callback(_param, LoadSuccessCallback, LoadFailCallback);
         }
@@ -188,15 +177,15 @@ namespace PixelLab.SL
 
     public class AsyncValue<TResult> : AsyncValueBase<TResult>
     {
-        private readonly Func<Action<TResult>, Action<Exception>, IAsyncResult> _callback;
+        private readonly Func<Action<TResult>, Action<Exception>, IDisposable> _callback;
 
-        public AsyncValue(Func<Action<TResult>, Action<Exception>, IAsyncResult> callBack)
+        public AsyncValue(Func<Action<TResult>, Action<Exception>, IDisposable> callBack)
         {
             Contract.Requires(callBack != null);
             _callback = callBack;
         }
 
-        protected override IAsyncResult LoadCore()
+        protected override IDisposable LoadCore()
         {
             return _callback(LoadSuccessCallback, LoadFailCallback);
         }
