@@ -34,6 +34,17 @@ namespace PixelLab.Common
             }
         }
 
+        /// <summary>
+        /// If a Filter is active, raise a collection reset event.
+        /// </summary>
+        public void ResetFilter()
+        {
+            if (_filter != null)
+            {
+                OnCollectionChanged();
+            }
+        }
+
         public IEnumerator<TItem> GetEnumerator()
         {
             if (_filter == null)
