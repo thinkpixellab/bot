@@ -13,9 +13,6 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Reactive">
-      <HintPath>..\packages\Rx-Main.1.0.10621\lib\Net4\System.Reactive.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data" />
@@ -36,7 +33,6 @@
     <Compile Include="DeadCommand.cs" />
     <Compile Include="DebugTrace.cs" />
     <Compile Include="DependencyPropHelper.cs" />
-    <Compile Include="DispatcherExtensions.cs" />
     <Compile Include="EnumConverter.cs" />
     <Compile Include="GeoHelper.cs" />
     <Compile Include="HueConverter.cs" />
