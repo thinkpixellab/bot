@@ -1,5 +1,10 @@
 # Bag of Tricks Change Log #
 
+## v4.0.0 - 2011-07-08
+
+* **BREAKING** - Removed `DispatcherExtensions`. The implementation was trivial and it brought in all of Reactive Extensions as a dependency, which isn't worth it.
+* Fix for *Issue #3* from Larry.
+
 ## v3.0.0 - 2011-07-08
 
 *Because this rev contains non-compatible breaking changes, I'm bumping the version number. If this is annoying, let me know and I'll be more careful.*
@@ -7,7 +12,7 @@
 * Added command support to `DoubleClickBehavior` - *thanks, Larry*
 * Added demo for `DoubleClickBehavior`
 * Added `FilteredObservableEnumerable`
-* Using *Reactive Extensions* for async features
+* **BREAKING** - Using *Reactive Extensions* for async features
 
 ## v2.0.0 - 2011-07-05
 
