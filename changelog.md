@@ -18,8 +18,8 @@
 
 *In the `NuGet` world, BOT is not three projects: Core, Common, BOT. This allows one to minimize dependencies on external assemblies (mostly Prism) when not needed.*
 
-* Added a `Core` Silverlight assembly to match the same in WPF
-* Moved `DemoCollection` back to WPF demo app. This eliminates the dependency on Prism in Core and Common
+* **BREAKING** - Added a `Core` Silverlight assembly to match the same in WPF
+* **BREAKING** - Moved `DemoCollection` back to WPF demo app. This eliminates the dependency on Prism in Core and Common
 
 ## v1.1.0 - 2011-06-22 ##
 
