@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Reflection;
 using System.Linq;
 #if CONTRACTS_FULL
@@ -133,6 +134,13 @@ namespace PixelLab.Common
         public static PropertyChangeWatcher AddWatcher(this INotifyPropertyChanged source, IList<string> propertyNames, Action handler)
         {
             return PropertyChangeWatcher.AddWatcher(source, propertyNames, handler);
+        }
+
+        public static IComparer<string> GetStringComparer(this CultureInfo cultureInfo, CompareOptions options = CompareOptions.None)
+        {
+            Contract.Requires(cultureInfo != null);
+            var func = new Func<string, string, int>((a, b) => cultureInfo.CompareInfo.Compare(a, b, options));
+            return func.ToComparer();
         }
 
         #region impl
