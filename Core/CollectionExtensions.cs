@@ -97,15 +97,17 @@ namespace PixelLab.Common
             Contract.Requires(source != null);
             Contract.Requires(compare != null);
 
+            return source.SelectAdjacentPairs().All(t => compare(t.Item1, t.Item2));
+        }
+
+        public static IEnumerable<Tuple<T, T>> SelectAdjacentPairs<T>(this IList<T> source)
+        {
+            Contract.Requires(source != null);
+
             for (int i = 0; i < (source.Count - 1); i++)
             {
-                if (!compare(source[i], source[i + 1]))
-                {
-                    return false;
-                }
+                yield return Tuple.Create(source[i], source[i + 1]);
             }
-
-            return true;
         }
 
         /// <summary>
