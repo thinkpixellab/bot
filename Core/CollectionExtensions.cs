@@ -264,6 +264,8 @@ namespace PixelLab.Common
         ///     result of recursively invoking the recursive transform function
         ///     on each element and nested element of the input sequence.
         /// </returns>
+        /// <remarks>This is a depth-first traversal. Be careful if you're using this to find something
+        /// shallow in a deep tree.</remarks>
         public static IEnumerable<TSource> SelectRecursive<TSource>(
             this IEnumerable<TSource> source,
             Func<TSource, IEnumerable<TSource>> recursiveSelector)
