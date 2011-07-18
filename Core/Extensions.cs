@@ -143,6 +143,22 @@ namespace PixelLab.Common
             return func.ToComparer();
         }
 
+        public static bool TryGetTypedValue<TOutput, TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, out TOutput value) where TOutput : TValue
+        {
+            Contract.Requires(dictionary != null);
+            if (dictionary.ContainsKey(key))
+            {
+                var val = dictionary[key];
+                if (val is TOutput)
+                {
+                    value = (TOutput)val;
+                    return true;
+                }
+            }
+            value = default(TOutput);
+            return false;
+        }
+
         #region impl
         private class FuncComparer<T> : IComparer<T>
         {

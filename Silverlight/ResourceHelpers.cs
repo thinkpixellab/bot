@@ -1,4 +1,6 @@
-﻿using System.Windows;
+using System.Collections.Generic;
+using System.Windows;
+using PixelLab.Common;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
@@ -26,17 +28,7 @@ namespace PixelLab.SL
         public static bool TryGetResource<T>(this ResourceDictionary dictionary, object key, out T value)
         {
             Contract.Requires(dictionary != null);
-            if (dictionary.Contains(key))
-            {
-                var val = dictionary[key];
-                if (val is T)
-                {
-                    value = (T)val;
-                    return true;
-                }
-            }
-            value = default(T);
-            return false;
+            return dictionary.TryGetTypedValue(key, out value);
         }
     }
 }
