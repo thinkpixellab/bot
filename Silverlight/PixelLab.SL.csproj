@@ -51,6 +51,7 @@
     <Compile Include="LoadState.cs" />
     <Compile Include="PanZoomControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceHelpers.cs" />
     <Compile Include="SLExtentions.cs" />
     <Compile Include="SpriteButton.cs" />
     <Compile Include="SpriteElement.cs" />
