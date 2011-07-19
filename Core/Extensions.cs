@@ -146,9 +146,9 @@ namespace PixelLab.Common
         public static bool TryGetTypedValue<TOutput, TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, out TOutput value) where TOutput : TValue
         {
             Contract.Requires(dictionary != null);
-            if (dictionary.ContainsKey(key))
+            TValue val;
+            if (dictionary.TryGetValue(key, out val))
             {
-                var val = dictionary[key];
                 if (val is TOutput)
                 {
                     value = (TOutput)val;
