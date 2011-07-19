@@ -64,6 +64,9 @@
     <Compile Include="FlipControlPage.xaml.cs">
       <DependentUpon>FlipControlPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ModalControlPage.xaml.cs">
+      <DependentUpon>ModalControlPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PanZoomPage.xaml.cs">
       <DependentUpon>PanZoomPage.xaml</DependentUpon>
     </Compile>
@@ -93,6 +96,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FlipControlPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ModalControlPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

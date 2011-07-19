@@ -397,4 +397,16 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="bot:ModalControl">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Background" Value="DarkGray" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="bot:ModalControl">
+                    <Grid x:Name="ContentElement" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
