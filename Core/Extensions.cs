@@ -108,6 +108,14 @@ namespace PixelLab.Common
             return rnd.Next() % 2 == 0;
         }
 
+        public static float NextFloat(this Random rnd, float min = 0, float max = 1)
+        {
+            Contract.Requires(rnd != null);
+            Contract.Requires(max >= min);
+            var delta = max - min;
+            return (float)rnd.NextDouble() * delta + min;
+        }
+
         public static IEnumerable<T> GetCustomAttributes<T>(this ICustomAttributeProvider attributeProvider, bool inherit) where T : Attribute
         {
             Contract.Requires(attributeProvider != null);
