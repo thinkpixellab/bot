@@ -1,5 +1,17 @@
 # Bag of Tricks Change Log #
 
+## V4.1.0 - 2011-07-20
+*Lot's of fun now stuff, but no breaking changes! Feels good.*
+
+* Added `GetStringComparer` extension that takes a CultureInfo
+* Added `SelectAdjacentPairs` to extensions
+* Added `ResourceHelpers` extensions to SL assembly
+* Added `TryGetTypedValue<>` extension
+* Fixed a gnarly bug in SL version of `ColorHelper.HsbToRgb`
+* Added `NextFloat` extension method for `Random`
+* Added `ModalControl` *Closes #23*
+* Adjacent pairs methods now take `IEnumerable<T>` instead of requiring `IList<T>`
+
 ## v4.0.0 - 2011-07-08
 
 * **BREAKING** - Removed `DispatcherExtensions`. The implementation was trivial and it brought in all of Reactive Extensions as a dependency, which isn't worth it.
