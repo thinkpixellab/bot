@@ -92,7 +92,7 @@ namespace PixelLab.Common
         /// </para>
         /// </remarks>
         [Pure]
-        public static bool TrueForAllAdjacentPairs<T>(this IList<T> source, Func<T, T, bool> compare)
+        public static bool TrueForAllAdjacentPairs<T>(this IEnumerable<T> source, Func<T, T, bool> compare)
         {
             Contract.Requires(source != null);
             Contract.Requires(compare != null);
@@ -100,13 +100,24 @@ namespace PixelLab.Common
             return source.SelectAdjacentPairs().All(t => compare(t.Item1, t.Item2));
         }
 
-        public static IEnumerable<Tuple<T, T>> SelectAdjacentPairs<T>(this IList<T> source)
+        public static IEnumerable<Tuple<T, T>> SelectAdjacentPairs<T>(this IEnumerable<T> source)
         {
             Contract.Requires(source != null);
+            bool hasPrevious = false;
+            T previous = default(T);
 
-            for (int i = 0; i < (source.Count - 1); i++)
+            foreach (var item in source)
             {
-                yield return Tuple.Create(source[i], source[i + 1]);
+                if (!hasPrevious)
+                {
+                    previous = item;
+                    hasPrevious = true;
+                }
+                else
+                {
+                    yield return Tuple.Create(previous, item);
+                    previous = item;
+                }
             }
         }
 
