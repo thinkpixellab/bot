@@ -36,6 +36,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="CollectionExtensionsTests.cs" />
+    <Compile Include="EnumConverterTest.cs" />
     <Compile Include="Helpers\AssertPlus.cs" />
     <Compile Include="AsyncValueTests.cs" />
     <Compile Include="Helpers\TestChangeable.cs" />
