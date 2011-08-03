@@ -25,8 +25,8 @@ namespace PixelLab.SL
         // ********************************************************************
 
         private readonly DelegateCommand _resetCommand;
-        private ScrollBar _horizontal;
-        private ScrollBar _vertical;
+        private ScrollBar _horizontalScrollBar;
+        private ScrollBar _verticalScrollBar;
         private bool _isMouseDown;
         private bool _isFirstResize = true;
         private Point _lastDown = new Point();
@@ -347,17 +347,15 @@ namespace PixelLab.SL
 
         protected override void OnContentChanged(object oldContent, object newContent)
         {
-
             base.OnContentChanged(oldContent, newContent);
 
-
-            FrameworkElement of = (oldContent as FrameworkElement);
+            var of = oldContent as FrameworkElement;
             if (of != null)
             {
-                of.SizeChanged += child_SizeChanged;
+                of.SizeChanged -= child_SizeChanged;
             }
 
-            FrameworkElement nf = (newContent as FrameworkElement);
+            var nf = newContent as FrameworkElement;
             if (nf != null)
             {
                 nf.SizeChanged += child_SizeChanged;
@@ -370,12 +368,14 @@ namespace PixelLab.SL
         /// <param name="e">The data for the event.</param>
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (this.CanPan)
+            if (this.CanPan && !e.Handled)
             {
+                e.Handled = true;
                 this._lastDown = e.GetPosition(this);
                 this._isMouseDown = true;
                 this.CaptureMouse();
             }
+            base.OnMouseLeftButtonDown(e);
         }
 
         /// <summary>
@@ -412,32 +412,34 @@ namespace PixelLab.SL
         // private methods
         // ********************************************************************
 
-        /// <summary>
-        /// When overridden in a derived class, is invoked whenever application code or internal processes (such as a rebuilding layout pass) call <see cref="M:System.Windows.Controls.Control.ApplyTemplate"/>. In simplest terms, this means the method is called just before a UI element displays in an application. For more information, see Remarks.
-        /// </summary>
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
-            this._horizontal = (ScrollBar)this.GetTemplateChild(PartHorizontal);
-            this._horizontal.ValueChanged += this._horizontal_ValueChanged;
-            this._horizontal.LostMouseCapture += new MouseEventHandler(_horizontal_LostMouseCapture);
+            this._horizontalScrollBar = this.GetTemplateChild(PartHorizontal) as ScrollBar;
+            if (_horizontalScrollBar != null)
+            {
+                this._horizontalScrollBar.ValueChanged += this._horizontal_ValueChanged;
+                this._horizontalScrollBar.LostMouseCapture += _horizontal_LostMouseCapture;
+            }
 
-            this._vertical = (ScrollBar)this.GetTemplateChild(PartVertical);
-            this._vertical.ValueChanged += this._vertical_ValueChanged;
-            this._vertical.LostMouseCapture += new MouseEventHandler(_vertical_LostMouseCapture);
+            this._verticalScrollBar = this.GetTemplateChild(PartVertical) as ScrollBar;
+            if (_verticalScrollBar != null)
+            {
+                this._verticalScrollBar.ValueChanged += this._vertical_ValueChanged;
+                this._verticalScrollBar.LostMouseCapture += _vertical_LostMouseCapture;
+            }
         }
 
         private void child_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            this.UpdateScrollBars();
+            UpdateScrollBars();
         }
 
         private void PanZoomControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (e.NewSize.Width > 0 && e.NewSize.Height > 0)
             {
-
                 UpdateClip(e.NewSize);
 
                 if (_isFirstResize)
@@ -457,30 +459,46 @@ namespace PixelLab.SL
 
         private void _horizontal_LostMouseCapture(object sender, MouseEventArgs e)
         {
-            this.UpdateScrollBars();
+            UpdateScrollBars();
         }
 
         private void _vertical_LostMouseCapture(object sender, MouseEventArgs e)
         {
-            this.UpdateScrollBars();
+            UpdateScrollBars();
         }
 
         private void _horizontal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (_isMouseDown) return;
-            _suspendScrollBarUpdates = true;
-            double span = (_scrollmaxx - _scrollminx);
-            this.OffsetX = ((span - (span * (e.NewValue))) + _scrollminx) / this.Scale;
-            _suspendScrollBarUpdates = false;
+            if (!_isMouseDown)
+            {
+                try
+                {
+                    _suspendScrollBarUpdates = true;
+                    double span = (_scrollmaxx - _scrollminx);
+                    this.OffsetX = ((span - (span * (e.NewValue))) + _scrollminx) / this.Scale;
+                }
+                finally
+                {
+                    _suspendScrollBarUpdates = false;
+                }
+            }
         }
 
         private void _vertical_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (_isMouseDown) return;
-            _suspendScrollBarUpdates = true;
-            double span = (_scrollmaxy - _scrollminy);
-            this.OffsetY = ((span - (span * (e.NewValue))) + _scrollminy) / this.Scale;
-            _suspendScrollBarUpdates = false;
+            if (!_isMouseDown)
+            {
+                try
+                {
+                    _suspendScrollBarUpdates = true;
+                    double span = (_scrollmaxy - _scrollminy);
+                    this.OffsetY = ((span - (span * (e.NewValue))) + _scrollminy) / this.Scale;
+                }
+                finally
+                {
+                    _suspendScrollBarUpdates = false;
+                }
+            }
         }
 
         /// <summary>
@@ -517,12 +535,14 @@ namespace PixelLab.SL
 
         private void UpdateClip(Size s)
         {
-
             if (this.ClipToBounds)
             {
-                RectangleGeometry r = new RectangleGeometry();
-                r.Rect = new Rect(0, 0, s.Width, s.Height);
-                this.Clip = r;
+                var rectClip = Clip as RectangleGeometry;
+                if (rectClip == null)
+                {
+                    Clip = rectClip = new RectangleGeometry();
+                }
+                rectClip.Rect = new Rect(new Point(), this.RenderSize);
             }
             else
             {
@@ -532,54 +552,61 @@ namespace PixelLab.SL
 
         private void UpdateScrollBars()
         {
-            if (_suspendScrollBarUpdates || _horizontal == null || _vertical == null) return;
-
-            // horizontal 
-
-            double offsetx = this.OffsetX;
-            double scaledoffsetx = (offsetx * this.Scale);
-            double scaledwidth = (this.ContentSize.Width * this.Scale);
-
-            // do we need to show the scroll bars
-            if (offsetx >= 0 && ((scaledwidth + scaledoffsetx) <= this.ActualWidth))
+            if (!_suspendScrollBarUpdates)
             {
-                _horizontal.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                _scrollminx = scaledwidth * -1;
-                _scrollminx = Math.Min(_scrollminx, scaledoffsetx);
+                if (_horizontalScrollBar != null)
+                {
+                    // horizontal 
 
-                _scrollmaxx = this.ActualWidth;
-                _scrollmaxx = Math.Max(_scrollmaxx, scaledoffsetx);
+                    double offsetx = this.OffsetX;
+                    double scaledoffsetx = (offsetx * this.Scale);
+                    double scaledwidth = (this.ContentSize.Width * this.Scale);
 
-                _horizontal.Value = 1 - ((scaledoffsetx - _scrollminx) / (_scrollmaxx - _scrollminx));
-                _horizontal.ViewportSize = this.ActualWidth / (_scrollmaxx - _scrollminx);
-                _horizontal.Visibility = Visibility.Visible;
-            }
+                    // do we need to show the scroll bars
+                    if (offsetx >= 0 && ((scaledwidth + scaledoffsetx) <= this.ActualWidth))
+                    {
+                        _horizontalScrollBar.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        _scrollminx = scaledwidth * -1;
+                        _scrollminx = Math.Min(_scrollminx, scaledoffsetx);
 
-            // vertical 
+                        _scrollmaxx = this.ActualWidth;
+                        _scrollmaxx = Math.Max(_scrollmaxx, scaledoffsetx);
 
-            double offsety = this.OffsetY;
-            double scaledoffsety = (offsety * this.Scale);
-            double scaledheight = (this.ContentSize.Height * this.Scale);
+                        _horizontalScrollBar.Value = 1 - ((scaledoffsetx - _scrollminx) / (_scrollmaxx - _scrollminx));
+                        _horizontalScrollBar.ViewportSize = this.ActualWidth / (_scrollmaxx - _scrollminx);
+                        _horizontalScrollBar.Visibility = Visibility.Visible;
+                    }
+                }
 
-            // do we need to show the scroll bars
-            if (offsety >= 0 && ((scaledheight + scaledoffsety) <= this.ActualHeight))
-            {
-                _vertical.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                _scrollminy = scaledheight * -1;
-                _scrollminy = Math.Min(_scrollminy, scaledoffsety);
+                if (_verticalScrollBar != null)
+                {
+                    // vertical 
 
-                _scrollmaxy = this.ActualHeight;
-                _scrollmaxy = Math.Max(_scrollmaxy, scaledoffsety);
+                    var offsety = this.OffsetY;
+                    var scaledoffsety = (offsety * this.Scale);
+                    var scaledheight = (this.ContentSize.Height * this.Scale);
 
-                _vertical.Value = 1 - ((scaledoffsety - _scrollminy) / (_scrollmaxy - _scrollminy));
-                _vertical.ViewportSize = this.ActualHeight / (_scrollmaxy - _scrollminy);
-                _vertical.Visibility = Visibility.Visible;
+                    // do we need to show the scroll bars
+                    if (offsety >= 0 && ((scaledheight + scaledoffsety) <= this.ActualHeight))
+                    {
+                        _verticalScrollBar.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        _scrollminy = scaledheight * -1;
+                        _scrollminy = Math.Min(_scrollminy, scaledoffsety);
+
+                        _scrollmaxy = this.ActualHeight;
+                        _scrollmaxy = Math.Max(_scrollmaxy, scaledoffsety);
+
+                        _verticalScrollBar.Value = 1 - ((scaledoffsety - _scrollminy) / (_scrollmaxy - _scrollminy));
+                        _verticalScrollBar.ViewportSize = this.ActualHeight / (_scrollmaxy - _scrollminy);
+                        _verticalScrollBar.Visibility = Visibility.Visible;
+                    }
+                }
             }
         }
 
