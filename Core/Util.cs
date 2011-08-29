@@ -50,7 +50,25 @@ namespace PixelLab.Common
         ///     If <paramref name="location"/> is null, the object to set it to.
         /// </param>
         /// <returns>true if <paramref name="location"/> was null and has now been set; otherwise, false.</returns>
+        [Obsolete("The name of this method is pretty wrong. Use InterlockedSetNullField instead.")]
         public static bool InterlockedSetIfNotNull<T>(ref T location, T value) where T : class
+        {
+            return InterlockedSetNullField<T>(ref location, value);
+        }
+
+        /// <summary>
+        ///     Wraps <see cref="Interlocked.CompareExchange{T}(ref T,T,T)"/>
+        ///     for atomically setting null fields.
+        /// </summary>
+        /// <typeparam name="T">The type of the field to set.</typeparam>
+        /// <param name="location">
+        ///     The field that, if null, will be set to <paramref name="value"/>.
+        /// </param>
+        /// <param name="value">
+        ///     If <paramref name="location"/> is null, the object to set it to.
+        /// </param>
+        /// <returns>true if <paramref name="location"/> was null and has now been set; otherwise, false.</returns>
+        public static bool InterlockedSetNullField<T>(ref T location, T value) where T : class
         {
             Contract.Requires(value != null);
 
