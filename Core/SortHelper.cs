@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
@@ -10,89 +11,44 @@ namespace PixelLab.Common
 {
     public static class SortHelper
     {
-        /*
-        public static int BinarySearch(T[] array, int index, int length, T value, IComparer<T> comparer) {
-          int num;
-          try {
-            if (comparer == null) {
-              comparer = Comparer<T>.Default;
-            }
-            num = InternalBinarySearch(array, index, length, value, comparer);
-          }
-          catch (Exception exception) {
-            throw new InvalidOperationException("InvalidOperation_IComparerFailed", exception);
-          }
-          return num;
-        }
-
-        internal static int InternalBinarySearch(T[] array, int index, int length, T value, IComparer<T> comparer) {
-          int num = index;
-          int num2 = (index + length) - 1;
-          while (num <= num2) {
-            int num3 = num + ((num2 - num) >> 1);
-            int num4 = comparer.Compare(array[num3], value);
-            if (num4 == 0) {
-              return num3;
-            }
-            if (num4 < 0) {
-              num = num3 + 1;
-            }
-            else {
-              num2 = num3 - 1;
-            }
-          }
-          return ~num;
-        }*/
-
         public static bool QuickSort<T>(this IList<T> list, Func<T, T, int> comparer)
         {
             Contract.Requires(list != null);
             Contract.Requires(comparer != null);
-            return Sort(list, 0, list.Count, comparer.ToComparer());
-        }
-
-        public static bool QuickSort<T>(this IList<T> list, IComparer<T> comparer)
-        {
-            Contract.Requires(list != null);
-            Contract.Requires(comparer != null);
-            return Sort(list, 0, list.Count, comparer);
+            return list.QuickSort(comparer.ToComparer());
         }
 
         public static bool QuickSort<T>(this IList<T> list, Comparison<T> comparison)
         {
             Contract.Requires(list != null);
             Contract.Requires(comparison != null);
-            return Sort(list, 0, list.Count, comparison.ToComparer());
+            return list.QuickSort(comparison.ToComparer());
         }
 
         public static bool QuickSort<T>(this IList<T> list)
         {
             Contract.Requires(list != null);
-            return Sort(list, 0, list.Count, null);
+            return list.QuickSort(Comparer<T>.Default);
         }
 
-        private static bool Sort<T>(IList<T> keys, int index, int length, IComparer<T> comparer)
+        public static bool QuickSort<T>(this IList<T> list, IComparer<T> comparer)
         {
+            Contract.Requires(list != null);
             Contract.Requires(comparer != null);
-            Contract.Requires(keys != null);
 
-            if (length > 1)
+            if (list.Count > 1)
             {
                 try
                 {
-                    if (comparer == null)
-                    {
-                        comparer = Comparer<T>.Default;
-                    }
-                    return quickSort(keys, index, index + (length - 1), comparer);
+                    return quickSort(list, 0, list.Count - 1, comparer);
                 }
                 catch (IndexOutOfRangeException ioore)
                 {
-                    throw new ArgumentException("BogusIComparer", ioore);
+                    throw new ArgumentException("Bogus IComparer", ioore);
                 }
                 catch (Exception exception)
                 {
-                    throw new InvalidOperationException("IComparerFailed", exception);
+                    throw new InvalidOperationException("IComparer Failed", exception);
                 }
             }
             return false;
@@ -100,12 +56,12 @@ namespace PixelLab.Common
 
         private static bool quickSort<T>(IList<T> keys, int left, int right, IComparer<T> comparer)
         {
-            Contract.Requires(comparer != null);
-            Contract.Requires(keys != null);
-            Contract.Requires(left >= 0);
-            Contract.Requires(left < keys.Count);
-            Contract.Requires(right >= 0);
-            Contract.Requires(right < keys.Count);
+            Debug.Assert(comparer != null);
+            Debug.Assert(keys != null);
+            Debug.Assert(left >= 0);
+            Debug.Assert(left < keys.Count);
+            Debug.Assert(right >= 0);
+            Debug.Assert(right < keys.Count);
 
             bool change = false;
             do
