@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Windows;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
@@ -17,7 +18,7 @@ namespace PixelLab.SL
         void Load();
         event EventHandler ValueLoaded;
         ICommand LoadCommand { get; }
-        event EventHandler<UnhandledExceptionEventArgs> LoadError;
+        event EventHandler<ApplicationUnhandledExceptionEventArgs> LoadError;
     }
 
     [ContractClassFor(typeof(IAsyncValue<>))]
@@ -68,7 +69,7 @@ namespace PixelLab.SL
             remove { throw new NotImplementedException(); }
         }
 
-        event EventHandler<UnhandledExceptionEventArgs> IAsyncValue<T>.LoadError
+        event EventHandler<ApplicationUnhandledExceptionEventArgs> IAsyncValue<T>.LoadError
         {
             add { throw new NotImplementedException(); }
             remove { throw new NotImplementedException(); }

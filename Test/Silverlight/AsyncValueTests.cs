@@ -57,6 +57,7 @@ namespace PixelLab.Test.SL
             asyncValue.LoadError += (sender, args) =>
             {
                 errorHappened = true;
+                args.Handled = true;
             };
 
             asyncValue.Load();

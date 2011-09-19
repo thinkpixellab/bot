@@ -35,6 +35,7 @@
     </Compile>
     <Compile Include="AsBigAsYouWantPanel.cs" />
     <Compile Include="AsyncValue.cs" />
+    <Compile Include="AsyncValueLoadException.cs" />
     <Compile Include="CollapseOnDisableBehavior.cs" />
     <Compile Include="DiscreteSlider.cs" />
     <Compile Include="DoubleClickBehavior.cs" />

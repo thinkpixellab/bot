@@ -60,7 +60,7 @@ namespace PixelLab.SL
 
         public event EventHandler ValueLoaded;
 
-        public event EventHandler<UnhandledExceptionEventArgs> LoadError;
+        public event EventHandler<ApplicationUnhandledExceptionEventArgs> LoadError;
 
         public void Load()
         {
@@ -119,6 +119,7 @@ namespace PixelLab.SL
         protected void LoadFailCallback(Exception exception)
         {
             Contract.Requires(State == LoadState.Loading);
+            Debug.Assert(exception != null);
             Deployment.Current.VerifyAccess();
 
             if (DoingLoad) // result came back within the Load call...
@@ -134,10 +135,15 @@ namespace PixelLab.SL
             State = LoadState.Error;
             OnPropertyChanged("Value");
 
+            var args = new ApplicationUnhandledExceptionEventArgs(exception, false);
             var handler = LoadError;
             if (handler != null)
             {
-                handler(this, new UnhandledExceptionEventArgs(exception, false));
+                handler(this, args);
+            }
+            if (!args.Handled)
+            {
+                throw new AsyncValueLoadException(exception);
             }
         }
 
