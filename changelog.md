@@ -1,5 +1,13 @@
 # Bag of Tricks Change Log #
 
+## V5.0.0 - 2011-09-19
+*No huge changes or additions, but there is a big breaking change with AsyncValue<T>. Soooo...new major version number.*
+
+* Fixed silly naming in Util around `InterlockedSetIfNotNull` vs `InterlockedSetNullField`.
+* Huge code review for `PanZoomControl`
+* Bug fixes and clean-up in `SortHelper`
+* **BREAKING** - `IAsyncValue<T>` and friends now raise `ApplicationUnhandledExceptionEventArgs`. If cancel is not set, an exception is thrown.
+
 ## V4.1.0 - 2011-07-20
 *Lot's of fun now stuff, but no breaking changes! Feels good.*
 
