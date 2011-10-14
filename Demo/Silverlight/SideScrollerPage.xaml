@@ -10,14 +10,20 @@
     xmlns:in="http://schemas.microsoft.com/expression/2010/interactivity"
     d:DesignHeight="300" d:DesignWidth="400">
 
-    <StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <RepeatButton Content="Left" Name="leftButton"/>
-            <RepeatButton Content="Right" Name="rightButton" />
-        </StackPanel>
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
 
+        <RepeatButton Content="Left" Name="leftButton">
+            <in:Interaction.Behaviors>
+                <bot:CollapseOnDisableBehavior />
+            </in:Interaction.Behaviors>
+        </RepeatButton>
 
-        <ListBox Width="300">
+        <ListBox Grid.Column="1" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
             <in:Interaction.Behaviors>
                 <bot:ScrollBehavior x:Name="scrollBehavior" />
             </in:Interaction.Behaviors>
@@ -36,8 +42,13 @@
             <sys:String>Foo Bar baz</sys:String>
 
         </ListBox>
+        <RepeatButton Content="Right" Name="rightButton" Grid.Column="2" >
+            <in:Interaction.Behaviors>
+                <bot:CollapseOnDisableBehavior />
+            </in:Interaction.Behaviors>
+        </RepeatButton>
 
-    </StackPanel>
+    </Grid>
 
 
 </UserControl>
