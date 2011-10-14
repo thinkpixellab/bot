@@ -7,10 +7,10 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using PixelLab.Common;
-#if CONTRACTS_FULL
-using System.Diagnostics.Contracts;
 using System.Windows.Data;
 using System.Windows.Shapes;
+#if CONTRACTS_FULL
+using System.Diagnostics.Contracts;
 #else
 using PixelLab.Contracts;
 #endif
@@ -26,7 +26,6 @@ namespace PixelLab.SL
         private readonly RectangleGeometry _clip;
 
         private bool? _previousTargetEnabledState;
-        private UIElement _rootChild;
         private Grid _contentElement;
         private Control _targetElement;
         private bool _targetPointUpdateEnqued;
