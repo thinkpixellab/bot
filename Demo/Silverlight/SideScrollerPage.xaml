@@ -1,0 +1,43 @@
+﻿<UserControl 
+    x:Class="PixelLab.SL.Demo.SideScrollerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:bot="http://schemas.thinkpixellab.com/2011/xaml/presentation"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:in="http://schemas.microsoft.com/expression/2010/interactivity"
+    d:DesignHeight="300" d:DesignWidth="400">
+
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <RepeatButton Content="Left" Name="leftButton"/>
+            <RepeatButton Content="Right" Name="rightButton" />
+        </StackPanel>
+
+
+        <ListBox Width="300">
+            <in:Interaction.Behaviors>
+                <bot:ScrollBehavior x:Name="scrollBehavior" />
+            </in:Interaction.Behaviors>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+            <sys:String>Foo Bar baz</sys:String>
+            <sys:String>Foo Bar baz</sys:String>
+            <sys:String>Foo Bar baz</sys:String>
+            <sys:String>Foo Bar baz</sys:String>
+            <sys:String>Foo Bar baz</sys:String>
+            <sys:String>Foo Bar baz</sys:String>
+            <sys:String>Foo Bar baz</sys:String>
+
+        </ListBox>
+
+    </StackPanel>
+
+
+</UserControl>
