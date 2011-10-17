@@ -10,45 +10,56 @@
     xmlns:in="http://schemas.microsoft.com/expression/2010/interactivity"
     d:DesignHeight="300" d:DesignWidth="400">
 
-    <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
+    <ListBox Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+        <ListBox.Template>
+            <ControlTemplate TargetType="ListBox">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-        <RepeatButton Content="Left" Name="leftButton">
-            <in:Interaction.Behaviors>
-                <bot:CollapseOnDisableBehavior />
-            </in:Interaction.Behaviors>
-        </RepeatButton>
+                    <RepeatButton Content="&lt;" Command="{Binding ElementName=scrollBehavior, Path=ScrollLeftCommand}">
+                        <in:Interaction.Behaviors>
+                            <bot:CollapseOnDisableBehavior />
+                        </in:Interaction.Behaviors>
+                    </RepeatButton>
 
-        <ListBox Grid.Column="1" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-            <in:Interaction.Behaviors>
-                <bot:ScrollBehavior x:Name="scrollBehavior" />
-            </in:Interaction.Behaviors>
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
+                    <ScrollViewer Name="ScrollViewer" Grid.Column="1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden">
+                        <in:Interaction.Behaviors>
+                            <bot:ScrollBehavior x:Name="scrollBehavior" />
+                        </in:Interaction.Behaviors>
+                        <ItemsPresenter />
+                    </ScrollViewer>
 
-            <sys:String>Foo Bar baz</sys:String>
-            <sys:String>Foo Bar baz</sys:String>
-            <sys:String>Foo Bar baz</sys:String>
-            <sys:String>Foo Bar baz</sys:String>
-            <sys:String>Foo Bar baz</sys:String>
-            <sys:String>Foo Bar baz</sys:String>
-            <sys:String>Foo Bar baz</sys:String>
+                    <RepeatButton Content="&gt;" Command="{Binding ElementName=scrollBehavior, Path=ScrollRightCommand}"
+                                  Grid.Column="2" >
+                        <in:Interaction.Behaviors>
+                            <bot:CollapseOnDisableBehavior />
+                        </in:Interaction.Behaviors>
+                    </RepeatButton>
 
-        </ListBox>
-        <RepeatButton Content="Right" Name="rightButton" Grid.Column="2" >
-            <in:Interaction.Behaviors>
-                <bot:CollapseOnDisableBehavior />
-            </in:Interaction.Behaviors>
-        </RepeatButton>
+                </Grid>
+            </ControlTemplate>
+        </ListBox.Template>
+        <ListBox.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
 
-    </Grid>
+        <sys:String>Foo Bar baz</sys:String>
+        <sys:String>Foo Bar baz</sys:String>
+        <sys:String>Foo Bar baz</sys:String>
+        <sys:String>Foo Bar baz</sys:String>
+        <sys:String>Foo Bar baz</sys:String>
+        <sys:String>Foo Bar baz</sys:String>
+        <sys:String>Foo Bar baz</sys:String>
+
+    </ListBox>
+
+
 
 
 </UserControl>

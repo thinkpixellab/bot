@@ -9,11 +9,10 @@ using PixelLab.Common;
 
 namespace PixelLab.SL
 {
-    public class ScrollBehavior : Behavior<ListBox>
+    public class ScrollBehavior : Behavior<ScrollViewer>
     {
         private readonly DelegateCommand _scrollRightCommand, _scrollLeftCommand;
 
-        private ListBox _listBox;
         private ScrollViewer _scrollViewer;
         private ScrollContentPresenter _contentPresenter;
 
@@ -81,34 +80,15 @@ namespace PixelLab.SL
             return _contentPresenter != null && _contentPresenter.CanHorizontallyScroll && _contentPresenter.HorizontalOffset > 0;
         }
 
-        private void processVisualTree(ListBox listBox)
+        private void processVisualTree(ScrollViewer scrollViewer)
         {
-            if (listBox != _listBox)
-            {
-                if (_listBox != null)
-                {
-                    _listBox.LayoutUpdated -= childLayoutUpdated;
-                }
-                _listBox = listBox;
-                if (_listBox != null)
-                {
-                    _listBox.LayoutUpdated += childLayoutUpdated;
-                }
-            }
-
-            ScrollViewer foundScrollViewer = null;
-            if (_listBox != null)
-            {
-                foundScrollViewer = _listBox.GetVisualDescendents().OfType<ScrollViewer>().SingleOrDefault();
-            }
-
-            if (foundScrollViewer != _scrollViewer)
+            if (scrollViewer != _scrollViewer)
             {
                 if (_scrollViewer != null)
                 {
                     _scrollViewer.LayoutUpdated -= childLayoutUpdated;
                 }
-                _scrollViewer = foundScrollViewer;
+                _scrollViewer = scrollViewer;
                 if (_scrollViewer != null)
                 {
                     _scrollViewer.LayoutUpdated += childLayoutUpdated;
@@ -145,7 +125,7 @@ namespace PixelLab.SL
 
         private void childLayoutUpdated(object sender, EventArgs e)
         {
-            processVisualTree(this._listBox);
+            processVisualTree(AssociatedObject);
         }
     }
 }
