@@ -74,6 +74,9 @@
     <Compile Include="ScrollBehaviorPage.xaml.cs">
       <DependentUpon>ScrollBehaviorPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SpinningProgressControlPage.xaml.cs">
+      <DependentUpon>SpinningProgressControlPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SpriteButtonPage.xaml.cs">
       <DependentUpon>SpriteButtonPage.xaml</DependentUpon>
     </Compile>
@@ -111,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ScrollBehaviorPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SpinningProgressControlPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

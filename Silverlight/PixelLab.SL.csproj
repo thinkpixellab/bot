@@ -56,6 +56,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceHelpers.cs" />
     <Compile Include="SLExtentions.cs" />
+    <Compile Include="SpinningProgressControl.xaml.cs">
+      <DependentUpon>SpinningProgressControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SpriteButton.cs" />
     <Compile Include="SpriteElement.cs" />
   </ItemGroup>
@@ -77,6 +80,10 @@
     <Page Include="GridLineControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SpinningProgressControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\generic.xaml">
       <Generator>MSBuild:Compile</Generator>
