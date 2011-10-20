@@ -1,11 +1,12 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
+using PixelLab.Common;
 
 namespace PixelLab.Wpf.Demo.MineSweeper
 {
@@ -45,6 +46,12 @@ namespace PixelLab.Wpf.Demo.MineSweeper
         public MineFieldElement() : this(new MineField()) { }
         public MineFieldElement(MineField mineField)
         {
+            _timer = new DispatcherTimer()
+            {
+                Interval = TimeSpan.FromSeconds(1),
+            };
+            _timer.Tick += timerTick;
+
             Initialize(mineField);
         }
 
@@ -59,7 +66,13 @@ namespace PixelLab.Wpf.Demo.MineSweeper
                 }
                 return _secondsElapsed;
             }
+            private set
+            {
+                _secondsElapsed = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("SecondsElapsed"));
+            }
         }
+
         public PlayState PlayState
         {
             get
@@ -184,10 +197,8 @@ namespace PixelLab.Wpf.Demo.MineSweeper
 
         private void Initialize(MineField mineField)
         {
-            if (mineField == null)
-            {
-                throw new ArgumentNullException("mineField");
-            }
+            Util.ThrowUnless<ArgumentNullException>(mineField != null);
+
             _mineField = mineField;
             _mineField.PropertyChanged += (sender, e) =>
             {
@@ -272,76 +283,50 @@ namespace PixelLab.Wpf.Demo.MineSweeper
         }
         private void startTimer()
         {
-            Debug.Assert(_timer == null);
-            Debug.Assert(_secondsElapsed == 0);
+            Debug.Assert(SecondsElapsed == 0);
             Debug.Assert(_playState == PlayState.NotStarted);
+            Debug.Assert(!_timer.IsEnabled);
 
-            _timer = new Timer(new TimerCallback(timerTick), null, 0, 1000);
+            _timer.Start();
+
             _playState = PlayState.Started;
         }
         private void stopTimer()
         {
-            Debug.Assert(_timer != null);
+            Debug.Assert(_timer.IsEnabled);
             Debug.Assert(_playState == PlayState.Started);
 
-            _timer.Change(Timeout.Infinite, Timeout.Infinite);
-            _timer.Dispose();
-            _timer = null;
+            _timer.Stop();
 
             _playState = PlayState.Finished;
         }
+
         private void resetTimer()
         {
             Debug.Assert(_playState == PlayState.Finished);
-            Debug.Assert(_timer == null);
+            Debug.Assert(!_timer.IsEnabled);
 
-            _secondsElapsed = 0;
+            SecondsElapsed = 0;
             _playState = PlayState.NotStarted;
         }
-        private void timerTick(object state)
+
+        private void timerTick(object sender, EventArgs args)
         {
-            Debug.Assert(_timer != null);
             Debug.Assert(_playState == PlayState.Started);
 
-            lock (this)
-            {
-                __secondsElapsed++;
-                OnPropertyChanged(new PropertyChangedEventArgs("SecondsElapsed"));
-            }
+            SecondsElapsed++;
         }
 
         private const double _childSize = 20;
 
+        private readonly DispatcherTimer _timer;
         private ContentControl[] _contentControls;
 
         private MineField _mineField;
-        private ContentControl _leftDownControl = null;
-        private ContentControl _middleDownControl = null;
-        private int __secondsElapsed = 0;
-        private int _secondsElapsed
-        {
-            get
-            {
-                lock (this)
-                {
-                    return __secondsElapsed;
-                }
-            }
-            set
-            {
-                lock (this)
-                {
-                    if (value != __secondsElapsed)
-                    {
-                        __secondsElapsed = value;
-                        OnPropertyChanged(new PropertyChangedEventArgs("SecondsElapsed"));
-                    }
-                }
-            }
-        }
-
+        private ContentControl _leftDownControl;
+        private ContentControl _middleDownControl;
+        private int _secondsElapsed;
         private PlayState _playState = PlayState.NotStarted;
-        private Timer _timer = null;
 
         #endregion
     }
