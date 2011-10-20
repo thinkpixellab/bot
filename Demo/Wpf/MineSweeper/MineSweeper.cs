@@ -59,32 +59,28 @@ namespace PixelLab.Wpf.Demo.MineSweeper
                 }
             }
 
-            _squares = new List<Square>();
-            int index;
-            Square square;
+            var squares = new List<Square>();
             for (int y = 0; y < _rows; y++)
             {
                 for (int x = 0; x < _columns; x++)
                 {
-                    index = y * _columns + x;
+                    var index = y * _columns + x;
 
-                    square = new Square(this, y, x, live[index]);
-                    square.PropertyChanged += new PropertyChangedEventHandler(square_PropertyChanged);
+                    var square = new Square(this, y, x, live[index]);
+                    square.PropertyChanged += square_PropertyChanged;
 
-                    _squares.Add(square);
+                    squares.Add(square);
                 }
             }
+
+            _squares = squares.ToReadOnlyCollection();
         }
 
         public ReadOnlyCollection<Square> Squares
         {
             get
             {
-                if (_squaresROWrapperCache == null)
-                {
-                    _squaresROWrapperCache = new ReadOnlyCollection<Square>(_squares);
-                }
-                return _squaresROWrapperCache;
+                return _squares;
             }
         }
         public int Rows
@@ -294,7 +290,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
 
         void square_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "State")
+            if (e.PropertyName == StatePropertyName)
             {
                 //recount Flags
                 var newFlagCount = _squares.Count(s => s.State == SquareState.Flagged);
@@ -363,13 +359,12 @@ namespace PixelLab.Wpf.Demo.MineSweeper
             return adjacent;
         }
 
-        private List<Square> _squares;
-        private ReadOnlyCollection<Square> _squaresROWrapperCache;
-        private int _squareCount;
-        private int _columns;
-        private int _mineCount;
+        private readonly ReadOnlyCollection<Square> _squares;
+        private readonly int _squareCount;
+        private readonly int _columns;
+        private readonly int _mineCount;
+        private readonly int _rows;
         private int _clearedCount;
-        private int _rows;
         private WinState _state;
         private int _flagCount;
 
@@ -380,7 +375,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
 
         public const string ClearedCountPropertyName = "ClearedCount";
         public const string MinesLeftPropertyName = "MinesLeft";
-        public const string StatePropertyName = "StateLeft";
+        public const string StatePropertyName = "State";
 
         private const int DefaultMineCount = 40;
         private const int DefaultWidth = 16;
@@ -429,7 +424,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
             set
             {
                 _state = value;
-                OnPropertyChanged("State");
+                OnPropertyChanged(MineField.StatePropertyName);
             }
         }
         public override string ToString()
