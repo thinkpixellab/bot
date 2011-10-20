@@ -37,8 +37,7 @@ namespace PixelLab.SL
             private set
             {
                 Deployment.Current.VerifyAccess();
-                _state = value;
-                OnPropertyChanged("State");
+                UpdateProperty("State", ref _state, value);
                 _loadCommand.RaiseCanExecuteChanged();
             }
         }

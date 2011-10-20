@@ -478,8 +478,7 @@ namespace PixelLab.Wpf.Demo.Hex
             get { return _isWinner; }
             set
             {
-                _isWinner = value;
-                OnPropertyChanged("IsWinner");
+                UpdateProperty("IsWinner", ref _isWinner, value);
             }
         }
 
@@ -490,8 +489,7 @@ namespace PixelLab.Wpf.Demo.Hex
             {
                 Debug.Assert(_state == HexPieceState.Unused, "shouldn't set the thing after its already been set");
                 Debug.Assert(value != HexPieceState.Unused);
-                _state = value;
-                OnPropertyChanged("State");
+                UpdateProperty("State", ref _state, value);
             }
         }
 
@@ -502,8 +500,7 @@ namespace PixelLab.Wpf.Demo.Hex
             {
                 Debug.Assert(_number == 0, "Shouldn't set this thing after its already been set.");
                 Debug.Assert(value > 0);
-                _number = value;
-                OnPropertyChanged("Number");
+                UpdateProperty("Number", ref _number, value);
             }
         }
 
