@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Microsoft.Practices.Prism.Commands;
 using PixelLab.Common;
 
 namespace PixelLab.Wpf.Demo.MineSweeper
@@ -52,79 +53,66 @@ namespace PixelLab.Wpf.Demo.MineSweeper
             };
             _timer.Tick += timerTick;
 
+            _newGameCommand = new DelegateCommand(NewGame);
+            _contentControls = new ContentControl[mineField.Squares.Count];
+
             Initialize(mineField);
         }
+
+        private static readonly DependencyPropertyKey SecondsElapsedPropertyKey = DependencyProperty.RegisterReadOnly("SecondsElapsed", typeof(int), typeof(MineFieldElement), null);
+
+        public static readonly DependencyProperty SecondsElapsedProperty = SecondsElapsedPropertyKey.DependencyProperty;
 
         public int SecondsElapsed
         {
             get
             {
-                Debug.Assert(_secondsElapsed >= 0);
-                if (_secondsElapsed > 0)
-                {
-                    Debug.Assert(_playState == PlayState.Started || _playState == PlayState.Finished);
-                }
-                return _secondsElapsed;
+                return (int)GetValue(SecondsElapsedProperty);
             }
             private set
             {
-                _secondsElapsed = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("SecondsElapsed"));
+                SetValue(SecondsElapsedPropertyKey, value);
             }
         }
 
-        public PlayState PlayState
+        private static readonly DependencyPropertyKey MineFieldPropertyKey = DependencyProperty.RegisterReadOnly("MineField", typeof(MineField), typeof(MineFieldElement), null);
+
+        public static readonly DependencyProperty MineFieldProperty = MineFieldPropertyKey.DependencyProperty;
+
+        public MineField MineField
         {
             get
             {
-                if (_playState == PlayState.NotStarted || _playState == PlayState.Started)
-                {
-                    Debug.Assert(_mineField.State == WinState.Unknown);
-                }
-                else
-                {
-                    Debug.Assert(_mineField.State != WinState.Unknown);
-                }
-
-                return _playState;
+                return (MineField)GetValue(MineFieldProperty);
+            }
+            private set
+            {
+                SetValue(MineFieldPropertyKey, value);
             }
         }
-        public int MinesLeft { get { return _mineField.MinesLeft; } }
-        public int MinesToFind
+
+        public ICommand NewGameCommand
         {
             get
             {
-                return (_mineField.Rows * _mineField.Columns) - (_mineField.ClearedCount + _mineField.MineCount);
-            }
-        }
-
-        public WinState State { get { return _mineField.State; } }
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, e);
+                return _newGameCommand;
             }
         }
 
         internal void NewGame()
         {
             cleanUp();
-            Initialize(new MineField(_mineField.Rows, _mineField.Columns, _mineField.MineCount));
+            Initialize(new MineField(MineField.Rows, MineField.Columns, MineField.MineCount));
             CreateElements();
             if (_playState == PlayState.Started)
             {
                 stopTimer();
             }
-            if (_playState == PlayState.Finished)
+            else if (_playState == PlayState.Finished)
             {
                 resetTimer();
             }
             this.InvalidateVisual();
-            OnPropertyChanged(new PropertyChangedEventArgs(MineField.StatePropertyName));
         }
 
         protected override void OnInitialized(EventArgs e)
@@ -132,19 +120,20 @@ namespace PixelLab.Wpf.Demo.MineSweeper
             base.OnInitialized(e);
             CreateElements();
         }
+
         private void CreateElements()
         {
-            //create children
-            _contentControls = new ContentControl[_mineField.Squares.Count];
-            ContentControl cc;
+            Debug.Assert(_contentControls.Length == MineField.Squares.Count);
 
-            for (int i = 0; i < _mineField.Squares.Count; i++)
+            for (int i = 0; i < MineField.Squares.Count; i++)
             {
-                cc = new ContentControl();
+                var cc = new ContentControl()
+                {
+                    Content = MineField.Squares[i]
+                };
 
-                cc.Content = _mineField.Squares[i];
-                cc.MouseDown += new MouseButtonEventHandler(cc_MouseDown);
-                cc.MouseUp += new MouseButtonEventHandler(cc_MouseUp);
+                cc.MouseDown += cc_MouseDown;
+                cc.MouseUp += cc_MouseUp;
 
                 _contentControls[i] = cc;
 
@@ -154,8 +143,9 @@ namespace PixelLab.Wpf.Demo.MineSweeper
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            return new Size(_mineField.Columns * _childSize, _mineField.Rows * _childSize);
+            return new Size(MineField.Columns * _childSize, MineField.Rows * _childSize);
         }
+
         protected override Size ArrangeOverride(Size finalSize)
         {
             Size measureSize = new Size(_childSize, _childSize);
@@ -171,13 +161,14 @@ namespace PixelLab.Wpf.Demo.MineSweeper
                 }
             }
 
-            return new Size(_mineField.Columns * _childSize, _mineField.Rows * _childSize);
+            return new Size(MineField.Columns * _childSize, MineField.Rows * _childSize);
         }
 
         protected override Visual GetVisualChild(int index)
         {
             return _contentControls[index];
         }
+
         protected override int VisualChildrenCount
         {
             get
@@ -199,77 +190,81 @@ namespace PixelLab.Wpf.Demo.MineSweeper
         {
             Util.ThrowUnless<ArgumentNullException>(mineField != null);
 
-            _mineField = mineField;
-            _mineField.PropertyChanged += (sender, e) =>
+            if (MineField != null)
             {
-                if (e.PropertyName == MineField.MinesLeftPropertyName)
-                {
-                    OnPropertyChanged(new PropertyChangedEventArgs(MineField.MinesLeftPropertyName));
-                }
-                else if (e.PropertyName == MineField.StatePropertyName)
-                {
-                    stopTimer();
-                    OnPropertyChanged(new PropertyChangedEventArgs(MineField.StatePropertyName));
-                }
-            };
+                MineField.PropertyChanged -= MineField_PropertyChanged;
+            }
+
+            MineField = mineField;
+
+            MineField.PropertyChanged += MineField_PropertyChanged;
         }
+
+        private void MineField_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "State")
+            {
+                stopTimer();
+            }
+        }
+
         private void cleanUp()
         {
-            foreach (ContentControl control in _contentControls)
+            foreach (var control in _contentControls)
             {
                 RemoveVisualChild(control);
             }
-            _contentControls = null;
         }
 
         private void cc_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Middle)
-            {
-                ContentControl control = (ContentControl)sender;
-                _middleDownControl = control;
-            }
-            else if (e.ChangedButton == MouseButton.Left)
-            {
-                ContentControl control = (ContentControl)sender;
-                _leftDownControl = control;
-            }
-            else if (e.ChangedButton == MouseButton.Right)
-            {
-                ContentControl control = (ContentControl)sender;
-                Square square = (Square)control.Content;
+            var cc = (ContentControl)sender;
 
-                checkTimer();
-                _mineField.ToggleSquare(square.Column, square.Row);
+            switch (e.ChangedButton)
+            {
+                case MouseButton.Middle:
+                    _middleDownControl = cc;
+                    break;
+                case MouseButton.Left:
+                    _leftDownControl = cc;
+                    break;
+                case MouseButton.Right:
+                    var square = (Square)cc.Content;
+
+                    checkTimer();
+                    MineField.ToggleSquare(square.Column, square.Row);
+                    break;
             }
         }
+
         private void cc_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (_mineField.State == WinState.Unknown)
+            var cc = (ContentControl)sender;
+            if (MineField.State == WinState.Unknown)
             {
-                if (e.ChangedButton == MouseButton.Middle)
+                switch (e.ChangedButton)
                 {
-                    ContentControl control = (ContentControl)sender;
+                    case
+                    MouseButton.Middle:
 
-                    if (control == _middleDownControl)
-                    {
-                        Square square = (Square)control.Content;
-                        checkTimer();
-                        _mineField.ClearSquare(square.Column, square.Row);
-                    }
-                    _middleDownControl = null;
-                }
-                else if (e.ChangedButton == MouseButton.Left)
-                {
-                    ContentControl control = (ContentControl)sender;
+                        if (cc == _middleDownControl)
+                        {
+                            Square square = (Square)cc.Content;
+                            checkTimer();
+                            MineField.ClearSquare(square.Column, square.Row);
+                        }
+                        _middleDownControl = null;
+                        break;
+                    case MouseButton.Left:
 
-                    if (control == _leftDownControl)
-                    {
-                        Square square = (Square)control.Content;
-                        checkTimer();
-                        _mineField.RevealSquare(square.Column, square.Row);
-                    }
-                    _leftDownControl = null;
+                        if (cc == _leftDownControl)
+                        {
+                            Square square = (Square)cc.Content;
+                            checkTimer();
+                            MineField.RevealSquare(square.Column, square.Row);
+                        }
+                        _leftDownControl = null;
+                        break;
                 }
             }
         }
@@ -281,6 +276,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
                 startTimer();
             }
         }
+
         private void startTimer()
         {
             Debug.Assert(SecondsElapsed == 0);
@@ -291,6 +287,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
 
             _playState = PlayState.Started;
         }
+
         private void stopTimer()
         {
             Debug.Assert(_timer.IsEnabled);
@@ -320,12 +317,11 @@ namespace PixelLab.Wpf.Demo.MineSweeper
         private const double _childSize = 20;
 
         private readonly DispatcherTimer _timer;
-        private ContentControl[] _contentControls;
+        private readonly DelegateCommand _newGameCommand;
+        private readonly ContentControl[] _contentControls;
 
-        private MineField _mineField;
         private ContentControl _leftDownControl;
         private ContentControl _middleDownControl;
-        private int _secondsElapsed;
         private PlayState _playState = PlayState.NotStarted;
 
         #endregion

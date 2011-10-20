@@ -1,40 +1,12 @@
-﻿<Page x:Class="PixelLab.Wpf.Demo.MineSweeper.MineSweeperPage"
+﻿<Page 
+    x:Class="PixelLab.Wpf.Demo.MineSweeper.MineSweeperPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:msa="clr-namespace:PixelLab.Wpf.Demo.MineSweeper"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <Page.Background>
-        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-            <LinearGradientBrush.GradientStops>
-                <GradientStop Color="White" Offset="0" />
-                <GradientStop Color="Navy" Offset="1" />
-            </LinearGradientBrush.GradientStops>
-        </LinearGradientBrush>
-    </Page.Background>
 
     <Page.Resources>
-
-        <LinearGradientBrush x:Key="WonBackgroundBrush" StartPoint="0,0" EndPoint="1,1" >
-            <LinearGradientBrush.GradientStops>
-                <GradientStop Color="White" Offset="0" />
-                <GradientStop Color="DarkGreen" Offset="1" />
-            </LinearGradientBrush.GradientStops>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" x:Key="PlayingBackgroundBrush">
-            <LinearGradientBrush.GradientStops>
-                <GradientStop Color="White" Offset="0" />
-                <GradientStop Color="Navy" Offset="1" />
-            </LinearGradientBrush.GradientStops>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" x:Key="LostBackgroundBrush">
-            <LinearGradientBrush.GradientStops>
-                <GradientStop Color="White" Offset="0" />
-                <GradientStop Color="DarkRed" Offset="1" />
-            </LinearGradientBrush.GradientStops>
-        </LinearGradientBrush>
-
+        <msa:GameStateBrushConverter x:Key="GameStateBrushConverter" />
         <msa:SquareTemplateSelector x:Key="SquareTemplateSelector"/>
 
         <DataTemplate x:Key="NonZero" DataType="{x:Type sys:Int32}">
@@ -51,9 +23,9 @@
         <ControlTemplate x:Key="Flag" TargetType="{x:Type Control}">
             <Canvas>
                 <Polygon Points="10,2 10,10 2,6" Fill="Red"
-					 StrokeLineJoin="Round"/>
+                     StrokeLineJoin="Round"/>
                 <Polygon Points="10,10 11,13 16,16 4,16 9,13" Fill="Black"
-					 StrokeLineJoin="Round"/>
+                     StrokeLineJoin="Round"/>
             </Canvas>
         </ControlTemplate>
         <ControlTemplate x:Key="Clear" TargetType="{x:Type Control}">
@@ -67,7 +39,7 @@
                     </LinearGradientBrush>
                 </Border.Background>
                 <ContentControl Content="{Binding AdjacentNumber}" HorizontalAlignment="Center" VerticalAlignment="Center"
-								ContentTemplateSelector="{StaticResource SquareTemplateSelector}"/>
+                                ContentTemplateSelector="{StaticResource SquareTemplateSelector}"/>
             </Border>
         </ControlTemplate>
         <ControlTemplate x:Key="Unknown" TargetType="{x:Type Control}">
@@ -167,23 +139,24 @@
 
     </Page.Resources>
 
-    <Viewbox>
-        <Grid Margin="20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal"  Margin="0 0 0 10" HorizontalAlignment="Center">
-                <TextBlock>Mines Left:</TextBlock>
-                <TextBlock Margin="5 0 0 0" Width="20" Text="{Binding ElementName=m_mineField, Path=MinesLeft}"/>
-                <TextBlock>Time:</TextBlock>
-                <TextBlock Margin="5 0 0 0" Width="20" Text="{Binding ElementName=m_mineField, Path=SecondsElapsed}"/>
-                <Button Margin="5 0 0 0" Content="_New Game" Click="NewGame"/>
-            </StackPanel>
-            <Border Grid.Row="1" BorderBrush="black" BorderThickness="1">
-                <msa:MineFieldElement x:Name="m_mineField" PropertyChanged="_mineFieldElement_PropertyChanged"/>
-            </Border>
-        </Grid>
-    </Viewbox>
-
+    <Grid Background="{Binding ElementName=m_mineField, Path=MineField.State, Converter={StaticResource GameStateBrushConverter}}">
+        <Viewbox>
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal"  Margin="0 0 0 10" HorizontalAlignment="Center">
+                    <TextBlock>Mines Left:</TextBlock>
+                    <TextBlock Margin="5 0 0 0" Width="20" Text="{Binding ElementName=m_mineField, Path=MineField.MinesLeft}"/>
+                    <TextBlock>Time:</TextBlock>
+                    <TextBlock Margin="5 0 0 0" Width="20" Text="{Binding ElementName=m_mineField, Path=SecondsElapsed}"/>
+                    <Button Margin="5 0 0 0" Content="_New Game" Command="{Binding ElementName=m_mineField, Path=NewGameCommand}" />
+                </StackPanel>
+                <Border Grid.Row="1" BorderBrush="black" BorderThickness="1">
+                    <msa:MineFieldElement x:Name="m_mineField"/>
+                </Border>
+            </Grid>
+        </Viewbox>
+    </Grid>
 </Page>

@@ -1,7 +1,7 @@
-using System.ComponentModel;
-using System.Windows;
+using System;
 using System.Windows.Controls;
 using System.Windows.Media;
+using PixelLab.Common;
 using PixelLab.Demo.Core;
 
 namespace PixelLab.Wpf.Demo.MineSweeper
@@ -12,41 +12,33 @@ namespace PixelLab.Wpf.Demo.MineSweeper
         public MineSweeperPage()
         {
             InitializeComponent();
-
-            Initialized += (sender, args) =>
-            {
-                _playingBrush = (GradientBrush)FindResource("PlayingBackgroundBrush");
-                _wonBrush = (GradientBrush)FindResource("WonBackgroundBrush");
-                _lostBrush = (GradientBrush)FindResource("LostBackgroundBrush");
-            };
         }
+    }
 
-        private void _mineFieldElement_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    public class GameStateBrushConverter : SimpleValueConverter<WinState, Brush>
+    {
+        protected override Brush ConvertBase(WinState input)
         {
-            if (e.PropertyName == MineField.StatePropertyName)
+            switch (input)
             {
-                if (m_mineField.State == WinState.Won)
-                {
-                    this.Background = _wonBrush;
-                }
-                else if (m_mineField.State == WinState.Lost)
-                {
-                    this.Background = _lostBrush;
-                }
-                else if (m_mineField.State == WinState.Unknown)
-                {
-                    this.Background = _playingBrush;
-                }
+                case WinState.Unknown:
+                    return makeBrush(Colors.Navy);
+                case WinState.Lost:
+                    return makeBrush(Colors.Maroon);
+                case WinState.Won:
+                    return makeBrush(Colors.DarkGreen);
+                default:
+                    throw new NotSupportedException();
             }
         }
 
-        void NewGame(object sender, RoutedEventArgs e)
+        private static GradientBrush makeBrush(Color color)
         {
-            m_mineField.NewGame();
+            return new LinearGradientBrush(new GradientStopCollection()
+            {
+                new GradientStop(Colors.White,0),
+                new GradientStop(color, 1)
+            }, 45);
         }
-
-        Brush _playingBrush;
-        Brush _wonBrush;
-        Brush _lostBrush;
     }
 }

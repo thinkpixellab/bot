@@ -15,22 +15,11 @@ namespace PixelLab.Wpf.Demo.MineSweeper
 {
     public class MineField : Changeable
     {
-        public MineField() : this(DefaultHeight, DefaultWidth, DefaultMineCount) { }
-
-        public MineField(int rows, int columns, int mineCount)
+        public MineField(int rows = DefaultHeight, int columns = DefaultWidth, int mineCount = DefaultMineCount)
         {
-            if (rows < 1)
-            {
-                throw new ArgumentOutOfRangeException("rows");
-            }
-            if (columns < 1)
-            {
-                throw new ArgumentOutOfRangeException("columns");
-            }
-            if (mineCount < 1 || mineCount >= rows * columns)
-            {
-                throw new ArgumentOutOfRangeException("mineCount");
-            }
+            Contract.Requires(rows > 0);
+            Contract.Requires(columns > 0);
+            Contract.Requires(mineCount > 0 && mineCount <= rows * columns);
 
             _rows = rows;
             _columns = columns;
@@ -104,15 +93,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
             get
             {
 #if DEBUG
-                int clearCheck = 0;
-                foreach (Square s in _squares)
-                {
-                    if (s.State == SquareState.Exposed)
-                    {
-                        clearCheck++;
-                    }
-                }
-
+                int clearCheck = _squares.Where(s => s.State == SquareState.Exposed).Count();
                 Debug.Assert(clearCheck == _clearedCount);
 #endif
                 return _clearedCount;
@@ -121,14 +102,27 @@ namespace PixelLab.Wpf.Demo.MineSweeper
 
         public int MinesLeft { get { return _mineCount - _flagCount; } }
 
-        public WinState State { get { return _state; } }
+        public WinState State
+        {
+            get { return _state; }
+            private set
+            {
+                UpdateProperty("State", ref _state, value);
+            }
+        }
 
         public void ClearSquare(int column, int row)
         {
             Debug.Assert(!_working);
             _working = true;
-            internalClearSquare(column, row);
-            _working = false;
+            try
+            {
+                internalClearSquare(column, row);
+            }
+            finally
+            {
+                _working = false;
+            }
             FireDefered();
         }
 
@@ -136,16 +130,22 @@ namespace PixelLab.Wpf.Demo.MineSweeper
         {
             Debug.Assert(!_working);
             _working = true;
-            intervalRevealSquare(col, row);
-            _working = false;
+            try
+            {
+                intervalRevealSquare(col, row);
+            }
+            finally
+            {
+                _working = false;
+            }
             FireDefered();
         }
 
         public void ToggleSquare(int column, int row)
         {
-            if (_state == WinState.Unknown)
+            if (State == WinState.Unknown)
             {
-                Square s = GetSquare(column, row);
+                var s = GetSquare(column, row);
                 if (s.State != SquareState.Exposed)
                 {
                     switch (s.State)
@@ -168,7 +168,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
         {
             Debug.Assert(_working);
 
-            if (_state == WinState.Unknown)
+            if (State == WinState.Unknown)
             {
                 Square target = GetSquare(column, row);
                 if (target.State == SquareState.Exposed)
@@ -211,9 +211,9 @@ namespace PixelLab.Wpf.Demo.MineSweeper
         private void intervalRevealSquare(int col, int row)
         {
             Debug.Assert(_working);
-            if (_state == WinState.Unknown)
+            if (State == WinState.Unknown)
             {
-                Square target = GetSquare(col, row);
+                var target = GetSquare(col, row);
 
                 if (target.State == SquareState.Unknown)
                 {
@@ -246,23 +246,22 @@ namespace PixelLab.Wpf.Demo.MineSweeper
         {
             if (_clearedCountChanged)
             {
-                OnPropertyChanged(new PropertyChangedEventArgs(ClearedCountPropertyName));
+                OnPropertyChanged("ClearedCount");
                 _clearedCountChanged = false;
             }
             if (_minesLeftCountChanged)
             {
-                OnPropertyChanged(new PropertyChangedEventArgs(MinesLeftPropertyName));
+                OnPropertyChanged("MinesLeft");
                 _minesLeftCountChanged = false;
             }
         }
 
         private void IncrementCleared()
         {
-            Debug.Assert(_state == WinState.Unknown);
+            Debug.Assert(State == WinState.Unknown);
             Debug.Assert(_working);
             _clearedCount++;
             _clearedCountChanged = true;
-            //PropertyChanged(this, new PropertyChangedEventArgs(ClearedCountPropertyName));
 
             int targetClear = _rows * _columns - _mineCount;
             if (_clearedCount == targetClear)
@@ -274,35 +273,33 @@ namespace PixelLab.Wpf.Demo.MineSweeper
         private void Won()
         {
 #if DEBUG
-            Debug.Assert(_state == WinState.Unknown);
-            foreach (Square square in _squares)
+            Debug.Assert(State == WinState.Unknown);
+            foreach (var square in from s in _squares
+                                   where !s.IsMine
+                                   select s)
             {
-                if (!square.IsMine)
-                {
-                    Debug.Assert(square.State == SquareState.Exposed);
-                }
+                Debug.Assert(square.State == SquareState.Exposed);
             }
 #endif
-            this._state = WinState.Won;
-            OnPropertyChanged(new PropertyChangedEventArgs(StatePropertyName));
+            State = WinState.Won;
         }
 
         private void Lost()
         {
-            this._state = WinState.Lost;
-            OnPropertyChanged(new PropertyChangedEventArgs(StatePropertyName));
-            foreach (Square s in _squares)
+            State = WinState.Lost;
+            foreach (var s in from sq in _squares
+                              where sq.IsMine
+                              && sq.State != SquareState.Flagged
+                              select sq)
             {
-                if (s.IsMine && s.State != SquareState.Flagged)
-                {
-                    s.State = SquareState.Exposed;
-                }
+                s.State = SquareState.Exposed;
             }
         }
 
-        void square_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void square_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == StatePropertyName)
+            var square = (Square)sender;
+            if (e.PropertyName == "State")
             {
                 //recount Flags
                 var newFlagCount = _squares.Count(s => s.State == SquareState.Flagged);
@@ -312,11 +309,10 @@ namespace PixelLab.Wpf.Demo.MineSweeper
                     _minesLeftCountChanged = true;
                 }
 
-                if (((Square)sender).State == SquareState.Exposed)
+                if (square.State == SquareState.Exposed)
                 {
                     Debug.Assert(_working);
                     _minesLeftCountChanged = true; //que up a defered property changed
-                    //PropertyChanged(this, new PropertyChangedEventArgs(MinesLeftPropertyName));
                 }
 
                 FireDefered();
@@ -326,7 +322,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
         private Square GetSquare(int col, int row)
         {
             int squareIndex = row * _columns + col;
-            Square target = _squares[squareIndex];
+            var target = _squares[squareIndex];
 
             Debug.Assert(col == target.Column && row == target.Row);
             return target;
@@ -373,10 +369,6 @@ namespace PixelLab.Wpf.Demo.MineSweeper
 
         private bool _clearedCountChanged;
         private bool _minesLeftCountChanged;
-
-        public const string ClearedCountPropertyName = "ClearedCount";
-        public const string MinesLeftPropertyName = "MinesLeft";
-        public const string StatePropertyName = "State";
 
         private const int DefaultMineCount = 40;
         private const int DefaultWidth = 16;
