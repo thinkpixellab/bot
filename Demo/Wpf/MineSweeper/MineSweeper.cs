@@ -126,13 +126,13 @@ namespace PixelLab.Wpf.Demo.MineSweeper
             FireDefered();
         }
 
-        public void RevealSquare(int col, int row)
+        public void RevealSquare(int col, int row, bool isDouble)
         {
             Debug.Assert(!_working);
             _working = true;
             try
             {
-                intervalRevealSquare(col, row);
+                intervalRevealSquare(col, row, isDouble);
             }
             finally
             {
@@ -197,7 +197,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
                         {
                             foreach (var s in adjacent.Where(s => s.State == SquareState.Unknown))
                             {
-                                intervalRevealSquare(s.Column, s.Row);
+                                intervalRevealSquare(s.Column, s.Row, false);
                             }
                         }
                     }
@@ -205,7 +205,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
             }
         }
 
-        private void intervalRevealSquare(int col, int row)
+        private void intervalRevealSquare(int col, int row, bool isDouble)
         {
             Debug.Assert(_working);
             if (State == WinState.Unknown)
@@ -227,12 +227,28 @@ namespace PixelLab.Wpf.Demo.MineSweeper
                     if (target.AdjacentNumber == 0 && !target.IsMine)
                     {
                         var adjacent = GetAdjacentSquares(col, row);
-                        foreach (var adjacentSquare in adjacent)
+                        foreach (var adjacentSquare in adjacent.Where(s => s.State == SquareState.Unknown))
                         {
-                            if (adjacentSquare.State == SquareState.Unknown)
-                            {
-                                intervalRevealSquare(adjacentSquare.Column, adjacentSquare.Row);
-                            }
+                            intervalRevealSquare(adjacentSquare.Column, adjacentSquare.Row, false);
+                        }
+                    }
+                }
+                else if (isDouble && target.State == SquareState.Exposed)
+                {
+                    // ah ha! count flags
+                    // if we have flags == the number, then do an expose on all the non-exposed points
+                    var adjacent = GetAdjacentSquares(col, row).ToList();
+
+                    var mineCount = adjacent.Where(s => s.IsMine).Count();
+                    var flagCount = adjacent.Where(s => s.State == SquareState.Flagged).Count();
+
+                    Debug.Assert(mineCount == target.AdjacentNumber);
+
+                    if (flagCount > 0 && flagCount == mineCount)
+                    {
+                        foreach (var adjacentSquare in adjacent.Where(s => s.State == SquareState.Unknown))
+                        {
+                            intervalRevealSquare(adjacentSquare.Column, adjacentSquare.Row, false);
                         }
                     }
                 }
@@ -325,7 +341,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
             return target;
         }
 
-        internal int GetAdjacent(int col, int row)
+        internal int GetAdjacentMineCount(int col, int row)
         {
             return GetAdjacentSquares(col, row).Where(s => s.IsMine).Count();
         }
@@ -418,7 +434,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
             {
                 if (_numberCache == -1)
                 {
-                    _numberCache = this._owner.GetAdjacent(_column, _row);
+                    _numberCache = this._owner.GetAdjacentMineCount(_column, _row);
                 }
                 return _numberCache;
             }

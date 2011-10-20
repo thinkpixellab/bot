@@ -219,6 +219,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
         private void cc_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cc = (ContentControl)sender;
+            _clickCount = 0;
 
             switch (e.ChangedButton)
             {
@@ -227,6 +228,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
                     break;
                 case MouseButton.Left:
                     _leftDownControl = cc;
+                    _clickCount = e.ClickCount;
                     break;
                 case MouseButton.Right:
                     var square = (Square)cc.Content;
@@ -240,16 +242,16 @@ namespace PixelLab.Wpf.Demo.MineSweeper
         private void cc_MouseUp(object sender, MouseButtonEventArgs e)
         {
             var cc = (ContentControl)sender;
+            var square = (Square)cc.Content;
+
             if (MineField.State == WinState.Unknown)
             {
                 switch (e.ChangedButton)
                 {
-                    case
-                    MouseButton.Middle:
+                    case MouseButton.Middle:
 
                         if (cc == _middleDownControl)
                         {
-                            Square square = (Square)cc.Content;
                             checkTimer();
                             MineField.ClearSquare(square.Column, square.Row);
                         }
@@ -259,9 +261,8 @@ namespace PixelLab.Wpf.Demo.MineSweeper
 
                         if (cc == _leftDownControl)
                         {
-                            Square square = (Square)cc.Content;
                             checkTimer();
-                            MineField.RevealSquare(square.Column, square.Row);
+                            MineField.RevealSquare(square.Column, square.Row, _clickCount > 1);
                         }
                         _leftDownControl = null;
                         break;
@@ -322,6 +323,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
 
         private ContentControl _leftDownControl;
         private ContentControl _middleDownControl;
+        private int _clickCount;
         private PlayState _playState = PlayState.NotStarted;
 
         #endregion
