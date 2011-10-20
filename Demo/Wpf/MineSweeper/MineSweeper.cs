@@ -83,18 +83,22 @@ namespace PixelLab.Wpf.Demo.MineSweeper
                 return _squares;
             }
         }
+
         public int Rows
         {
             get { return _rows; }
         }
+
         public int Columns
         {
             get { return _columns; }
         }
+
         public int MineCount
         {
             get { return _mineCount; }
         }
+
         public int ClearedCount
         {
             get
@@ -114,7 +118,9 @@ namespace PixelLab.Wpf.Demo.MineSweeper
                 return _clearedCount;
             }
         }
+
         public int MinesLeft { get { return _mineCount - _flagCount; } }
+
         public WinState State { get { return _state; } }
 
         public void ClearSquare(int column, int row)
@@ -125,6 +131,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
             _working = false;
             FireDefered();
         }
+
         public void RevealSquare(int col, int row)
         {
             Debug.Assert(!_working);
@@ -133,6 +140,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
             _working = false;
             FireDefered();
         }
+
         public void ToggleSquare(int column, int row)
         {
             if (_state == WinState.Unknown)
@@ -169,7 +177,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
                     //see if there are any mines around
                     if (target.AdjacentNumber > 0)
                     {
-                        IList<Square> adjacent = GetAdjacentSquares(column, row);
+                        var adjacent = GetAdjacentSquares(column, row).ToList();
 
                         int adjacentFlagCount = 0;
                         int adjacentQuestionCount = 0;
@@ -199,6 +207,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
                 }
             }
         }
+
         private void intervalRevealSquare(int col, int row)
         {
             Debug.Assert(_working);
@@ -220,8 +229,8 @@ namespace PixelLab.Wpf.Demo.MineSweeper
 
                     if (target.AdjacentNumber == 0 && !target.IsMine)
                     {
-                        IList<Square> adjacent = GetAdjacentSquares(col, row);
-                        foreach (Square adjacentSquare in adjacent)
+                        var adjacent = GetAdjacentSquares(col, row);
+                        foreach (var adjacentSquare in adjacent)
                         {
                             if (adjacentSquare.State == SquareState.Unknown)
                             {
@@ -232,6 +241,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
                 }
             }
         }
+
         private void FireDefered()
         {
             if (_clearedCountChanged)
@@ -260,6 +270,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
                 Won();
             }
         }
+
         private void Won()
         {
 #if DEBUG
@@ -275,6 +286,7 @@ namespace PixelLab.Wpf.Demo.MineSweeper
             this._state = WinState.Won;
             OnPropertyChanged(new PropertyChangedEventArgs(StatePropertyName));
         }
+
         private void Lost()
         {
             this._state = WinState.Lost;
@@ -319,44 +331,33 @@ namespace PixelLab.Wpf.Demo.MineSweeper
             Debug.Assert(col == target.Column && row == target.Row);
             return target;
         }
+
         internal int GetAdjacent(int col, int row)
         {
-            int count = 0;
-            foreach (Square s in GetAdjacentSquares(col, row))
-            {
-                if (s.IsMine)
-                {
-                    count++;
-                }
-            }
-            return count;
+            return GetAdjacentSquares(col, row).Where(s => s.IsMine).Count();
         }
 
-        private IList<Square> GetAdjacentSquares(int col, int row)
+        private IEnumerable<Square> GetAdjacentSquares(int col, int row)
         {
-            List<Square> adjacent = new List<Square>();
-            int lookingCol, lookingRow;
-
-            for (int y = -1; y < 2; y++)
+            for (var y = -1; y < 2; y++)
             {
-                for (int x = -1; x < 2; x++)
+                for (var x = -1; x < 2; x++)
                 {
                     if (!(x == 0 && y == 0))
                     {
-                        lookingCol = col + x;
-                        lookingRow = row + y;
+                        var lookingCol = col + x;
+                        var lookingRow = row + y;
 
                         if (lookingCol >= 0 && lookingCol < _columns)
                         {
                             if (lookingRow >= 0 && lookingRow < _rows)
                             {
-                                adjacent.Add(GetSquare(lookingCol, lookingRow));
+                                yield return GetSquare(lookingCol, lookingRow);
                             }
                         }
                     }
                 }
             }
-            return adjacent;
         }
 
         private readonly ReadOnlyCollection<Square> _squares;
@@ -410,27 +411,31 @@ namespace PixelLab.Wpf.Demo.MineSweeper
         {
             get { return _row; }
         }
+
         public int Column
         {
             get { return _column; }
         }
+
         public bool IsMine
         {
             get { return _isMine; }
         }
+
         public SquareState State
         {
             get { return _state; }
             set
             {
-                _state = value;
-                OnPropertyChanged(MineField.StatePropertyName);
+                UpdateProperty("State", ref _state, value);
             }
         }
+
         public override string ToString()
         {
             return string.Format("Square: {0}, {1}", _column, _row);
         }
+
         public int AdjacentNumber
         {
             get
