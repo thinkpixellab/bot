@@ -179,15 +179,15 @@ namespace PixelLab.Wpf.Demo.MineSweeper
                     {
                         var adjacent = GetAdjacentSquares(column, row).ToList();
 
-                        int adjacentFlagCount = 0;
-                        int adjacentQuestionCount = 0;
-                        foreach (Square s in adjacent)
+                        var adjacentFlagCount = 0;
+                        var adjacentQuestionCount = 0;
+                        foreach (var s in adjacent)
                         {
                             if (s.State == SquareState.Flagged)
                             {
                                 adjacentFlagCount++;
                             }
-                            if (s.State == SquareState.Question)
+                            else if (s.State == SquareState.Question)
                             {
                                 adjacentQuestionCount++;
                             }
@@ -195,12 +195,9 @@ namespace PixelLab.Wpf.Demo.MineSweeper
 
                         if (adjacentFlagCount == target.AdjacentNumber && adjacentQuestionCount == 0)
                         {
-                            foreach (Square s in adjacent)
+                            foreach (var s in adjacent.Where(s => s.State == SquareState.Unknown))
                             {
-                                if (s.State == SquareState.Unknown)
-                                {
-                                    intervalRevealSquare(s.Column, s.Row);
-                                }
+                                intervalRevealSquare(s.Column, s.Row);
                             }
                         }
                     }
@@ -335,25 +332,12 @@ namespace PixelLab.Wpf.Demo.MineSweeper
 
         private IEnumerable<Square> GetAdjacentSquares(int col, int row)
         {
-            for (var y = -1; y < 2; y++)
-            {
-                for (var x = -1; x < 2; x++)
-                {
-                    if (!(x == 0 && y == 0))
-                    {
-                        var lookingCol = col + x;
-                        var lookingRow = row + y;
-
-                        if (lookingCol >= 0 && lookingCol < _columns)
-                        {
-                            if (lookingRow >= 0 && lookingRow < _rows)
-                            {
-                                yield return GetSquare(lookingCol, lookingRow);
-                            }
-                        }
-                    }
-                }
-            }
+            return from y in Enumerable.Range(row - 1, 3)
+                   from x in Enumerable.Range(col - 1, 3)
+                   where !(x == col && y == row)
+                   where x >= 0 && x < _columns
+                   where y >= 0 && y < _rows
+                   select GetSquare(x, y);
         }
 
         private readonly ReadOnlyCollection<Square> _squares;

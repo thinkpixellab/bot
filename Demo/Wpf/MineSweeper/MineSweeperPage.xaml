@@ -73,7 +73,7 @@
         </ControlTemplate>
 
         <DataTemplate DataType="{x:Type msa:Square}">
-            <Border BorderThickness="1" BorderBrush="Black">
+            <Border Name="Border" BorderThickness="1" BorderBrush="Black" Cursor="Hand">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                         <LinearGradientBrush.GradientStops>
@@ -85,53 +85,30 @@
                 <Control x:Name="icon"/>
             </Border>
             <DataTemplate.Triggers>
-                <DataTrigger Binding="{Binding Path=State}">
-                    <DataTrigger.Value>
-                        <msa:SquareState>Flagged</msa:SquareState>
-                    </DataTrigger.Value>
+                <DataTrigger Binding="{Binding Path=State}" Value="Flagged">
                     <Setter TargetName="icon" Property="Template" Value="{StaticResource Flag}"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding Path=State}">
-                    <DataTrigger.Value>
-                        <msa:SquareState>Question</msa:SquareState>
-                    </DataTrigger.Value>
+                <DataTrigger Binding="{Binding Path=State}" Value="Question">
                     <Setter TargetName="icon" Property="Template" Value="{StaticResource Question}"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding Path=State}">
-                    <DataTrigger.Value>
-                        <msa:SquareState>Unknown</msa:SquareState>
-                    </DataTrigger.Value>
+                <DataTrigger Binding="{Binding Path=State}" Value="Unknown">
                     <Setter TargetName="icon" Property="Template" Value="{StaticResource Unknown}"/>
                 </DataTrigger>
                 <MultiDataTrigger>
                     <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=IsMine}">
-                            <Condition.Value>
-                                <sys:Boolean>True</sys:Boolean>
-                            </Condition.Value>
-                        </Condition>
-                        <Condition Binding="{Binding Path=State}">
-                            <Condition.Value>
-                                <msa:SquareState>Exposed</msa:SquareState>
-                            </Condition.Value>
-                        </Condition>
+                        <Condition Binding="{Binding Path=IsMine}" Value="true" />
+                        <Condition Binding="{Binding Path=State}" Value="Exposed" />
                     </MultiDataTrigger.Conditions>
                     <Setter TargetName="icon" Property="Template" Value="{StaticResource Mine}"/>
+                    <Setter TargetName="Border" Property="Cursor" Value="Arrow" />
                 </MultiDataTrigger>
                 <MultiDataTrigger>
                     <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=IsMine}">
-                            <Condition.Value>
-                                <sys:Boolean>False</sys:Boolean>
-                            </Condition.Value>
-                        </Condition>
-                        <Condition Binding="{Binding Path=State}">
-                            <Condition.Value>
-                                <msa:SquareState>Exposed</msa:SquareState>
-                            </Condition.Value>
-                        </Condition>
+                        <Condition Binding="{Binding Path=IsMine}" Value="false" />
+                        <Condition Binding="{Binding Path=State}" Value="Exposed" />
                     </MultiDataTrigger.Conditions>
                     <Setter TargetName="icon" Property="Template" Value="{StaticResource Clear}"/>
+                    <Setter TargetName="Border" Property="Cursor" Value="Arrow" />
                 </MultiDataTrigger>
 
             </DataTemplate.Triggers>
@@ -146,12 +123,12 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <StackPanel Orientation="Horizontal"  Margin="0 0 0 10" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal"  Margin="0 0 0 10" HorizontalAlignment="Center" DataContext="{Binding ElementName=m_mineField}">
                     <TextBlock>Mines Left:</TextBlock>
-                    <TextBlock Margin="5 0 0 0" Width="20" Text="{Binding ElementName=m_mineField, Path=MineField.MinesLeft}"/>
+                    <TextBlock Margin="5 0 0 0" Width="20" Text="{Binding Path=MineField.MinesLeft}"/>
                     <TextBlock>Time:</TextBlock>
-                    <TextBlock Margin="5 0 0 0" Width="20" Text="{Binding ElementName=m_mineField, Path=SecondsElapsed}"/>
-                    <Button Margin="5 0 0 0" Content="_New Game" Command="{Binding ElementName=m_mineField, Path=NewGameCommand}" />
+                    <TextBlock Margin="5 0 0 0" Width="20" Text="{Binding Path=SecondsElapsed}"/>
+                    <Button Margin="5 0 0 0" Content="_New Game" Command="{Binding Path=NewGameCommand}" />
                 </StackPanel>
                 <Border Grid.Row="1" BorderBrush="black" BorderThickness="1">
                     <msa:MineFieldElement x:Name="m_mineField"/>
