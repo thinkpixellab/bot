@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Diagnostics;
-
+using System.Collections.Generic;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
@@ -54,6 +54,19 @@ namespace PixelLab.Common
         public static bool InterlockedSetIfNotNull<T>(ref T location, T value) where T : class
         {
             return InterlockedSetNullField<T>(ref location, value);
+        }
+
+        public static T GetEnumValue<T>(string enumName, bool ignoreCase = false)
+        {
+            Contract.Requires(!enumName.IsNullOrWhiteSpace());
+            Util.ThrowUnless(typeof(T).IsEnum);
+            return (T)Enum.Parse(typeof(T), enumName, ignoreCase);
+        }
+
+        /// <remarks>This will blow up wonderfully at runtime if T is not an enum type.</remarks>
+        public static Dictionary<T, string> EnumToDictionary<T>()
+        {
+            return GetEnumNames<T>().ToDictionary(name => GetEnumValue<T>(name));
         }
 
         /// <summary>
@@ -161,6 +174,19 @@ namespace PixelLab.Common
             {
                 throw new TException();
             }
+        }
+
+        // SL4 doesn't have Enum.GetNames...so...
+        private static IEnumerable<string> GetEnumNames<T>()
+        {
+            var enumType = typeof(T);
+            Util.ThrowUnless(enumType.IsEnum, "The provided type must be an enum");
+#if SILVERLIGHT
+            var enumFields = enumType.GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+            return enumFields.Select(fi => fi.Name);
+#else
+            return Enum.GetNames(typeof(T));
+#endif
         }
 
         private static readonly WeakReference s_random = new WeakReference(null);
