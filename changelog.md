@@ -1,5 +1,15 @@
 # Bag of Tricks Change Log #
 
+## V5.1.0 - 2011-11-07
+*A bunch of new stuff, but no breaking changes. So just a dot release.*
+
+* Added a few `Enum` helpers to `Util`
+* Used `Changeable.UpdateProperty` in more places
+* NEW! `SpinningProgressControl`
+* NEW! `ScrollBehavior`
+* Fixes for `ModalControl`
+* Fixed some weirdness in Core SL4 proj file
+
 ## V5.0.0 - 2011-09-19
 *No huge changes or additions, but there is a big breaking change with AsyncValue<T>. Soooo...new major version number.*
 
