@@ -7,10 +7,10 @@ using PixelLab.Test.Helpers;
 namespace PixelLab.Test.SL
 {
     [TestClass]
-    public class ListMoverTest
+    public class ListReorderUtilTests
     {
         [TestMethod]
-        public void TestListItemMover()
+        public void TestListReorderUtil()
         {
             IList<int> result;
 

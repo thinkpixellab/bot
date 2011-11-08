@@ -42,7 +42,7 @@
     <Compile Include="Helpers\TestChangeable.cs" />
     <Compile Include="ModalControlTests.cs" />
     <Compile Include="PropertyWatcherTest.cs" />
-    <Compile Include="ListMoverTest.cs" />
+    <Compile Include="ListReorderUtilTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ContractTests.cs" />
     <Compile Include="SortHelperTests.cs" />
