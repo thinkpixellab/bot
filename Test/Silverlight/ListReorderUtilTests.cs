@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PixelLab.Common;
 using PixelLab.Test.Helpers;
@@ -59,6 +60,29 @@ namespace PixelLab.Test.SL
             Assert.AreEqual(result[1], 3);
         }
 
+        [TestMethod]
+        public void TestUnpacked()
+        {
+            int[] indicies = new int[] { 1, 3 };
 
+            Assert.IsTrue(ListReorderUtil.CanReorder(indicies, 4, ReorderDirection.Beginning));
+            IList<int> result = ListReorderUtil.Reorder(indicies, 4, ReorderDirection.Beginning);
+            Assert.AreEqual(result[0], 1);
+            Assert.AreEqual(result[1], 2);
+
+            indicies = new int[] { 2, 4, 6 };
+
+            Assert.IsTrue(ListReorderUtil.CanReorder(indicies, 7, ReorderDirection.Beginning));
+            result = ListReorderUtil.Reorder(indicies, 7, ReorderDirection.Beginning);
+            Assert.IsTrue(result.SequenceEqual(new int[] { 2, 4, 5 }));
+
+            Assert.IsTrue(ListReorderUtil.CanReorder(result, 7, ReorderDirection.End));
+            result = ListReorderUtil.Reorder(result, 7, ReorderDirection.End);
+            Assert.IsTrue(result.SequenceEqual(new int[] { 3, 4, 5 }));
+
+            Assert.IsTrue(ListReorderUtil.CanReorder(result, 7, ReorderDirection.Beginning));
+            result = ListReorderUtil.Reorder(result, 7, ReorderDirection.Beginning);
+            Assert.IsTrue(result.SequenceEqual(new int[] { 2, 3, 4 }));
+        }
     }
 }

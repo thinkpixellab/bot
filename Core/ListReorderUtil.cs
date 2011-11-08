@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
+
 #else
 using PixelLab.Contracts;
 #endif
@@ -34,8 +35,6 @@ namespace PixelLab.Common
                 // Two cases: bunched and unbunched
                 // 1 - Unbunched: two or more selected items that are not packed together
                 //     Can always move unbunched items
-                // TODO: unbunched not supported at this time
-
                 // 2 - Bunched: one or more items, all together
                 //     If items are bunched, can only move if there is room to move them in the desired direction
 
@@ -74,8 +73,62 @@ namespace PixelLab.Common
                         }
                     }
                 }
+                else
+                {
+                    Debug.Assert(indicies.Count > 1);
+                    var slices = Slice(indicies);
+                    if (moveDirection == ReorderDirection.Beginning)
+                    {
+                        var subSlice = slices.Last();
+                        slices.Remove(subSlice);
+
+                        // reorder just the subSlice
+                        subSlice = Reorder(subSlice, length, moveDirection);
+                        slices.Add(subSlice);
+                    }
+                    else
+                    {
+                        Debug.Assert(moveDirection == ReorderDirection.End);
+                        var subSlice = slices.First();
+                        slices.Remove(subSlice);
+
+                        // reorder just the subSlice
+                        subSlice = Reorder(subSlice, length, moveDirection);
+                        slices.Insert(0, subSlice);
+                    }
+                    return slices.SelectMany(s => s).ToList();
+                }
             }
             return null;
+        }
+
+        private static List<IList<int>> Slice(IList<int> indicies)
+        {
+            Debug.Assert(indicies != null);
+            Debug.Assert(indicies.Count > 1);
+
+            var slices = new List<IList<int>>();
+
+            List<int> currentSlice = null;
+            for (var i = 0; i < indicies.Count; i++)
+            {
+                var currentValue = indicies[i];
+                if (i == 0 || indicies[i - 1] < (currentValue - 1))
+                {
+                    currentSlice = new List<int>();
+                    slices.Add(currentSlice);
+                }
+                currentSlice.Add(currentValue);
+            }
+
+            Debug.Assert(slices.Count >= 2, "Slice should only be called in unpacked mode...so there should be at least 2 slices");
+            Debug.Assert(slices.SelectMany(s => s).SequenceEqual(indicies));
+            Debug.Assert(slices.All(slice =>
+            {
+                return slice.Count > 0 && slice.TrueForAllAdjacentPairs((a, b) => a + 1 == b);
+            }));
+
+            return slices;
         }
     }
 
