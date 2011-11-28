@@ -5,6 +5,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Linq;
 using PixelLab.Common;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
@@ -24,20 +25,21 @@ namespace PixelLab.Wpf
             {
                 // update the position of the adorner
 
-                Point current = e.GetPosition(this);
+                var current = e.GetPosition(this);
+                m_dragAdorner.OffsetX = current.X - m_mouseDown.X;
                 m_dragAdorner.OffsetY = current.Y - m_mouseDown.Y;
 
                 // find the item that we are dragging over
-                UIElement element = this.InputHitTest(new Point(this.ActualWidth / 2, e.GetPosition(this).Y)) as UIElement;
+                var element = this.InputHitTest(new Point(e.GetPosition(this).X, e.GetPosition(this).Y)) as UIElement;
 
                 if (element != null)
                 {
-                    FrameworkElement itemOver = TreeHelpers.GetItemContainerFromChildElement(this, element) as FrameworkElement;
+                    var itemOver = TreeHelpers.GetItemContainerFromChildElement(this, element) as FrameworkElement;
 
                     if (itemOver != null)
                     {
-                        Point p = Mouse.GetPosition(itemOver);
-                        ReorderQuadrant q = PointToQuadrant(itemOver, p);
+                        var p = Mouse.GetPosition(itemOver);
+                        var q = PointToQuadrant(itemOver, p);
 
                         if (itemOver != m_lastMouseOverItem || q != m_lastMouseOverQuadrant)
                         {
@@ -171,39 +173,33 @@ namespace PixelLab.Wpf
         /// <summary>
         /// Handles changes to the IsDragElement property.
         /// </summary>
-        private static void OnIsDragElementChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnIsDragElementChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
-            UIElement element = d as UIElement;
-            if (element != null)
+            var element = (UIElement)obj;
+            if ((bool)args.NewValue)
             {
-                if ((bool)e.NewValue)
-                {
-                    element.MouseLeftButtonDown += element_MouseLeftButtonDown;
-                }
-                else
-                {
-                    element.MouseLeftButtonDown -= element_MouseLeftButtonDown;
-                }
+                element.MouseLeftButtonDown += element_MouseLeftButtonDown;
+            }
+            else
+            {
+                element.MouseLeftButtonDown -= element_MouseLeftButtonDown;
             }
         }
 
         private static void element_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            UIElement element = sender as UIElement;
+            var element = (UIElement)sender;
 
-            if (element != null)
+            // find the ReoderListBox parent of the element
+            var reorderListBox = TreeHelpers.FindParent<ReorderListBox>(element);
+
+            if (reorderListBox != null)
             {
-                // find the ReoderListBox parent of the element
-                ReorderListBox r = TreeHelpers.FindParent<ReorderListBox>(element);
-
-                if (r != null)
+                // find the ItemContainer
+                FrameworkElement f = TreeHelpers.GetItemContainerFromChildElement(reorderListBox, element) as FrameworkElement;
+                if (f != null)
                 {
-                    // find the ItemContainer
-                    FrameworkElement f = TreeHelpers.GetItemContainerFromChildElement(r, element) as FrameworkElement;
-                    if (f != null)
-                    {
-                        r.BeginDrag(f);
-                    }
+                    reorderListBox.BeginDrag(f);
                 }
             }
         }
@@ -359,7 +355,7 @@ namespace PixelLab.Wpf
             if (m_isDragging && m_dragItem != null && relativeTo != null)
             {
                 // get the index of the item being dragged
-                int relativeToIndex = ItemContainerGenerator.IndexFromContainer(relativeTo);
+                var relativeToIndex = ItemContainerGenerator.IndexFromContainer(relativeTo);
 
                 // get the index of insertion
                 var offset = (placement == ReorderPlacement.Before) ? 0 : 1;
@@ -367,64 +363,66 @@ namespace PixelLab.Wpf
 
                 for (int i = 0; i < Items.Count; i++)
                 {
+                    double delta;
                     if (i > m_dragItemIndex && i < m_dragInsertIndex)
                     {
-                        TranslateItem(ItemContainerGenerator.ContainerFromIndex(i) as FrameworkElement, (m_dragItem.ActualHeight * -1));
+                        delta = -1 * m_dragItem.ActualHeight;
                     }
-
                     else if (i < m_dragItemIndex && i >= m_dragInsertIndex)
                     {
-                        TranslateItem(ItemContainerGenerator.ContainerFromIndex(i) as FrameworkElement, (m_dragItem.ActualHeight));
+                        delta = m_dragItem.ActualHeight;
                     }
-
                     else
                     {
-                        TranslateItem(ItemContainerGenerator.ContainerFromIndex(i) as FrameworkElement, 0);
+                        delta = 0;
                     }
+
+                    TranslateItem((FrameworkElement)ItemContainerGenerator.ContainerFromIndex(i), delta, this.Duration);
                 }
 
                 // if the insert location is after the current location, we need to decrement it
                 // by one after we've made the visual adjustments so that the actual drop index
                 // will be accurate
-                if (m_dragInsertIndex > m_dragItemIndex) m_dragInsertIndex--;
+                if (m_dragInsertIndex > m_dragItemIndex)
+                {
+                    m_dragInsertIndex--;
+                }
             }
         }
 
-        private void TranslateItem(FrameworkElement f, double yDelta) { TranslateItem(f, yDelta, this.Duration); }
-
-        private static void TranslateItem(FrameworkElement f, double yDelta, int milliseconds)
+        private static void TranslateItem(FrameworkElement element, double yDelta, int milliseconds)
         {
-            Storyboard sb = (Storyboard)f.GetValue(s_dragPreviewStoryboardProperty);
-            SplineDoubleKeyFrame k;
+            var storyboard = (Storyboard)element.GetValue(s_dragPreviewStoryboardProperty);
+            SplineDoubleKeyFrame keyframe;
 
-            if (sb == null)
+            if (storyboard == null)
             {
-                TranslateTransform t;
-                DoubleAnimationUsingKeyFrames d;
+                var t = new TranslateTransform();
+                element.RenderTransform = t;
 
-                t = new TranslateTransform();
-                f.RenderTransform = t;
+                keyframe = new SplineDoubleKeyFrame
+                {
+                    KeySpline = new KeySpline(0, 0.7, 0.7, 1)
+                };
+                var animation = new DoubleAnimationUsingKeyFrames();
+                animation.KeyFrames.Add(keyframe);
 
-                sb = new Storyboard();
-                k = new SplineDoubleKeyFrame();
-                k.KeySpline = new KeySpline(0, 0.7, 0.7, 1);
-                d = new DoubleAnimationUsingKeyFrames();
-                d.KeyFrames.Add(k);
+                Storyboard.SetTarget(animation, element);
+                Storyboard.SetTargetProperty(animation, new PropertyPath("(RenderTransform).(TranslateTransform.Y)"));
 
-                Storyboard.SetTarget(d, f);
-                Storyboard.SetTargetProperty(d, new PropertyPath("(RenderTransform).(TranslateTransform.Y)"));
-                sb.Children.Add(d);
+                storyboard = new Storyboard();
+                storyboard.Children.Add(animation);
 
-                f.SetValue(s_dragPreviewStoryboardProperty, sb);
+                element.SetValue(s_dragPreviewStoryboardProperty, storyboard);
             }
             else
             {
-                k = (sb.Children[0] as DoubleAnimationUsingKeyFrames).KeyFrames[0] as SplineDoubleKeyFrame;
+                keyframe = storyboard.Children.Cast<DoubleAnimationUsingKeyFrames>().Single().KeyFrames.Cast<SplineDoubleKeyFrame>().Single();
             }
 
-            k.Value = yDelta;
-            k.KeyTime = TimeSpan.FromMilliseconds(milliseconds);
-            f.BeginStoryboard(sb);
+            keyframe.Value = yDelta;
+            keyframe.KeyTime = TimeSpan.FromMilliseconds(milliseconds);
+            element.BeginStoryboard(storyboard);
         }
 
         private AdornerLayer m_adornerLayer
@@ -474,8 +472,7 @@ namespace PixelLab.Wpf
 
         public override string ToString()
         {
-            return string.Format("{0} - From {1} to {2}",
-                base.ToString(), ItemContainer, ToContainer);
+            return string.Format("{0} - From {1} to {2}", base.ToString(), ItemContainer, ToContainer);
         }
     }
 
