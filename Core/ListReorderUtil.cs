@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Linq;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
-
 #else
 using PixelLab.Contracts;
 #endif
