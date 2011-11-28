@@ -92,10 +92,13 @@ namespace PixelLab.Wpf
                 }
 
                 // reset the transform on all of the items
-                for (int i = 0; i < this.Items.Count; i++)
+                for (var i = 0; i < Items.Count; i++)
                 {
-                    FrameworkElement item = ItemContainerGenerator.ContainerFromIndex(i) as FrameworkElement;
-                    if (item != null) TranslateItem(item as FrameworkElement, 0, 0);
+                    var item = (FrameworkElement)ItemContainerGenerator.ContainerFromIndex(i);
+                    if (item != null)
+                    {
+                        TranslateItem(item, 0, 0, Orientation);
+                    }
                 }
 
                 e.Handled = true;
@@ -127,6 +130,18 @@ namespace PixelLab.Wpf
         {
             get { return (int)GetValue(DurationProperty); }
             set { SetValue(DurationProperty, value); }
+        }
+
+        #endregion
+
+        #region Orientation
+
+        public static readonly DependencyProperty OrientationProperty = DependencyPropHelper.Register<ReorderListBox, Orientation>("Orientation", Orientation.Vertical);
+
+        public Orientation Orientation
+        {
+            get { return (Orientation)GetValue(OrientationProperty); }
+            set { SetValue(OrientationProperty, value); }
         }
 
         #endregion
@@ -366,18 +381,18 @@ namespace PixelLab.Wpf
                     double delta;
                     if (i > m_dragItemIndex && i < m_dragInsertIndex)
                     {
-                        delta = -1 * m_dragItem.ActualHeight;
+                        delta = -1 * getOrientedDimension(m_dragItem);
                     }
                     else if (i < m_dragItemIndex && i >= m_dragInsertIndex)
                     {
-                        delta = m_dragItem.ActualHeight;
+                        delta = getOrientedDimension(m_dragItem);
                     }
                     else
                     {
                         delta = 0;
                     }
 
-                    TranslateItem((FrameworkElement)ItemContainerGenerator.ContainerFromIndex(i), delta, this.Duration);
+                    TranslateItem((FrameworkElement)ItemContainerGenerator.ContainerFromIndex(i), delta, this.Duration, Orientation);
                 }
 
                 // if the insert location is after the current location, we need to decrement it
@@ -390,7 +405,20 @@ namespace PixelLab.Wpf
             }
         }
 
-        private static void TranslateItem(FrameworkElement element, double yDelta, int milliseconds)
+        private double getOrientedDimension(FrameworkElement element)
+        {
+            switch (Orientation)
+            {
+                case System.Windows.Controls.Orientation.Vertical:
+                    return element.ActualHeight;
+                case System.Windows.Controls.Orientation.Horizontal:
+                    return element.ActualWidth;
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
+        private static void TranslateItem(FrameworkElement element, double delta, int milliseconds, Orientation orientation)
         {
             var storyboard = (Storyboard)element.GetValue(s_dragPreviewStoryboardProperty);
             SplineDoubleKeyFrame keyframe;
@@ -408,7 +436,16 @@ namespace PixelLab.Wpf
                 animation.KeyFrames.Add(keyframe);
 
                 Storyboard.SetTarget(animation, element);
-                Storyboard.SetTargetProperty(animation, new PropertyPath("(RenderTransform).(TranslateTransform.Y)"));
+                PropertyPath propertyPath;
+                if (orientation == Orientation.Vertical)
+                {
+                    propertyPath = new PropertyPath("(RenderTransform).(TranslateTransform.Y)");
+                }
+                else
+                {
+                    propertyPath = new PropertyPath("(RenderTransform).(TranslateTransform.X)");
+                }
+                Storyboard.SetTargetProperty(animation, propertyPath);
 
                 storyboard = new Storyboard();
                 storyboard.Children.Add(animation);
@@ -420,7 +457,7 @@ namespace PixelLab.Wpf
                 keyframe = storyboard.Children.Cast<DoubleAnimationUsingKeyFrames>().Single().KeyFrames.Cast<SplineDoubleKeyFrame>().Single();
             }
 
-            keyframe.Value = yDelta;
+            keyframe.Value = delta;
             keyframe.KeyTime = TimeSpan.FromMilliseconds(milliseconds);
             element.BeginStoryboard(storyboard);
         }
