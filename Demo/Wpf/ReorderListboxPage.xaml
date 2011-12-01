@@ -26,7 +26,7 @@
             <TextBlock Text="Drag to reorder items on the left." TextWrapping="Wrap" HorizontalAlignment="Center"/>
             <TextBlock Grid.Column="1" Text="Drop to see them reorder on the right." TextWrapping="Wrap" HorizontalAlignment="Center"/>
 
-            <lib:ReorderListBox Grid.Row="1" ItemsSource="{Binding}"/>
+            <lib:ReorderListBox Grid.Row="1" ItemsSource="{Binding}" SelectionMode="Multiple" ReorderRequested="listbox_Reorder" />
             <ListBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding}"/>
 
         </Grid>
