@@ -93,10 +93,10 @@ namespace PixelLab.SL
 
         public void Close(IModalToken openToken)
         {
-            Contract.Requires(IsOpen);
-            Contract.Requires(openToken != null);
+            Contract.Requires<InvalidOperationException>(IsOpen, "Close called when ModalControl was not oppen.");
+            Contract.Requires<ArgumentException>(openToken != null, "openToken must be non-null");
             Debug.Assert(!_content.IsEmpty());
-            Util.ThrowUnless(openToken == _content.Last());
+            Util.ThrowUnless<ArgumentException>(openToken == _content.Last(), "The token provided was not for the last modal window openned.");
 
             Debug.Assert(_content.Count > 0);
             var last = _content.Last();
