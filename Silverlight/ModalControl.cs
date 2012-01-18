@@ -73,11 +73,11 @@ namespace PixelLab.SL
             }
         }
 
-        public IModalToken Open(FrameworkElement content, ModalPosition position, Point? location)
+        public IModalToken Open(FrameworkElement content, ModalPosition position, Point? location, bool allowsCloseWithAncestor = false)
         {
             Contract.Requires(content != null);
 
-            var wrapper = new ContentWrapper(this, content, position, location);
+            var wrapper = new ContentWrapper(this, content, position, location, allowsCloseWithAncestor);
             if (_content.Any())
             {
                 Debug.Assert(_content.Count(cw => cw.IsEnabled) == 1);
@@ -96,12 +96,24 @@ namespace PixelLab.SL
             Contract.Requires<InvalidOperationException>(IsOpen, "Close called when ModalControl was not oppen.");
             Contract.Requires<ArgumentException>(openToken != null, "openToken must be non-null");
             Debug.Assert(!_content.IsEmpty());
-            Util.ThrowUnless<ArgumentException>(openToken == _content.Last(), "The token provided was not for the last modal window openned.");
+
+            var tokenAndRemainder = _content.SkipWhile(cw => cw != openToken).ToList();
+            Util.ThrowUnless<ArgumentException>(tokenAndRemainder.Any(), "The provided token does not exist");
+            Debug.Assert(tokenAndRemainder.First() == openToken);
+            foreach (var item in tokenAndRemainder.Skip(1))
+            {
+                Util.ThrowUnless<ArgumentException>(item.AllowsCloseWithAncestor, "One of the items after the provided token does not allow close with ancenstor");
+            }
 
             Debug.Assert(_content.Count > 0);
-            var last = _content.Last();
-            last.Close();
-            _content.RemoveLast();
+
+            tokenAndRemainder.Reverse();
+            foreach (var last in tokenAndRemainder)
+            {
+                Debug.Assert(_content.Last() == last);
+                last.Close();
+                _content.RemoveLast();
+            }
             if (_content.IsEmpty())
             {
                 updateState();
@@ -258,6 +270,7 @@ namespace PixelLab.SL
         {
             private static readonly DependencyProperty ContentWrapperProperty = DependencyPropHelper.RegisterAttached<ContentWrapper, FrameworkElement, ContentWrapper>("ContentWrapper");
 
+            private readonly bool _allowsCloseWithAncestor;
             private readonly Grid _container;
             private readonly Rectangle _mask;
             private readonly FrameworkElement _element;
@@ -268,7 +281,7 @@ namespace PixelLab.SL
             private ContentState _state;
             private Storyboard _storyboard;
 
-            public ContentWrapper(ModalControl parent, FrameworkElement element, ModalPosition position, Point? location)
+            public ContentWrapper(ModalControl parent, FrameworkElement element, ModalPosition position, Point? location, bool allowsCloseWithAncestor)
             {
                 Contract.Requires(parent != null);
                 Contract.Requires(element != null);
@@ -304,6 +317,8 @@ namespace PixelLab.SL
                 }
 
                 _location = location;
+                _allowsCloseWithAncestor = allowsCloseWithAncestor;
+
                 State = ContentState.Unloaded;
 
                 _element.RenderTransform = _transform = new CompositeTransform { ScaleX = 0, ScaleY = 0 };
@@ -316,6 +331,8 @@ namespace PixelLab.SL
             }
 
             public ContentState State { get { return _state; } private set { _state = value; } }
+
+            public bool AllowsCloseWithAncestor { get { return _allowsCloseWithAncestor; } }
 
             public void Close()
             {
@@ -507,6 +524,7 @@ namespace PixelLab.SL
 
     public interface IModalToken
     {
+        bool AllowsCloseWithAncestor { get; }
         event EventHandler MaskClicked;
         event EventHandler EscPressed;
     }

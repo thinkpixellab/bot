@@ -6,12 +6,12 @@ using System.Windows.Threading;
 using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PixelLab.Common;
+using PixelLab.SL;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
 using PixelLab.Contracts;
 #endif
-using PixelLab.SL;
 
 namespace PixelLab.Test.SL
 {
@@ -29,8 +29,6 @@ namespace PixelLab.Test.SL
             Padding = new Thickness(20)
         };
 
-        private FrameworkElement _content1, _content2;
-
         private Grid _contentHolder;
 
         private IModalToken _token1, _token2;
@@ -43,24 +41,24 @@ namespace PixelLab.Test.SL
             TestGrid.Children.Add(_modalControl);
         }
 
-        [TestMethod, Asynchronous, Timeout(5 * 1000)]
+        [TestMethod, Asynchronous, Timeout(10 * 1000)]
         public void TestModal()
         {
             Assert.IsTrue(_modalControl.IsTargetSet);
             Assert.IsFalse(_modalControl.IsOpen);
 
-            _content1 = GetContent("Content 1");
+            var content1 = GetContent("Content 1");
 
-            _token1 = _modalControl.Open(_content1, ModalPosition.Center, null);
+            _token1 = _modalControl.Open(content1, ModalPosition.Center, null);
 
             Assert.IsTrue(_modalControl.IsOpen);
 
-            timerDelay(t1_afterOpen);
+            timerDelay(() => t1_afterOpen(content1));
         }
 
-        private void t1_afterOpen()
+        private void t1_afterOpen(FrameworkElement content1)
         {
-            var wrapperChild = (Grid)_content1.Parent;
+            var wrapperChild = (Grid)content1.Parent;
             var wrapper = (FrameworkElement)wrapperChild.Parent;
             _contentHolder = (Grid)wrapper.Parent;
 
@@ -83,14 +81,14 @@ namespace PixelLab.Test.SL
         {
             Assert.IsFalse(_modalControl.IsOpen);
             Assert.AreEqual(0, _contentHolder.Children.Count);
-            Assert.IsNull(_content1.Parent);
 
             timerDelay(t4_reopen);
         }
 
         private void t4_reopen()
         {
-            _token1 = _modalControl.Open(_content1, ModalPosition.Center, null);
+            var content1 = GetContent("Content 1");
+            _token1 = _modalControl.Open(content1, ModalPosition.Center, null);
 
             Assert.IsTrue(_modalControl.IsOpen);
 
@@ -101,9 +99,9 @@ namespace PixelLab.Test.SL
         {
             Assert.IsTrue(_modalControl.IsOpen);
 
-            _content2 = GetContent("Content 2");
+            var content2 = GetContent("Content 2");
 
-            _token2 = _modalControl.Open(_content2, ModalPosition.Center, null);
+            _token2 = _modalControl.Open(content2, ModalPosition.Center, null);
 
             timerDelay(t6_afterOpen2);
         }
@@ -126,9 +124,40 @@ namespace PixelLab.Test.SL
 
         private void t8_after1stClosed()
         {
-            EnqueueTestComplete();
             Assert.AreEqual(0, _contentHolder.Children.Count);
             Assert.IsFalse(_modalControl.IsOpen);
+            var content1 = GetContent("Content 1");
+            _token1 = _modalControl.Open(content1, ModalPosition.Center, null);
+
+            Assert.IsTrue(_modalControl.IsOpen);
+
+            timerDelay(t9_afterOpen);
+        }
+
+        private void t9_afterOpen()
+        {
+            Assert.IsTrue(_modalControl.IsOpen);
+
+            var content2 = GetContent("Content 2");
+
+            _token2 = _modalControl.Open(content2, ModalPosition.Center, null, true);
+
+            timerDelay(t10_afterOpen2);
+        }
+
+        private void t10_afterOpen2()
+        {
+            Assert.AreEqual(2, _contentHolder.Children.Count);
+
+            _modalControl.Close(_token1);
+
+            timerDelay(t11_afterClose);
+        }
+
+        private void t11_afterClose()
+        {
+            EnqueueTestComplete();
+            Assert.AreEqual(0, _contentHolder.Children.Count);
         }
 
         private Grid TestGrid
