@@ -28,6 +28,7 @@
     <Compile Include="Changeable.cs" />
     <Compile Include="CollectionExtensions.cs" />
     <Compile Include="CompositionHelpers.cs" />
+    <Compile Include="ConfigFactory.cs" />
     <Compile Include="Contract.cs" />
     <Compile Include="DBUtil.cs" />
     <Compile Include="DataErrorHelper.cs" />
