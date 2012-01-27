@@ -36,6 +36,12 @@ namespace PixelLab.Common
             return new ComparisonComparer<T>(compareFunction);
         }
 
+        public static IComparer<string> ToComparer<T>(this CompareInfo compareInfo)
+        {
+            Contract.Requires(compareInfo != null);
+            return new FuncComparer<string>(compareInfo.Compare);
+        }
+
         public static TValue EnsureItem<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Func<TValue> valueFactory)
         {
             Contract.Requires(dictionary != null);
