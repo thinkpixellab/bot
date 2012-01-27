@@ -73,7 +73,12 @@ namespace PixelLab.SL
             }
         }
 
-        public IModalToken Open(FrameworkElement content, ModalPosition position, Point? location, bool allowsCloseWithAncestor = false)
+        public IModalToken Open(FrameworkElement content, ModalPosition position, Point? location)
+        {
+            return Open(content, position, location, false);
+        }
+
+        public IModalToken Open(FrameworkElement content, ModalPosition position, Point? location, bool allowsCloseWithAncestor)
         {
             Contract.Requires(content != null);
 
