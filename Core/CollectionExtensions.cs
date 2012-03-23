@@ -464,5 +464,11 @@ namespace PixelLab.Common
 #endif
             }
         }
+
+        public static IDictionary<TKey, TValue> Clone<TKey, TValue>(this IDictionary<TKey, TValue> source)
+        {
+            Contract.Requires<ArgumentNullException>(source != null, "source");
+            return source.ToDictionary(p => p.Key, p => p.Value);
+        }
     }
 }

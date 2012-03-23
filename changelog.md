@@ -1,6 +1,8 @@
 # Bag of Tricks Change Log #
 
-## V5.2.0 - 2011-11-28
+## V5.2.0 - 2012-03-23
+* Added `Clone` extention method for `IDictionary`
+* Added some helpers for enums
 * Added 'unpacked' support to `ListReorderUtil`
 * `ReorderListBox` learned orientation. *You're welcome, John.*
 * Better exceptions when one uses `ModalControl.Close` incorrectly

@@ -173,6 +173,37 @@ namespace PixelLab.Common
             return false;
         }
 
+        /// <remarks>If a field doesn't have the defined attribute, null is provided. If a field has an attribute more than once, it causes an exception.</remarks>
+        public static IDictionary<TEnum, TAttribute> GetEnumValueAttributes<TEnum, TAttribute>() where TAttribute : Attribute
+        {
+            var type = typeof(TEnum);
+            Util.ThrowUnless(type.IsEnum, "The provided type must be an enum");
+
+            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static);
+
+            var dict = new Dictionary<TEnum, TAttribute>();
+            foreach (var field in fields)
+            {
+                var attr = field.GetCustomAttributes<TAttribute>(false).FirstOrDefault();
+
+                dict.Add((TEnum)field.GetRawConstantValue(), attr);
+            }
+            return dict;
+        }
+
+        public static IEnumerable<TEnum> GetEnumValues<TEnum>()
+        {
+            var type = typeof(TEnum);
+            Util.ThrowUnless(type.IsEnum, "The provided type must be an enum");
+
+            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static);
+
+            foreach (var field in fields)
+            {
+                yield return (TEnum)field.GetRawConstantValue();
+            }
+        }
+
         #region impl
         private class FuncComparer<T> : IComparer<T>
         {
