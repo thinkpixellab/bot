@@ -8,7 +8,7 @@
 * Better exceptions when one uses `ModalControl.Close` incorrectly
 * Can now opt-in to allowing parent content to close nested popups in `ModalControl`
 * Added conversion from `CompareInfo` to `IComparer<string>`
-* Added `ConfigFactory`. I have customer reasons for this. Could use a lot of work, but it's a good start.
+* Added `ConfigFactory`. *I have customer reasons for this. Could use a lot of work, but it's a good start.*
 
 ## V5.1.0 - 2011-11-07
 *A bunch of new stuff, but no breaking changes. So just a dot release.*
