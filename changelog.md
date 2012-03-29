@@ -29,7 +29,7 @@
 * **BREAKING** - `IAsyncValue<T>` and friends now raise `ApplicationUnhandledExceptionEventArgs`. If cancel is not set, an exception is thrown.
 
 ## V4.1.0 - 2011-07-20
-*Lot's of fun now stuff, but no breaking changes! Feels good.*
+*Lot's of fun new stuff, but no breaking changes! Feels good.*
 
 * Added `GetStringComparer` extension that takes a CultureInfo
 * Added `SelectAdjacentPairs` to extensions
