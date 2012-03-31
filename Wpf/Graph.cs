@@ -13,8 +13,31 @@ using PixelLab.Common;
 
 namespace PixelLab.Wpf
 {
+
+    public enum ArrowDirectionType
+    {
+        FromCenterToElement,
+        FromElementToCenter,
+        None
+    }
+
     public class Graph : FrameworkElement
     {
+
+        // Using a DependencyProperty as the backing store for DirectionType.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DirectionTypeProperty =
+            DependencyProperty.RegisterAttached("DirectionType", typeof(ArrowDirectionType), typeof(Graph), new FrameworkPropertyMetadata(ArrowDirectionType.None));
+
+        public static void SetDirectionType(DependencyObject o, ArrowDirectionType value)
+        {
+            o.SetValue(DirectionTypeProperty, value);
+        }
+
+        public static ArrowDirectionType GetDirectionType(DependencyObject o)
+        {
+            return (ArrowDirectionType)o.GetValue(DirectionTypeProperty);
+        }
+
         static Graph()
         {
             ClipToBoundsProperty.OverrideMetadata(typeof(Graph), new FrameworkPropertyMetadata(true));
@@ -33,7 +56,12 @@ namespace PixelLab.Wpf
             m_nodeTemplateSelectorBinding.Source = this;
 
             m_nodePresenters = new List<GraphContentPresenter>();
+
+            ToElementGradient = FromElementGradient = Brushes.Black;
         }
+
+        private Brush ToElementGradient { get; set; }
+        private Brush FromElementGradient { get; set; }
 
         #region overrides
         protected override Size MeasureOverride(Size availableSize)
@@ -86,12 +114,69 @@ namespace PixelLab.Wpf
                 throw new ArgumentException("not a valid index");
             }
         }
+
+        private Geometry Triangle()
+        {
+            var f = new PathFigure { StartPoint = new Point(-2, -2) };
+            f.Segments.Add(new LineSegment(new Point(4, 0), true));
+            f.Segments.Add(new LineSegment(new Point(-2, 2), true));
+            f.Segments.Add(new LineSegment(new Point(-1, 0), true));
+            f.IsClosed = true;
+
+            var p = new PathGeometry();
+            p.Figures.Add(f);
+
+            return p;
+        }
+
+        private void DrawPresenter(GraphContentPresenter gcp, DrawingContext drawingContext)
+        {
+            var pen = LinePen;
+            drawingContext.DrawLine(pen, m_centerGraphContentPresenter.ActualLocation, gcp.ActualLocation);
+            if (gcp.ArrowDirection == ArrowDirectionType.None) return;
+
+            var centPt = m_centerGraphContentPresenter.ActualLocation;
+            var outPt = gcp.ActualLocation;
+
+            var directionVector = outPt.Subtract(centPt);
+            var halfDirVec = Vector.Divide(directionVector, 2);
+            var middleOfLinePt = Vector.Add(halfDirVec, centPt);
+
+            const double EPSILON = 0.00001;
+            var vec1 = new Vector(0, Math.Abs((Math.Abs(centPt.Y - outPt.Y) > EPSILON) ? centPt.Y - outPt.Y : outPt.Y));
+            var vec2 = new Vector(outPt.X - centPt.X, centPt.Y - outPt.Y);
+
+            double deg;
+
+            switch (gcp.ArrowDirection)
+            {
+                case ArrowDirectionType.FromElementToCenter:
+                    deg = Vector.AngleBetween(vec2, vec1) + 90.0;
+                    DrawArrow(drawingContext, middleOfLinePt.X, middleOfLinePt.Y, deg);
+                    break;
+                case ArrowDirectionType.FromCenterToElement:
+                    deg = Vector.AngleBetween(vec2, vec1) - 90.0;
+                    DrawArrow(drawingContext, middleOfLinePt.X, middleOfLinePt.Y, deg);
+                    break;
+            }
+        }
+
+        private void DrawArrow(DrawingContext drawingContext, double centerX, double centerY, double deg)
+        {
+            var tg = new TransformGroup();
+            tg.Children.Add(new TranslateTransform(centerX, centerY));
+            tg.Children.Add(new ScaleTransform(3, 3, centerX, centerY));
+            tg.Children.Add(new RotateTransform(deg, centerX, centerY));
+            drawingContext.PushTransform(tg);
+            drawingContext.DrawGeometry(ToElementGradient, null, Triangle());
+            drawingContext.Pop();
+        }
+
         protected override void OnRender(DrawingContext drawingContext)
         {
             if (LinePen != null && m_centerGraphContentPresenter != null)
             {
-                var pen = LinePen;
-                m_nodePresenters.ForEach(gcp => drawingContext.DrawLine(pen, m_centerGraphContentPresenter.ActualLocation, gcp.ActualLocation));
+                m_nodePresenters.ForEach(gcp => DrawPresenter(gcp, drawingContext));
             }
         }
         #endregion
@@ -699,24 +784,29 @@ namespace PixelLab.Wpf
             }
 
 #if DEBUG
-      if (CenterObject != null) {
-        CenterObject.Equals(m_centerDataInUse);
-        Debug.Assert(m_centerGraphContentPresenter != null);
-      }
-      else {
-        Debug.Assert(m_centerDataInUse == null);
-      }
-      if (Nodes != null) {
-        Debug.Assert(m_nodePresenters != null);
-        Debug.Assert(Nodes.Count == m_nodePresenters.Count);
-        Debug.Assert(m_nodesInUse == Nodes);
-      }
-      else {
-        Debug.Assert(m_nodesInUse == null);
-        if (m_nodePresenters != null) {
-          Debug.Assert(m_nodePresenters.Count == 0);
-        }
-      }
+            if (CenterObject != null)
+            {
+                CenterObject.Equals(m_centerDataInUse);
+                Debug.Assert(m_centerGraphContentPresenter != null);
+            }
+            else
+            {
+                Debug.Assert(m_centerDataInUse == null);
+            }
+            if (Nodes != null)
+            {
+                Debug.Assert(m_nodePresenters != null);
+                Debug.Assert(Nodes.Count == m_nodePresenters.Count);
+                Debug.Assert(m_nodesInUse == Nodes);
+            }
+            else
+            {
+                Debug.Assert(m_nodesInUse == null);
+                if (m_nodePresenters != null)
+                {
+                    Debug.Assert(m_nodePresenters.Count == 0);
+                }
+            }
 #endif
 
             Children.ForEach(gcp => SetIsCenter(gcp, gcp == m_centerGraphContentPresenter));
@@ -746,10 +836,11 @@ namespace PixelLab.Wpf
         private void setupNodes(IList nodes)
         {
 #if DEBUG
-      for (int i = 0; i < m_nodePresenters.Count; i++) {
-        Debug.Assert(m_nodePresenters[i] != null);
-        Debug.Assert(VisualTreeHelper.GetParent(m_nodePresenters[i]) == this);
-      }
+            for (int i = 0; i < m_nodePresenters.Count; i++)
+            {
+                Debug.Assert(m_nodePresenters[i] != null);
+                Debug.Assert(VisualTreeHelper.GetParent(m_nodePresenters[i]) == this);
+            }
 #endif
 
             int nodesCount = (nodes == null) ? 0 : nodes.Count;
@@ -791,12 +882,13 @@ namespace PixelLab.Wpf
             }
 
 #if DEBUG
-      m_nodePresenters.ForEach(item => Debug.Assert(item == null));
-      newNodes.CountForEach((item, i) => {
-        Debug.Assert(item != null);
-        Debug.Assert(VisualTreeHelper.GetParent(item) == this);
-        Debug.Assert(item.Content == nodes[i]);
-      });
+            m_nodePresenters.ForEach(item => Debug.Assert(item == null));
+            newNodes.CountForEach((item, i) =>
+            {
+                Debug.Assert(item != null);
+                Debug.Assert(VisualTreeHelper.GetParent(item) == this);
+                Debug.Assert(item.Content == nodes[i]);
+            });
 #endif
 
             m_nodePresenters.Clear();
@@ -965,6 +1057,14 @@ namespace PixelLab.Wpf
 
         private class GraphContentPresenter : ContentPresenter
         {
+            public ArrowDirectionType ArrowDirection
+            {
+                get
+                {
+                    var depObj = VisualTreeHelper.GetChild(this, 0);
+                    return GetDirectionType(depObj);
+                }
+            }
             public GraphContentPresenter(object content,
             BindingBase nodeTemplateBinding, BindingBase nodeTemplateSelectorBinding, bool offsetCenter)
                 : base()

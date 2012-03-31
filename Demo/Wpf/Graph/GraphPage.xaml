@@ -90,8 +90,10 @@
                 </Style>
 
                 <DataTemplate x:Key="nodeTemplate" >
-                    <Button Background="{Binding Converter={StaticResource NodeColorConverter}}"
-                  Command="{x:Static local:GraphPage.ChangeCenter}" CommandParameter="{Binding }" Padding="10">
+                    <Button 
+                        lib:Graph.DirectionType="{Binding ArrowDirection}"
+                        Background="{Binding Converter={StaticResource NodeColorConverter}}"
+                        Command="{x:Static local:GraphPage.ChangeCenter}" CommandParameter="{Binding }" Padding="10">
                         <TextBlock Text="{Binding Path=Item}" FontSize="16" Name="textBlock"/>
                     </Button>
                     <DataTemplate.Triggers>
