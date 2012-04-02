@@ -4,20 +4,21 @@ using System.ComponentModel;
 using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PixelLab.Common;
+using PixelLab.Test.Helpers;
 
 namespace PixelLab.Test
 {
     [TestClass]
     public class ConfigFactoryTests : SilverlightTest
     {
+        private readonly ConfigFactory<ConfigFactoryTestClass> _factory = ConfigFactory<ConfigFactoryTestClass>.Instance;
+
         [TestMethod]
         public void BasicRoundTrip()
         {
-            var factory = ConfigFactory<ConfigFactoryTestClass>.Instance;
+            var instance = _factory.CreateDefaultInstance();
 
-            var instance = factory.CreateDefaultInstance();
-
-            var roundTripInstance = testRoundTrip(factory, instance);
+            var roundTripInstance = testRoundTrip(_factory, instance);
 
             Assert.AreEqual(roundTripInstance.IntProperty, ConfigFactoryTestClass.DefaultIntValue);
             Assert.AreEqual(roundTripInstance.StringProperty, ConfigFactoryTestClass.DefaultStringValue);
@@ -27,25 +28,38 @@ namespace PixelLab.Test
         [TestMethod]
         public void TweakedRoundTrip()
         {
-            var values = new Dictionary<string, object>();
-
             var intValue = Util.Rnd.Next(500);
-            values["IntProperty"] = intValue;
-
             var stringValue = DateTime.Now.ToLongDateString();
-            values["StringProperty"] = stringValue;
-
             var uriValue = new Uri("http://testCrazy");
-            values["UriProperty"] = uriValue;
 
-            var factory = ConfigFactory<ConfigFactoryTestClass>.Instance;
-            var instance = factory.CreateInstance(values);
+            var values = new Dictionary<string, object>(){
+                { "IntProperty", intValue},
+                { "StringProperty", stringValue},
+                { "UriProperty", uriValue}
+            };
 
-            var roundTrip = testRoundTrip(factory, instance);
+            var instance = _factory.CreateInstance(values);
+
+            var roundTrip = testRoundTrip(_factory, instance);
 
             Assert.AreEqual(intValue, roundTrip.IntProperty);
             Assert.AreEqual(stringValue, roundTrip.StringProperty);
             Assert.AreEqual(uriValue, roundTrip.UriProperty);
+        }
+
+        [TestMethod]
+        public void TestMissingProperty()
+        {
+            var intValue = Util.Rnd.Next(500);
+            var uriValue = new Uri("http://testCrazy");
+
+            var values = new Dictionary<string, object>(){
+                { "IntProperty", intValue},
+                { "UriProperty", uriValue}
+            };
+
+            var argEx = AssertPlus.ExceptionThrown<ArgumentException>(() => _factory.CreateInstance(values));
+            Assert.IsTrue(argEx.Message.StartsWith("missing required key StringProperty"));
         }
 
         private T testRoundTrip<T>(ConfigFactory<T> factory, T instance)

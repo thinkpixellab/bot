@@ -92,8 +92,20 @@ namespace PixelLab.Common
 
         public T CreateInstance(IDictionary<string, object> values)
         {
-            var ctorParams = (from paramName in _ctorParamMap
-                              select convert(values[paramName], _targetTypes[paramName].Item1.PropertyType)).ToArray();
+            var ctorParams = new object[_ctorParamMap.Count];
+            var index = 0;
+            foreach (var paramName in _ctorParamMap)
+            {
+                object val;
+                if (values.TryGetValue(paramName, out val))
+                {
+                    ctorParams[index++] = convert(val, _targetTypes[paramName].Item1.PropertyType);
+                }
+                else
+                {
+                    throw new ArgumentException("missing required key {0}".DoFormat(paramName), "values");
+                }
+            }
 
             return (T)typeof(T).CreateInstance(ctorParams);
         }
