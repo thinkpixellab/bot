@@ -104,5 +104,71 @@
             </summary>
             <returns>This implementation always returns the Raised event name for ease of connection with <see cref="T:Microsoft.Practices.Prism.Interactivity.InteractionRequest.IInteractionRequest"/>.</returns>
         </member>
+        <member name="T:Microsoft.Practices.Prism.Interactivity.InvokeCommandAction">
+            <summary>
+            Trigger action that executes a command when invoked. 
+            It also maintains the Enabled state of the target control based on the CanExecute method of the command.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Practices.Prism.Interactivity.InvokeCommandAction.CommandProperty">
+            <summary>
+            Dependency property identifying the command to execute when invoked.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Practices.Prism.Interactivity.InvokeCommandAction.CommandParameterProperty">
+            <summary>
+            Dependency property identifying the command parameter to supply on command execution.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Prism.Interactivity.InvokeCommandAction.Invoke">
+            <summary>
+            Public wrapper of the Invoke method. No parameter is passed here, as the parameter in the Invoke method is ignored in this class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Prism.Interactivity.InvokeCommandAction.Invoke(System.Object)">
+            <summary>
+            Executes the command
+            </summary>
+            <param name="unusedParameter">This parameter is ignored; the CommandParameter specified in the CommandParameterProperty is used for command invocation.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Prism.Interactivity.InvokeCommandAction.OnDetaching">
+            <summary>
+            Sets the Command and CommandParameter properties to null.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Prism.Interactivity.InvokeCommandAction.OnAttached">
+            <summary>
+            This method is called after the behavior is attached.
+            It updates the command behavior's Command and CommandParameter properties if necessary.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Prism.Interactivity.InvokeCommandAction.Command">
+            <summary>
+            Gets or sets the command to execute when invoked.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Prism.Interactivity.InvokeCommandAction.CommandParameter">
+            <summary>
+            Gets or sets the command parameter to supply on command execution.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Prism.Interactivity.InvokeCommandAction.ExecutableCommandBehavior">
+            <summary>
+            A CommandBehavior that exposes a public ExecuteCommand method. It provides the functionality to invoke commands and update Enabled state of the target control.
+            It is not possible to make the <see cref="T:Microsoft.Practices.Prism.Interactivity.InvokeCommandAction"/> inherit from <see cref="T:Microsoft.Practices.Prism.Commands.CommandBehaviorBase`1"/>, since the <see cref="T:Microsoft.Practices.Prism.Interactivity.InvokeCommandAction"/>
+            must already inherit from <see cref="T:System.Windows.Interactivity.TriggerAction`1"/>, so we chose to follow the aggregation approach.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Prism.Interactivity.InvokeCommandAction.ExecutableCommandBehavior.#ctor(System.Windows.UIElement)">
+            <summary>
+            Constructor specifying the target object.
+            </summary>
+            <param name="target">The target object the behavior is attached to.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Prism.Interactivity.InvokeCommandAction.ExecutableCommandBehavior.ExecuteCommand">
+            <summary>
+            Executes the command, if it's set, providing the <see cref="P:Microsoft.Practices.Prism.Interactivity.InvokeCommandAction.CommandParameter"/>
+            </summary>
+        </member>
     </members>
 </doc>
