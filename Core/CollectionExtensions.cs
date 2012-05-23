@@ -284,16 +284,16 @@ namespace PixelLab.Common
             Contract.Requires(source != null);
             Contract.Requires(recursiveSelector != null);
 
-            Stack<IEnumerator<TSource>> stack = new Stack<IEnumerator<TSource>>();
+            var stack = new Stack<IEnumerator<TSource>>();
             stack.Push(source.GetEnumerator());
 
             try
             {
-                while (stack.Count > 0)
+                while (stack.Any())
                 {
                     if (stack.Peek().MoveNext())
                     {
-                        TSource current = stack.Peek().Current;
+                        var current = stack.Peek().Current;
 
                         yield return current;
 
@@ -307,7 +307,7 @@ namespace PixelLab.Common
             }
             finally
             {
-                while (stack.Count > 0)
+                while (stack.Any())
                 {
                     stack.Pop().Dispose();
                 }
@@ -469,6 +469,35 @@ namespace PixelLab.Common
         {
             Contract.Requires<ArgumentNullException>(source != null, "source");
             return source.ToDictionary(p => p.Key, p => p.Value);
+        }
+
+        public static bool TryGetTypedValue<TOutput, TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, out TOutput value) where TOutput : TValue
+        {
+            Contract.Requires(dictionary != null);
+            TValue val;
+            if (dictionary.TryGetValue(key, out val))
+            {
+                if (val is TOutput)
+                {
+                    value = (TOutput)val;
+                    return true;
+                }
+            }
+            value = default(TOutput);
+            return false;
+        }
+
+        public static TValue EnsureItem<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Func<TValue> valueFactory)
+        {
+            Contract.Requires(dictionary != null);
+            Contract.Requires(valueFactory != null);
+            TValue value;
+            if (!dictionary.TryGetValue(key, out value))
+            {
+                value = valueFactory();
+                dictionary.Add(key, value);
+            }
+            return value;
         }
     }
 }

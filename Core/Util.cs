@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Reflection;
 #if CONTRACTS_FULL
 using System.Diagnostics.Contracts;
 #else
@@ -66,7 +67,27 @@ namespace PixelLab.Common
         /// <remarks>This will blow up wonderfully at runtime if T is not an enum type.</remarks>
         public static Dictionary<T, string> EnumToDictionary<T>()
         {
-            return GetEnumNames<T>().ToDictionary(name => GetEnumValue<T>(name));
+            return GetEnumValues<T>().ToDictionary(v => v, v => Enum.GetName(typeof(T), v));
+        }
+
+        public static IEnumerable<TEnum> GetEnumValues<TEnum>()
+        {
+            var type = typeof(TEnum);
+            Util.ThrowUnless(type.IsEnum, "The provided type must be an enum");
+
+#if SILVERLIGHT
+            return GetEnumFields(type).Select(fi => fi.GetRawConstantValue()).Cast<TEnum>();
+#else
+            return Enum.GetValues(type).Cast<TEnum>();
+#endif
+        }
+
+        /// <remarks>If a field doesn't have the defined attribute, null is provided. If a field has an attribute more than once, it causes an exception.</remarks>
+        public static IDictionary<TEnum, TAttribute> GetEnumValueAttributes<TEnum, TAttribute>() where TAttribute : Attribute
+        {
+            var type = typeof(TEnum);
+            Util.ThrowUnless(type.IsEnum, "The provided type must be an enum");
+            return GetEnumFields(type).ToDictionary(f => (TEnum)f.GetRawConstantValue(), f => f.GetCustomAttributes<TAttribute>(false).FirstOrDefault());
         }
 
         /// <summary>
@@ -176,17 +197,10 @@ namespace PixelLab.Common
             }
         }
 
-        // SL4 doesn't have Enum.GetNames...so...
-        private static IEnumerable<string> GetEnumNames<T>()
+        private static IEnumerable<System.Reflection.FieldInfo> GetEnumFields(Type enumType)
         {
-            var enumType = typeof(T);
             Util.ThrowUnless(enumType.IsEnum, "The provided type must be an enum");
-#if SILVERLIGHT
-            var enumFields = enumType.GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
-            return enumFields.Select(fi => fi.Name);
-#else
-            return Enum.GetNames(typeof(T));
-#endif
+            return enumType.GetFields(BindingFlags.Public | BindingFlags.Static);
         }
 
         private static readonly WeakReference s_random = new WeakReference(null);

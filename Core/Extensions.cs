@@ -42,19 +42,6 @@ namespace PixelLab.Common
             return new FuncComparer<string>(compareInfo.Compare);
         }
 
-        public static TValue EnsureItem<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Func<TValue> valueFactory)
-        {
-            Contract.Requires(dictionary != null);
-            Contract.Requires(valueFactory != null);
-            TValue value;
-            if (!dictionary.TryGetValue(key, out value))
-            {
-                value = valueFactory();
-                dictionary.Add(key, value);
-            }
-            return value;
-        }
-
         [Pure]
         public static bool IsNullOrWhiteSpace(this string str)
         {
@@ -155,53 +142,6 @@ namespace PixelLab.Common
             Contract.Requires(cultureInfo != null);
             var func = new Func<string, string, int>((a, b) => cultureInfo.CompareInfo.Compare(a, b, options));
             return func.ToComparer();
-        }
-
-        public static bool TryGetTypedValue<TOutput, TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, out TOutput value) where TOutput : TValue
-        {
-            Contract.Requires(dictionary != null);
-            TValue val;
-            if (dictionary.TryGetValue(key, out val))
-            {
-                if (val is TOutput)
-                {
-                    value = (TOutput)val;
-                    return true;
-                }
-            }
-            value = default(TOutput);
-            return false;
-        }
-
-        /// <remarks>If a field doesn't have the defined attribute, null is provided. If a field has an attribute more than once, it causes an exception.</remarks>
-        public static IDictionary<TEnum, TAttribute> GetEnumValueAttributes<TEnum, TAttribute>() where TAttribute : Attribute
-        {
-            var type = typeof(TEnum);
-            Util.ThrowUnless(type.IsEnum, "The provided type must be an enum");
-
-            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static);
-
-            var dict = new Dictionary<TEnum, TAttribute>();
-            foreach (var field in fields)
-            {
-                var attr = field.GetCustomAttributes<TAttribute>(false).FirstOrDefault();
-
-                dict.Add((TEnum)field.GetRawConstantValue(), attr);
-            }
-            return dict;
-        }
-
-        public static IEnumerable<TEnum> GetEnumValues<TEnum>()
-        {
-            var type = typeof(TEnum);
-            Util.ThrowUnless(type.IsEnum, "The provided type must be an enum");
-
-            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static);
-
-            foreach (var field in fields)
-            {
-                yield return (TEnum)field.GetRawConstantValue();
-            }
         }
 
         #region impl
