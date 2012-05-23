@@ -23,10 +23,7 @@ namespace PixelLab.Common
         /// <param name="items">An array of elements from which to create a hash.</param>
         public static int GetHashCode(params object[] items)
         {
-            if (items == null)
-            {
-                items = new object[0];
-            }
+            items = items ?? new object[0];
 
             return items
                 .Select(item => (item == null) ? 0 : item.GetHashCode())
@@ -116,7 +113,7 @@ namespace PixelLab.Common
                 // This makes sure than one and only one value is set to field.
                 // This is super important if the field is used in locking, for instance.
 
-                T valueWhenSet = Interlocked.CompareExchange<T>(ref location, value, null);
+                var valueWhenSet = Interlocked.CompareExchange<T>(ref location, value, null);
                 return (valueWhenSet == null);
             }
             else
@@ -197,7 +194,7 @@ namespace PixelLab.Common
             }
         }
 
-        private static IEnumerable<System.Reflection.FieldInfo> GetEnumFields(Type enumType)
+        private static IEnumerable<FieldInfo> GetEnumFields(Type enumType)
         {
             Util.ThrowUnless(enumType.IsEnum, "The provided type must be an enum");
             return enumType.GetFields(BindingFlags.Public | BindingFlags.Static);
