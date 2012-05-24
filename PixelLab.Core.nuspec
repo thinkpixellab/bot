@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <version>5.2.0</version>
+    <version>6.0.0</version>
     <authors>Kevin Moore,Robby Ingebretsen,Derek Lakin</authors>
     <owners>Pixel Lab - http://thinkpixellab.com</owners>
     <licenseUrl>http://creativecommons.org/licenses/MIT/</licenseUrl>
@@ -13,11 +13,11 @@
     <description>A collection of helpers and controls for .NET, WPF and Silverlight.</description>
   </metadata>
   <files>
-    <file src="Core\_build\WPF\bin\Release\PixelLab.Core.dll" target="lib\net4" />
-    <file src="Core\_build\WPF\bin\Release\PixelLab.Core.pdb" target="lib\net4" />
-    <file src="Core\_build\WPF\bin\Release\PixelLab.Core.xml" target="lib\net4" />
-    <file src="Core\_build\SL4\bin\Release\PixelLab.Core_SL4.dll" target="lib\sl4" />
-    <file src="Core\_build\SL4\bin\Release\PixelLab.Core_SL4.pdb" target="lib\sl4" />
-    <file src="Core\_build\SL4\bin\Release\PixelLab.Core_SL4.xml" target="lib\sl4" />
+    <file src="Core\_build\WPF\bin\Release\PixelLab.Core.dll" target="lib\net4\PixelLab.Core.dll" />
+    <file src="Core\_build\WPF\bin\Release\PixelLab.Core.pdb" target="lib\net4\PixelLab.Core.pdb" />
+    <file src="Core\_build\WPF\bin\Release\PixelLab.Core.XML" target="lib\net4\PixelLab.Core.XML" />
+    <file src="Core\_build\SL4\bin\Release\PixelLab.Core_SL4.dll" target="lib\sl4\PixelLab.Core_SL4.dll" />
+    <file src="Core\_build\SL4\bin\Release\PixelLab.Core_SL4.pdb" target="lib\sl4\PixelLab.Core_SL4.pdb" />
+    <file src="Core\_build\SL4\bin\Release\PixelLab.Core_SL4.XML" target="lib\sl4\PixelLab.Core_SL4.XML" />
   </files>
 </package>
