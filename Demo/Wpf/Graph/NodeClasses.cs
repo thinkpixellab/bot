@@ -21,6 +21,12 @@ namespace PixelLab.Wpf.Demo
 
             m_item = item;
             m_parent = parent;
+            m_arrowDirection = new Random().NextDouble() > 0.5 ? ArrowDirectionType.FromCenterToElement : ArrowDirectionType.FromElementToCenter;
+        }
+
+        public ArrowDirectionType ArrowDirection
+        {
+            get { return m_arrowDirection; }
         }
 
         public ReadOnlyObservableCollection<Node<T>> ChildNodes
@@ -75,6 +81,7 @@ namespace PixelLab.Wpf.Demo
 
         private readonly T m_item;
         private readonly NodeCollection<T> m_parent;
+        private readonly ArrowDirectionType m_arrowDirection;
     }
 
     public class NodeChildrenChangedArgs<T> : EventArgs
