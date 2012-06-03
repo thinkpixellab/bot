@@ -20,7 +20,7 @@ namespace PixelLab.Common
         /// Adds an item to the end of the enumerable.
         /// </summary>
         /// <remarks>This method requires the entire collection to be enumerated.
-        /// If adding to the end is not required, use Prepend. It's faster.</remarks>
+        /// If adding to the end is not required, use <see cref="Insert"/>. It's faster.</remarks>
         public void Add(T item)
         {
             Contract.Requires<ArgumentNullException>(item != null);
@@ -41,7 +41,7 @@ namespace PixelLab.Common
         /// <summary>
         /// Adds an item to the begining (head) of the collection.
         /// </summary>
-        /// <remarks>Potentially a lot faster than Add.</remarks>
+        /// <remarks>Potentially a lot faster than <see cref="Add"/>.</remarks>
         public void Insert(T item)
         {
             Contract.Requires<ArgumentNullException>(item != null);
