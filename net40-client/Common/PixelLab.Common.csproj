@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{273247A2-A3C8-42D0-8463-F95FC5C0A34C}</ProjectGuid>
+    <ProjectGuid>{197F9FE2-E446-48FE-9A51-114918153426}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>PixelLab.Common</RootNamespace>
     <AssemblyName>PixelLab.Common</AssemblyName>
   </PropertyGroup>
-  <Import Project="..\targets\NET4.targets" />
+  <Import Project="..\..\targets\NET4.targets" />
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -20,10 +20,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\CommonAssemblyInfo.cs">
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\XamlAssemblyInfo.cs">
+    <Compile Include="..\..\XamlAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BrushHelper.cs" />
@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\PixelLab.Core.csproj">
-      <Project>{8F249828-4E5F-4B75-B3A4-F67D74518F29}</Project>
+      <Project>{5F336B0C-827C-4E1B-B0FF-53EC17B299A1}</Project>
       <Name>PixelLab.Core</Name>
     </ProjectReference>
   </ItemGroup>

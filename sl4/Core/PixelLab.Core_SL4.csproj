@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{D79F2834-0870-4029-BA93-8539CFAEA20E}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <RootNamespace>PixelLab.Common</RootNamespace>
+    <AssemblyName>PixelLab.Core_SL4</AssemblyName>
+    <SilverlightApplication>false</SilverlightApplication>
+  </PropertyGroup>
+  <Import Project="..\..\targets\SL4.targets" />
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\net40-client\Core\ActionOnDispose.cs">
+      <Link>ActionOnDispose.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\CastList.cs">
+      <Link>CastList.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\Changeable.cs">
+      <Link>Changeable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\CollectionExtensions.cs">
+      <Link>CollectionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\CompositionHelpers.cs">
+      <Link>CompositionHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\ConfigFactory.cs">
+      <Link>ConfigFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\Contract.cs">
+      <Link>Contract.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\DataErrorHelper.cs">
+      <Link>DataErrorHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\Extensions.cs">
+      <Link>Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\FilteredObservableEnumerable.cs">
+      <Link>FilteredObservableEnumerable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\FuncEnumerable.cs">
+      <Link>FuncEnumerable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\InstanceFactory.cs">
+      <Link>InstanceFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\ListBase.cs">
+      <Link>ListBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\ListReorderUtil.cs">
+      <Link>ListReorderUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\LockHelper.cs">
+      <Link>LockHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\ObservableCollectionPlus.cs">
+      <Link>ObservableCollectionPlus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\PropertyChangeWatcher.cs">
+      <Link>PropertyChangeWatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\SortedObservableEnumerable.cs">
+      <Link>SortedObservableEnumerable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\SortHelper.cs">
+      <Link>SortHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\StreamHelpers.cs">
+      <Link>StreamHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\TypedDictionaryExtensions.cs">
+      <Link>TypedDictionaryExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\Util.cs">
+      <Link>Util.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\WeakEnumerable.cs">
+      <Link>WeakEnumerable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Core\WrappedLock.cs">
+      <Link>WrappedLock.cs</Link>
+    </Compile>
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

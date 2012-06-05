@@ -17,11 +17,11 @@
     <summary />
   </metadata>
   <files>
-    <file src="Common\_build\WPF\bin\Release\PixelLab.Common.dll" target="lib\net40\PixelLab.Common.dll" />
-    <file src="Common\_build\WPF\bin\Release\PixelLab.Common.pdb" target="lib\net40\PixelLab.Common.pdb" />
-    <file src="Common\_build\WPF\bin\Release\PixelLab.Common.XML" target="lib\net40\PixelLab.Common.XML" />
-    <file src="Common\_build\SL4\bin\Release\PixelLab.Common_SL4.dll" target="lib\sl40\PixelLab.Common_SL4.dll" />
-    <file src="Common\_build\SL4\bin\Release\PixelLab.Common_SL4.pdb" target="lib\sl40\PixelLab.Common_SL4.pdb" />
-    <file src="Common\_build\SL4\bin\Release\PixelLab.Common_SL4.XML" target="lib\sl40\PixelLab.Common_SL4.XML" />
+    <file src="net40-client\Common\_build\bin\Release\PixelLab.Common.dll" target="lib\net40\PixelLab.Common.dll" />
+    <file src="net40-client\Common\_build\bin\Release\PixelLab.Common.pdb" target="lib\net40\PixelLab.Common.pdb" />
+    <file src="net40-client\Common\_build\bin\Release\PixelLab.Common.XML" target="lib\net40\PixelLab.Common.XML" />
+    <file src="sl4\Common\_build\bin\Release\PixelLab.Common_SL4.dll" target="lib\sl40\PixelLab.Common_SL4.dll" />
+    <file src="sl4\Common\_build\bin\Release\PixelLab.Common_SL4.pdb" target="lib\sl40\PixelLab.Common_SL4.pdb" />
+    <file src="sl4\Common\_build\bin\Release\PixelLab.Common_SL4.XML" target="lib\sl40\PixelLab.Common_SL4.XML" />
   </files>
 </package>

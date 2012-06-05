@@ -13,11 +13,11 @@
     <description>A collection of helpers and controls for .NET, WPF and Silverlight.</description>
   </metadata>
   <files>
-    <file src="Core\_build\WPF\bin\Release\PixelLab.Core.dll" target="lib\net4\PixelLab.Core.dll" />
-    <file src="Core\_build\WPF\bin\Release\PixelLab.Core.pdb" target="lib\net4\PixelLab.Core.pdb" />
-    <file src="Core\_build\WPF\bin\Release\PixelLab.Core.XML" target="lib\net4\PixelLab.Core.XML" />
-    <file src="Core\_build\SL4\bin\Release\PixelLab.Core_SL4.dll" target="lib\sl4\PixelLab.Core_SL4.dll" />
-    <file src="Core\_build\SL4\bin\Release\PixelLab.Core_SL4.pdb" target="lib\sl4\PixelLab.Core_SL4.pdb" />
-    <file src="Core\_build\SL4\bin\Release\PixelLab.Core_SL4.XML" target="lib\sl4\PixelLab.Core_SL4.XML" />
+    <file src="net40-client\Core\_build\bin\Release\PixelLab.Core.dll" target="lib\net4\PixelLab.Core.dll" />
+    <file src="net40-client\Core\_build\bin\Release\PixelLab.Core.pdb" target="lib\net4\PixelLab.Core.pdb" />
+    <file src="net40-client\Core\_build\bin\Release\PixelLab.Core.XML" target="lib\net4\PixelLab.Core.XML" />
+    <file src="sl4\Core\_build\bin\Release\PixelLab.Core_SL4.dll" target="lib\sl4\PixelLab.Core_SL4.dll" />
+    <file src="sl4\Core\_build\bin\Release\PixelLab.Core_SL4.pdb" target="lib\sl4\PixelLab.Core_SL4.pdb" />
+    <file src="sl4\Core\_build\bin\Release\PixelLab.Core_SL4.XML" target="lib\sl4\PixelLab.Core_SL4.XML" />
   </files>
 </package>

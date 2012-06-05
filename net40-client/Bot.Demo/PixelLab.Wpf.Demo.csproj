@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
-    <ProjectGuid>{8D131626-B130-429D-A6F3-BB7D83A58F75}</ProjectGuid>
+    <ProjectGuid>{17C607ED-D20B-45A7-98D6-7A955F62108A}</ProjectGuid>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <RootNamespace>PixelLab.Wpf.Demo</RootNamespace>
     <AssemblyName>PixelLab.Wpf.Demo</AssemblyName>
@@ -12,13 +12,16 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Prism, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism.Interactivity, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xaml.Tools">
@@ -28,6 +31,9 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\NET40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationProvider" />
@@ -347,23 +353,23 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\PixelLab.Common.csproj">
-      <Project>{273247A2-A3C8-42D0-8463-F95FC5C0A34C}</Project>
-      <Name>PixelLab.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\PixelLab.Core.csproj">
-      <Project>{8F249828-4E5F-4B75-B3A4-F67D74518F29}</Project>
-      <Name>PixelLab.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Wpf\PixelLab.Wpf.csproj">
-      <Project>{E4BBC94F-B837-4668-A127-E36E6DE012F5}</Project>
-      <Name>PixelLab.Wpf</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
     <Resource Include="logo.png" />
     <None Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bot\PixelLab.Wpf.csproj">
+      <Project>{E835A348-A6D1-4423-B749-0006B5700C35}</Project>
+      <Name>PixelLab.Wpf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\PixelLab.Common.csproj">
+      <Project>{197F9FE2-E446-48FE-9A51-114918153426}</Project>
+      <Name>PixelLab.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\PixelLab.Core.csproj">
+      <Project>{5F336B0C-827C-4E1B-B0FF-53EC17B299A1}</Project>
+      <Name>PixelLab.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

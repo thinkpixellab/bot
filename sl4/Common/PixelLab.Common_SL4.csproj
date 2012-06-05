@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{9533C336-6070-478D-AA69-FD81D055AD40}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <RootNamespace>PixelLab.Common</RootNamespace>
+    <AssemblyName>PixelLab.Common_SL4</AssemblyName>
+    <SilverlightApplication>false</SilverlightApplication>
+  </PropertyGroup>
+  <Import Project="..\..\targets\SL4.targets" />
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL4\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL4\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Interactivity">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL4\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\..\packages\CommonServiceLocator.1.0\lib\SL30\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL4\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Common\BrushHelper.cs">
+      <Link>BrushHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Common\ColorHelper.cs">
+      <Link>ColorHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Common\CommandHelpers.cs">
+      <Link>CommandHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Common\CompositionTargetRenderingListening.cs">
+      <Link>CompositionTargetRenderingListening.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Common\DeadCommand.cs">
+      <Link>DeadCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Common\DebugTrace.cs">
+      <Link>DebugTrace.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Common\DependencyPropHelper.cs">
+      <Link>DependencyPropHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Common\EnumConverter.cs">
+      <Link>EnumConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Common\GeoHelper.cs">
+      <Link>GeoHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Common\HueConverter.cs">
+      <Link>HueConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Common\ICommandProxy.cs">
+      <Link>ICommandProxy.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Common\IDynamicValue.cs">
+      <Link>IDynamicValue.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Common\Line.cs">
+      <Link>Line.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Common\PageFlipper.cs">
+      <Link>PageFlipper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Common\PathWatcher.cs">
+      <Link>PathWatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Common\RoundDoubleConverter.cs">
+      <Link>RoundDoubleConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Common\SimpleValueConverter.cs">
+      <Link>SimpleValueConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net40-client\Common\TreeHelpers.cs">
+      <Link>TreeHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\..\XamlAssemblyInfo.cs">
+      <Link>Properties\XamlAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="ActualSizePropertyProxy.cs" />
+    <Compile Include="CommandKeyMapper.cs" />
+    <Compile Include="KeyBinding.cs" />
+    <Compile Include="SelectedItemsBehavior.cs" />
+    <Compile Include="Vector_SL.cs" />
+    <Compile Include="WrapPanel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\PixelLab.Core_SL4.csproj">
+      <Project>{D79F2834-0870-4029-BA93-8539CFAEA20E}</Project>
+      <Name>PixelLab.Core_SL4</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

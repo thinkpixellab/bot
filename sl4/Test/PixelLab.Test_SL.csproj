@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{AA0B1C80-97AE-49F5-8310-5A7683BE47BF}</ProjectGuid>
+    <ProjectGuid>{E6F34DD6-9449-4FCF-8DFC-4922AE6E99C4}</ProjectGuid>
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <RootNamespace>PixelLab.Test</RootNamespace>
     <AssemblyName>PixelLab.Test_SL</AssemblyName>
@@ -60,21 +60,21 @@
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\PixelLab.Common_SL4.csproj">
-      <Project>{ACA535DF-6536-4FA4-8FFB-9CE2F05EF137}</Project>
-      <Name>PixelLab.Common_SL4</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\PixelLab.Core_SL4.csproj">
-      <Project>{A5A55BBF-F2D5-4938-B5A8-9A950EF7D014}</Project>
-      <Name>PixelLab.Core_SL4</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Silverlight\PixelLab.SL.csproj">
-      <Project>{74445E4D-56D4-40F5-A9FD-3793A014E76E}</Project>
-      <Name>PixelLab.SL</Name>
-    </ProjectReference>
+    <None Include="Properties\OutOfBrowserSettings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\OutOfBrowserSettings.xml" />
+    <ProjectReference Include="..\Common\PixelLab.Common_SL4.csproj">
+      <Project>{9533C336-6070-478D-AA69-FD81D055AD40}</Project>
+      <Name>PixelLab.Common_SL4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\PixelLab.Core_SL4.csproj">
+      <Project>{D79F2834-0870-4029-BA93-8539CFAEA20E}</Project>
+      <Name>PixelLab.Core_SL4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SL4\PixelLab.SL.csproj">
+      <Project>{7EFDBF36-BF2E-491B-9A16-3964361BE1C7}</Project>
+      <Name>PixelLab.SL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <Import Condition="$(SilverlightVersion)=='v4.0'" Project="$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SilverlightToolkit\Tools\v4.0)Microsoft.Silverlight.Toolkit.Build.targets" />

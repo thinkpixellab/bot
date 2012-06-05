@@ -18,11 +18,11 @@
     <summary />
   </metadata>
   <files>
-    <file src="Wpf\_build\WPF\bin\Release\PixelLab.Wpf.dll" target="lib\net40\PixelLab.Wpf.dll" />
-    <file src="Wpf\_build\WPF\bin\Release\PixelLab.Wpf.pdb" target="lib\net40\PixelLab.Wpf.pdb" />
-    <file src="Wpf\_build\WPF\bin\Release\PixelLab.Wpf.XML" target="lib\net40\PixelLab.Wpf.XML" />
-    <file src="Silverlight\_build\SL4\bin\Release\PixelLab.SL.dll" target="lib\sl40\PixelLab.SL.dll" />
-    <file src="Silverlight\_build\SL4\bin\Release\PixelLab.SL.pdb" target="lib\sl40\PixelLab.SL.pdb" />
-    <file src="Silverlight\_build\SL4\bin\Release\PixelLab.SL.XML" target="lib\sl40\PixelLab.SL.XML" />
+    <file src="net40-client\Bot\_build\bin\Release\PixelLab.Wpf.dll" target="lib\net40\PixelLab.Wpf.dll" />
+    <file src="net40-client\Bot\_build\bin\Release\PixelLab.Wpf.pdb" target="lib\net40\PixelLab.Wpf.pdb" />
+    <file src="net40-client\Bot\_build\bin\Release\PixelLab.Wpf.XML" target="lib\net40\PixelLab.Wpf.XML" />
+    <file src="sl4\SL4\_build\bin\Release\PixelLab.SL.dll" target="lib\sl40\PixelLab.SL.dll" />
+    <file src="sl4\SL4\_build\bin\Release\PixelLab.SL.pdb" target="lib\sl40\PixelLab.SL.pdb" />
+    <file src="sl4\SL4\_build\bin\Release\PixelLab.SL.XML" target="lib\sl40\PixelLab.SL.XML" />
   </files>
 </package>

@@ -8,7 +8,7 @@
     <WarningLevel>4</WarningLevel>
     <ErrorReport>prompt</ErrorReport>
     <DefineConstants>TRACE</DefineConstants>
-    <RootOutputPath>_build\$(BotTypeName)</RootOutputPath>
+    <RootOutputPath>_build</RootOutputPath>
     <BaseIntermediateOutputPath>$(RootOutputPath)\obj</BaseIntermediateOutputPath>
     <AppDesignerFolder>Properties</AppDesignerFolder>
   </PropertyGroup>

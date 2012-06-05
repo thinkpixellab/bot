@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{966B0BD5-F6EE-42E9-AD48-4864C456F204}</ProjectGuid>
+    <ProjectGuid>{521623EC-691A-46D8-A8D4-6C605ACD47DD}</ProjectGuid>
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <RootNamespace>PixelLab.SL.Demo</RootNamespace>
     <AssemblyName>PixelLab.SL.Demo</AssemblyName>
@@ -20,13 +20,16 @@
   </PropertyGroup>
   <Import Project="..\..\targets\SL4.targets" />
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.Prism, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL4\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL4\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Prism.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Practices.Prism.Interactivity">
       <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL4\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\..\packages\CommonServiceLocator.1.0\lib\SL30\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
@@ -46,7 +49,7 @@
     <Compile Include="..\..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\Wpf\Core\DemoMetadataAttribute.cs">
+    <Compile Include="..\..\net40-client\Bot.Demo\Core\DemoMetadataAttribute.cs">
       <Link>Core\DemoMetadataAttribute.cs</Link>
     </Compile>
     <Compile Include="App.xaml.cs">
@@ -135,29 +138,29 @@
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\PixelLab.Common_SL4.csproj">
-      <Project>{ACA535DF-6536-4FA4-8FFB-9CE2F05EF137}</Project>
-      <Name>PixelLab.Common_SL4</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\PixelLab.Core_SL4.csproj">
-      <Project>{A5A55BBF-F2D5-4938-B5A8-9A950EF7D014}</Project>
-      <Name>PixelLab.Core_SL4</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Silverlight\PixelLab.SL.csproj">
-      <Project>{74445E4D-56D4-40F5-A9FD-3793A014E76E}</Project>
-      <Name>PixelLab.SL</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="..\Wpf\logo.png">
-      <Link>logo.png</Link>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Properties\OutOfBrowserSettings.xml" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\sprite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\PixelLab.Common_SL4.csproj">
+      <Project>{9533C336-6070-478D-AA69-FD81D055AD40}</Project>
+      <Name>PixelLab.Common_SL4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\PixelLab.Core_SL4.csproj">
+      <Project>{D79F2834-0870-4029-BA93-8539CFAEA20E}</Project>
+      <Name>PixelLab.Core_SL4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SL4\PixelLab.SL.csproj">
+      <Project>{7EFDBF36-BF2E-491B-9A16-3964361BE1C7}</Project>
+      <Name>PixelLab.SL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\net40-client\Bot.Demo\logo.png">
+      <Link>logo.png</Link>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
