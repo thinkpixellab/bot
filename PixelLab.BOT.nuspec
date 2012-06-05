@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <version>6.0.0</version>
+    <version>6.0.1</version>
     <authors>Kevin Moore,Robby Ingebretsen,Derek Lakin</authors>
     <owners>Pixel Lab - http://thinkpixellab.com</owners>
     <licenseUrl>http://creativecommons.org/licenses/MIT/</licenseUrl>
@@ -9,7 +9,7 @@
     <iconUrl>http://www.nuget.org/Media/Default/Packages/PixelLab.BOT/1.0.1/logo.png</iconUrl>
     <dependencies>
       <dependency id="Prism" version="4.1.0.0" />
-      <dependency id="PixelLab.Common" version="6.0.0" />
+      <dependency id="PixelLab.Common" version="6.0.1" />
     </dependencies>
     <id>PixelLab.BOT</id>
     <title>PixelLab.BOT</title>
