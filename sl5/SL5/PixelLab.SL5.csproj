@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{B8A4B839-C760-4485-87BA-833C9744F0E1}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <RootNamespace>PixelLab.SL</RootNamespace>
+    <AssemblyName>PixelLab.SL5</AssemblyName>
+    <SilverlightApplication>false</SilverlightApplication>
+  </PropertyGroup>
+  <Import Project="..\..\targets\SL5.targets" />
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Interactivity">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\..\packages\CommonServiceLocator.1.0\lib\SL30\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\..\packages\Prism.4.1.0.0\lib\SL5\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\IsolatedStorage\IsolatedFileSystemInfo.cs">
+      <Link>IsolatedStorage\IsolatedFileSystemInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\SpriteButton.cs">
+      <Link>SpriteButton.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\SpriteElement.cs">
+      <Link>SpriteElement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\StretchDirection.cs">
+      <Link>StretchDirection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\AsBigAsYouWantPanel.cs">
+      <Link>AsBigAsYouWantPanel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\AsyncValue.cs">
+      <Link>AsyncValue.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\AsyncValueLoadException.cs">
+      <Link>AsyncValueLoadException.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\CollapseOnDisableBehavior.cs">
+      <Link>CollapseOnDisableBehavior.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\DiscreteSlider.cs">
+      <Link>DiscreteSlider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\DoubleClickBehavior.cs">
+      <Link>DoubleClickBehavior.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\EditableTextBlock.cs">
+      <Link>EditableTextBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\FlipControl.xaml.cs">
+      <Link>FlipControl.xaml.cs</Link>
+      <DependentUpon>FlipControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\GridLineControl.xaml.cs">
+      <Link>GridLineControl.xaml.cs</Link>
+      <DependentUpon>GridLineControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\Helpers_Phone.cs">
+      <Link>Helpers_Phone.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\IAsyncValue.cs">
+      <Link>IAsyncValue.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\LoadState.cs">
+      <Link>LoadState.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\ModalControl.cs">
+      <Link>ModalControl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\PanZoomControl.cs">
+      <Link>PanZoomControl.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\ResourceHelpers.cs">
+      <Link>ResourceHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\ScrollBehavior.cs">
+      <Link>ScrollBehavior.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\SLExtentions.cs">
+      <Link>SLExtentions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\sl4\SL4\SpinningProgressControl.xaml.cs">
+      <Link>SpinningProgressControl.xaml.cs</Link>
+      <DependentUpon>SpinningProgressControl.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="..\..\sl4\SL4\FlipControl.xaml">
+      <Link>FlipControl.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\sl4\SL4\GridLineControl.xaml">
+      <Link>GridLineControl.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\sl4\SL4\SpinningProgressControl.xaml">
+      <Link>SpinningProgressControl.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\sl4\SL4\Themes\generic.xaml">
+      <Link>Themes\generic.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\PixelLab.Common_SL5.csproj">
+      <Project>{197BF618-435B-467E-B8F7-DF46A68BE0FB}</Project>
+      <Name>PixelLab.Common_SL5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\PixelLab.Core_SL5.csproj">
+      <Project>{EBA347D6-9F23-4FAF-83B2-69F1EFAD6D7E}</Project>
+      <Name>PixelLab.Core_SL5</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\sl4\SL4\Images\cross.png">
+      <Link>Images\cross.png</Link>
+    </Resource>
+    <Resource Include="..\..\sl4\SL4\Images\pencil.png">
+      <Link>Images\pencil.png</Link>
+    </Resource>
+    <Resource Include="..\..\sl4\SL4\Images\tick.png">
+      <Link>Images\tick.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

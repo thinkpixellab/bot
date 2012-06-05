@@ -23,5 +23,8 @@
     <file src="sl4\Common\_build\bin\Release\PixelLab.Common_SL4.dll" target="lib\sl40\PixelLab.Common_SL4.dll" />
     <file src="sl4\Common\_build\bin\Release\PixelLab.Common_SL4.pdb" target="lib\sl40\PixelLab.Common_SL4.pdb" />
     <file src="sl4\Common\_build\bin\Release\PixelLab.Common_SL4.XML" target="lib\sl40\PixelLab.Common_SL4.XML" />
+    <file src="sl5\Common\_build\bin\Release\PixelLab.Common_SL5.dll" target="lib\sl50\PixelLab.Common_SL5.dll" />
+    <file src="sl5\Common\_build\bin\Release\PixelLab.Common_SL5.pdb" target="lib\sl50\PixelLab.Common_SL5.pdb" />
+    <file src="sl5\Common\_build\bin\Release\PixelLab.Common_SL5.XML" target="lib\sl50\PixelLab.Common_SL5.XML" />
   </files>
 </package>
